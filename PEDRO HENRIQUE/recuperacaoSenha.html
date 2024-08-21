@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de Senha | SecurePass</title>
+    <link rel="stylesheet" href="LogCad.css">
+</head>
+<body>
+    <div class="fundoBranco">
+        <img src="SecurePass.svg" title="Logo | SecurePass">
+        <div id="pergunta">
+            <div class="Form">
+                <center>
+                <p class="titulo" style="width: 100%; font-size: medium;">Selecione abaixo qual conta quer redefinir:</p>
+            </center>
+            </div>
+    
+            <div class="botoes">
+                <button onclick="administrador()">Administrador</button>
+                <button onclick="funcionario()">Funcionário</button>
+            </div>
+        </div>
+    
+        
+        <div id="adm" style="display: none;">
+            <div class="Form">
+                    <p class="titulo">Recuperação de Senha - Administrador</p>
+                    <input type="text" id="name" placeholder = "E-mail:">
+                    <input type="number" id="name" placeholder = "CNPJ:">
+                    <input type="password" id="name" placeholder = "Nova senha:" >
+                    <input type="password" id="name" placeholder = "Confirmar nova senha:" >
+                    <div class="botoes">
+                        <button onclick="voltar()">Voltar</button>
+                        <button>Reconfigurar Senha</button>
+                    </div>
+            </div>
+    
+        </div>
+    
+        <div id="func" style="display: none;">
+            <div class="Form">
+                    <p class="titulo">Recuperação de Senha - Funcionário</p>
+                    <input type="text" id="name" placeholder = "E-mail:">
+                    <input type="number" id="name" placeholder = "CPF:">
+                    <input type="password" id="name" placeholder = "Nova senha:" >
+                    <input type="password" id="name" placeholder = "Confirmar nova senha:" >
+                    <div class="botoes">
+                        <button onclick="voltar()">Voltar</button>
+                        <button>Reconfigurar Senha</button>
+                    </div>
+            </div>
+    
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+<script>
+
+    function administrador(){
+        document.getElementById("pergunta").style.display = "none";
+        document.getElementById("adm").style.display = "block";
+    }
+
+    function funcionario(){
+        document.getElementById("pergunta").style.display = "none";
+        document.getElementById("func").style.display = "block";
+    }
+
+    function voltar(){
+        window.location.replace(URL="recuperacaoSenha.html")
+    }
+
+</script>
