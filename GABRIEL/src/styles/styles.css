@@ -1,0 +1,39 @@
+
+.mobile-navbar-list{
+    display: none;
+}
+
+.mobile-btn-default{
+    display: none;
+} 
+
+.navbar-team{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.navbar-title{
+    font-size: 48px;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-member{
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-member i{
+    font-size: 18px;
+}
+
+@media screen and (max-width: 450px){
+    .navbar-list{
+        display: none;
+    }
+    .mobile-navbar-list{
+        display: block;
+    }
+}
