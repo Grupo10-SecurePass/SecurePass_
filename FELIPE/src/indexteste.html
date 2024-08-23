@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Responsive Menu with Pure CSS | Kamal Ahmed</title>
+    <link rel="stylesheet" href="css/menu.css" />
+  </head>
+  <body>
+    <header class="header">
+    <input type="checkbox" id="menu-btn" class="menu-btn" />
+
+      <div class="logo-wrap">
+        <img src="../src/images/SecurePass SVGLogoNavBar.svg" alt="">
+        <div class="mobile-menu-toggle">
+          <label for="menu-btn" class="menu-icon"
+            ><span class="nav-icon"></span
+          ></label>
+        </div>
+      </div>
+
+      <ul class="menu">
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </header>
+  </body>
+</html>
+
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ddd;
+  color: #000;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+.header {
+  background-color: #000dff;
+  -webkit-box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.header ul {
+  list-style: none;
+  overflow: hidden;
+}
+
+.header ul a {
+  display: block;
+  padding: 20px;
+  text-decoration: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.header ul a:hover {
+  color: #fff;
+  background-color: #ffc107;
+  border-color: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.header ul a.active {
+  color: #fff;
+  background-color: #ffc107;
+  border-color: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.header .logo-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.header .logo {
+  display: block;
+  font-size: 2rem;
+  padding: 10px 20px;
+}
+
+.header .menu {
+  max-height: 0;
+  -webkit-transition: max-height .5s ease-out;
+  transition: max-height .5s ease-out;
+}
+
+.header .menu-icon {
+  display: flex;
+  padding: 28px 20px;
+  cursor: pointer;
+}
+
+.header .menu-icon .nav-icon {
+  background: #333;
+  display: block;
+  height: 2px;
+  width: 28px;
+  position: relative;
+  -webkit-transition: background .2s ease-out;
+  transition: background .2s ease-out;
+}
+
+.header .menu-icon .nav-icon:before, .header .menu-icon .nav-icon:after {
+  content: "";
+  background: #333;
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  -webkit-transition: all .2s ease-out;
+  transition: all .2s ease-out;
+}
+
+.header .menu-icon .nav-icon:before {
+  top: 10px;
+}
+
+.header .menu-icon .nav-icon:after {
+  bottom: 10px;
+}
+
+.header .menu-btn {
+  display: none;
+}
+
+.header .menu-btn:checked ~ .menu {
+  max-height: 500px;
+}
+
+.header .menu-btn:checked ~ .logo-wrap .nav-icon {
+  background: transparent;
+}
+
+.header .menu-btn:checked ~ .logo-wrap .nav-icon:before {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  top: auto;
+}
+
+.header .menu-btn:checked ~ .logo-wrap .nav-icon:after {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  bottom: auto;
+}
+
+@media (min-width: 48em) {
+  .header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .header .menu-icon {
+    display: none;
+  }
+  .header .menu {
+    min-height: 58px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .header .menu a {
+    border-bottom: none;
+    border-right: 1px solid #ccc;
+  }
+}
+/*# sourceMappingURL=menu.css.map */
+</style>
