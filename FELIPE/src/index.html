@@ -5,45 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Secure Pass | Home</title>
-    <link rel="stylesheet" href="src/styles/styles.css">
+    <link rel="stylesheet" href="../src/styles/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="navbar-default">
-                <!-- Colocar logo -->
-                 Colocar Logo
-                <img src="" alt="">
+            <div class="navbar-img"> 
+                <img src="images/SecurePass SVGLogoNavBar.svg" alt="">
             </div>
             <div class="navbar-default">
                 <ul class="navbar-list">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Sobre Nós</a></li>
-                    <li><a href="#">Serviços</a></li>
-                    <li><a href="#">Equipe</a></li>
-                    <li><a href="#">Contato</a></li>
+                    <li class="li-navbar-btn"><a href="#">Inicio</a></li>
+                    <li class="li-navbar-btn"><a href="#">Sobre Nós</a></li>
+                    <li class="li-navbar-btn"><a href="#">Serviços</a></li>
+                    <li class="li-navbar-btn"><a href="#">Equipe</a></li>
+                    <li class="li-navbar-btn"><a href="#">Contato</a></li>
                 </ul>
             </div>
             <div class="btn-default">
                 <button onclick="entrar()">Entrar</button>
             </div>
 
-            <div class="moblie-navbar-default">
+            <div class="moblie-navbar-default active">
                 <ul class="mobile-navbar-list">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Sobre Nós</a></li>
-                    <li><a href="#">Serviços</a></li>
-                    <li><a href="#">Equipe</a></li>
-                    <li><a href="#">Contato</a></li>
+                    <li class="li-navbar-btn"><a href="#">Inicio</a></li>
+                    <li class="li-navbar-btn"><a href="#">Sobre Nós</a></li>
+                    <li class="li-navbar-btn"><a href="#">Serviços</a></li>
+                    <li class="li-navbar-btn"><a href="#">Equipe</a></li>
+                    <li class="li-navbar-btn"><a href="#">Contato</a></li>
                 </ul>
             </div>
-            <div class="mobile-btn-default">
+            <div class="btn-default">
                 <button onclick="entrar()">Entrar</button>
             </div>
         </nav>
     </header>
 
+<main id="global" class="global-style">
+<div class="TelaDoInicio"> </div>
     <section>
         <nav class="navbar-info">
             <div class="info">
@@ -111,23 +111,23 @@
         </div>
         <nav class="navbar-team">
             <div class="navbar-member">
-                <img src="src/images/grupo-10/eli.png" alt="">
+                <img src="../src/images/grupo-10/eli.png" alt="">
                 <i class="fa-brands fa-github"> Eli Rufino</i>
             </div>
             <div class="navbar-member">
-                <img src="src/images/grupo-10/felipe.png" alt="">
-                <i class="fa-brands fa-github"> Felipe Manzoli</i>
+                <img src="../src/images/grupo-10/felipe.png" alt="">
+                <i class="fa-brands fa-github"> Felipe Manzolli</i>
             </div>
             <div class="navbar-member">
-                <img src="src/images/grupo-10/gabriel.png" alt="">
+                <img src="../src/images/grupo-10/gabriel.png" alt="">
                 <i class="fa-brands fa-github"> Gabriel Teixeira</i>
             </div>
             <div class="navbar-member">
-                <img src="src/images/grupo-10/barbosa.png" alt="">
+                <img src="../src/images/grupo-10/barbosa.png" alt="">
                 <i class="fa-brands fa-github"> Pedro Barbosa</i>
             </div>
             <div class="navbar-member">
-                <img src="src/images/grupo-10/ph.png" alt="">
+                <img src="../src/images/grupo-10/ph.png" alt="">
                 <i class="fa-brands fa-github"> Pedro Henrique</i>
             </div>
         </nav>
@@ -153,5 +153,8 @@
             </div>
         </nav>
     </section>
+
+</main>
 </body>
 </html>
+
