@@ -40,7 +40,7 @@
                 <button onclick="entrar()">Entrar</button>
             </div>
         </nav>
-    </header> -->
+    </header>
 
     <header class="header">
         <input type="checkbox" id="menu-btn" class="menu-btn" />
@@ -55,15 +55,36 @@
           </div>
     
           <ul class="menu">
-            <li><a href="#" class="active">Inicio</a></li>
-            <li><a href="#">Sobre Nós</a></li>
-            <li><a href="#">Serviços</a></li>
-            <li><a href="#">Equipe</a></li>            
-            <li><a href="#">Contato</a></li>
-            <li><a href="#">Entrar</a></li>
+            <li><a href="#" class="a-navbar-btn">Inicio</a></li>
+            <li><a href="#" class="a-navbar-btn">Sobre Nós</a></li>
+            <li><a href="#" class="a-navbar-btn">Serviços</a></li>
+            <li><a href="#" class="a-navbar-btn">Equipe</a></li>            
+            <li><a href="#" class="a-navbar-btn">Contato</a></li>
+            <li class="li-navbar"><a href="#" class="a-navbar-btn">Entrar</a></li>
           </ul>
         </header>
-
+ -->
+        <header>
+            <nav class="nav-header">
+                <img src="images/SecurePass SVGLogoNavBar.svg" alt="Logo">
+                <div class="mobile-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+                    <ul class="nav-list">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Serviços</a></li>
+                        <li><a href="#">Equipe</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                    
+                    <ul class="nav-list-btn">
+                        <li><a href="#">LOGIN</a></li>
+                    </ul>
+            </nav>
+        </header>
 
 <main id="global" class="global-style">
 <div class="TelaDoInicio"> </div>
@@ -181,3 +202,45 @@
 </body>
 </html>
 
+<script>class MobileNavbar{
+    constructor(mobileMenu, navList, navLinks){
+        this.mobileMenu = document.querySelector(mobileMenu);
+        this.navList = document.querySelector(navList);
+        this.navLinks = document.querySelectorAll(navLinks);
+        this.activeClass = "active";
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    animateLinks(){
+        this.navLinks.forEach((link, index) => {
+            link.style.animation
+            ? (link.style.animation = "")
+            : (link.style.animation = `navLinkFade 0.5 ease forwards 0.3s`);
+        })
+    }
+
+     handleClick(){
+        this.navList.classList.toggle(this.activeClass);
+        this.animateLinks();
+     }
+
+    addClickEvent() {
+    this.mobileMenu.addEventListener("click", this.handleClick);
+}
+
+    init(){
+        if(this.mobileMenu){
+            this.addClickEvent();
+        }
+        return this;
+    }
+}
+
+const mobileNavbar = new MobileNavbar(
+    ".mobile-menu",
+    ".nav-list",
+    ".nav-list li",
+);
+
+mobileNavbar.init();</script>

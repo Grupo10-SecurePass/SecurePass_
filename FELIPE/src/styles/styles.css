@@ -1,338 +1,178 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-    }
-    
-    body {
-        color: #000000;
-    }
+a{
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
 
-    a {
-        color: #FFFFFF;
-        text-decoration: none;
+a:hover{
+    opacity: 0.7;
+}
+
+.logo{
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.nav-header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #003366;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 20%;
+    flex-direction: column;
+}
+img {
+    max-width: 100%;
+    width: 300px;  
+  }
+main{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center; 
+    width: 100%; 
+    height: 100%; 
+}
+
+.nav-list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10dvh;
+    align-items: center;
+}
+.nav-list-btn{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 15dvh;
+    font-weight: bold;
+    align-items: center;
+}
+
+.nav-list li{
+    letter-spacing: 3px;
+    margin-left: 32px;
+}
+
+ul{
+    display: flex;
+    justify-content: space-around;
+}
+
+.mobile-menu{
+    cursor: pointer;
+    display: none;
+}
+
+.mobile-menu div{
+    width: 32px;
+    height: 2px;
+    background-color: #fff;
+    margin: 8px;
+}
+
+@media (max-width: 999px){
+    body{
+        overflow-x: hidden;
     }
-    /*------------------------Header------------------------*/
-    header {
-        position: fixed;
-        top: 0;
+    .nav-list{
+        position: absolute;
+        top: 8vh;
         right: 0;
-        width: 20%;
-        height: 100%;
+        width: 50vh;
+        height: 92vh;
         background-color: #003366;
-        display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 20px 0;
-        overflow-y: auto;
+        justify-content: space-around;
+        transform: translateX(100%);
+        transition: ease 0.3s;
+    }
+    .nav-list li{
+        margin-left: 0;
+        opacity: 0;
     }
 
-    .navbar-img img {
-        max-width: 80%;
-        height: auto;
-    }
-    
-    .navbar-default ul {
-        list-style: none;
-        width: 100%;
-        padding: 0;
-    }
-    
-    .li-navbar-btn {
-        background-color: #6699CC;
-        text-align: center;
-        padding: 5px;
-        margin-bottom: 15px;
-    }
-    
-    .li-navbar-btn a {
-        text-decoration: none;
-        color: #fff;
+    .mobile-menu{
         display: block;
     }
-    
-    .btn-default {
-        border-radius: 4px;
-        background-color: #6699CC;
-        padding: 20px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        margin-top: auto; /* Moves button to bottom */
-    }
-    
-    .btn-default:hover {
-        background-color: #003366;
-    }
 
-.header {
-    -webkit-box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
-            box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
-    display: -webkit-box;
-    display: -ms-flexbox;
+    .nav-list.active{
+        transform: translateX(0);
+    }
+}
+
+@keyframes navLinkFade{
+    from{
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.TelaDoInicio{
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-  }
-  
-  .header ul {
-    list-style: none;
-    overflow: hidden;
-    /* flex-direction: column; */
-  
-  }
-  
-  .header ul a {
-    display: flex;
-    /* flex-direction: column; */
-    padding: 20px;
-    text-decoration: none;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .header ul a:hover {
-    color: #fff;
-    background-color: #000044;
-    border-color: 1px solid rgba(0, 0, 0, 0.4);
-  }
-  
-  .header ul a.active {
-    color: #fff;
-    background-color: #000044;
-    border-color: 1px solid rgba(0, 0, 0, 0.4);
-  }
-  
-  .header .logo-wrap {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-around;
-            flex-direction: column;
-            align-items: center;
-  }
-  
-  .header .logo {
-    display: block;
-    font-size: 2rem;
-    padding: 10px 20px;
-  }
-  
-  .header .menu {
-    max-height: 0;
-    -webkit-transition: max-height .5s ease-out;
-    transition: max-height .5s ease-out;
-  }
-  
-  .header .menu-icon {
-    display: flex;
-    padding: 28px 20px;
-    cursor: pointer;
-  
-  }
-  
-  .header .menu-icon .nav-icon {
-    background: #ffffff;
-    display: block;
-    height: 2px;
-    width: 28px;
-    position: relative;
-    -webkit-transition: background .2s ease-out;
-    transition: background .2s ease-out;
-  }
-  
-  .header .menu-icon .nav-icon:before, .header .menu-icon .nav-icon:after {
-    content: "";
-    background: #ffffff;
-    display: block;
-    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(../images/TelaDoInicio.svg);
+    height: 100vh;
     width: 100%;
-    position: absolute;
-    -webkit-transition: all .2s ease-out;
-    transition: all .2s ease-out;
-  }
-  
-  .header .menu-icon .nav-icon:before {
-    top: 10px;
-  }
-  
-  .header .menu-icon .nav-icon:after {
-    bottom: 10px;
-  }
-  
-  .header .menu-btn {
-    display: none;
-  }
-  
-  .header .menu-btn:checked ~ .menu {
-    max-height: 500px;
-  }
-  
-  .header .menu-btn:checked ~ .logo-wrap .nav-icon {
-    background: transparent;
-  }
-  
-  .header .menu-btn:checked ~ .logo-wrap .nav-icon:before {
-    -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-    top: auto;
-  }
-  
-  .header .menu-btn:checked ~ .logo-wrap .nav-icon:after {
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-    bottom: auto;
-  }
-  
-  @media (min-width: 48em) {
-    .header {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: column;
-              flex-direction: column;
-      -webkit-box-pack: justify;
-          -ms-flex-pack: justify;
-              justify-content: space-between;
-    }
-    .header .menu-icon {
-      display: none;
-    }
-    .header .menu {
-      min-height: 58px;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-    }
-    .header .menu a {
-      border-bottom: none;
-      border-right: 1px solid #ccc;
-    }
-  }  
-    
-    /*------------------------Main Content------------------------*/
-    main {
-        margin-right: 20%;
-        
-    }
-    
-    section {
-        margin-bottom: 40px;
-    }
-    
-    .navbar-info, .navbar-values, .navbar-service, .navbar-team, .navbar-contact {
-        margin-bottom: 40px;
-    }
-    
-    .navbar-title h1 {
-        font-size: 48px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    
-    .navbar-team {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-    }
-    
-    .navbar-member {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    
-    .navbar-member img {
-        max-width: 100px;
-        height: auto;
-        border-radius: 50%;
-    }
-    
-    .navbar-member i {
-        font-size: 18px;
-        margin-top: 10px;
-        display: inline-block;
-    }
-    
-    .navbar-contact input, .navbar-contact textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-    
-    .navbar-map img {
-        width: 100%;
-        height: auto;
-    }
-    
-    /*------------------------Responsividade------------------------*/
-    @media screen and (max-width: 991px) {
-        main {
-            margin-left: 0;
-            width: 100%;
-        }
-    
-        header {
-            width: 100%;
-            height: auto;
-            position: static;
-            flex-direction: row;
-            justify-content: space-between;
-            padding: 10px;
-        }
-    
-        .navbar-img img {
-            height: 50px;
-        }
-    
-        .navbar-default ul {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            width: 100%;
-        }
-    
-        .li-navbar-btn {
-            flex: 1;
-            padding: 10px;
-        }
-    
-        .btn-default {
-            margin-top: 0;
-        }
-    }
-    .mobile-navbar-list {
-        display: none;
-    }
-    .mobile-btn-default{
-        display: none;
-    }
+}
 
-    @media screen and (max-width: 450px) {
-        .navbar-default .btn-default ul {
-            display: none;
-            
-        }
-    
-        .mobile-navbar-list .mobile-btn-default {
-            display: block;
-        }
-    }
-    
-    /*------------------------Tela-do-inicio------------------------*/
+
+@media screen and (max-width: 1370px) {
+      
     .TelaDoInicio{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url(../images/TelaDoInicio.svg);
-        height: 100vh;
-        width: 100%;
-    }
+      height: 50vh;
+      width: 100%;
+  }
+  @media screen and (max-width: 500px) {
+    
+    .TelaDoInicio{
+      height: 30vh;
+      width: 100%;
+  }
+  }
+}
 
+@media screen and (max-width: 480px) {
+    
+  .TelaDoInicio{
+    height: 50vh;
+    width: 100%;
+} 
+}
+  @media screen and (max-width: 450px) {
+    
+    .TelaDoInicio{
+      height: 30vh;
+      width: 100%;
+  }
+
+}
+
+
+@media screen and (max-width: 270px) {
+    
+.TelaDoInicio{
+  height: 10vh;
+  width: 100%;
+}
+
+}
