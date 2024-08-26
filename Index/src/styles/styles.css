@@ -1,0 +1,10 @@
+:root{
+    --tamanho-header: 15%;
+    --tamanho-landing-page: calc(100% - var(--tamanho-header));
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
