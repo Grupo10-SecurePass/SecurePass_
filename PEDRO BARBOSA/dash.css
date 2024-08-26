@@ -1,0 +1,95 @@
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.tela_inteira {
+    display: flex;
+    flex-direction: row; 
+    height: 100vh; 
+}
+
+
+.menu_lateralE {
+    display: flex;
+    flex-direction: column; 
+    width: 200px; 
+    background-color: #f4f4f4; 
+}
+
+.logo {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 150px;
+}
+
+.logo img {
+    max-width: 100%; 
+    max-height: 100%; 
+    
+}
+
+.logo_suporte {
+    display: flex;
+    justify-content: center; 
+    align-items: end;
+    height: 150px;
+}
+
+.logo_suporte img {
+    max-width: 100%; 
+    max-height: 100%; 
+    
+}    
+
+
+.menu_interacao {
+    display: flex;
+    flex-direction: column; 
+    flex-grow: 1; 
+    padding: 10px;
+}
+
+
+.menu_indicadores {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    justify-content: space-between; 
+    padding: 10px;
+}
+
+.indicadores_cima {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    padding-bottom: 10px;  
+}
+
+.indicador_principal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;  
+    flex-grow: 1; 
+}
+
+
+.indicadores_no_final {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    padding-top: 10px; 
+}
+
+.menu_lateralD{
+    display: flex;
+    flex-direction: column; 
+    width: 200px; 
+    background-color: #f4f4f4;    
+}
