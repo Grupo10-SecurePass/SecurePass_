@@ -1,242 +1,263 @@
-*{
-    margin: 0;
-    padding: 0;
-  }
-  body{
-    background-color: #6699CC;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .contentGeral{
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #6699CC;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentGeral {
   display: flex;
   width: 100vw;
   height: 100vh;
   margin: 0;
   flex-direction: column;
-  justify-content: space-between ;
-  }
-  
-  .navbar{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 20vw;
-    height: 97vh;
-    margin-top: 0.5rem;
-    border-radius: 1vh;
-    background-color: #C0C0C0;
-    position: fixed;
-    align-items: center;
-  }
-  .usuario{
-    display: flex;
-    background-color: #D9D9D9;
-    width: 11vw;
-    height: 24vh;
-    border-radius: 50%;
-    flex-direction: column;
-    margin-top: 0.5rem;
-    align-items: center;
-    margin-bottom: 5rem;
-  }
-  
-  .usuario img {
-    width: 13vw;
-    height: 24vh;
-  }
-  .usuario span{
-    font-size: 1.3rem;
-    margin-top: 0.2rem;
-  }
-  .separacao{
-    height: 0.05rem;
-    width: 40vh;
-    background-color: black;
-    margin-left: 1rem;
-    margin-top: 1vh;
-    margin-bottom: 18vh;
-  }
-  .navegacao{
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    width: 20vw;
-    height: 68vh;
-  }
-  .link {
-    color: black;
-    font-size: 4vh;
-    text-decoration: none;
-    padding-bottom: 2vh;
-  }
-  
-  .navegacao img{
-    width: 4vh;
-  }
-  .navegacao label {
-    margin-left: 5vh;
-    width: 29vh;
-    height: 4vh;
-    margin-bottom: 1vh;
-    padding: 0.7rem;
-  
-  }
-  .link:hover {
-    color: white;
-  }
-  .lbt:hover  {
-    background-color: #040483;
-    border-radius: 3vh;
-  }
-  
-  .graficosGeral{
-    width: 137vh;
-    display: flex;
-    flex-direction: column;
-    left: 49vh;
-    position: fixed;
-  }
-  .garficosSuperior {
-    display: flex;
-    flex-direction: row;
-    width: 137vh;
-    height: 22vh;
-    background-color: #F4F4F4;
-    border-radius: 1vh;
-    margin-top: 0.5rem;
-  }
-  .garficosSuperior div{
-    background-color: #e9e5e5;;
-    width: 42vh;
-    height: 20vh;
-    border-radius: 1vh;
-    margin-top: 1vh;
-    margin-left: 2vh;
-  }
-  .garficosSuperior div:not(:last-child){
-    margin-right: 1.5vh;
-  }
-  
-  .graficoCentral {
-    width: 38vh;
-    height: 20vh;
-    background-color: #F4F4F4;
-    width: 115vh;
-    height: 39vh;
-    margin-top: 2vh;
-    border-radius: 1vh;
-    margin-bottom: 2vh;
-  }
-  
-  .graficoInferior{
-    width: 59vw;
-    height: 40vh;
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .graficoInf1{
-    background-color: #F4F4F4;
-    width: 56vh;
-    height: 32vh;
-    margin-right: 2vh;
-    border-radius: 1vh;
-  }
-  
-  .graficoInf2{
-    
-    background-color: #F4F4F4;
-    width: 79vh;
-    height: 32vh;
-    border-radius: 1vh;
-  }
-  .graficoInf2 canvas {
-    width: 434px;
-  }
-  
-  .navbarCatracas{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 19vw;
-    height: 97vh;
-    margin-top: 0.5rem;
-    border-radius: 1vh;
-    background-color: #C0C0C0;
-    position: fixed;
-    left: 75rem;
-  }
-  
-  .exibicaoCatracas {
-    width: 38vh;
-    height: 20vh;
-    display: flex;
-    flex-direction: row;
-    background-color: #D9D9D9;
-    margin-bottom: 2vh;
-    border-radius: 2vh;
-    align-items: center;
+  justify-content: space-between;
+}
 
-  }.navbarCatracas img {
-    width: 25vh;
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-  }
-  .exibicaoCatracas img {
-    width: 4vh;
-    margin-left: 5vh;
-    margin-bottom: 2vh;
-  }
-  .exibicaoCatracas div {
-    width: 8vh;
-    height: 7vh;
-    margin-right: 4vh;
-    margin-left: 2vh;
-    border-radius: 50%;
-    background-color: #61e61f;
-  }
-  #vermelha {
-    width: 8vh;
-    height: 7vh;
-    margin-right: 4vh;
-    margin-left: 2vh;
-    border-radius: 50%;
-    background-color: #D51313;
-  }
-  #amarela {
-    width: 8vh;
-    height: 7vh;
-    margin-right: 4vh;
-    margin-left: 2vh;
-    border-radius: 50%;
-    background-color: #FAC02B;
-  }
+.navbar {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 20vw;
+  height: 97vh;
+  margin-top: 0.5rem;
+  border-radius: 1vh;
+  background-color: #C0C0C0;
+  position: fixed;
+  align-items: center;
+}
 
-  .garficosSuperior {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100px;
-    background-color: #f1f1f1; 
+.usuario {
+  display: flex;
+  background-color: #D9D9D9;
+  width: 11vw;
+  height: 24vh;
+  border-radius: 50%;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.usuario img {
+  width: 13vw;
+  height: 24vh;
+}
+
+.usuario span {
+  font-size: 1.3rem;
+  margin-top: 0.2rem;
+}
+
+.separacao {
+  height: 0.05rem;
+  width: 40vh;
+  background-color: black;
+  margin-left: 1rem;
+  margin-top: 1vh;
+  margin-bottom: 18vh;
+}
+
+.navegacao {
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  width: 20vw;
+  height: 68vh;
+}
+
+.link {
+  color: black;
+  font-size: 4vh;
+  text-decoration: none;
+  padding-bottom: 2vh;
+}
+
+.navegacao img {
+  width: 4vh;
+}
+
+.navegacao label {
+  margin-left: 5vh;
+  width: 29vh;
+  height: 4vh;
+  margin-bottom: 1vh;
+  padding: 0.7rem;
+
+}
+
+.link:hover {
+  color: white;
+}
+
+.lbt:hover {
+  background-color: #040483;
+  border-radius: 3vh;
+}
+
+.graficosGeral {
+  width: 137vh;
+  display: flex;
+  flex-direction: column;
+  left: 49vh;
+  position: fixed;
+}
+
+.garficosSuperior {
+  display: flex;
+  flex-direction: row;
+  width: 137vh;
+  height: 22vh;
+  background-color: #F4F4F4;
+  border-radius: 1vh;
+  margin-top: 0.5rem;
+}
+
+.garficosSuperior div {
+  background-color: #e9e5e5;
+  ;
+  width: 42vh;
+  height: 20vh;
+  border-radius: 1vh;
+  margin-top: 1vh;
+  margin-left: 2vh;
+}
+
+.garficosSuperior div:not(:last-child) {
+  margin-right: 1.5vh;
+}
+
+.graficoCentral {
+  background-color: #F4F4F4;
+  width: 93vh;
+  height: 46vh;
+  margin-top: 2vh;
+  border-radius: 1vh;
+  margin-bottom: 2vh;
+  margin-left: 14%;
+}
+
+canvas {
+  width: 25dvw;
+  height: 50dvh;
+}
+
+.graficoInferior {
+  width: 59vw;
+  height: 34vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.graficoInf1 {
+  background-color: #F4F4F4;
+  width: 56vh;
+  height: 32vh;
+  margin-right: 2vh;
+  border-radius: 1vh;
+}
+
+.graficoInf2 {
+
+  background-color: #F4F4F4;
+  width: 79vh;
+  height: 32vh;
+  border-radius: 1vh;
+}
+
+.graficoInf2 canvas {
+  width: 434px;
+}
+
+.navbarCatracas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 19vw;
+  height: 97vh;
+  margin-top: 0.5rem;
+  border-radius: 1vh;
+  background-color: #C0C0C0;
+  position: fixed;
+  left: 65rem;
+}
+
+.exibicaoCatracas {
+  width: 38vh;
+  height: 20vh;
+  display: flex;
+  flex-direction: row;
+  background-color: #D9D9D9;
+  margin-bottom: 2vh;
+  border-radius: 2vh;
+  align-items: center;
+
+}
+
+.navbarCatracas img {
+  width: 25vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.exibicaoCatracas img {
+  width: 4vh;
+  margin-left: 5vh;
+  margin-bottom: 2vh;
+}
+
+.exibicaoCatracas div {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #61e61f;
+}
+
+#vermelha {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #D51313;
+}
+
+#amarela {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #FAC02B;
+}
+
+.garficosSuperior {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10dvh;
+  background-color: #f1f1f1;
+  margin-bottom: 2%;
 }
 
 #catracaSelect {
-    width: 200%; 
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-    color: #333;
+  width: 200%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
 #catracaSelect option[disabled] {
-    color: #888;
-    font-style: italic;
+  color: #888;
+  font-style: italic;
 }
-
-
-
-  
