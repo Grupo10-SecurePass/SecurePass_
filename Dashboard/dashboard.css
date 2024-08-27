@@ -82,11 +82,9 @@ justify-content: space-between ;
   padding: 0.7rem;
 
 }
-.link:hover {
-  color: white;
-}
-.lbt:hover  {
-  background-color: #040483;
+
+.list.active  {
+  background-color: #6699CC;
   border-radius: 3vh;
 }
 
