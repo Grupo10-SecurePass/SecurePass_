@@ -54,8 +54,8 @@
     width: 38vh;
     background-color: black;
     /* margin-left: 1rem; */
-    margin: 4vh;
-    margin-bottom: 14vh;
+    margin: 1vh;
+    margin-bottom: 18vh;
   }
   .navegacao{
     display: flex;
@@ -80,8 +80,8 @@
     height: 4vh;
     margin-bottom: 1vh;
     padding: 0.7rem;
-  
   }
+  
   .list.active{
     background-color: #6699CC;
     border-radius: 3vh;
