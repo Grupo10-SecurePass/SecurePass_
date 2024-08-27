@@ -122,7 +122,7 @@
     width: 38vh;
     height: 20vh;
     background-color: #F4F4F4;
-    width: 137vh;
+    width: 115vh;
     height: 39vh;
     margin-top: 2vh;
     border-radius: 1vh;
@@ -131,7 +131,7 @@
   
   .graficoInferior{
     width: 59vw;
-    height: 100vh;
+    height: 40vh;
     display: flex;
     flex-direction: row;
   }
@@ -166,7 +166,7 @@
     border-radius: 1vh;
     background-color: #C0C0C0;
     position: fixed;
-    left: 65rem;
+    left: 75rem;
   }
   
   .exibicaoCatracas {
