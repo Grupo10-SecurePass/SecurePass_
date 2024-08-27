@@ -34,6 +34,7 @@ span{
 
 
 .logo{
+    display: flex;
     font-size: 24px;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -41,9 +42,9 @@ span{
 
 nav{
     display: flex;
-    position: sticky;
     padding: 20px 5%;
     justify-content: space-around;
+    position: fixed;
     align-items: center;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     height: var(--tamanho-header);
@@ -51,6 +52,7 @@ nav{
     z-index: 3;
     top: 0;
     transition: border-bottom 1s cubic-bezier(0.25, 0.1, 0.21, 0.64) 0.3s;;
+    background-color: #151570;
 }
 
 
@@ -61,11 +63,11 @@ nav{
 }
 
 .nav-list a:hover{
-    border-bottom: #182c6d solid 1px ;
+    border-bottom: #266bd1 solid 1px ;
 }
 
 .nav-list li{
-    letter-spacing: 3px;
+    letter-spacing: 5px;
     margin-left: 32px;
 }
 
@@ -122,7 +124,7 @@ nav{
         font-weight: 600;
         box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
         cursor: pointer;
-        transition: background-color 3s ease;
+        transition: background-color 1.5s ease;
         list-style: none;
         letter-spacing: 3px;
         margin-left: 17px;
@@ -130,7 +132,37 @@ nav{
         
         .btn-block:hover{
             background-color: rgb(0, 0, 116);
+            color: #fff;
         }
+
+        .pageInitial {
+            background-image: url(/src/images/ImagePageSec.svg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            width: 100%;
+            z-index: 1;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+        }
+
+        
+        
+        .pageInitial img {
+            /* Define o tamanho da imagem */
+            width: 60%; /* Ajuste o valor conforme necessário */
+            max-width: 800px; /* Limita a largura máxima para a imagem */
+            height: auto; /* Mantém a proporção da imagem */
+            position: absolute; /* Posiciona a imagem no centro */
+            top: 50%; /* Move a imagem para baixo até o meio do contêiner */
+            left: 50%; /* Move a imagem para a direita até o meio do contêiner */
+            transform: translate(-50%, -50%); /* Ajusta a posição para realmente centralizar */
+            z-index: 1;
+        }
+        
+
 
 
 @media (max-width: 999px){
@@ -158,7 +190,7 @@ nav{
     }
 
     .mobile-menu{
-        display: block;
+       display: block;
     }
 
     .nav-list.active{
@@ -169,7 +201,10 @@ nav{
     }
     .login-none{
         display: block;
+    }
 
+    .image-logo{
+        display: none;
     }
 }
 
@@ -185,134 +220,72 @@ nav{
 }
 
 /* -------------------------------------------------SOBRE NOS ------------------------------------------------- */
-
-@media (max-width: 1048px){
-    body{
-        overflow-x: hidden;
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.5em;
     }
-    .shape,
-    .shape img{
-        display: none;
-    }
-    .section-about{
+    
+    .description {
+        font-size: 0.9em;
         display: flex;
-        justify-content: center;
-        position: relative;
-        width: 100%;
+        justify-items: center
     }
-}
-@media (max-width: 768px){
-    body{
-        overflow-x: hidden;
+    
+    .btn-block {
+        padding: 8px 16px;
+        font-size: 0.9em; 
     }
-    .shape,
-    .shape img{
-        display: none;
-    }
-    .section-about{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+
+    #email-button {
+        bottom: 10px;
+        left: 10px; 
     }
 }
 
-@media (max-width: 690px){
-    body{
-        overflow-x: hidden;
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.2em; 
     }
-    .shape,
-    .shape img{
-        display: none;
+    
+    .description {
+        font-size: 0.8em; 
     }
-    .section-about{
-        display: flex;
-        justify-content: center;
-        position: relative;
-        width: 100%;
+    
+    .btn-block {
+        padding: 6px 12px;
+        font-size: 0.8em; 
+    }
+
+    #email-button {
+        bottom: 5px;
+        left: 5px; 
     }
 }
 
-.section-about{
-    height: 35dvh;
+.section-about { 
+    height: 50vh; 
+    border-bottom: solid 2px #000;
 }
 
-.about{
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 10px;
-}
 
-.title{
-    font-size: 4rem;
-    color: #181717;
-    display: flex;
-    justify-content: center;
-}
 
 .description{
-    font-size: 1.2rem;
-    color: #fff;
-    display: flex;
-    padding: 10px 10px 0px;
+    text-align: center;
 }
 
-.about-info{
-    display: flex;
-    gap: 24px;
-}
-
-#email-button{
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    align-items: center;
-    padding: 8px 0px 10px 0px;
-    font-weight: 500;
-    color: #f1f1f1;
-}
-
-#email-button button{
-    box-shadow: none;
-}
-
-.about p{
+ .about p{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 19px;
     max-width: 100%;
-}
-
-
-.shape img {
-    width: 100%;
-    height: 80%;
-    max-width: 1200px;
-    display: flex;
-    margin: 0 auto;
-    position: absolute;
-    right: 0;
-    top: 10%;
-    border-radius: 40% 30% 0% 20%;
-}
-
-.shape{
-    width: 42%;
-    height: 80%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: -999;
-}
+    margin-bottom: 270px;
+} 
 
 /* -------------------------------------------------VALORES------------------------------------------------- */
 
-.section-values{
-    background-image: url(/src/images/inicio.png);
-    background-size: cover;
-    background-position: center;
+/* .section-values{
     height: 100dvh;
-    position: relative;
+    border-bottom: #000 solid 2px;
 }
 
 .div-values{
@@ -357,6 +330,89 @@ nav{
 .value{
     bottom: 40px;
     right: 40px;  
+} */
+
+.section-values {
+    height: 80vh;
+    border-bottom: #000 solid 2px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
+    box-sizing: border-box;
+}
+
+.div-values {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 30px; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    max-width: 1200px; 
+}
+
+.mission,
+.vision,
+.value {
+    display: flex; 
+    padding: 10px; 
+    border-radius: 8px; 
+    width: 100%; 
+    max-width: 350px;
+    height: 400px;
+    align-items: center; 
+    flex-direction: column; 
+    gap: 1.25rem; 
+    background-color: #b0c4de;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1); 
+    box-sizing: border-box; 
+}
+
+
+.mission i,
+.vision i,
+.value i {
+    font-size: 2em;
+    margin-bottom: 0.5rem; 
+}
+
+.mission p,
+.vision p,
+.value p {
+    font-size: 0.9em; 
+    line-height: 1.6; 
+}
+
+@media (max-width: 768px) {
+    .div-values {
+        flex-direction: column; 
+        align-items: center;
+    }
+    
+    .mission,
+    .vision,
+    .value {
+        width: 90%; 
+        max-width: 100%;
+        height: auto; 
+    }
+}
+
+
+@media (max-width: 480px) {
+    .mission i,
+    .vision i,
+    .value i {
+        font-size: 1.5em; 
+    }
+
+    .mission p,
+    .vision p,
+    .value p {
+        font-size: 0.8em; 
+    }
 }
 
 
@@ -486,6 +542,7 @@ nav{
     color: #181717;
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 30px;
 }
 
 .line-team {
