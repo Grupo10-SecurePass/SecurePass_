@@ -51,11 +51,11 @@
   }
   .separacao{
     height: 0.05rem;
-    width: 40vh;
+    width: 38vh;
     background-color: black;
-    margin-left: 1rem;
-    margin-top: 1vh;
-    margin-bottom: 18vh;
+    /* margin-left: 1rem; */
+    margin: 4vh;
+    margin-bottom: 14vh;
   }
   .navegacao{
     display: flex;
@@ -82,8 +82,7 @@
     padding: 0.7rem;
   
   }
-  
-  .list.active  {
+  .list.active{
     background-color: #6699CC;
     border-radius: 3vh;
   }
@@ -120,7 +119,7 @@
     width: 38vh;
     height: 20vh;
     background-color: #F4F4F4;
-    width: 115vh;
+    width: 137vh;
     height: 39vh;
     margin-top: 2vh;
     border-radius: 1vh;
@@ -129,7 +128,7 @@
   
   .graficoInferior{
     width: 59vw;
-    height: 40vh;
+    height: 100vh;
     display: flex;
     flex-direction: row;
   }
@@ -164,7 +163,7 @@
     border-radius: 1vh;
     background-color: #C0C0C0;
     position: fixed;
-    left: 75rem;
+    left: 65rem;
   }
   
   .exibicaoCatracas {
