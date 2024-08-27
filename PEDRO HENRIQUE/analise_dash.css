@@ -1,15 +1,14 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: #6699CC;
-  display: flex;
-  flex-direction: column;
-}
-
-.contentGeral {
+*{
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    background-color: #6699CC;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contentGeral{
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -52,11 +51,11 @@ body {
   }
   .separacao{
     height: 0.05rem;
-    width: 40vh;
+    width: 38vh;
     background-color: black;
-    margin-left: 1rem;
-    margin-top: 1vh;
-    margin-bottom: 18vh;
+    /* margin-left: 1rem; */
+    margin: 4vh;
+    margin-bottom: 14vh;
   }
   .navegacao{
     display: flex;
@@ -83,11 +82,8 @@ body {
     padding: 0.7rem;
   
   }
-  .link:hover {
-    color: white;
-  }
-  .lbt:hover  {
-    background-color: #040483;
+  .list.active{
+    background-color: #6699CC;
     border-radius: 3vh;
   }
   
@@ -123,7 +119,7 @@ body {
     width: 38vh;
     height: 20vh;
     background-color: #F4F4F4;
-    width: 115vh;
+    width: 137vh;
     height: 39vh;
     margin-top: 2vh;
     border-radius: 1vh;
@@ -132,7 +128,7 @@ body {
   
   .graficoInferior{
     width: 59vw;
-    height: 40vh;
+    height: 100vh;
     display: flex;
     flex-direction: row;
   }
@@ -167,7 +163,7 @@ body {
     border-radius: 1vh;
     background-color: #C0C0C0;
     position: fixed;
-    left: 75rem;
+    left: 65rem;
   }
   
   .exibicaoCatracas {
@@ -180,82 +176,64 @@ body {
     border-radius: 2vh;
     align-items: center;
 
-}
+  }.navbarCatracas img {
+    width: 25vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+  .exibicaoCatracas img {
+    width: 4vh;
+    margin-left: 5vh;
+    margin-bottom: 2vh;
+  }
+  .exibicaoCatracas div {
+    width: 8vh;
+    height: 7vh;
+    margin-right: 4vh;
+    margin-left: 2vh;
+    border-radius: 50%;
+    background-color: #61e61f;
+  }
+  #vermelha {
+    width: 8vh;
+    height: 7vh;
+    margin-right: 4vh;
+    margin-left: 2vh;
+    border-radius: 50%;
+    background-color: #D51313;
+  }
+  #amarela {
+    width: 8vh;
+    height: 7vh;
+    margin-right: 4vh;
+    margin-left: 2vh;
+    border-radius: 50%;
+    background-color: #FAC02B;
+  }
 
-.navbarCatracas img {
-  width: 25vh;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
-}
-
-.exibicaoCatracas img {
-  width: 4vh;
-  margin-left: 5vh;
-  margin-bottom: 2vh;
-}
-
-.exibicaoCatracas div {
-  width: 8vh;
-  height: 7vh;
-  margin-right: 4vh;
-  margin-left: 2vh;
-  border-radius: 50%;
-  background-color: #61e61f;
-}
-
-#vermelha {
-  width: 8vh;
-  height: 7vh;
-  margin-right: 4vh;
-  margin-left: 2vh;
-  border-radius: 50%;
-  background-color: #D51313;
-}
-
-#amarela {
-  width: 8vh;
-  height: 7vh;
-  margin-right: 4vh;
-  margin-left: 2vh;
-  border-radius: 50%;
-  background-color: #FAC02B;
-}
-
-.garficosSuperior {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10dvh;
-  background-color: #f1f1f1;
-  margin-bottom: 2%;
+  .garficosSuperior {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100px;
+    background-color: #f1f1f1; 
 }
 
 #catracaSelect {
-  width: 200%;
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  color: #333;
+    width: 200%; 
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 #catracaSelect option[disabled] {
-  color: #888;
-  font-style: italic;
+    color: #888;
+    font-style: italic;
 }
 
-@media screen and (max-width: 700px) {
-  .box {
-    transition: 1s;
-    display: block;
-    width: 100%;
-    
-  }
-  .graph {
-    transition: 1s;
-    display: block;
-    width: 100%;
-    height: 150px;
-  }
-}
+
+
+  
