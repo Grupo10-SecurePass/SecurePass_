@@ -166,7 +166,7 @@
     border-radius: 1vh;
     background-color: #C0C0C0;
     position: fixed;
-    right: 30rem;
+    left: 65rem;
   }
   
   .exibicaoCatracas {
@@ -178,6 +178,7 @@
     margin-bottom: 2vh;
     border-radius: 2vh;
     align-items: center;
+
   }.navbarCatracas img {
     width: 25vh;
     margin-top: 2vh;
@@ -215,10 +216,10 @@
 
   .garficosSuperior {
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-    height: 100px; /* Define uma altura para a div, ajuste conforme necessário */
-    background-color: #f1f1f1; /* Adicione uma cor de fundo se desejar */
+    justify-content: center; 
+    align-items: center; 
+    height: 100px;
+    background-color: #f1f1f1; 
 }
 
 #catracaSelect {

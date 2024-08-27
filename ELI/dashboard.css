@@ -196,4 +196,21 @@ justify-content: space-between ;
   border-radius: 50%;
   background-color: #61e61f;
 }
+#vermelha {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #D51313;
+}
+#amarela {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #FAC02B;
+}
+
 
