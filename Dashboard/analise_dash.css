@@ -1,14 +1,15 @@
-*{
-    margin: 0;
-    padding: 0;
-  }
-  body{
-    background-color: #6699CC;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .contentGeral{
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #6699CC;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentGeral {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -82,9 +83,11 @@
     padding: 0.7rem;
   
   }
-  
-  .list.active  {
-    background-color: #6699CC;
+  .link:hover {
+    color: white;
+  }
+  .lbt:hover  {
+    background-color: #040483;
     border-radius: 3vh;
   }
   
@@ -177,64 +180,67 @@
     border-radius: 2vh;
     align-items: center;
 
-  }.navbarCatracas img {
-    width: 25vh;
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-  }
-  .exibicaoCatracas img {
-    width: 4vh;
-    margin-left: 5vh;
-    margin-bottom: 2vh;
-  }
-  .exibicaoCatracas div {
-    width: 8vh;
-    height: 7vh;
-    margin-right: 4vh;
-    margin-left: 2vh;
-    border-radius: 50%;
-    background-color: #61e61f;
-  }
-  #vermelha {
-    width: 8vh;
-    height: 7vh;
-    margin-right: 4vh;
-    margin-left: 2vh;
-    border-radius: 50%;
-    background-color: #D51313;
-  }
-  #amarela {
-    width: 8vh;
-    height: 7vh;
-    margin-right: 4vh;
-    margin-left: 2vh;
-    border-radius: 50%;
-    background-color: #FAC02B;
-  }
+}
 
-  .garficosSuperior {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100px;
-    background-color: #f1f1f1; 
+.navbarCatracas img {
+  width: 25vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.exibicaoCatracas img {
+  width: 4vh;
+  margin-left: 5vh;
+  margin-bottom: 2vh;
+}
+
+.exibicaoCatracas div {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #61e61f;
+}
+
+#vermelha {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #D51313;
+}
+
+#amarela {
+  width: 8vh;
+  height: 7vh;
+  margin-right: 4vh;
+  margin-left: 2vh;
+  border-radius: 50%;
+  background-color: #FAC02B;
+}
+
+.garficosSuperior {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10dvh;
+  background-color: #f1f1f1;
+  margin-bottom: 2%;
 }
 
 #catracaSelect {
-    width: 200%; 
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-    color: #333;
+  width: 200%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
 #catracaSelect option[disabled] {
-    color: #888;
-    font-style: italic;
+  color: #888;
+  font-style: italic;
 }
-
-
-
-  
