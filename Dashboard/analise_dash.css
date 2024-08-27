@@ -83,10 +83,7 @@ body {
     padding: 0.7rem;
   
   }
-  .link:hover {
-    color: white;
-  }
-  .lbt:hover  {
+  .list.active  {
     background-color: #040483;
     border-radius: 3vh;
   }
