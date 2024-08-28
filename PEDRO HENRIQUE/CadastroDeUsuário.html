@@ -5,28 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Funcionário  | SecurePass</title>
     <link rel="stylesheet" href="LogCad.css">
+
 </head>
 <body>
-    <section class="section-login">
-    <div class="fundoBranco">
-        <!-- <button style="margin-left: 0%; margin-top:0%">X</button> -->
-        <img src="SecurePass.svg" title="Logo | SecurePass">
-        <div class="Form">
-                <p class="titulo">Cadastre seu funcionário</p>
-                <input type="text" id="name" placeholder = "Nome:" >
-                <input type="number" id="name" placeholder = "CPF:" >
-                <input type="text" id="name" placeholder = "E-mail:" >
-                <input type="password" id="name" placeholder = "Senha:" >
-                <input type="password" id="name" placeholder = "Confirmação de Senha:" >
+
+        <div class="navbar">
+    
+          <div class="usuario">
+            <img src="./assets/perfil.png" alt="">
+            <span>Nome usuário</span>
+            <span>Cargo: Gerente</span>
+          </div>
+    
+          <div class="navegacao">
+            <label class="list" for="" style="margin-bottom: -1vh;">
+              <img src="./assets/dash.png" alt="">
+              <a class="link" href="Dash_extratos.html">Dashboard</a>
+            </label>
+    
+            <label class="list" for="">
+                <img src="./assets/analise.png" alt="">
+                <a class="link" href="analise_extratos.html">
+              Análise</a>
+            </label>
+    
+            <a class="link" href="CadastroDeUsuário.html">
+              <label class="list active" for="">
+                <img src="./assets/cadastro.png" alt="">
+                Funcionário
+              </label></a>
+    
+            <div class="separacao"></div>
+    
+           <label class="list" for="">
+            <img src="./assets/ouvidoria.png" alt="">
+            <a class="link" href="">Suporte</a>
+           </label>
+            
+             <label class="list" for="">
+              <img src="assets/saida.png" alt="" style="color: white;">
+              <a class="link" href="">Sair</a>
+             </label>
+            
+          </div>
+    
         </div>
 
-        <p>Já possui login? <a href="login.html">Clique aqui!</a></p>
-
-        <div class="botoes">
-            <button class="cancelar"><a href="Dash_extratos.html">Cancelar</a></button>
-            <button>Cadastrar</button>
+        <section class="section-login">
+        <div class="fundoBranco">
+            <img id="logo" src="SecurePass.svg" title="Logo | SecurePass">
+            <div class="Form">
+                    <p class="titulo">Cadastre seu funcionário</p>
+                    <input type="text" id="name" placeholder = "Nome:" >
+                    <input type="number" id="name" placeholder = "CPF:" >
+                    <input type="text" id="name" placeholder = "E-mail:" >
+                    <input type="password" id="name" placeholder = "Senha:" >
+                    <input type="password" id="name" placeholder = "Confirmação de Senha:" >
+            </div>
+    
+            <!-- <p>Já possui login? <a href="login.html">Clique aqui!</a></p> -->
+    
+            <div class="botoes">
+                <a href="Dash_extratos.html"><button class="cancelar">Cancelar</button></a>
+                <button onclick="cadastro()">Cadastrar</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+
 </body>
 </html>
+
+<script>
+    function cadastro(){
+        alert("Cadastro de novo Funcionário realizado com sucesso!")
+        alert("Redirecionando tela...")
+        window.location = 'Dash_extratos.html'
+    }
+</script>
