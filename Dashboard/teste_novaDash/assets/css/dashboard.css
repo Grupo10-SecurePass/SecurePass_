@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body {
+  background: #6699CC;
+  display: grid;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100dvh;
+  width: 90px;
+  background-color: #fff;
+  overflow: hidden;
+  transform: width 0.2s linear;
+  transition: width 0.5s ease;
+  box-shadow: 0 30px 35px rgb(27, 27, 27);
+}
+
+.logo {
+  text-align: center;
+  display: flex;
+  transition: all 0.5s ease;
+  margin: 10px 0 0 10px;
+}
+
+.logo img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.logo span {
+  font-weight: bold;
+  padding-left: 25px;
+  font-size: 18px;
+  text-transform: uppercase;
+  align-items: center;
+  display: flex;
+}
+
+a {
+  position: relative;
+  color: rgba(85, 83, 83);
+  font-size: 17px;
+  display: table;
+  width: 300px;
+  padding: 10px;
+}
+
+.fa-solid {
+  position: relative;
+  width: 70px;
+  height: 40px;
+  top: 14px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.navItem {
+  position: relative;
+  top: 12px;
+  margin-left: 10px;
+}
+
+a:hover {
+  background: #eee;
+  color: #0080ff;
+}
+
+nav:hover {
+  width: 280px;
+  transition: all 0.5s ease;
+}
+
+.sair {
+  position: absolute;
+  bottom: 0;
+}
+
+#sidebar-ativo {
+  display: none;
+}
+
+.sideBar-open,
+.sideBar-close {
+  padding: 0 20px;
+  display: none;
+}
+
+@media(max-width: 768px) {
+
+  nav {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    bottom: 0;
+    height: 100dvh;
+    width: 280px;
+    background-color: #fff;
+    overflow: hidden;
+    transform: width 0.2s linear;
+    transition: left 1s ease;
+    box-shadow: 0 30px 35px rgb(27, 27, 27);
+  }
+
+  .sideBar-open {
+    display: flex;
+    background: white;
+    width: 47px;
+    height: 41px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    top: 15px;
+    position: relative;
+    left: 21px;
+    cursor: pointer;
+  }
+
+  .sideBar-close {
+    display: flex;
+    background: white;
+    width: 47px;
+    height: 41px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    top: 3px;
+    position: relative;
+    left: 222px;
+  }
+
+  .sideBar-open i {
+    margin-bottom: 2dvh;
+  }
+
+  #sidebar-ativo:checked~nav {
+    left: 0;
+  }
+
+}
