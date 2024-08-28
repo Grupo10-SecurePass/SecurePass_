@@ -1,23 +1,25 @@
-*{
+* {
   margin: 0;
   padding: 0;
 }
-body{
-  background-color: #6699CC;
+
+body {
+  height: 100vh;
+  background: linear-gradient(to bottom, #003366, #6699CC);
   display: flex;
   flex-direction: column;
 }
 
-.contentGeral{
-display: flex;
-width: 100vw;
-height: 100vh;
-margin: 0;
-flex-direction: column;
-justify-content: space-between ;
+.contentGeral {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.navbar{
+.navbar {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -29,7 +31,8 @@ justify-content: space-between ;
   position: fixed;
   align-items: center;
 }
-.usuario{
+
+.usuario {
   display: flex;
   background-color: #D9D9D9;
   width: 11vw;
@@ -45,25 +48,29 @@ justify-content: space-between ;
   width: 13vw;
   height: 24vh;
 }
-.usuario span{
+
+.usuario span {
   font-size: 1.3rem;
   margin-top: 0.2rem;
 }
-.separacao{
+
+.separacao {
   height: 0.05rem;
-  width: 37vh;
+  width: 38vh;
   background-color: black;
   margin-left: 1rem;
-  margin-top: 1vh;
+  margin: 1vh;
   margin-bottom: 18vh;
 }
-.navegacao{
+
+.navegacao {
   display: flex;
   align-content: center;
   flex-direction: column;
   width: 20vw;
   height: 68vh;
 }
+
 .link {
   color: black;
   font-size: 4vh;
@@ -71,30 +78,31 @@ justify-content: space-between ;
   padding-bottom: 2vh;
 }
 
-.navegacao img{
+.navegacao img {
   width: 4vh;
 }
+
 .navegacao label {
   margin-left: 5vh;
   width: 29vh;
   height: 4vh;
   margin-bottom: 1vh;
   padding: 0.7rem;
-
 }
 
-.list.active  {
+.list.active {
   background-color: #6699CC;
   border-radius: 3vh;
 }
 
-.graficosGeral{
+.graficosGeral {
   width: 137vh;
   display: flex;
   flex-direction: column;
   left: 49vh;
   position: fixed;
 }
+
 .garficosSuperior {
   display: flex;
   flex-direction: row;
@@ -104,15 +112,18 @@ justify-content: space-between ;
   border-radius: 1vh;
   margin-top: 0.5rem;
 }
-.garficosSuperior div{
-  background-color: #e9e5e5;;
+
+.garficosSuperior div {
+  background-color: #e9e5e5;
+  ;
   width: 42vh;
   height: 20vh;
   border-radius: 1vh;
   margin-top: 1vh;
   margin-left: 2vh;
 }
-.garficosSuperior div:not(:last-child){
+
+.garficosSuperior div:not(:last-child) {
   margin-right: 1.5vh;
 }
 
@@ -127,14 +138,14 @@ justify-content: space-between ;
   margin-bottom: 2vh;
 }
 
-.graficoInferior{
+.graficoInferior {
   width: 59vw;
   height: 100vh;
   display: flex;
   flex-direction: row;
 }
 
-.graficoInf1{
+.graficoInf1 {
   background-color: #F4F4F4;
   width: 56vh;
   height: 32vh;
@@ -142,18 +153,19 @@ justify-content: space-between ;
   border-radius: 1vh;
 }
 
-.graficoInf2{
-  
+.graficoInf2 {
+
   background-color: #F4F4F4;
   width: 79vh;
   height: 32vh;
   border-radius: 1vh;
 }
+
 .graficoInf2 canvas {
   width: 434px;
 }
 
-.navbarCatracas{
+.navbarCatracas {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -164,13 +176,9 @@ justify-content: space-between ;
   border-radius: 1vh;
   background-color: #C0C0C0;
   position: fixed;
-  left: 80%;
+  left: 65rem;
 }
-.navbarCatracas img {
-  width: 25vh;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
-}
+
 .exibicaoCatracas {
   width: 38vh;
   height: 20vh;
@@ -180,12 +188,21 @@ justify-content: space-between ;
   margin-bottom: 2vh;
   border-radius: 2vh;
   align-items: center;
+
 }
+
+.navbarCatracas img {
+  width: 25vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
 .exibicaoCatracas img {
   width: 4vh;
   margin-left: 5vh;
   margin-bottom: 2vh;
 }
+
 .exibicaoCatracas div {
   width: 8vh;
   height: 7vh;
@@ -194,6 +211,7 @@ justify-content: space-between ;
   border-radius: 50%;
   background-color: #61e61f;
 }
+
 #vermelha {
   width: 8vh;
   height: 7vh;
@@ -202,6 +220,7 @@ justify-content: space-between ;
   border-radius: 50%;
   background-color: #D51313;
 }
+
 #amarela {
   width: 8vh;
   height: 7vh;
@@ -211,4 +230,25 @@ justify-content: space-between ;
   background-color: #FAC02B;
 }
 
+.garficosSuperior {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #f1f1f1;
+}
 
+#catracaSelect {
+  width: 200%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+#catracaSelect option[disabled] {
+  color: #888;
+  font-style: italic;
+}

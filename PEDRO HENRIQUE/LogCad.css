@@ -1,24 +1,96 @@
-*{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+* {
+    font-family: 'Times New Roman', Times, serif;
     margin: 0;
 }
 
-html{
-    background: linear-gradient(to right, #003366,#6699CC); 
+html {
+    height: 100vh;
+    background: linear-gradient(to bottom, #003366, #6699CC);
 }
 
-body{
+body {
+    overflow-y: hidden;
+    width: 100%;
+}
+
+.navbar {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    margin: 10%;
-    height: 100%;
+    flex-direction: column;
+    width: 20vw;
+    height: 97vh;
+    margin-top: 0.5rem;
+    border-radius: 1vh;
+    background-color: #C0C0C0;
+    position: fixed;
+    align-items: center;
 }
 
+.usuario {
+    display: flex;
+    background-color: #D9D9D9;
+    width: 50%;
+    height: 20vh;
+    border-radius: 50%;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    align-items: center;
+    margin-bottom: 5rem;
+}
 
+.usuario img {
+    width: 13vw;
+    height: 24vh;
+}
 
-#pergunta{
+.usuario span {
+    font-size: 1.3rem;
+    margin-top: 0.2rem;
+}
+
+.separacao {
+    height: 0.05rem;
+    width: 38vh;
+    background-color: black;
+    margin-left: 1rem;
+    margin: 1vh;
+    margin-bottom: 18vh;
+}
+
+.navegacao {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    width: 20vw;
+    height: 68vh;
+}
+
+.link {
+    color: black;
+    font-size: 4vh;
+    text-decoration: none;
+    padding-bottom: 2vh;
+}
+
+.navegacao img {
+    width: 4vh;
+    background-color: transparent;
+}
+
+.navegacao label {
+    margin-left: 5vh;
+    width: 29vh;
+    height: 4vh;
+    margin-bottom: 1vh;
+    padding: 0.7rem;
+}
+
+.list.active {
+    background-color: #6699CC;
+    border-radius: 3vh;
+}
+
+#pergunta {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -29,7 +101,7 @@ body{
     border-radius: 20px;
 }
 
-#adm{
+#adm {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -40,7 +112,7 @@ body{
     border-radius: 20px;
 }
 
-#func{
+#func {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -51,29 +123,38 @@ body{
     border-radius: 20px;
 }
 
-.fundoBranco{
+.section-login {
+    height: 100%;
+    width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fundoBranco {
+    display: flex;
+    margin-top: 50px;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    width: 70%;
+    height: 50%;
+    width: 50%;
     background-color: #C0C0C0;
     border-radius: 20px;
 }
 
-img{
+#logo {
     margin: 4%;
     background-color: #C0C0C0;
     width: 25%;
 }
 
-p{
+p {
     margin: 0;
     padding: 0;
 }
 
-.Form{
+.Form {
     background-color: #C0C0C0;
     display: flex;
     flex-direction: column;
@@ -84,20 +165,21 @@ p{
     align-items: center;
 }
 
-input{
+input {
     background-color: #C0C0C0;
     border-bottom-color: #003366;
     border-top: none;
     border-left: none;
     border-right: none;
-    font-size: medium;
+    font-size: larger;
     margin: 2%;
     width: 100%;
 }
 
-input:focus, textarea:focus, select:focus {
-    /* border: 2px solid #00f;  */
-    background-color: #f0f0f000; 
+input:focus,
+textarea:focus,
+select:focus {
+    background-color: #f0f0f000;
     outline: none;
 }
 
@@ -119,29 +201,30 @@ input[type="number"]::-ms-outer-spin-button {
     margin: 0;
 }
 
-p{    
+p {
     margin: 2%;
     background-color: #C0C0C0;
     color: #003366;
-    font-size: medium; 
-}   
-
-.titulo{
-        margin: 2%;
-        background-color: #C0C0C0;
-        color: #003366;
-        font-size: medium; 
-        font-weight: bold;
+    font-size: large;
+    font-weight: bold;
 }
 
-a{
+.titulo {
+    margin: 2%;
     background-color: #C0C0C0;
     color: #003366;
-    font-size:  medium;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+a {
+    background-color: #C0C0C0;
+    color: #003366;
+    font-size: medium;
 }
 
 
-.botoes{
+.botoes {
     margin: 2%;
     background-color: #C0C0C0;
     display: flex;
@@ -149,7 +232,7 @@ a{
     justify-content: space-around;
 }
 
-.Form .botoes{
+.Form .botoes {
     margin: 2%;
     background-color: #C0C0C0;
     display: flex;
@@ -157,7 +240,7 @@ a{
     justify-content: space-around;
 }
 
-button.cancelar{
+button.cancelar {
     background-color: #6699CC;
     border-style: solid;
     border-color: #003366;
@@ -169,15 +252,14 @@ button.cancelar{
     margin-bottom: 5%;
 }
 
-button{
+button {
     background-color: #6699CC;
     border-style: solid;
     border-color: #003366;
     color: #003366;
     border-radius: 5px;
-    font-size: medium; 
+    font-size: medium;
     font-weight: bold;
     padding: 2%;
     margin-bottom: 5%;
 }
-

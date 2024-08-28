@@ -1,52 +1,217 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Pass | Inicio</title>
-    <link rel="stylesheet" href="src/styles/header.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link rel="stylesheet" href="src/styles/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <header>
         <nav>
-            <img class="image-logo" src="/src/images/SecurePass SVGLogoNavBar.svg" alt="">
+            <a href="#">
+                <img src="/src/images/SecurePass SVGLogoNavBar.svg" alt="">
+            </a>
+
             <div class="mobile-menu">
                 <div class="line1"></div>
                 <div class="line2"></div>
                 <div class="line3"></div>
             </div>
-            
-                <ul class="nav-list">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Serviços</a></li>
-                    <li><a href="#">Equipe</a></li>
-                    <li><a href="#">Contato</a></li>
-                    <li class="login-none"><a href="#">Login</a></li>
-                </ul>
-                <div class="btn-default">
-                    <li><a href="#">Login</a></li>
-                </div>
+
+            <ul class="nav-list">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Serviços</a></li>
+                <li><a href="#">Equipe</a></li>
+                <li><a href="#">Contato</a></li>
+                <li class="login-none"><a href="#">Login</a></li>
+            </ul>
+            <div class="btn-default">
+                <li><a href="#">Login</a></li>
+            </div>
         </nav>
 
-        <main class="pageInitial">
+        <main class="hero">
             <img src="/src/images/SecurePass SVGLogoNavBar.svg" alt="">
         </main>
     </header>
 
 
 
-    <section class="section-about">
-        
-        <div class="about">
-
-            <h1 class="title">
+    <section class="container-pai">
+        <h1 class="title">
             SOBRE NÓS
-            </h1>
-            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi temporibus asperiores, officia nesciunt unde sed ullam adipisci, cum esse eveniet eligendi fugiat molestias libero. Id, harum odit? Voluptatem, quisquam sed?</p>
+        </h1>
+        <div class="container-filho">
+            <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi temporibus asperiores,
+                officia nesciunt unde sed ullam adipisci, cum esse eveniet eligendi fugiat molestias libero. Id, harum
+                odit? Voluptatem, quisquam sed?
+            </p>
         </div>
+    </section>
+
+    <section class="container-pai-mvv">
+        <div class="container-filho-mvv">
+            <div class="container-missao">
+                <i class="fa-solid fa-medal">
+                    <span>Missão</span>
+                </i>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate animi expedita facere, ipsum
+                    voluptates minus aliquid atque esse labore mollitia accusantium magnam, exercitationem nihil
+                    quibusdam dolorum culpa temporibus, dolor possimus!</p>
+            </div>
+            <div class="container-visao">
+                <i class="fa-solid fa-eye">
+                    <span>Visão</span>
+                </i>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos aut quia sapiente dolorum iste
+                    velit nam, perspiciatis alias a quis! Illo magni at harum recusandae natus. Velit obcaecati tenetur
+                    dolorem.</p>
+            </div>
+            <div class="container-valor">
+                <i class="fa-solid fa-star">
+                    <span>Valores</span>
+                </i>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quibusdam cum laudantium eaque a
+                    corporis autem distinctio at saepe nulla, reprehenderit ipsa nihil unde. Ex deserunt quidem neque
+                    ratione! Similique?</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-pai-servico">
+        <h1 class="title">
+            SERVIÇOS
+        </h1>
+        <div class="container-tio-servico">
+        <div class="arrow-left">
+            <button onclick="antes()"><i class="fa-solid fa-arrow-left">
+                    <p>Anterior</p>
+                </i></button>
+        </div>
+        <div class="container-filho-servico">
+
+            <div class="container-monitoramento" id="1" style="display: block;">
+                <h2 class="subtitle">
+                    <i class="fa-solid fa-desktop">
+                        <span>Monitoramento</span>
+                    </i>
+                </h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate animi expedita facere, ipsum
+                    voluptates minus aliquid atque esse labore mollitia accusantium magnam, exercitationem nihil
+                    quibusdam dolorum culpa temporibus, dolor possimus!</p>
+            </div>
+            <div class="container-suporte" id="2" style="display: none;">
+                <h2 class="subtitle">
+                    <i class="fa-solid fa-gear">
+                        <span>Suporte</span>
+                    </i>
+                </h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos aut quia sapiente dolorum iste
+                    velit nam, perspiciatis alias a quis! Illo magni at harum recusandae natus. Velit obcaecati tenetur
+                    dolorem.</p>
+            </div>
+            <div class="container-implementaçao" id="3" style="display: none;">
+                <h2 class="subtitle">
+                    <i class="fa-solid fa-wrench">
+                        <span>Implementação</span>
+                    </i>
+                </h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quibusdam cum laudantium eaque a
+                    corporis autem distinctio at saepe nulla, reprehenderit ipsa nihil unde. Ex deserunt quidem neque
+                    ratione! Similique?</p>
+            </div>
+
+        </div>
+        <div class="arrow-right">
+            <button onclick="proximo()"><i class="fa-solid fa-arrow-right">
+                    <p>Proximo</p>
+                </i></button>
+        </div>
+    </div>
+    </section>
+
+    <section class="container-pai-equipe">
+        <h1 class="title">
+            EQUIPE
+        </h1>
+        <div class="container-filho-equipe">
+            <div class="container-member">
+                <img src="/src/images/equipe/eli.png" alt="">
+                <div class="container-social">
+                    <a href=""><i class="fa-brands fa-instagram">
+                            <p>Eli Rufino</p>
+                        </i></a>
+                    <a href=""><i class="fa-brands fa-github">
+                            <p>EliRufinoSptech</p>
+                        </i></a>
+                </div>
+            </div>
+
+            <div class="container-member">
+                <img src="/src/images/equipe/felipe.png" alt="">
+                <div class="container-social">
+                    <a href=""><i class="fa-brands fa-instagram">
+                            <p>Felipe Amorim</p>
+                        </i></a>
+                    <a href=""><i class="fa-brands fa-github">
+                            <p>FelipeAmorimSptech</p>
+                        </i></a>
+                </div>
+            </div>
+
+            <div class="container-member">
+                <img src="/src/images/equipe/gabriel.png" alt="">
+                <div class="container-social">
+                    <a href=""><i class="fa-brands fa-instagram">
+                            <p>Gabriel Teixeira</p>
+                        </i></a>
+                    <a href=""><i class="fa-brands fa-github">
+                            <p>TeixeiraGabbriel</p>
+                        </i></a>
+                </div>
+            </div>
+
+            <div class="container-member">
+                <img src="/src/images/equipe/barbosa.png" alt="">
+                <div class="container-social">
+                    <a href=""><i class="fa-brands fa-instagram">
+                            <p>Pedro Barbosa</p>
+                        </i></a>
+                    <a href=""><i class="fa-brands fa-github">
+                            <p>PedroSouzaSptech</p>
+                        </i></a>
+                </div>
+            </div>
+
+            <div class="container-member">
+                <img src="/src/images/equipe/ph.png" alt="">
+                <div class="container-social">
+                    <a href=""><i class="fa-brands fa-instagram">
+                            <p>Pedro Henrique</p>
+                        </i></a>
+                    <a href=""><i class="fa-brands fa-github">
+                            <p>PedroHenriqueSptech</p>
+                        </i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <a href="">
+                <img src="./src/images/SecurePass SVGLogoNavBar.svg" alt="">
+            </a>
+        </div>
+        
+        <div class="footer-button">
             <div id="email-button">
                 <button class="btn-block">
                     <i class="fa-solid fa-envelope">
@@ -54,137 +219,22 @@
                     </i>
                 </button>
             </div>
-    </div>
-        
-        
-        
-    </section>
-    
-    <section class="section-values">
-        <div class="div-values">
-            <div class="mission">
-                <i class="fa-solid fa-medal">
-                    <span>Missão</span>
-                </i>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate animi expedita facere, ipsum voluptates minus aliquid atque esse labore mollitia accusantium magnam, exercitationem nihil quibusdam dolorum culpa temporibus, dolor possimus!</p>
-            </div>
-            <div class="vision">
-                <i class="fa-solid fa-eye">
-                    <span>Visão</span>
-                </i>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos aut quia sapiente dolorum iste velit nam, perspiciatis alias a quis! Illo magni at harum recusandae natus. Velit obcaecati tenetur dolorem.</p>
-            </div>
-            <div class="value">
-                <i class="fa-solid fa-star">
-                    <span>Valores</span>
-                </i>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quibusdam cum laudantium eaque a corporis autem distinctio at saepe nulla, reprehenderit ipsa nihil unde. Ex deserunt quidem neque ratione! Similique?</p>
-            </div>
         </div>
 
-
-    </section>
-
-    <section class="section-services">
-        <h1 class="title1">
-            SERVIÇOS
-        </h1>
-        <div class="div-service">
-                <div class="service-arrow-left">
-                <button onclick="antes()"><i class="fa-solid fa-arrow-left"><p>Anterior</p></i></button>
-                </div>
-                
-                <div class="div-monitoramento" id="1" style="display: block;">
-                    <h2>
-                        <i class="fa-solid fa-desktop">
-                            <span>Monitoramento</span>
-                        </i>
-                    </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate animi expedita facere, ipsum voluptates minus aliquid atque esse labore mollitia accusantium magnam, exercitationem nihil quibusdam dolorum culpa temporibus, dolor possimus!</p>
-                </div>
-                <div class="div-suporte" id="2" style="display: none;">
-                    <h2>
-                        <i class="fa-solid fa-gear">
-                            <span>Suporte</span>
-                        </i>
-                    </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos aut quia sapiente dolorum iste velit nam, perspiciatis alias a quis! Illo magni at harum recusandae natus. Velit obcaecati tenetur dolorem.</p>
-                </div>
-                <div class="div-implementaçao" id="3" style="display: none;">
-                    <h2>
-                        <i class="fa-solid fa-wrench">
-                            <span>Implementação</span>
-                        </i>
-                    </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quibusdam cum laudantium eaque a corporis autem distinctio at saepe nulla, reprehenderit ipsa nihil unde. Ex deserunt quidem neque ratione! Similique?</p>
-                </div>
-
-        <div class="service-arrow-right">
-            <button onclick="proximo()"><i class="fa-solid fa-arrow-right"><p>Proximo</p></i></button>
+        <div class="footer-span">
+            <span>
+                Feito por equipe da Secure Pass  &copy; 2024
+            </span>
         </div>
-
-        </div>
-    </section>
-
-    <section class="team">
-        <h1 class="title">
-            EQUIPE
-        </h1> 
-        <div class="line-team">
-            <div class="member">
-                <img src="/src/images/equipe/eli.png" alt="">
-            <div class="social">
-                <a href=""><i class="fa-brands fa-instagram"><p>Eli Rufino</p></i></a>
-                <a href=""><i class="fa-brands fa-github"><p>EliRufinoSptech</p></i></a>
-            </div>
-            </div>
-            
-            <div class="member">
-                <img src="/src/images/equipe/felipe.png" alt="">
-            <div class="social">
-                <a href=""><i class="fa-brands fa-instagram"><p>Felipe Amorim</p></i></a>
-                <a href=""><i class="fa-brands fa-github"><p>FelipeAmorimSptech</p></i></a>
-            </div>
-            </div>
-
-            <div class="member">
-                <img src="/src/images/equipe/gabriel.png" alt="">
-            <div class="social">
-                <a href=""><i class="fa-brands fa-instagram"><p>Gabriel Teixeira</p></i></a>
-                <a href=""><i class="fa-brands fa-github"><p>TeixeiraGabbriel</p></i></a>
-            </div>
-            </div>
-
-            <div class="member">
-                <img src="/src/images/equipe/barbosa.png" alt="">
-            <div class="social">
-                <a href=""><i class="fa-brands fa-instagram"><p>Pedro Barbosa</p></i></a>
-                <a href=""><i class="fa-brands fa-github"><p>PedroSouzaSptech</p></i></a>
-            </div>
-            </div>
-
-            <div class="member">
-                <img src="/src/images/equipe/ph.png" alt="">
-            <div class="social">
-                <a href=""><i class="fa-brands fa-instagram"><p>Pedro Henrique</p></i></a>
-                <a href=""><i class="fa-brands fa-github"><p>PedroHenriqueSptech</p></i></a>
-            </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact">
-
-    </section>
-
-    
+    </footer>
 
 </body>
+
 </html>
 <script src="src/script/mobile-script.js"></script>
 <script>
     var indiceAtual = 1; // Começa com o primeiro personagem
-    
+
     function proximo() {
         // Esconde o personagem atual
         document.getElementById(indiceAtual).style.display = "none";
