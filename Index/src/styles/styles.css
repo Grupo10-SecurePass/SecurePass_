@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: rgb(0,0,68);
+    background: linear-gradient(to bottom, #151570, 5%, #003366, 70%, #6699CC), 70%;
+}
+
+section{
+    padding: 28px 8%;   
+}
+
+p{
+    font-size: 2.5vw;
+}
+
+i{
+    font-size: 2.5vw;
+}
+
+.btn-default{
+border: none;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: rgba(102,153,204,1);
+border-radius: 12px;
+padding: 10px 14px;
+font-weight: 600;
+box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+transition: background-color 3s ease;
+}
+
+.btn-default:hover{
+    background-color: rgba(0,0,68,1);
+}
+
+.title{
+    margin: 0;
+    padding: 0.5em 0;
+    font-family: 'Arial', sans-serif;
+    font-size: 6vw;             
+    font-weight: bold;         
+    color: #0f0f5c;             
+    text-align: center;         
+    text-transform: uppercase; 
+}
+
+.subtitle{
+    margin: 0;
+    padding: 0.5em 0;
+    font-family: 'Arial', sans-serif;
+    font-size: 3vw;             
+    font-weight: bold;         
+    color: #000;             
+    text-align: center;         
+    text-transform: uppercase; 
+}
+
+@media (max-width: 700px) {
+    .title { 
+        font-size: 6vw; 
+    }
+    p{
+        font-size: 2.5vw;
+    }
+}
