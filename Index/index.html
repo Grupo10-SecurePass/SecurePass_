@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Pass | Inicio</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,16 +17,17 @@
 </head>
 
 <body>
-    <header>
+<!-- ------------------------------------HEADER----------------------------------- -->
+    <header >
         <nav id="navbar">
             <i class="fa-solid fa-bus" id="nav_logo"> securepass</i>
             
             <ul id="nav_list">
-                <li class="nav-item active"><a href="#">Inicio</a></li>
-                <li class="nav-item"><a href="#">Sobre</a></li>
-                <li class="nav-item"><a href="#">Serviços</a></li>
-                <li class="nav-item"><a href="#">Equipe</a></li>
-                <li class="nav-item"><a href="#">Contato</a></li>
+                <li class="nav-item"><a href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a href="#sobre">Sobre</a></li>
+                <li class="nav-item"><a href="#servico">Serviços</a></li>
+                <li class="nav-item"><a href="#equipe">Equipe</a></li>
+                <li class="nav-item"><a href="#contato">Contato</a></li>
             </ul>
 
             <button class="btn-default">
@@ -40,34 +42,44 @@
         
         <div id="mobile_menu">
             <ul id="mobile_nav_list">
-                <li class="nav-item"><a href="#">Inicio</a></li>
-                <li class="nav-item"><a href="#">Sobre</a></li>
-                <li class="nav-item"><a href="#">Serviços</a></li>
-                <li class="nav-item"><a href="#">Equipe</a></li>
-                <li class="nav-item"><a href="#">Contato</a></li>
+                <li class="nav-item"><a href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a href="#sobre">Sobre</a></li>
+                <li class="nav-item"><a href="#servico">Serviços</a></li>
+                <li class="nav-item"><a href="#contato">Contato</a></li>
                 <li class="nav-item"><a href="#">Entrar</a></li>
             </ul>
         </div>
 
     </header>
 
-    <main class="hero">
+    <main class="hero" id="inicio">
         <img src="/src/images/SecurePass SVGLogoNavBar.svg" alt="">
     </main>
-    
-    <section class="conteudo-sobreNos">
-        <h1 class="title"> SOBRE NÓS</h1>
+
+
+
+<!-- -----------------------------SOBRE NÓS--------------------------------->
+    <section class="conteudo-sobreNos" id="sobre">
+        <h1 class="title">SOBRE NÓS</h1>
             <div class="grid-container-sobreNos">
-                <p class="grid-item-sobreNos">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi temporibus asperiores,
+                <div class="grid-item-sobreNos">
+                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi temporibus asperiores,
                 officia nesciunt unde sed ullam adipisci, cum esse eveniet eligendi fugiat molestias libero. Id, harum
                 odit? Voluptatem, quisquam sed?
                 </p>
-                <p class="grid-item-sobreNos">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi temporibus asperiores,
+            </div>
+            <div  class="grid-item-sobreNos">
+                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi temporibus asperiores,
                     officia nesciunt unde sed ullam adipisci, cum esse eveniet eligendi fugiat molestias libero. Id, harum
                     odit? Voluptatem, quisquam sed?
                 </p>
+            </div>
         </div>
     </section>
+
+
+ <!-- ----------------------------------VALORES-----------------------------------    -->
+    <main class="mvv"><img src="/src/images/ImageMvv.svg" alt=""></main>
 
     <section class="conteudo-valores">
         <div class="grid-container-valores">
@@ -76,9 +88,9 @@
                 <i id="subtitle" class="fa-solid fa-medal">
                     <span>Missão</span>
                 </i>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate animi expedita facere, ipsum
+                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate animi expedita facere, ipsum
                     voluptates minus aliquid atque esse labore mollitia accusantium magnam, exercitationem nihil
-                    quibusdam dolorum culpa temporibus, dolor possimus!</p>
+                    quibusdam dolorum.</p>
                 </div>
             </div>
         <div class="grid-item-valores">
@@ -86,7 +98,7 @@
                 <i id="subtitle" class="fa-solid fa-eye">
                     <span>Visão</span>
                 </i>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos aut quia sapiente dolorum iste
+                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos aut quia sapiente dolorum iste
                     velit nam, perspiciatis alias a quis! Illo magni at harum recusandae natus. Velit obcaecati tenetur
                     dolorem.</p>
             </div>
@@ -96,7 +108,7 @@
                 <i id="subtitle" class="fa-solid fa-star">
                     <span>Valores</span>
                 </i>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quibusdam cum laudantium eaque a
+                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quibusdam cum laudantium eaque a
                     corporis autem distinctio at saepe nulla, reprehenderit ipsa nihil unde. Ex deserunt quidem neque
                     ratione! Similique?</p>
             </div>
@@ -104,126 +116,122 @@
         </div>
     </section>
 
-    <section class="container-pai-servico">
+<!-- --------------------------------SERVIÇOS------------------------------------- -->
+<!-- -------------------------------------DESKTOP---------------------------------     -->
+    <section class="conteudo-servicos" id="servico">
         <h1 class="title">
             SERVIÇOS
         </h1>
-        <div class="container-tio-servico">
-            <div class="arrow-left">
-                <button onclick="antes()"><i class="fa-solid fa-arrow-left">
-                        <p>Anterior</p>
-                    </i></button>
-            </div>
-            <div class="container-filho-servico">
 
-                <div class="container-monitoramento" id="1" style="display: block;">
-                    <h2 class="subtitle">
-                        <i class="fa-solid fa-desktop">
-                            <span>Monitoramento</span>
-                        </i>
-                    </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate animi expedita facere, ipsum
-                        voluptates minus aliquid atque esse labore mollitia accusantium magnam, exercitationem nihil
-                        quibusdam dolorum culpa temporibus, dolor possimus!</p>
-                </div>
-                <div class="container-suporte" id="2" style="display: none;">
-                    <h2 class="subtitle">
-                        <i class="fa-solid fa-gear">
-                            <span>Suporte</span>
-                        </i>
-                    </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos aut quia sapiente dolorum
-                        iste
-                        velit nam, perspiciatis alias a quis! Illo magni at harum recusandae natus. Velit obcaecati
-                        tenetur
-                        dolorem.</p>
-                </div>
-                <div class="container-implementaçao" id="3" style="display: none;">
-                    <h2 class="subtitle">
-                        <i class="fa-solid fa-wrench">
-                            <span>Implementação</span>
-                        </i>
-                    </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta quibusdam cum laudantium eaque a
-                        corporis autem distinctio at saepe nulla, reprehenderit ipsa nihil unde. Ex deserunt quidem
-                        neque
-                        ratione! Similique?</p>
-                </div>
-
-            </div>
-            <div class="arrow-right">
-                <button onclick="proximo()"><i class="fa-solid fa-arrow-right">
-                        <p>Proximo</p>
-                    </i></button>
+    <div class="grid-default">
+        <div class="grid-container-servicos" style="display: block;">
+            <div class="grid-item-servicos">
+                <h2 id="subtitle">Monitoramento</h2>
+                <button class="arrow-left" onclick="antes()"></button>
+                <p class="description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi deleniti ullam nobis rerum commodi.</p>
+                <button class="arrow-right" onclick="proximo()"></button>
             </div>
         </div>
-    </section>
 
-    <section class="container-pai-equipe">
-        <h1 class="title">EQUIPE</h1>
-        <div class="container-filho-equipe">
-            <div class="container-member">
-                <img src="/src/images/equipe/eli.png" alt="">
-                <div class="container-social">
-                    <a href=""><i class="fa-brands fa-instagram">
-                            <p>Eli Rufino</p>
-                        </i></a>
-                    <a href=""><i class="fa-brands fa-github">
-                            <p>EliRufinoSptech</p>
-                        </i></a>
-                </div>
+        <div class="grid-container-servicos" style="display: block;">
+            <div class="grid-item-servicos">
+                <h2 id="subtitle">Suporte</h2>
+                <button class="arrow-left" onclick="antes()"></button>
+                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam qui architecto numquam.</p>
+                <button class="arrow-right" onclick="proximo()"></button>
             </div>
+        </div>
 
-            <div class="container-member">
-                <img src="/src/images/equipe/felipe.png" alt="">
-                <div class="container-social">
-                    <a href=""><i class="fa-brands fa-instagram">
-                            <p>Felipe Amorim</p>
-                        </i></a>
-                    <a href=""><i class="fa-brands fa-github">
-                            <p>FelipeAmorimSptech</p>
-                        </i></a>
-                </div>
+        <div class="grid-container-servicos" style="display: block;"> 
+            <div class="grid-item-servicos">
+                <h2 id="subtitle">Implementação</h2>
+                <button class="arrow-left" onclick="antes()"></button>
+                <p class="description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit laudantium, expedita.</p>
+                <button class="arrow-right" onclick="proximo()"></button>
             </div>
+        </div>
+    </div>
 
-            <div class="container-member">
-                <img src="/src/images/equipe/gabriel.png" alt="">
-                <div class="container-social">
-                    <a href=""><i class="fa-brands fa-instagram">
-                            <p>Gabriel Teixeira</p>
-                        </i></a>
-                    <a href=""><i class="fa-brands fa-github">
-                            <p>TeixeiraGabbriel</p>
-                        </i></a>
-                </div>
-            </div>
 
-            <div class="container-member">
-                <img src="/src/images/equipe/barbosa.png" alt="">
-                <div class="container-social">
-                    <a href=""><i class="fa-brands fa-instagram">
-                            <p>Pedro Barbosa</p>
-                        </i></a>
-                    <a href=""><i class="fa-brands fa-github">
-                            <p>PedroSouzaSptech</p>
-                        </i></a>
-                </div>
-            </div>
-
-            <div class="container-member">
-                <img src="/src/images/equipe/ph.png" alt="">
-                <div class="container-social">
-                    <a href=""><i class="fa-brands fa-instagram">
-                            <p>Pedro Henrique</p>
-                        </i></a>
-                    <a href=""><i class="fa-brands fa-github">
-                            <p>PedroHenriqueSptech</p>
-                        </i></a>
+<!-- ------------------------------------MOBILE----------------------------------- -->
+    <div class="grid-mobile">
+        <div class="grid-mobile-menu">
+            <div class="grid-container-servicos" style="display: none;"  id="2">
+                <h2 id="subtitle">Suporte</h2>
+                <div class="grid-item-servicos">
+                    <button class="arrow-left" onclick="antes()"></button>
+                    <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam qui architecto numquam.</p>
+                    <button class="arrow-right" onclick="proximo()"></button>
                 </div>
             </div>
         </div>
+
+        <div class="grid-mobile">
+            <div class="grid-container-servicos" style="display: block;"  id="1">
+                <h2 id="subtitle">Monitoramento</h2>
+                <div class="grid-item-servicos">
+                    <button class="arrow-left" onclick="antes()"></button>
+                    <p class="description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi deleniti ullam nobis rerum commodi.</p>
+                    <button class="arrow-right" onclick="proximo()"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-mobile-menu">
+            <div class="grid-container-servicos" style="display: none;"  id="3"> 
+                <h2 id="subtitle">Implementação</h2>
+                <div class="grid-item-servicos">
+                    <button class="arrow-left" onclick="antes()"></button>
+                    <p class="description"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit fugit laudantium, expedita.</p>
+                    <button class="arrow-right" onclick="proximo()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
     </section>
 
+
+
+<!-- --------------------------------EQUIPE------------------------------------ -->
+<section class="slider" id="equipe">
+    <h1 class="title">EQUIPE</h1>
+    <div class="slides">
+      <input type="radio" name="radio-btn" id="radio1">
+      <input type="radio" name="radio-btn" id="radio2">
+      <input type="radio" name="radio-btn" id="radio3">
+      <input type="radio" name="radio-btn" id="radio4">
+      <input type="radio" name="radio-btn" id="radio5">
+
+      <div class="slide first">
+        <img src="/src/images/equipe/eli.png" alt="img_carrousel" id="img-slide1">
+        <div class="text-overlay"><a href="" class="icon-member"><i class="fa-brands fa-linkedin"></i><i class="fa-brands fa-github"></i></a></div>
+
+      </div>
+      <div class="slide">
+        <img src="./src/images/equipe/felipe.png" alt="img_carrousel">
+        <div class="text-overlay"><a href="" class="icon-member"><i class="fa-brands fa-linkedin"></i><i class="fa-brands fa-github"></i></a></div>
+
+      </div>
+      <div class="slide">
+        <img src="./src/images/equipe/gabriel.png" alt="img_carrousel">
+        <div class="text-overlay"><a href="" class="icon-member"><i class="fa-brands fa-linkedin"></i><i class="fa-brands fa-github"></i></a></div>
+      </div>
+
+      <div class="slide">
+        <img src="./src/images/equipe/barbosa.png" alt="img_carrousel">
+        <div class="text-overlay"><a href="" class="icon-member"><i class="fa-brands fa-linkedin"></i><i class="fa-brands fa-github"></i></a></div>
+      </div>
+
+      <div class="slide">
+        <img src="./src/images/equipe/ph.png" alt="img_carrousel">
+        <div class="text-overlay"><a href="" class="icon-member"><i class="fa-brands fa-linkedin"></i><i class="fa-brands fa-github"></i></a></div>
+      </div>
+    </div>
+  </section>
+
+
+
+<!-- ------------------------------FOOTER------------------------------------- -->
     <footer class="footer">
         <div class="footer-logo">
             <a href="">
@@ -233,7 +241,7 @@
 
         <div class="footer-button">
             <div id="email-button">
-                <button class="btn-block">
+                <button class="btn-default" id="contato">
                     <i class="fa-solid fa-envelope">
                         <span>SECURE PASS</span>
                     </i>

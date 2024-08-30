@@ -3,7 +3,7 @@ header {
     padding: 28px 8%;
     position: sticky;
     top: 0;
-    background-color: rgba (0,0,68,1);
+    background-color: rgba (0, 0, 68, 1);
     z-index: 3;
 }
 
@@ -15,7 +15,7 @@ header {
 }
 
 #nav_logo{
-    font-size: 28px;
+    font-size: 3vw;
     color: #fff;
 }
 
@@ -27,13 +27,9 @@ header {
 
 .nav-item a{
     text-decoration: none;
-    color: #1d1d1dad;
-    font-family: 600;
-}
-
-.nav-item.active a{
-    color: #1d1d1dad;
-    border-bottom: 3px solid rgba(102,153,204,1);
+    color: #ffffff;
+    font-size: 1.5vw;
+    font-weight: bold;
 }
 
 #mobile_btn{
@@ -49,27 +45,62 @@ header {
     #navbar .btn-default{
         display: none;
     }
+
+    .nav-item a{
+        color: #ffffff;
+        font-size: 2.5vw;
+        font-weight: bold;
+    }
+
     #mobile_btn{
         display: block;
         border: none;
         background-color: transparent;
         font-size: 1.5rem;
         cursor: pointer;
+        z-index: 1;
+        transition: ease 1s; 
     }
-    #mobile_menu.active{
+
+    #mobile_menu {
+       
         display: flex;
         flex-direction: column;
         align-items: center;
+        opacity: 0; 
+        height: 0; 
+        overflow: hidden; 
+        transition: opacity 0.3s ease, height 0.3s ease;
     }
+
+    #mobile_menu.active{
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        opacity: 1;
+        gap: 5px;
+        height: auto;
+    }
+
     #mobile_nav_list{
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        margin: 12px 0px;
+        /* margin: 12px 0px; */
+        list-style: none;
+        background-color: transparent;
+        padding: 10px;
+        
     }
+
     #mobile_nav_list .nav_item{
         list-style: none;
         text-align: center;
+    }
+
+    #mobile_menu.active #mobile_nav_list {
+        display: flex; 
+        opacity: 1; 
+        height: auto; 
     }
 }
 /* -------------------------------------------------FOOTER------------------------------------------------ */
@@ -128,7 +159,7 @@ header {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 999px) {
     .footer {
         flex-direction: column;
         text-align: center;

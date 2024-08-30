@@ -16,8 +16,9 @@ section{
     padding: 28px 8%;   
 }
 
-p{
+.description{
     font-size: 2.5vw;
+    line-height: 1.5;
 }
 
 i{
@@ -29,18 +30,20 @@ border: none;
 display: flex;
 align-items: center;
 justify-content: center;
-background-color: rgba(102,153,204,1);
+background-color: #6699cc;
 border-radius: 12px;
 padding: 10px 14px;
 font-weight: 600;
 box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
 cursor: pointer;
 transition: background-color 3s ease;
+border-radius: 10px;
 }
 
 .btn-default:hover{
-    background-color: rgba(0,0,68,1);
+    background-color: #000044;
 }
+
 
 .title{
     margin: 0;
@@ -48,27 +51,28 @@ transition: background-color 3s ease;
     font-family: 'Arial', sans-serif;
     font-size: 6vw;             
     font-weight: bold;         
-    color: #0f0f5c;             
+    color: #ffffff;             
     text-align: center;         
     text-transform: uppercase; 
 }
 
-.subtitle{
-    margin: 0;
-    padding: 0.5em 0;
-    font-family: 'Arial', sans-serif;
-    font-size: 3vw;             
-    font-weight: bold;         
-    color: #000;             
-    text-align: center;         
-    text-transform: uppercase; 
+#subtitle{
+    font-size: 3vw;
+    font-weight: bold;
+    margin-block: 5px;
+    margin-left: 10px;
+    color: #000044;
 }
 
-@media (max-width: 700px) {
-    .title { 
-        font-size: 6vw; 
-    }
-    p{
-        font-size: 2.5vw;
-    }
+
+.icon-member {
+    display: inline-flex; 
+    gap: 15px;
+    align-items: center;
+    font-size: 10px;
+    color: #ffffff; 
+    text-decoration: none; 
+    padding: 8px; 
+    margin: 2px; 
 }
+
