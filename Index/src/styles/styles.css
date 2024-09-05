@@ -36,12 +36,14 @@ padding: 10px 14px;
 font-weight: 600;
 box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
 cursor: pointer;
-transition: background-color 3s ease;
+transition: background-color 1s ease;
+transition: color 1s ease;
 border-radius: 10px;
 }
 
 .btn-default:hover{
     background-color: #000044;
+    color: #fff;
 }
 
 

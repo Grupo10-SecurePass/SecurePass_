@@ -1,5 +1,5 @@
 .hero{
-    background-image: url(/src/images/ImagePageSec.svg);
+    background-image: url(/Index/src/images/ImagePageSec.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -8,21 +8,28 @@
     align-items: center;
     width: 100%;
     height: 70%;
+    padding-top: 5%
 }
 
 .hero img{
     width: 50%
 }
 
+@media(max-width: 999px){
+    .hero {
+        padding-top: 0%;
+    }
+}
+
 @media(max-width: 690px){
     .hero img{
-        width: 50%;
+        display: none;
     }
 }
 
 @media(max-width: 900){
     .hero img{
-        width: 50%;
+        display: none;
     }
 }
 
@@ -35,6 +42,8 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
+    padding-top: 10%;
 }
 
 .grid-container-sobreNos{
