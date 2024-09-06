@@ -60,7 +60,7 @@ header.rolagem{
     .nav-item a{
         color: #ffffff;
         font-size: 2.5vw;
-        font-weight: bold;
+        letter-spacing: 3px;
     }
 
     #mobile_btn{
@@ -71,6 +71,7 @@ header.rolagem{
         cursor: pointer;
         z-index: 1;
         transition: ease 1s; 
+        color: #fff;
     }
 
     #mobile_menu {
@@ -79,26 +80,22 @@ header.rolagem{
         align-items: start;
         opacity: 0; 
         height: 0; 
-        /* overflow: hidden;  */
+        background-color: #151570;
+        width: 100%;
         transition: opacity 0.3s ease, height 0.3s ease;
+        width: 100vw;
     }
 
     #mobile_menu.active{
-        display: flex;
-        flex-direction: column;
-        align-items: start;
         opacity: 1;
-        gap: 5px;
         height: auto;
     }
 
     #mobile_nav_list{
         display: flex;
         flex-direction: column;
-        margin: 12px 0px;
         list-style: none;
         background-color: transparent;
-        padding: 10px;
     }
 
     #mobile_nav_list .nav_item{

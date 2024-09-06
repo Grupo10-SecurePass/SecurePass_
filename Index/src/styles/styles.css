@@ -17,9 +17,24 @@ section{
 }
 
 .description{
-    font-size: 2.5vw;
+    font-size: 1.75vw;
     line-height: 1.5;
+    text-align: center;
 }
+
+.description-sobrenos{
+    font-size: 1.75vw;
+    line-height: 1.5;
+    color: #fff;
+}
+
+.description-servicos{
+    font-size: 1.75vw;
+    line-height: 1.5;
+    text-align: justify;
+    padding: 20px;
+}
+
 
 i{
     font-size: 2.5vw;
@@ -41,6 +56,11 @@ transition: color 1s ease;
 border-radius: 10px;
 }
 
+.btn-default a{
+    color: #fff;
+    text-decoration: none;
+}
+
 .btn-default:hover{
     background-color: #000044;
     color: #fff;
@@ -59,7 +79,8 @@ border-radius: 10px;
 }
 
 #subtitle{
-    font-size: 3vw;
+    text-align: center;
+    font-size: 2.5vw;
     font-weight: bold;
     margin-block: 5px;
     margin-left: 10px;

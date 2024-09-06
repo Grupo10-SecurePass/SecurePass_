@@ -7,23 +7,33 @@
     <link rel="stylesheet" href="LogCad.css">
 </head>
 <body>
+    <section class="sessao-cadastro">
     <div class="fundoBranco">
         <img src="SecurePass.svg" title="Logo | SecurePass">
         <div class="Form">
                 <p class="titulo">Cadastre-se</p>
-                <input type="text" id="name"  placeholder = "Nome:" >
-                <input type="number" id="name" placeholder = "CNPJ:" >
-                <input type="text" id="name"  placeholder = "E-mail:" >
-                <input type="password" id="name" placeholder = "Senha:" >
-                <input type="password" id="name" placeholder = "Confirmação de Senha:" >
+                <input type="text" id="nome"  placeholder = "Nome:" >
+                <input type="number" id="cnpj" placeholder = "CNPJ:" >
+                <input type="email" id="email"  placeholder = "E-mail:" >
+                <input type="password" id="senha" placeholder = "Senha:" >
+                <input type="password" id="confSenha" placeholder = "Confirmação de Senha:" >
         </div>
 
         <p>Já possui login? <a href="login.html">Clique aqui!</a></p>
 
         <div class="botoes">
-            <button class="cancelar">Cancelar</button>
-            <button>Cadastrar</button>
+            <button class="btn-cancelar" onclick="cancelar()">Cancelar</button>
+            <button class="btn">Cadastrar</button>
         </div>
     </div>
+</section>
+
 </body>
 </html>
+
+<script>
+    function cancelar(){
+        window.location.replace(URL="../Index/index.html")
+    }
+
+</script>

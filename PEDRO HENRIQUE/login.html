@@ -7,19 +7,28 @@
     <link rel="stylesheet" href="LogCad.css">
 </head>
 <body>
+    <section class="sessao-cadastro">
     <div class="fundoBranco">
         <img src="SecurePass.svg" title="Logo | SecurePass">
         <div class="Form">
                 <p class="titulo">Login</p>
-                <input type="text" id="name" placeholder = "E-mail:" >
-                <input type="password" id="name" placeholder = "Senha:" >
+                <input type="text" id="email" placeholder = "E-mail:" >
+                <input type="password" id="senha" placeholder = "Senha:" >
         </div>
 
         <p>Esqueceu sua senha? <a href="recuperacaoSenha.html">Clique aqui!</a></p>
 
         <div class="botoes">
-            <button>login</button>
+            <button class="btn-cancelar" onclick="voltar()">voltar</button>
+            <button class="btn">login</button>
         </div>
     </div>
+</section>
 </body>
 </html>
+
+<script>
+        function voltar(){
+        window.location.replace(URL="CadastroDeAdm.html")
+    }
+</script>
