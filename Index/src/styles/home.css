@@ -17,7 +17,7 @@
 
 @media(max-width: 999px){
     .hero {
-        padding-top: 0%;
+        display: none;
     }
 }
 
@@ -43,7 +43,6 @@
     flex-direction: column;
     align-items: stretch;
     margin-bottom: 5%;
-    padding-top: 5%;
 }
 
 .grid-container-sobreNos{

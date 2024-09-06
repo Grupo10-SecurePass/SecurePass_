@@ -1,3 +1,4 @@
+@media(min-width: 1000px){
 header {
     width: 100%;
     padding: 28px 8%;
@@ -8,7 +9,7 @@ header {
 }
 
 header.rolagem{
-    background-color: #151570;
+    background-color: #000044;
     padding: 20px 4%;
 }
 
@@ -46,12 +47,9 @@ header.rolagem{
 #mobile_menu{
     display: none;
 }
+}
 
 @media(max-width: 999px) {
-    #header.rolagem{
-        display: none;
-    }
-    
     #nav_list, 
     #navbar .btn-default{
         display: none;
@@ -72,6 +70,7 @@ header.rolagem{
         z-index: 1;
         transition: ease 1s; 
         color: #fff;
+        margin-left: 15px;
     }
 
     #mobile_menu {
@@ -80,22 +79,27 @@ header.rolagem{
         align-items: start;
         opacity: 0; 
         height: 0; 
-        background-color: #151570;
+        background-color: transparent;
         width: 100%;
-        transition: opacity 0.3s ease, height 0.3s ease;
         width: 100vw;
     }
 
     #mobile_menu.active{
         opacity: 1;
         height: auto;
+        display: flex;
+        align-items: center;
+        transition: 1s;
     }
 
     #mobile_nav_list{
         display: flex;
         flex-direction: column;
         list-style: none;
-        background-color: transparent;
+    }
+
+    #mobile_nav_list a{
+        text-decoration: none;
     }
 
     #mobile_nav_list .nav_item{
