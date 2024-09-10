@@ -77,9 +77,25 @@
 </html>
 
 <script>
-    function cadastro(){
-        alert("Cadastro de novo Funcionário realizado com sucesso!")
-        alert("Redirecionando tela...")
-        window.location = 'Dash_extratos.html'
-    }
+     function cadastro() {
+            var nome = document.getElementById('name').value;
+            var cpf = document.getElementById('cpf').value;
+            var email = document.getElementById('email').value;
+            var senha = document.getElementById('senha').value;
+            var confirmaSenha = document.getElementById('confirmaSenha').value;
+
+            if (!nome || !cpf || !email || !senha || !confirmaSenha) {
+                alert("Todos os campos devem ser preenchidos!");
+                return;
+            }
+
+            if (senha !== confirmaSenha) {
+                alert("Senhas não coincidem!");
+                return;
+            }
+
+            alert("Cadastro de novo Funcionário realizado com sucesso!");
+            alert("Redirecionando tela...");
+            window.location.href = 'Dash_extratos.html';
+        }
 </script>

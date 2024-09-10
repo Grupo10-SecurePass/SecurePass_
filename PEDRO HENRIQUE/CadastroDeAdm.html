@@ -23,7 +23,7 @@
 
         <div class="botoes">
             <button class="btn-cancelar" onclick="cancelar()">Cancelar</button>
-            <button class="btn">Cadastrar</button>
+            <button class="btn" onclick="verificar()">Cadastrar</button>
         </div>
     </div>
 </section>
@@ -34,6 +34,50 @@
 <script>
     function cancelar(){
         window.location.replace(URL="../Index/index.html")
+    }
+
+       // Função para verificar o formulário
+       function verificar() {
+        const nome = document.getElementById("nome").value;
+        const cnpj = document.getElementById("cnpj").value;
+        const email = document.getElementById("email").value;
+        const senha = document.getElementById("senha").value;
+        const confSenha = document.getElementById("confSenha").value;
+
+        // Verificação de campos vazios
+        if (!nome || !cnpj || !email || !senha || !confSenha) {
+            alert("Todos os campos são obrigatórios.");
+            return false;
+        }
+
+        // Verificação de CNPJ (simplificada)
+        if (cnpj.length !== 14) {
+            alert("O CNPJ deve ter 14 dígitos.");
+            return false;
+        }
+
+        // Verificação de formato de e-mail
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert("E-mail inválido.");
+            return false;
+        }
+
+        // Verificação de senha (mínimo de 6 caracteres)
+        if (senha.length < 6) {
+            alert("A senha deve ter pelo menos 6 caracteres.");
+            return false;
+        }
+
+        // Verificação de confirmação de senha
+        if (senha !== confSenha) {
+            alert("As senhas não coincidem.");
+            return false;
+        }
+
+        // Se tudo estiver correto
+        alert("Cadastro realizado com sucesso!");
+        return true;
     }
 
 </script>
