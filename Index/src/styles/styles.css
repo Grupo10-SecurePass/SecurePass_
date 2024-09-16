@@ -41,6 +41,11 @@ transition: color 1s ease;
 border-radius: 10px;
 }
 
+.btn-default a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
 .btn-default:hover{
     background-color: #000044;
     color: #fff;
