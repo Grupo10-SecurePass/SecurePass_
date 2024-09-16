@@ -7,23 +7,77 @@
     <link rel="stylesheet" href="LogCad.css">
 </head>
 <body>
+    <section class="sessao-cadastro">
     <div class="fundoBranco">
         <img src="SecurePass.svg" title="Logo | SecurePass">
         <div class="Form">
                 <p class="titulo">Cadastre-se</p>
-                <input type="text" id="name"  placeholder = "Nome:" >
-                <input type="number" id="name" placeholder = "CNPJ:" >
-                <input type="text" id="name"  placeholder = "E-mail:" >
-                <input type="password" id="name" placeholder = "Senha:" >
-                <input type="password" id="name" placeholder = "Confirmação de Senha:" >
+                <input type="text" id="nome"  placeholder = "Nome:" >
+                <input type="number" id="cnpj" placeholder = "CNPJ:" >
+                <input type="email" id="email"  placeholder = "E-mail:" >
+                <input type="password" id="senha" placeholder = "Senha:" >
+                <input type="password" id="confSenha" placeholder = "Confirmação de Senha:" >
         </div>
 
         <p>Já possui login? <a href="login.html">Clique aqui!</a></p>
 
         <div class="botoes">
-            <button class="cancelar">Cancelar</button>
-            <button>Cadastrar</button>
+            <button class="btn-cancelar" onclick="cancelar()">Cancelar</button>
+            <button class="btn" onclick="verificar()">Cadastrar</button>
         </div>
     </div>
+</section>
+
 </body>
 </html>
+
+<script>
+    function cancelar(){
+        window.location.replace(URL="../Index/index.html")
+    }
+
+       // Função para verificar o formulário
+       function verificar() {
+        const nome = document.getElementById("nome").value;
+        const cnpj = document.getElementById("cnpj").value;
+        const email = document.getElementById("email").value;
+        const senha = document.getElementById("senha").value;
+        const confSenha = document.getElementById("confSenha").value;
+
+        // Verificação de campos vazios
+        if (!nome || !cnpj || !email || !senha || !confSenha) {
+            alert("Todos os campos são obrigatórios.");
+            return false;
+        }
+
+        // Verificação de CNPJ (simplificada)
+        if (cnpj.length !== 14) {
+            alert("O CNPJ deve ter 14 dígitos.");
+            return false;
+        }
+
+        // Verificação de formato de e-mail
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert("E-mail inválido.");
+            return false;
+        }
+
+        // Verificação de senha (mínimo de 6 caracteres)
+        if (senha.length < 6) {
+            alert("A senha deve ter pelo menos 6 caracteres.");
+            return false;
+        }
+
+        // Verificação de confirmação de senha
+        if (senha !== confSenha) {
+            alert("As senhas não coincidem.");
+            return false;
+        }
+
+        // Se tudo estiver correto
+        alert("Cadastro realizado com sucesso!");
+        return true;
+    }
+
+</script>
