@@ -1,1 +1,1 @@
-# HealthTech-Grupo10
+# SecurePass-Grupo10
