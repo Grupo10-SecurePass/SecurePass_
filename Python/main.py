@@ -22,6 +22,7 @@ i = 0
 while i < atualizador:
     cpu_percent = psutil.cpu_percent(interval=1)
 
+
     print(f"Uso de CPU: {cpu_percent:.2f}%")
     print(cpu_percent)
 
