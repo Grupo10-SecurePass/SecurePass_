@@ -1,0 +1,63 @@
+
+.body{
+    color: #FCFFFC; 
+}
+
+.geral{
+
+  display: flex;  
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+}
+
+.card{
+
+    height: 460px;
+    width: 420px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito Sans';
+    color: #FCFFFC;
+    box-shadow:0 0 10px black;
+}
+  
+  .formulario {
+    display: flex;  
+    width: 90%;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+
+  .formulario h2 {
+    display: flex;
+    justify-content: center;
+  }
+ 
+  
+  .formulario input {
+    border: 3px solid #248232;
+    font-family: 'Nunito Sans';
+    height: 32px;
+    border-radius: 10px;  
+   
+  }
+  
+  
+  .botao {
+    cursor: pointer;    
+    border: 0;
+    border-radius: 10px;
+    background-color: #248232;
+    color: #ffffff;
+    font-size:13px;
+    width: 130px;
+    height: 40px;
+    align-self: center;
+  
+  }
+  
