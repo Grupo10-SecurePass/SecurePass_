@@ -46,6 +46,15 @@
     border-radius: 10px;  
    
   }
+
+  .formulario select{
+    border: 3px solid #248232;
+    font-family: 'Nunito Sans';
+    height: 32px;
+    border-radius: 10px;  
+    color: #5e5e5e;
+   
+  }
   
   
   .botao {

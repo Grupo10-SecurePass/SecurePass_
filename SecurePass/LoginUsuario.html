@@ -25,7 +25,13 @@
             <input id="input_senha" type="text" placeholder="Senha">
             <br>
             <br>
-            <input id="input_cargo" type="text" placeholder="Cargo">
+            <select name="cargo" id="inputCargo">
+                <option selected disabled value="#">Selecione um cargo</option>
+                <option value="representante">Representante</option>
+                <option value="gerente"> Gerente de TI </option>
+                <option value="suporte">Técnico de Suporte</option>
+              </select>
+            
             <br>    
             <br>
             <button class="botao" onclick="entrar()">Entrar</button>
