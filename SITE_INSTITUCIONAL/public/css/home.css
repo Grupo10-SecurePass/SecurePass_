@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+*{
+  font-family: "Nunito Sans", system-ui;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.secao1{
+  width: 100%;
+  height: 690px;
+}
+.background{
+  width: 100%;
+  height: 100%;
+  background-image: url("../imagens/fundoHome.svg");
+  background-color: #020808;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+header{
+  width: 100%;
+  height: 65px;
+  background-color: #2ba84a53;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.div_logo{
+  height: 100%;
+  width: 55%;
+  justify-content: start;
+  align-items: center;
+  display: flex;
+}
+.caixa_logo{
+  height: 60px;
+  width: 20%;
+  display: flex;
+  align-items: center;
+}
+.caixa_logo a{
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo{
+  width: 100%;
+}
+.div_pailinks{
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+}
+.div_links{
+  display: flex;
+  width: 85%;
+  height: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.div_links a{
+  text-decoration: none;
+  color: #FCFFFC;
+  transition: color 0.3s ease;
+}
+.div_links a:hover {
+  color: #BCC2C0;
+}
+.div_logcad{
+  color: #FCFFFC;
+  display: flex;
+  justify-content: space-between;
+  width: 35%;
+}
+.div_logcad a{
+  text-decoration: none;
+  color: #FCFFFC;
+  transition: color 0.3s ease;
+}
+.div_logcad a:hover {
+  color: #BCC2C0;
+}
+
+.mae_frase{
+  width: 100%;
+  height: 470px;
+  padding: 60px;
+  display: flex;
+  align-items: end;
+}
+.filha_frase{
+  z-index: 2;
+  width: 50%;
+}
+.filha_frase h1{
+  color: #ffffff;
+  font-size: 100px;
+}
+.btn_cad{
+  display: flex;
+  width: 100%;
+}
+.btn_cad button{
+  padding: 5px 30px;
+  border-radius: 10px;
+  border: #248232 solid 2px;
+  background-color: #040F0F;
+  color: #FCFFFC;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn_cad button:hover{
+  background-color: #071818;
+}
+.seta{
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+.seta_baixo{
+  padding: 10px;
+}
+.material-symbols-outlined{
+  color: #2BA84A;
+}
+
+.secao2{
+  width: 100%;
+  height: 680px;
+  background-color: #040F0F;
+  position: relative;
+}
+.mae_texto{
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  padding: 50px;
+}
+.texto_sobrenos{
+  color: #fff;
+  font-size: 24px;
+  width: 60%;
+  font-size: 35px;
+}
+.fundo_sobrenos{
+  width: 100%;
+  height: 670px;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+.fundo_sobrenos p{
+  color: #2BA84A;
+  font-size: 320px;
+  opacity: 0.05;
+}
+
+.secao3{
+  width: 100%;
+  height: 695px;
+}
+.background2{
+  width: 100%;
+  height: 100%;
+  background-image: url("../imagens/secao3index.svg");
+  background-color: #020808;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
