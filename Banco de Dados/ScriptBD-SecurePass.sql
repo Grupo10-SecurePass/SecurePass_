@@ -23,7 +23,7 @@ fkNR INT,
 		REFERENCES empresa(NR),
 PRIMARY KEY(idUsuario, fkNR),
 nome VARCHAR(100),
-CPF CHAR(14),
+CPF CHAR(14) UNIQUE NOT NULL,
 email VARCHAR(256) UNIQUE NOT NULL,
 	CONSTRAINT chEmail CHECK (cargo like('%@%.%')),
 senha VARCHAR(45),
@@ -49,7 +49,7 @@ stats VARCHAR(45),
 
 CREATE TABLE componente(
 idComponente INT PRIMARY KEY auto_increment,
-nome VARCHAR(100) unique,
+nome VARCHAR(100),
 unidadeDeMedida VARCHAR(45)
 );
 
