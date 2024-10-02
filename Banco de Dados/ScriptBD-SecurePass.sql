@@ -42,7 +42,7 @@ fkNR INT,
 CONSTRAINT fkNrDispositivo FOREIGN KEY (fkNR)
 		REFERENCES dispositivo(idDispositivo),
 PRIMARY KEY(idDispositivo, fkNR),
-nome varchar(100),
+nome VARCHAR(100) UNIQUE,
 stats VARCHAR(45),
 	CONSTRAINT chStatsDispositivo CHECK (stats in ('ativo', 'inativo'))
 );

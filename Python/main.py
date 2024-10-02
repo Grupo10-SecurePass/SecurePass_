@@ -3,9 +3,11 @@ import psutil
 import time
 import os
 from dotenv import load_dotenv
+import socket #serve para pegar o nome da máquina
 
 load_dotenv()
 
+#configurando o banco de dados
 config = {
   "user": os.getenv("USER_LOGIN"),
   "password": os.getenv("DB_PASSWORD"),
@@ -13,23 +15,52 @@ config = {
   "database": os.getenv("DATABASE")
 }
 
-print('Monitorando CPU...')
+#pegando a fkDispositivo e a fkNR por meio do nome e armazenando em uma variável
+try:
+        # Conectar ao banco de dados
+        mydb = connect(**config)
+        if mydb.is_connected():
+            mycursor = mydb.cursor()
 
-atualizador = 5  # Número de vezes que o loop vai rodar
-limite_cpu = 15  # Limite de uso de CPU para disparar o alerta
-i = 0
+            nome_dispositivo = socket.gethostname()
 
-while i < atualizador:
-    cpu_percent = psutil.cpu_percent(interval=1)
+            result = mycursor.execute(f"SELECT idDispositivo, fkNR FROM dispositivo WHERE nome LIKE '%{nome_dispositivo}%';")
+            select = mycursor.fetchall()
+            fkDispositivo = select[0][0]
+            fkNR = select[0][1]
+                 
+
+except Error as e:
+        print("Erro ao conectar com o MySQL (parte da fkDispositivo):", e)
+        
+finally:
+        # Fechar cursor e conexão
+        if mydb.is_connected():
+            mycursor.close()
+            mydb.close()
 
 
-    print(f"Uso de CPU: {cpu_percent:.2f}%")
-    print(cpu_percent)
+#começo da captura de dados
 
-    if cpu_percent > limite_cpu:
-        print(f"Uso de CPU {cpu_percent:.2f}% ...ALERTA")
-    else:
-        print("a cpu está normal")
+#serve para o disco sendo como um indicador para quando capturar 
+contador_disco = 0
+
+while True:
+    PercCPU = psutil.cpu_percent()
+    PercMEM = psutil.virtual_memory().percent
+
+    #listas para trabalhar com mais de um valor
+    lista_valor = [PercCPU, PercMEM]
+    lista_variavel = ["PercCPU", "PercMEM"]
+    lista_idComponente = []
+
+    #select pra pegar idComponente
+    for captura in lista_variavel:
+        result = mycursor.execute(f"SELECT idComponente FROM componente WHERE nome LIKE '%{captura}%';")
+        idComponente = mycursor.fetchall()
+        idComponente = idComponente[0][0]
+        lista_idComponente.append(idComponente)
+
 
     try:
         # Conectar ao banco de dados
@@ -37,16 +68,93 @@ while i < atualizador:
         if mydb.is_connected():
             mycursor = mydb.cursor()
 
+        if (PercCPU > 70.0 or PercMEM > 75.0):
+            
+            #serve para identificar na lista_idComponente, qual a fkComponente
+            i = 0
+
+            for item in lista_valor:
+                sql_query = """
+                INSERT INTO Captura (fkDispositivo, fkComponente, registro, dataRegistro)
+                VALUES (%s, %s, %s, current_timestamp())
+                """
+                val = (fkDispositivo, lista_idComponente[i],item)
+                mycursor.execute(sql_query, val)
+                mydb.commit()
+
+                #pego a fkCaptura pegando o último dado que foi inserido
+                result = mycursor.execute(f"SELECT idCaptura FROM captura ORDER BY idCaptura DESC LIMIT 1;")
+                idUltimoDado = mycursor.fetchall()
+                idUltimoDado = idUltimoDado[0][0]
+
+                #vejo com o índice qual é a variável da lista e se o valor dela ultrapassa o limite para fazer a descrição do alerta
+                if(lista_variavel[i] == "PercCPU", PercCPU > 70.0):
+                        descricao = f"Porcentual de uso de CPU está em risco! CPU: {PercCPU}"
+                        
+                        sql_query = "INSERT INTO Alerta(fkCaptura, fkNR, dataAlerta, descricao) VALUES (%s, %s, current_timestamp(), %s);"
+                        val = [idUltimoDado, fkNR, descricao]
+                        mycursor.execute(sql_query, val)
+                        mydb.commit()
+
+                elif(lista_variavel[i] == "PercMEM", PercMEM > 75.0):
+                        descricao = f"Porcentual de uso de memória RAM está em risco! RAM: {PercMEM}"
+
+                        sql_query = "INSERT INTO Alerta(fkCaptura, fkNR, dataAlerta, descricao) VALUES (%s, %s, current_timestamp(), %s);"
+                        val = [idUltimoDado, fkNR, descricao]
+                        mycursor.execute(sql_query, val)
+                        mydb.commit()
+
+                i += 1
+
+        else:
+
             # Inserir dados na tabela
+            i = 0
+
+            for item in lista_valor:
+                sql_query = """
+                    INSERT INTO Captura (fkDispositivo, fkNR, fkComponente, registro, dataRegistro)
+                    VALUES (%s, %s,%s, %s, current_timestamp())
+                    """
+                val = (fkDispositivo, fkNR,lista_idComponente[i],item)
+                mycursor.execute(sql_query, val)
+                mydb.commit()
+                i += 1
+                
+                print(mycursor.rowcount, "registro inserido")
+
+
+        #cada dado de cpu e ram será cadastrado a cada 30 segundos e dessa forma a cada 120 dados pegos, irá inserir um dado de disco (30 segundos = 120 dados em uma hora)
+        if (contador_disco == 0 or contador_disco % 120 == 0):
+            print("entrando em disco")
+
+            result = mycursor.execute(f"SELECT idComponente FROM componente WHERE nome LIKE '%PercDISCO%';")
+            idComponente = mycursor.fetchall()
+            idComponente = idComponente[0][0]
+
+            PercDISCO = psutil.disk_usage()
+
             sql_query = """
-            INSERT INTO Dados (data_hora, alerta, status_cpu)
-            VALUES (current_timestamp(), 'Uso de CPU está normal', %s)
-            """
-            val = (round(cpu_percent, 2),)
+                INSERT INTO Captura (fkDispositivo, fkNR, fkComponente, registro, dataRegistro)
+                VALUES (%s, %s, %s, %s, current_timestamp())
+                """
+            val = (fkDispositivo, fkNR,idComponente, PercDISCO)
             mycursor.execute(sql_query, val)
             mydb.commit()
-                
-            print(mycursor.rowcount, "registro inserido")
+
+            result = mycursor.execute(f"SELECT idCaptura FROM captura ORDER BY idCaptura DESC LIMIT 1;")
+            idUltimoDadoDISK = mycursor.fetchall()
+            idUltimoDadoDISK = idUltimoDado[0][0]
+            
+
+            if(PercCPU > 80.0):
+                descricao = f"Porcentual de uso de disco está em risco! disk: {PercCPU}"
+
+                sql_query = "INSERT INTO Alerta(fkCaptura, fkNR, dataAlerta, descricao) VALUES (%s, %s, current_timestamp(), %s);"
+                val = [idUltimoDadoDISK, fkNR, descricao]
+                mycursor.execute(sql_query, val)
+                mydb.commit()
+
                  
 
     except Error as e:
@@ -58,5 +166,6 @@ while i < atualizador:
             mycursor.close()
             mydb.close()
 
-    i += 1
-    time.sleep(5)
+
+    contador_disco += 1
+    time.sleep(30)
