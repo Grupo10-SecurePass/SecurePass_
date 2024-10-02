@@ -3,6 +3,7 @@
   font-family: "Nunito Sans", system-ui;
   box-sizing: border-box;
   margin: 0;
+  scroll-behavior: smooth;
 }
 
 .secao1{
@@ -111,9 +112,11 @@ header{
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  transition: border 0.3s ease;
 }
 .btn_cad button:hover{
   background-color: #071818;
+  border: #2dfe4d solid 2px;
 }
 .seta{
   width: 100%;
@@ -162,7 +165,7 @@ header{
 
 .secao3{
   width: 100%;
-  height: 695px;
+  height: 680px;
 }
 .background2{
   width: 100%;
@@ -171,4 +174,166 @@ header{
   background-color: #020808;
   background-repeat: no-repeat;
   z-index: -1;
+}
+.mae_destaques{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 660px;
+}
+.titulo_destaque{
+  display: flex;
+  padding: 30px;
+}
+.titulo_destaque h1{
+  color: #FCFFFC;
+  font-size: 50px;
+  font-weight: 400;
+}
+.texto_destaque{
+  display: flex;
+  color: #FCFFFC;
+  justify-content: end;
+  padding: 30px;
+}
+.destaques{
+  text-align: end;
+  width: 90%;
+  font-size: 30px;
+}
+
+.secao4{
+  width: 100%;
+  height: 600px;
+  background-color: #040F0F;
+}
+.mae_texto_secao4{
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  padding: 50px;
+}
+.texto_qa{
+  color: #fff;
+  font-size: 24px;
+  width: 60%;
+  font-size: 25px;
+}
+.fundo_qa{
+  width: 100%;
+  height: 610px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.fundo_qa p{
+  color: #2D3A3A;
+  font-size: 500px;
+  opacity: 0.15;
+}
+
+footer{
+  width: 100%;
+  height: 170px;
+  background-color: #FCFFFC;
+}
+.mae_footer{
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
+}
+.mae_texto_btn{
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  color: #020808;
+  padding: 20px;
+}
+.mae_texto_btn p{
+}
+.mae_texto_btn button{
+  padding: 5px 30px;
+  border-radius: 10px;
+  border: #248232 solid 2px;
+  background-color: #040F0F;
+  color: #FCFFFC;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  transition: border 0.3s ease;
+}
+.mae_texto_btn button:hover{
+  background-color: #071818;
+  border: #27cb3f solid 2px;
+}
+.links_footer{
+  width: 30%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.links_footer a{
+  text-decoration: none;
+  color: #020808;
+}
+.links_footer a:hover{
+  color: #616161;
+}
+.links_acima{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40%;
+  padding: 20px;
+}
+.link_acima_esquerda{
+  width: 50%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.link_acima_direita{
+  width: 50%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.links_debaixo{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40%;
+  padding: 20px;
+}
+.link_debaixo_esquerda{
+  width: 50%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.link_debaixo_direita{
+  width: 50%;
+  height: 40px;
+  display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.direitos{
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+}
+.direitos p{
+  font-weight: 400;
 }
