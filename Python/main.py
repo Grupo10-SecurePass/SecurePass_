@@ -2,10 +2,14 @@ from mysql.connector import connect, Error
 import psutil
 import time
 import os
+import platform
 from dotenv import load_dotenv
 import socket #serve para pegar o nome da máquina
 
 load_dotenv()
+
+#vejo sistema operacional
+SO = platform.system()
 
 #configurando o banco de dados
 config = {
@@ -132,7 +136,11 @@ while True:
             idComponente = mycursor.fetchall()
             idComponente = idComponente[0][0]
 
-            PercDISCO = psutil.disk_usage()
+            #vejo sistema operacional e assim coloco a pasta
+            if(SO == "Windows"):
+                PercDISCO = psutil.disk_usage('C:\\')
+            else:
+                PercDISCO = psutil.disk_usage('/')
 
             sql_query = """
                 INSERT INTO Captura (fkDispositivo, fkNR, fkComponente, registro, dataRegistro)
