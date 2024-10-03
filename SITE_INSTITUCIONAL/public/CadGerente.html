@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Gerente</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="CadDash.css">
-    <title>Perfil | SecurePass</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/CadDash.css">
 </head>
 <body>
-    <div class="quadro">
-        <div class="perfil">
-            <h2>***** , aqui estão seus dados:</h2>
+
+    <div class="geral">
+    
+         <div class="formulario">
+
+            <h2>Cadastro - Gerente</h2>
             
             <input id="input_nome" type="text" placeholder="Nome Completo">
             <br>
@@ -22,12 +25,16 @@
             <input id="input_senha" type="text" placeholder="Senha">   
             <br>    
             <br>
-            <button class="botao" onclick="atualizar()">Atualizar informações</button>
+            <button class="botao" onclick="cadastrar()">Cadastrar Gerente</button>
             <br>
             <br>
             <div class="mensagem"></div>
-
         </div>
+
+        <div class="historico"></div>
+      
     </div>
+
+    
 </body>
 </html>

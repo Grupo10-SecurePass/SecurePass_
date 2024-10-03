@@ -6,8 +6,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <title> Login | SecurePass</title>
-    <link rel="stylesheet" href="CadLog.css">
+    <title>Cadastro Representante | SecurePass</title>
+    <link rel="stylesheet" href="../public/css/CadLog.css">
 </head>
 <body>
 
@@ -16,30 +16,24 @@
     <div class="card">
         <div class="formulario">
 
-            <h2>Login</h2>
+            <h2>Cadastro - Representante</h2>
+
+            <input id="input_nome" type="text" placeholder="Nome Completo">
             <br>
+            <input id="input_cpf" type="text" placeholder="CPF">
             <br>
             <input id="input_email" type="text" placeholder="Email">
             <br>
-            <br>
             <input id="input_senha" type="text" placeholder="Senha">
-            <br>
-            <br>
-            <select name="cargo" id="inputCargo">
-                <option selected disabled value="#">Selecione um cargo</option>
-                <option value="representante">Representante</option>
-                <option value="gerente"> Gerente de TI </option>
-                <option value="suporte">Técnico de Suporte</option>
-              </select>
-            
             <br>    
+            <input id="input_nr" type="text" placeholder="NR (Número de Registro)">
             <br>
-            <button class="botao" onclick="entrar()">Entrar</button>
+            <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
     </div>
 
  </div>
- 
+
 </body>
 </html>
 
