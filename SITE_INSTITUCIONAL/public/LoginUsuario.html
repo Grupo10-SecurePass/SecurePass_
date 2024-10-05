@@ -35,6 +35,7 @@
             <br>    
             <br>
             <button class="botao" onclick="entrar()">Entrar</button>
+              <div id="mensagem_erro"></div>
         </div>
     </div>
 
@@ -45,6 +46,78 @@
 
 <script>
 
+function entrar() {
+
+        var emailVar = input_email.value;
+        var senhaVar = input_senha.value;
+        var cargoVar = inputCargo.value;
+
+
+        if (emailVar == "" || senhaVar == "" || cargoVar == "#") {
+            mensagem_erro.innerHTML = "Os campos para login estão preenchidos de forma incorreta!";
+            
+            return false;
+        }
+        else {
+            
+        }
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+                cargoServer: cargoVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.CARGO_USUARIO = json.cargo;
+                    sessionStorage.CPF_USUARIO = json.cpf;
+                    sessionStorage.STATS_USUARIO = json.stats;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.NR_EMPRESA = json.fkNR;
+
+                    if(sessionStorage.STATS_USUARIO == "inativo"){
+                        mensagem_erro.innerHTML = "Seu estado no nosso sistema está como inativo, caso esteja incorreto, por favor verificar com sua empresa.";
+                    }else if(sessionStorage.CARGO_USUARIO == "representante"){
+                        window.location = "./CadGerente.html"
+                    }else if(sessionStorage.CARGO_USUARIO == "gerente"){
+                        window.location = "./CadTecnicoSuporte.html"
+                    }else{
+                        window.location = "./dashboard.html"
+                    }
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                mensagem_erro.innerHTML = "Houve um erro ao tentar realizar o login! Verifique se o seu cargo está correto e se as credênciais também estão!"
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
 
 </script>
 

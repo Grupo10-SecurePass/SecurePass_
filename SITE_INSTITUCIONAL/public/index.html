@@ -6,7 +6,7 @@
   <!--Sessão da web-data-viz-->
   <!--script src="./js/sessao.js"></script-->
   <title>SecurePass</title>
-  <link rel="stylesheet" href="../public/css/home.css">
+  <link rel="stylesheet" href="./css/home.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
@@ -29,7 +29,7 @@
           <div class="div_logcad">
             <a href="">Cadastro</a>
             <p>|</p>
-            <a href="">Login</a>
+            <a href="LoginUsuario.html">Login</a>
           </div>
         </div>
       </header>
@@ -37,7 +37,7 @@
         <div class="filha_frase">
           <h1>Monitoramento Perspicaz</h1>
           <div class="btn_cad">
-            <button>Clique aqui e cadastre sua empresa</button>
+            <button onclick="CadastrarEmpresa()">Clique aqui e cadastre sua empresa</button>
           </div>
         </div>
       </div>
@@ -128,3 +128,11 @@
   </footer>
 </body>
 </html>
+
+<script>
+
+function CadastrarEmpresa(){
+  window.location = "./FormularioEmpresa.html"
+}
+
+</script>
