@@ -5,15 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro | Técnico de Suporte</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/CadDash.css">
+    <link rel="stylesheet" href="CadDash.css">
 </head>
 <body>
 
-    <div class="geral">
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+          
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
 
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="#">Gestão TS</a>
+                <a href="#">Home/Página Principal</a>
+                <a href="#">Dashboard</a>
+                <a href="#">Perfil</a>
+            </div>
+
+            <a href="#" class="logout">Sair</a>
+        </nav>
+    </div>
+
+    <div class="geral">
         <div class="formulario">
-            
             <h2>Cadastro - Técnico de Suporte </h2>
 
             <input id="input_nome" type="text" placeholder="Nome Completo">
@@ -32,9 +59,27 @@
         </div>
 
         <div class="historico"></div>
-      
     </div>
 
-    
+    <script>
+        function Navbar() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const closeBtn = document.querySelector('.close-btn');
+
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                setTimeout(() => {
+                    hamburger.style.display = 'block';
+                    closeBtn.style.display = 'none';
+                }, 300); 
+            } else {
+                hamburger.style.display = 'none';
+                closeBtn.style.display = 'block';
+                navMenu.classList.add('show');
+            }
+        }
+    </script>
+
 </body>
 </html>
