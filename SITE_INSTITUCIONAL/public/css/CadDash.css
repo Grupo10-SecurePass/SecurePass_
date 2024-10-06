@@ -96,6 +96,7 @@ body {
   display: flex; 
   flex-direction: column; 
   align-items: center; 
+  overflow: hidden; 
 }
 
 .nav-menu.show {
@@ -168,14 +169,16 @@ body {
 .logout {
   position: absolute;
   bottom: 10px;
-  width: 100%;
+  width: 90%; 
   text-align: center;
   color: #fcfffc;
   font-size: 18px;
-  padding: 15px;
+  padding: 10px; 
+  border-radius: 5px;
   text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .logout:hover {
-  background: #f00;
+  background: #f00; 
 }
