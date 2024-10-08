@@ -10,13 +10,13 @@
 </head>
 <body>
     <div class="content">
-        <button class="hamburger" onclick="Navbar()">
+        <button class="hamburger" onclick="toggleNavbar()">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
         </button>
         <nav id="navMenu" class="nav-menu">
-            <button class="close-btn" onclick="Navbar()">
+            <button class="close-btn" onclick="toggleNavbar()">
                 <div class="bar"></div>
                 <div class="bar"></div>
                 <div class="bar"></div>
@@ -27,6 +27,7 @@
             <div class="separator"></div>
 
             <div class="nav-links">
+                <a href="#">Gestão Gerente</a>
                 <a href="#">Home/Página Principal</a>
                 <a href="#">Perfil</a>
             </div>
@@ -56,21 +57,16 @@
     </div>
 
     <script>
-        function Navbar() {
+        function toggleNavbar() {
             const navMenu = document.getElementById('navMenu');
             const hamburger = document.querySelector('.hamburger');
-            const closeBtn = document.querySelector('.close-btn');
 
             if (navMenu.classList.contains('show')) {
                 navMenu.classList.remove('show');
-                setTimeout(() => {
-                    hamburger.style.display = 'block';
-                    closeBtn.style.display = 'none';
-                }, 300); 
+                hamburger.style.left = '10px'; 
             } else {
-                hamburger.style.display = 'none';
-                closeBtn.style.display = 'block';
                 navMenu.classList.add('show');
+                hamburger.style.left = '260px'; 
             }
         }
     </script>

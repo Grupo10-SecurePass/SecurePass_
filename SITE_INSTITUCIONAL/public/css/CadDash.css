@@ -67,10 +67,12 @@ body {
   border: none;
   cursor: pointer;
   padding: 5px;
-  position: absolute; 
+  position: absolute;
   top: 10px;
-  left: 10px;
+  left: 10px; /* Posição inicial do hamburger */
   z-index: 3;
+  display: block;
+  transition: left 0.3s ease; /* Transição suave para a nova posição */
 }
 
 .bar {
@@ -82,10 +84,33 @@ body {
   transition: 0.3s;
 }
 
-.nav-menu {
+/* Estilos do botão de fechar (close-btn) */
+.close-btn {
+  background: #040f0f;
+  border: none;
+  color: #fcfffc;
+  cursor: pointer;
+  padding: 5px;
   position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  display: none;
+}
+
+.close-btn .bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #fcfffc;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+.nav-menu {
+  position: fixed;
   top: 0;
-  left: -250px;
+  left: -250px; /* Inicialmente fora da tela */
   height: 100%;
   width: 250px;
   background: #040f0f;
@@ -101,6 +126,10 @@ body {
 
 .nav-menu.show {
   left: 0;
+}
+
+.nav-menu.show ~ .hamburger {
+  left: 270px; /* Mover o hamburger para o lado da navbar ao abrir */
 }
 
 .nav-links {
@@ -127,28 +156,6 @@ body {
   background-color: #2D3A3A; 
   color: #fcfffc;
   transition: background-color 0.8s ease; 
-}
-
-.close-btn {
-  background: #040f0f;
-  border: none;
-  color: #fcfffc;
-  cursor: pointer;
-  padding: 5px;
-  position: absolute;
-  top: 10px;
-  right: -50px;
-  z-index: 5;
-  transition: right 0.3s ease;
-}
-
-.close-btn .bar {
-  display: block;
-  width: 25px;
-  height: 3px;
-  background: #fcfffc;
-  margin: 5px 0;
-  transition: 0.3s;
 }
 
 .logo {
