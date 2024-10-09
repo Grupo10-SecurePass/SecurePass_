@@ -7,6 +7,12 @@ var usuarioController = require("../controllers/usuarioController");
 router.post("/cadastrar", function (req, res) {
     usuarioController.cadastrar(req, res);
 })
+router.post("/cadastrarGerente", function (req, res) {
+    usuarioController.cadastrarGerente(req, res);
+})
+router.post("/cadastrarSuporte", function (req, res) {
+    usuarioController.cadastrarSuporte(req, res);
+})
 
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);

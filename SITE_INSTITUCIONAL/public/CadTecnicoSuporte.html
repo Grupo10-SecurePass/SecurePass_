@@ -43,13 +43,16 @@
         <div class="formulario">
             <h2>Cadastro - Técnico de Suporte </h2>
 
-            <input id="input_nome" type="text" placeholder="Nome Completo">
+            <input id="input_nomeTecnico" type="text" placeholder="Nome Completo">
             <br>
             <br>
-            <input id="input_email" type="text" placeholder="Email">
+            <input id="input_cpfTecnico" type="text" placeholder="CPF">
             <br>
             <br>
-            <input id="input_senha" type="text" placeholder="Senha">   
+            <input id="input_emailTecnico" type="text" placeholder="Email">
+            <br>
+            <br>
+            <input id="input_senhaTecnico" type="text" placeholder="Senha">   
             <br>    
             <br>
             <button class="botao" onclick="cadastrar()">Cadastrar Técnico de Suporte</button>
@@ -78,6 +81,78 @@
                 closeBtn.style.display = 'block';
                 navMenu.classList.add('show');
             }
+        }
+
+        // VERIFICAR SE ESSA FUNÇÃO PEGA A fkNR DO USUÁRIO REPRESENTANTE QUE ESTÁ CADASTRANDO O GERENTE
+        let representanteVar = 0;
+        let fkNRVar = 0;
+
+        // ARRUMAR O idResponsavel QUE ESTÁ CADASTRANDO
+        function cadastrar() {
+            var nomeTecnicoVar = input_nomeTecnico.value;
+            var emailTecnicoVar = input_emailTecnico.value;
+            var senhaTecnicoVar = input_senhaTecnico.value;
+            var cpfTecnicoVar = input_cpfTecnico.value;
+
+            if (
+                nomeTecnicoVar == "" ||
+                emailTecnicoVar == "" ||
+                senhaTecnicoVar == "" ||
+                cpfTecnicoVar == ""
+            ) {
+                window.alert('Campos não devidamente preenchidos')
+            } else if(senhaGerente.length < 8) {
+                window.alert('A senha deve ter 8 ou mais caracteres')
+            } else{
+                // Enviando o valor da nova input
+                fetch("/usuarios/cadastrarSuporte", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeTecnicoServer: nomeTecnicoVar,
+                    cpfTecnicoServer: cpfTecnicoVar,
+                    emailTecnicoServer: emailTecnicoVar,
+                    senhaTecnicoServer: senhaTecnicoVar,
+                    representanteSever: representanteVar,
+                    fkNRSever: fkNRVar
+                }),
+                })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+
+                        window.alert('Cadastro de Gerente Realizado com sucesso')
+
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+                return false;
+                }
+        }
+
+        function buscarPorId() {
+            fetch("/empresas/buscar/:idUsuario", {
+            method: "GET",
+            })
+            .then(function (resposta) {
+                resposta.json().then((empresas) => {
+                empresas.forEach((empresa) => {
+                    representanteVar.idUsuario;
+                    fkNRVar.fkNR;
+                });
+                });
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
         }
     </script>
 

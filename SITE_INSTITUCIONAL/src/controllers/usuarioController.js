@@ -87,7 +87,132 @@ function cadastrar(req, res) {
     }
 }
 
+function cadastrarGerente(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var nomeGerente = req.body.nomeGerenteServer;
+    var cpfGerente = req.body.cpfGerenteServer;
+    var emailGerente = req.body.emailGerenteVar;
+    var senhaGerente = req.body.senhaGerenteVar;
+    var representanteGerente = req.body.representanteSever;
+    var fkNRGerente = req.body.fkNRSever;
+
+    // Faça as validações dos valores
+    if (fkNRGerente == undefined) {
+        res.status(400).send("Sua empresa a vincular está undefined!");
+    } else if (nomeGerente == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (cpfGerente == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (emailGerente == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (senhaGerente == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (representanteGerente == undefined) {
+        res.status(400).send("Seu representante a vincular está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrarGerente(fkNRGerente, nomeGerente, cpfGerente, emailGerente, senhaGerente, representanteGerente)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function cadastrar(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var nome = req.body.nomeServer;
+    var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
+    var fkEmpresa = req.body.idEmpresaVincularServer;
+
+    // Faça as validações dos valores
+    if (nome == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (email == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (senha == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (fkEmpresa == undefined) {
+        res.status(400).send("Sua empresa a vincular está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrar(nome, email, senha, fkEmpresa)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function cadastrarSuporte(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var nomeTecnico = req.body.nomeTecnicoServer;
+    var cpfTecnico = req.body.cpfTecnicoServer;
+    var emailTecnico = req.body.emailTecnicoVar;
+    var senhaTecnico = req.body.senhaTecnicoVar;
+    var representanteTecnico = req.body.representanteSever;
+    var fkNRSuporte = req.body.fkNRSever;
+
+    // Faça as validações dos valores
+    if (fkNRSuporte == undefined) {
+        res.status(400).send("Sua empresa a vincular está undefined!");
+    } else if (nomeTecnico == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (cpfTecnico == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (emailTecnico == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (senhaTecnico == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else if (representanteTecnico == undefined) {
+        res.status(400).send("Seu representante a vincular está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrarSuporte(fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, senhaTecnico, representanteTecnico)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    cadastrarGerente,
+    cadastrarSuporte
 }

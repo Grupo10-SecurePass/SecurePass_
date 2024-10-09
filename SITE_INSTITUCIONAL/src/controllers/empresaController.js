@@ -15,9 +15,9 @@ function listar(req, res) {
 }
 
 function buscarPorId(req, res) {
-  var id = req.params.id;
+  var idUsuario = req.params.idUsuario;
 
-  empresaModel.buscarPorId(id).then((resultado) => {
+  empresaModel.buscarPorId(idUsuario).then((resultado) => {
     res.status(200).json(resultado);
   });
 }
@@ -75,5 +75,5 @@ module.exports = {
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
-  listar,
+  listar
 };
