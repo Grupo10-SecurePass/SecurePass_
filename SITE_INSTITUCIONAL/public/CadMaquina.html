@@ -1,19 +1,63 @@
+CadMaquina
+
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Máquina</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/CadDash.css">
+    <title> Cadastro de Máquina | SecurePass</title>
 </head>
 <body>
-    
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="#">Home/Página Principal</a>
+                <a href="#">Perfil</a>
+            </div>
+
+            <a href="#" class="logout">Sair</a>
+        </nav>
+    </div>
+
+    <div class="geral">
+        <div class="formulario">
+            <h2>Cadastro de Máquina</h2>
+            <input id="input_nome" type="text" placeholder="Nome da Máquina">
+            <br>  
+            <br>    
+            <br>
+            <button class="botao" onclick="cadastrar()">Adicionar máquina</button>
+            <br>
+            <br>
+            <div class="mensagem"></div>
+        </div>
+        <div class="historico">
+            <h2> Máquinas cadastradas</h2>
+            
+        </div>
+    </div>
 </body>
 </html>
-
 <script>
-
-function cadastrar(){
-    
-}
-
+    function cadastrar() {
+        
+    }
 </script>
