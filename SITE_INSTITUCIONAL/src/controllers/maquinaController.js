@@ -1,4 +1,4 @@
-var aquarioModel = require("../models/aquarioModel");
+var maquinaModel = require("../models/maquinaModel");
 
 function buscarAquariosPorEmpresa(req, res) {
   var idUsuario = req.params.idUsuario;
@@ -18,17 +18,18 @@ function buscarAquariosPorEmpresa(req, res) {
 
 
 function cadastrar(req, res) {
-  var descricao = req.body.descricao;
-  var idUsuario = req.body.idUsuario;
+  var nome = req.body.nomeServer;
+  var fkNR = req.body.fkNRServer;
+  console.log(nome)
+  console.log(fkNR)
 
-  if (descricao == undefined) {
-    res.status(400).send("descricao está undefined!");
-  } else if (idUsuario == undefined) {
-    res.status(400).send("idUsuario está undefined!");
+  if (nome == undefined) {
+    res.status(400).send("O nome está indefinido!");
+  } else if (fkNR == undefined) {
+    res.status(400).send("A chave da empresa está indefinida!");
   } else {
 
-
-    aquarioModel.cadastrar(descricao, idUsuario)
+    maquinaModel.cadastrar(nome, fkNR)
       .then((resultado) => {
         res.status(201).json(resultado);
       }

@@ -7,7 +7,7 @@ CadMaquina
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/CadDash.css">
+    <link rel="stylesheet" href="./css/CadDash.css">
     <title> Cadastro de Máquina | SecurePass</title>
 </head>
 <body>
@@ -40,14 +40,14 @@ CadMaquina
     <div class="geral">
         <div class="formulario">
             <h2>Cadastro de Máquina</h2>
-            <input id="input_nome" type="text" placeholder="Nome da Máquina">
+            <input id="input_nome" type="text" placeholder="Nome da Máquina (deve ser único)">
             <br>  
             <br>    
             <br>
             <button class="botao" onclick="cadastrar()">Adicionar máquina</button>
             <br>
             <br>
-            <div class="mensagem"></div>
+            <div id="div_mensagem" class="mensagem"></div>
         </div>
         <div class="historico">
             <h2> Máquinas cadastradas</h2>
@@ -57,7 +57,46 @@ CadMaquina
 </body>
 </html>
 <script>
+
+    
     function cadastrar() {
-        
+        var nomeVar = input_nome.value;
+        var fkNRVar = sessionStorage.NR_EMPRESA;
+
+        if (
+            nomeVar == "" 
+        ) {
+            window.alert('Campos não devidamente preenchidos.')
+        }else {
+            // Enviando o valor da nova input
+            fetch("/maquinas/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nomeVar,
+                    fkNRServer: fkNRVar
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+
+                        window.alert('Máquina cadastrada com sucesso')
+
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+
+                        div_mensagem.innerHTML = "Já existe uma máquina com esse mesmo nome!"
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            return false;
+        }
     }
 </script>
