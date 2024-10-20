@@ -6,8 +6,8 @@ function buscarPorId(idUsuario) {
   return database.executar(instrucaoSql);
 }
 
-function listar() {
-  var instrucaoSql = `SELECT NR FROM empresa`;
+function verificarNR(fkNR) {
+  var instrucaoSql = `SELECT * FROM empresa WHERE NR = '${fkNR}'`;
 
   return database.executar(instrucaoSql);
 }
@@ -24,4 +24,4 @@ function cadastrar(nomeEmpresa, emailEmpresa, cnpj, NR) {
   return database.executar(instrucaoSql);
 }
 
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar };
+module.exports = { buscarPorCnpj, buscarPorId, cadastrar, verificarNR };

@@ -8,9 +8,18 @@ function buscarPorCnpj(req, res) {
   });
 }
 
-function listar(req, res) {
-  empresaModel.listar().then((resultado) => {
-    res.status(200).json(resultado);
+function verificarNR(req, res) {
+  var fkNR = req.query.idEmpresaVincular;
+
+  empresaModel.verificarNR(fkNR).then((resultado) => {
+    if (resultado.length > 0) {
+      res.status(200).send("NR encontrado");  // Sucesso
+    } else {
+      res.status(404).send("NR não encontrado");  // NR inválido
+    }
+  }).catch((erro) => {
+    console.error(erro);
+    res.status(500).send("Erro no servidor");
   });
 }
 
@@ -75,5 +84,5 @@ module.exports = {
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
-  listar
+  verificarNR
 };

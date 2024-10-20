@@ -16,8 +16,8 @@ router.get("/buscar/:idUsuario", function (req, res) {
   empresaController.buscarPorId(req, res);
 });
 
-router.get("/listar", function (req, res) {
-  empresaController.listar(req, res);
+router.get("/verificarNR", function (req, res) {
+  empresaController.verificarNR(req, res);
 });
 
 module.exports = router;

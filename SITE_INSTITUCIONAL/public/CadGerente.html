@@ -6,7 +6,8 @@
     <title>Cadastro | Gerente</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/CadDash.css">
+    <link rel="stylesheet" href="/css/CadDash.css">
+    <script src="./js/sessao.js"></script>
 </head>
 <body>
     <div class="content">
@@ -48,10 +49,10 @@
             <input id="input_emailGerente" type="text" placeholder="Email">
             <br>
             <br>
-            <input id="input_senhaGerente" type="text" placeholder="Senha">   
+            <input id="input_senhaGerente" type="password" placeholder="Senha">   
             <br>    
             <br>
-            <button class="botao" onclick="cadastrar()">Cadastrar Gerente</button>
+            <button class="botao" onclick="cadastrarGerente()">Cadastrar Gerente</button>
             <br>
             <br>
             <div class="mensagem"></div>
@@ -60,6 +61,12 @@
     </div>
 
     <script>
+        window.onload = function() {
+            // Verificar e exibir os valores recuperados
+            console.log("ID Usuário:", sessionStorage.getItem("ID_USUARIO"));
+            console.log("NR Empresa:", sessionStorage.getItem("NR_EMPRESA"));
+        };
+
         function toggleNavbar() {
             const navMenu = document.getElementById('navMenu');
             const hamburger = document.querySelector('.hamburger');
@@ -73,76 +80,54 @@
             }
         }
 
-        // VERIFICAR SE ESSA FUNÇÃO PEGA A fkNR DO USUÁRIO REPRESENTANTE QUE ESTÁ CADASTRANDO O GERENTE
-        let representanteVar = 0;
-        let fkNRVar = 0;
-
-        // ARRUMAR O idResponsavel QUE ESTÁ CADASTRANDO
-        function cadastrar() {
+        function cadastrarGerente() {
             var nomeGerenteVar = input_nomeGerente.value;
             var emailGerenteVar = input_emailGerente.value;
             var senhaGerenteVar = input_senhaGerente.value;
             var cpfGerenteVar = input_cpfGerente.value;
 
+            var representante = sessionStorage.getItem("ID_USUARIO");
+            var fkNR = sessionStorage.getItem("NR_EMPRESA");
+
             if (
-            nomeGerenteVar == "" ||
-            emailGerenteVar == "" ||
-            senhaGerenteVar == "" ||
-            cpfGerenteVar == ""
+                nomeGerenteVar == "" ||
+                emailGerenteVar == "" ||
+                senhaGerenteVar == "" ||
+                cpfGerenteVar == ""
             ) {
-                window.alert('Campos não devidamente preenchidos')
-            } else if(senhaGerente.length < 8) {
-                window.alert('A senha deve ter 8 ou mais caracteres')
-            } else{
-                // Enviando o valor da nova input
-                fetch("/usuarios/cadastrarGerente", {
+                window.alert("Campos não devidamente preenchidos");
+                return;
+            } else if (senhaGerenteVar.length < 8) {
+                window.alert("A senha deve ter 8 ou mais caracteres");
+                return;
+            } 
+
+            fetch("/usuarios/cadastrarGerente", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     nomeGerenteServer: nomeGerenteVar,
                     cpfGerenteServer: cpfGerenteVar,
                     emailGerenteServer: emailGerenteVar,
                     senhaGerenteServer: senhaGerenteVar,
-                    representanteSever: representanteVar,
-                    fkNRSever: fkNRVar
+                    representanteServer: representante,
+                    fkNRServer: fkNR
                 }),
-                })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
-
-                    if (resposta.ok) {
-
-                        window.alert('Cadastro de Gerente Realizado com sucesso')
-
-                    } else {
-                        throw "Houve um erro ao tentar realizar o cadastro!";
-                    }
-                })
-                .catch(function (resposta) {
-                    console.log(`#ERRO: ${resposta}`);
-                });
-
-                return false;
-                }
-        }
-
-        function buscarPorId() {
-            fetch("/empresas/buscar/:idUsuario", {
-            method: "GET",
             })
             .then(function (resposta) {
-                resposta.json().then((empresas) => {
-                empresas.forEach((empresa) => {
-                    representanteVar.idUsuario;
-                    fkNRVar.fkNR;
-                });
-                });
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    window.alert("Cadastro de Gerente Realizado com sucesso");
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
             });
+
+            return false;
         }
     </script>
 </body>

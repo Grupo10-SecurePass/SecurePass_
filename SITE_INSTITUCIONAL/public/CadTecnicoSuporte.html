@@ -54,7 +54,7 @@
             <input id="input_senhaTecnico" type="text" placeholder="Senha">   
             <br>    
             <br>
-            <button class="botao" onclick="cadastrar()">Cadastrar Técnico de Suporte</button>
+            <button class="botao" onclick="cadastrarSuporte()">Cadastrar Técnico de Suporte</button>
             <br>
             <br>
             <div class="mensagem"></div>
@@ -77,16 +77,14 @@
             }
         }
 
-        // VERIFICAR SE ESSA FUNÇÃO PEGA A fkNR DO USUÁRIO REPRESENTANTE QUE ESTÁ CADASTRANDO O GERENTE
-        let representanteVar = 0;
-        let fkNRVar = 0;
-
-        // ARRUMAR O idResponsavel QUE ESTÁ CADASTRANDO
-        function cadastrar() {
+        function cadastrarSuporte() {
             var nomeTecnicoVar = input_nomeTecnico.value;
-            var emailTecnicoVar = input_emailTecnico.value;
-            var senhaTecnicoVar = input_senhaTecnico.value;
-            var cpfTecnicoVar = input_cpfTecnico.value;
+            var emailTecnicoVar = input_cpfTecnico.value;
+            var senhaTecnicoVar = input_emailTecnico.value;
+            var cpfTecnicoVar = input_senhaTecnico.value;
+
+            var representante = sessionStorage.getItem("ID_USUARIO");
+            var fkNR = sessionStorage.getItem("NR_EMPRESA");
 
             if (
                 nomeTecnicoVar == "" ||
@@ -94,59 +92,39 @@
                 senhaTecnicoVar == "" ||
                 cpfTecnicoVar == ""
             ) {
-                window.alert('Campos não devidamente preenchidos')
-            } else if(senhaGerente.length < 8) {
-                window.alert('A senha deve ter 8 ou mais caracteres')
-            } else{
-                // Enviando o valor da nova input
-                fetch("/usuarios/cadastrarSuporte", {
+                window.alert("Campos não devidamente preenchidos");
+                return;
+            } else if (senhaTecnicoVar.length < 8) {
+                window.alert("A senha deve ter 8 ou mais caracteres");
+                return;
+            } 
+
+            fetch("/usuarios/cadastrarSuporte", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     nomeTecnicoServer: nomeTecnicoVar,
                     cpfTecnicoServer: cpfTecnicoVar,
                     emailTecnicoServer: emailTecnicoVar,
                     senhaTecnicoServer: senhaTecnicoVar,
-                    representanteSever: representanteVar,
-                    fkNRSever: fkNRVar
+                    representanteServer: representante,
+                    fkNRServer: fkNR
                 }),
-                })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
-
-                    if (resposta.ok) {
-
-                        window.alert('Cadastro de Gerente Realizado com sucesso')
-
-                    } else {
-                        throw "Houve um erro ao tentar realizar o cadastro!";
-                    }
-                })
-                .catch(function (resposta) {
-                    console.log(`#ERRO: ${resposta}`);
-                });
-
-                return false;
-                }
-        }
-
-        function buscarPorId() {
-            fetch("/empresas/buscar/:idUsuario", {
-            method: "GET",
             })
             .then(function (resposta) {
-                resposta.json().then((empresas) => {
-                empresas.forEach((empresa) => {
-                    representanteVar.idUsuario;
-                    fkNRVar.fkNR;
-                });
-                });
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    window.alert("Cadastro de Gerente Realizado com sucesso");
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
             });
+
+            return false;
         }
     </script>
 

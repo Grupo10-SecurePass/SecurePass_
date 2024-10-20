@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
     <title>Cadastro Representante | SecurePass</title>
-    <link rel="stylesheet" href="../public/css/CadLog.css">
+    <link rel="stylesheet" href="/css/CadLog.css">
 </head>
 <body>
 
@@ -39,109 +39,75 @@
 
 <script>
 
-  let listaEmpresasCadastradas = [];
   function cadastrar() {
-    // aguardar();
+      // Obtém os valores dos campos
+      var nomeVar = input_nome.value;
+      var cpfVar = input_cpf.value;
+      var emailVar = input_email.value;
+      var senhaVar = input_senha.value;
+      var idEmpresaVincular = Number(input_nr.value);
 
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
-    var nomeVar = input_nome.value;
-    var cpfVar = input_cpf.value;
-    var emailVar = input_email.value;
-    var senhaVar = input_senha.value;
-    var nrVar = input_nr.value;
-    var idEmpresaVincular
-
-    // Verificando se há algum campo em branco
-    if (
-      nomeVar == "" ||
-      cpfVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      nrVar == ""
-    ) {
-      window.alert("Preencha todos os campos corretamente")
-
-      //finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
-
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].nr == nrVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].nr
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
+      // Verifica se todos os campos estão preenchidos
+      if (nomeVar == "" || cpfVar == "" || emailVar == "" || senhaVar == "" || idEmpresaVincular == "") {
+          alert("Preencha todos os campos corretamente");
+          return false;
       }
-    }
 
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        cpfServer: cpfVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        nrServer: nrVar,
-        idEmpresaVincularServer: idEmpresaVincular
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          cardErro.style.display = "block";
-
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
-
-          //limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
+      // Chama a função assíncrona para verificar o NR
+      verificarNR(idEmpresaVincular, function(resultadoVerificacao) {
+          if (resultadoVerificacao == "certo") {
+              // Se o NR for válido, realiza o cadastro
+              fetch("/usuarios/cadastrar", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      nomeServer: nomeVar,
+                      cpfServer: cpfVar,
+                      emailServer: emailVar,
+                      senhaServer: senhaVar,
+                      idEmpresaVincularServer: idEmpresaVincular
+                  }),
+              })
+              .then(function(resposta) {
+                  console.log("resposta: ", resposta);
+                  if (resposta.ok) {
+                      setTimeout(() => {
+                          window.location = "LoginUsuario.html";
+                      }, 800);
+                  } else {
+                      throw "Houve um erro ao tentar realizar o cadastro!";
+                  }
+              })
+              .catch(function(resposta) {
+                  console.log(`#ERRO: ${resposta}`);
+              });
+          } else {
+              alert("O NR informado não pertence a nenhuma empresa cadastrada.");
+          }
       });
 
-    return false;
+      return false;
   }
 
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].nr)
-          });
-        });
+  function verificarNR(idEmpresaVincular, callback) {
+      fetch(`/empresas/verificarNR?idEmpresaVincular=${idEmpresaVincular}`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+          }
       })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
+      .then(function(resposta) {
+          if (resposta.ok) {
+              callback("certo"); // NR encontrado
+          } else {
+              callback("erro"); // NR não encontrado
+          }
+      })
+      .catch(function(error) {
+          console.error(error);
+          callback("erro");
       });
   }
 </script>
