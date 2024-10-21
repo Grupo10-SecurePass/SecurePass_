@@ -12,26 +12,179 @@
         <div class="quadros">
             <div class="div1">
                 <div class="filtro">
-                    <div class="data">
+                    <div class="escolha">
                         <div class="textodata">
-                            <p>Selecione o período desejado: de</p>
-                            <input type="date">
-                            <p>até</p>
-                            <input type="date">
+                            <p>Escolha o servidor que você deseja monitorar</p>
+                            <select name="escolherServidor" id="">
+                                <option value="#" selected disabled>Escolher</option>
+                            </select>
                         </div>
                         <div class="aviso">
                             <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento padrão da data de hoje e uma semana atrás. </p>
                         </div>
                     </div>
-                    <div class="btn_filtro"></div>
                 </div>
-                <div class="rede"></div>
+                <div class="rede">
+                    <div class="espacotitulorede">
+                        <p>Rede</p>
+                    </div>
+                    <div class="titulograficorede1">
+                        <p>Velocidade de upload:</p>
+                    </div>
+                    <div class="espacografico1rede">
+                        <div class="grafico1rede">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="linha"></div>
+                    <div class="titulograficorede2">
+                        <p>Velocidade de download:</p>
+                    </div>
+                    <div class="espacografico2rede">
+                        <div class="grafico2rede">
+                            <canvas id="myChart1"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="div2">
-                <div class="cpu"></div>
-                <div class="risco"></div>
+                <div class="ram">
+                    <div class="espacotituloram">
+                        <p>Uso de RAM:</p>
+                    </div>
+                    <div class="espacograficoram">
+                        <div class="graficoram">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="cpuedisco">
+                    <div class="cpu">
+                        <div class="titulocpu">
+                            <p>Uso de CPU:</p>
+                        </div>
+                        <div class="espacograficocpu">
+                            <div class="graficocpu">
+                                <canvas id="myChart3"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="disco">
+                        <div class="titulodisco">
+                            <p>Uso do Disco:</p>
+                        </div>
+                        <div class="espacograficodisco">
+                            <div class="graficocpu">
+                                <canvas id="myChart4"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+    const ctx1 = document.getElementById('myChart1');
+    const ctx2 = document.getElementById('myChart2');
+    const ctx3 = document.getElementById('myChart3');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [30, 25, 20, 15, 10, 5, 0],
+            datasets: [{
+              label: 'Mb/s',
+              data: [1200, 200, 900, 1500, 1500, 700, 600],
+              borderWidth: 2,
+              backgroundColor: 'rgba(36, 130, 50, 1)',
+              borderColor: 'rgba(36, 130, 50, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: [30, 25, 20, 15, 10, 5, 0],
+            datasets: [{
+              label: 'Mb/s',
+              data: [1200, 200, 900, 1500, 1500, 700, 600],
+              borderWidth: 2,
+              backgroundColor: 'rgba(36, 130, 50, 1)',
+              borderColor: 'rgba(36, 130, 50, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: [30, 25, 20, 15, 10, 5, 0],
+            datasets: [{
+              label: 'Mb/s',
+              data: [40, 20, 90, 92, 15, 70, 60],
+              borderWidth: 2,
+              backgroundColor: 'rgba(36, 130, 50, 1)',
+              borderColor: 'rgba(36, 130, 50, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: [30, 25, 20, 15, 10, 5, 0],
+            datasets: [{
+              label: 'Mb/s',
+              data: [40, 20, 90, 92, 15, 70, 60],
+              borderWidth: 2,
+              backgroundColor: 'rgba(36, 130, 50, 1)',
+              borderColor: 'rgba(36, 130, 50, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    const ctx4 = document.getElementById('myChart4').getContext('2d');
+    const myChart = new Chart(ctx4, {
+        type: 'pie',
+        data: {
+            labels: ['Usado', 'Livre'],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [300, 500],
+                backgroundColor: [
+                    'rgb(255, 0, 0, 1.0)',
+                    'rgb(36, 130, 50, 1.0)'
+                ]
+            }]
+        }
+    });
+</script>

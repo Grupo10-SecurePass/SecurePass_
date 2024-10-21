@@ -5,7 +5,7 @@
     margin: 0;
 }
 body{
-    background-color: #040F0F;
+    background-color: #FCFFFC;
 }
 .mae{
     display: flex;
@@ -36,8 +36,9 @@ body{
     background-color: #FCFFFC;
     display: flex;
     align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-.data{
+.escolha{
     display: flex;
     flex-direction: column;
     padding: 5px;
@@ -46,24 +47,74 @@ body{
 }
 .textodata{
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     gap: 10px;
+    width: 80%;
 }
 .textodata p{
     font-size: 15px;
     font-weight: 700;
 }
+.textodata select{
+    width: 20%;
+}
 .aviso{
     font-size: 10px;
-}
-.btn_filtro{
-    width: 15%;
-    height: 100%;
 }
 .rede{
     width: 100%;
     height: 520px;
     background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+.espacotitulorede{
+    width: 100%;
+    height: 35px;
+}
+.espacotitulorede p{
+    font-size: 30px;
+    font-weight: 600;
+}
+.titulograficorede1{
+    width: 90%;
+    height: 25px;
+    display: flex;
+    align-items: end;
+}
+.espacografico1rede{
+    width: 85%;
+    height: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grafico1rede{
+    width: 75%;
+}
+.linha{
+    width: 95%;
+    height: 1px;
+    background-color: #040F0F;
+}
+.titulograficorede2{
+    width: 90%;
+    height: 25px;
+    display: flex;
+    align-items: end;
+}
+.espacografico2rede{
+    width: 85%;
+    height: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grafico2rede{
+    width: 75%;
 }
 .div2{
     width: 45%;
@@ -72,13 +123,91 @@ body{
     flex-direction: column;
     justify-content: space-between;
 }
-.cpu{
+.ram{
     width: 100%;
     height: 295px;
     background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.risco{
+.espacotituloram{
+    width: 100%;
+    height: 30px;
+}
+.espacotituloram p{
+    font-size: 25px;
+    font-weight: 600;
+}
+.espacograficoram{
+    width: 85%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.graficoram{
+    width: 90%;
+}
+.cpuedisco{
     width: 100%;
     height: 295px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cpu{
+    height: 100%;
+    width: 60%;
     background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+.titulocpu{
+    width: 100%;
+    height: 35px;
+}
+.titulocpu p{
+    font-size: 25px;
+    font-weight: 600;
+}
+.espacograficocpu{
+    width: 100%;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.graficocpu{
+    width: 95%;
+}
+.disco{
+    height: 100%;
+    width: 35%;
+    background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+.titulodisco{
+    width: 100%;
+    height: 35px;
+}
+.titulodisco p{
+    font-size: 25px;
+    font-weight: 600;
+}
+.espacograficodisco{
+    width: 100%;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
