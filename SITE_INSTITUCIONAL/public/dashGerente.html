@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gerente</title>
+    <link rel="stylesheet" href="./css/dashGerente.css">
+</head>
+<body>
+    <div class="mae">
+        <div class="lateral"></div>
+        <div class="quadros">
+            <div class="div1">
+                <div class="filtro">
+                    <div class="data">
+                        <div class="textodata">
+                            <p>Selecione o período desejado: de</p>
+                            <input type="date">
+                            <p>até</p>
+                            <input type="date">
+                        </div>
+                        <div class="aviso">
+                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento padrão da data de hoje e uma semana atrás. </p>
+                        </div>
+                    </div>
+                    <div class="btn_filtro">
+                        <button>Filtrar</button>
+                    </div>
+                </div>
+                <div class="rede">
+                    <div class="titulorede">
+                        <p>Rede</p>
+                    </div>
+                    <div class="titulografico1rede">
+                        <p>Média de velocidade de upload:</p>
+                    </div>
+                    <div class="grafico1rede">
+                        <div class="espacografico1">
+                            <div class="graficoupload">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="legendagrafico1">
+                            <p>Média de velocidade: X Mb/s</p>
+                        </div>
+                    </div>
+                    <div class="linha"></div>
+                    <div class="titulografico2rede">
+                        <p>Média de velocidade de download:</p>
+                    </div>
+                    <div class="grafico2rede">
+                        <div class="espacografico2">
+                            <div class="graficodownload">
+                                <canvas id="myChart1"></canvas>
+                            </div>
+                        </div>
+                        <div class="legendagrafico2">
+                            <p>Média de velocidade: X Mb/s</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="div2">
+                <div class="cpu">
+                    <div class="titulocpu">
+                        <p>Média de uso de CPU:</p>
+                    </div>
+                    <div class="espacograficocpu">
+                        <div class="graficocpu">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="risco">
+                    <div class="titulorisco">
+                        <p>Quantidade de máquinas que ficaram em risco:</p>
+                    </div>
+                    <div class="graficolegenda">
+                        <div class="graficorisco">
+                            <canvas id="myChart3"></canvas>
+                        </div>
+                        <div class="riscolegenda">
+                            <p>A Linha Verde teve mais problemas com máquinas, totalizando X problemas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+    const ctx1 = document.getElementById('myChart1');
+    const ctx2 = document.getElementById('myChart2');
+    const ctx3 = document.getElementById('myChart3');
+      
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Mb/s',
+              data: [1500, 1000, 1250, 1750, 2000],
+              borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Mb/s',
+              data: [1500, 1000, 1250, 1750, 2000],
+              borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: '%',
+              data: [1500, 1000, 1250, 1750, 2000],
+              borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Qtd',
+              data: [15, 10, 12, 17, 20],
+              borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+</script>

@@ -1,8 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 body {
   display: flex;
   background-color: #040F0F;
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Nunito Sans", system-ui;
   height: 100vh;
 }
 

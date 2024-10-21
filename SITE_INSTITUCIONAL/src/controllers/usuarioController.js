@@ -127,10 +127,10 @@ function cadastrarSuporte(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nomeTecnico = req.body.nomeTecnicoServer;
     var cpfTecnico = req.body.cpfTecnicoServer;
-    var emailTecnico = req.body.emailTecnicoVar;
-    var senhaTecnico = req.body.senhaTecnicoVar;
-    var representanteTecnico = req.body.representanteSever;
-    var fkNRSuporte = req.body.fkNRSever;
+    var emailTecnico = req.body.emailTecnicoServer;
+    var senhaTecnico = req.body.senhaTecnicoServer;
+    var representanteTecnico = req.body.representanteServer;
+    var fkNRSuporte = req.body.fkNRServer;
 
     // Faça as validações dos valores
     if (fkNRSuporte == undefined) {

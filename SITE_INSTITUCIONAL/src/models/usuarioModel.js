@@ -39,8 +39,8 @@ function cadastrarSuporte(fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, se
     
     var instrucaoSql = `
         INSERT INTO usuario 
-        (fkNR, nome, cpf, email, senha, cargo, status, fkResponsavel) 
-        VALUES ('${fkNRSuporte}', '${nomeTecnico}', '${cpfTecnico}', '${emailTecnico}', '${senhaTecnico}', 'gerente', 'ativo', '${representanteTecnico}');
+        (fkNR, nome, cpf, email, senha, cargo, stats, fkResponsavel) 
+        VALUES ('${fkNRSuporte}', '${nomeTecnico}', '${cpfTecnico}', '${emailTecnico}', '${senhaTecnico}', 'técnico', 'ativo', '${representanteTecnico}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

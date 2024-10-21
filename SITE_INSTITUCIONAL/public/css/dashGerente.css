@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+*{
+    font-family: "Nunito Sans", system-ui;
+    box-sizing: border-box;
+    margin: 0;
+}
+body{
+    background-color: #040F0F;
+}
+.mae{
+    display: flex;
+    width: 100%;
+    height: 695px;
+    align-items: center;
+}
+.lateral{
+    width: 5%;
+    height: 100%;
+}
+.quadros{
+    width: 90%;
+    height: 620px;
+    display: flex;
+    gap: 30px;
+}
+.div1{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.filtro{
+    width: 100%;
+    height: 70px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+}
+.data{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 85%;
+    gap: 10px;
+}
+.textodata{
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+.textodata p{
+    font-size: 15px;
+    font-weight: 700;
+}
+.aviso{
+    font-size: 10px;
+}
+.btn_filtro{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.btn_filtro button{
+    padding: 10px 20px;
+    background-color: #248232;
+    color: #FCFFFC;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn_filtro button:hover{
+    background-color: #195d23;
+}
+.rede{
+    width: 100%;
+    height: 520px;
+    background-color: #FCFFFC;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.titulorede{
+    width: 100%;
+    height: 35px;
+}
+.titulorede p{
+    font-size: 30px;
+    font-weight: 600;
+}
+.titulografico1rede{
+    width: 75%;
+    height: 20px;
+}
+.grafico1rede{
+    width: 75%;
+    height: 210px;
+    display: flex;
+}
+.espacografico1{
+    width: 75%;
+    height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.graficoupload{
+    width: 100%;
+}
+.legendagrafico1{
+    font-size: 15px;
+    width: 25%;
+    height: 95%;
+}
+.linha{
+    width: 85%;
+    height: 1px;
+    background-color: #040F0F;
+}
+.titulografico2rede{
+    width: 75%;
+    height: 20px;
+    margin-top: 5px;
+}
+.grafico2rede{
+    width: 75%;
+    height: 210px;
+    display: flex;
+}
+.espacografico2{
+    width: 75%;
+    height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.graficodownload{
+    width: 100%;
+}
+.legendagrafico2{
+    font-size: 15px;
+    width: 25%;
+    height: 95%;
+}
+.div2{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.cpu{
+    width: 100%;
+    height: 295px;
+    background-color: #FCFFFC;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.titulocpu{
+    width: 100%;
+    height: 35px;
+    font-weight: 600;
+}
+.titulocpu p{
+    font-size: 25px;
+}
+.espacograficocpu{
+    width: 90%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.graficocpu{
+    width: 80%;
+}
+.risco{
+    width: 100%;
+    height: 295px;
+    background-color: #FCFFFC;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+.titulorisco{
+    width: 100%;
+    height: 40px;
+}
+.titulorisco p{
+    font-size: 25px;
+    font-weight: 600;
+}
+.graficolegenda{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.graficorisco{
+    width: 70%;
+}
+.riscolegenda{
+    width: 20%;
+}

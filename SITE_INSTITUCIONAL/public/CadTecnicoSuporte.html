@@ -6,7 +6,7 @@
     <title>Cadastro | Técnico de Suporte</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/CadDash.css">
+    <link rel="stylesheet" href="./css/CadDash.css">
 </head>
 <body>
 
@@ -79,9 +79,9 @@
 
         function cadastrarSuporte() {
             var nomeTecnicoVar = input_nomeTecnico.value;
-            var emailTecnicoVar = input_cpfTecnico.value;
-            var senhaTecnicoVar = input_emailTecnico.value;
-            var cpfTecnicoVar = input_senhaTecnico.value;
+            var cpfTecnicoVar = input_cpfTecnico.value;
+            var emailTecnicoVar = input_emailTecnico.value;
+            var senhaTecnicoVar = input_senhaTecnico.value;
 
             var representante = sessionStorage.getItem("ID_USUARIO");
             var fkNR = sessionStorage.getItem("NR_EMPRESA");

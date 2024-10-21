@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+*{
+    font-family: "Nunito Sans", system-ui;
+    box-sizing: border-box;
+    margin: 0;
+}
+body{
+    background-color: #040F0F;
+}
+.mae{
+    display: flex;
+    width: 100%;
+    height: 695px;
+    align-items: center;
+}
+.lateral{
+    width: 5%;
+    height: 100%;
+}
+.quadros{
+    width: 90%;
+    height: 620px;
+    display: flex;
+    gap: 30px;
+}
+.div1{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.filtro{
+    width: 100%;
+    height: 70px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+}
+.data{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 85%;
+    gap: 10px;
+}
+.textodata{
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+.textodata p{
+    font-size: 15px;
+    font-weight: 700;
+}
+.aviso{
+    font-size: 10px;
+}
+.btn_filtro{
+    width: 15%;
+    height: 100%;
+}
+.rede{
+    width: 100%;
+    height: 520px;
+    background-color: #FCFFFC;
+}
+.div2{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.cpu{
+    width: 100%;
+    height: 295px;
+    background-color: #FCFFFC;
+}
+.risco{
+    width: 100%;
+    height: 295px;
+    background-color: #FCFFFC;
+}
