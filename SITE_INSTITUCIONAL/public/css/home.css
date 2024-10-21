@@ -146,9 +146,9 @@ header{
 }
 .texto_sobrenos{
   color: #fff;
-  font-size: 24px;
   width: 60%;
-  font-size: 35px;
+  font-size: 25px;
+  
 }
 .fundo_sobrenos{
   width: 100%;
@@ -199,7 +199,7 @@ header{
 .destaques{
   text-align: end;
   width: 90%;
-  font-size: 30px;
+  font-size: 23px;
 }
 
 .secao4{
