@@ -6,10 +6,10 @@
     <title>Cadastro | Gerente</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/CadDash.css">
+    <link rel="stylesheet" href="./css/CadDash.css">
     <script src="./js/sessao.js"></script>
 </head>
-<body>
+<body onload="atualizarFeed()">
     <div class="content">
         <button class="hamburger" onclick="toggleNavbar()">
             <div class="bar"></div>
@@ -57,15 +57,94 @@
             <br>
             <div class="mensagem"></div>
         </div>
-        <div class="historico"></div>
+        <div class="historico">
+            <div class="titulohistorico">
+                <p>Gerentes já cadastrados:</p>
+            </div>
+            <div class="espacolista">
+                <div class="espacopesquisa">
+                    <div class="search-container">
+                        <input type="text" placeholder="Pesquisar">
+                        <button type="submit">
+                            <img src="" alt="Pesquisar">
+                        </button>
+                    </div>
+                </div>
+                <div class="listagerentes" id="listagerentes">
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        window.onload = function() {
-            // Verificar e exibir os valores recuperados
-            console.log("ID Usuário:", sessionStorage.getItem("ID_USUARIO"));
-            console.log("NR Empresa:", sessionStorage.getItem("NR_EMPRESA"));
-        };
+        function atualizarFeed() {
+        fetch("/avisos/listar")
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status === 204) {
+                        const lista = document.getElementById("listagerentes");
+                        lista.innerHTML = "<p>Nenhum resultado encontrado.</p>";
+                        throw "Nenhum resultado encontrado!";
+                    }
+
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listagerentes");
+                lista.innerHTML = ""; // Limpa a lista antes de adicionar novos itens
+
+                dados.forEach((card) => {
+                    // Criação dos elementos do card
+                    var divCard = document.createElement("a");
+                    divCard.className = "linklista";
+                    divCard.href = "#"; // Evita href vazio
+
+                    var divCardGerente = document.createElement("div");
+                    divCardGerente.className = "cardgerente";
+
+                    var divFotoeNome = document.createElement("div");
+                    divFotoeNome.className = "fotoenome";
+
+                    var imgPerfil = document.createElement("img");
+                    imgPerfil.src = "./imagens/perfil.svg";
+                    imgPerfil.alt = "Foto de perfil";
+
+                    var nome = document.createElement("p");
+                    nome.innerText = card.nome; // Atribui o nome ao <p>
+
+                    var status = document.createElement("div");
+                    status.className = "status";
+
+                    var statusAtivoInativo = document.createElement("p");
+                    statusAtivoInativo.innerText = card.stats; // Atribui o status ao <p>
+
+                    // Monta o card
+                    divFotoeNome.appendChild(imgPerfil);
+                    divFotoeNome.appendChild(nome);
+
+                    status.appendChild(statusAtivoInativo);
+
+                    divCardGerente.appendChild(divFotoeNome);
+                    divCardGerente.appendChild(status);
+
+                    divCard.appendChild(divCardGerente);
+
+                    // Adiciona o card à lista
+                    lista.appendChild(divCard);
+                });
+            })
+            .catch(function (erro) {
+                console.error(erro);
+
+                // Exibe uma mensagem de erro amigável
+                const lista = document.getElementById("listagerentes");
+                lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
+            });
+    }
 
         function toggleNavbar() {
             const navMenu = document.getElementById('navMenu');
