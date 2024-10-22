@@ -7,6 +7,37 @@
     <link rel="stylesheet" href="./css/dashSuporte.css">
 </head>
 <body>
+    
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="#">Dashboard</a>
+                <a href="#">Alertas</a>
+                <a href="#">Perfil</a>
+                <a href="index.html">Home/Página Principal</a>
+            </div>
+
+            <a href="#" class="logout">Sair</a>
+        </nav>
+    </div>
+
+    
     <div class="mae">
         <div class="lateral"></div>
         <div class="quadros">
@@ -83,108 +114,132 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function Navbar() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const closeBtn = document.querySelector('.close-btn');
+
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                setTimeout(() => {
+                    hamburger.style.display = 'block';
+                    closeBtn.style.display = 'none';
+                }, 300);
+            } else {
+                hamburger.style.display = 'none';
+                closeBtn.style.display = 'block';
+                navMenu.classList.add('show');
+                hamburger.classList.add('active');
+            }
+        }
+
+        const ctx = document.getElementById('myChart');
+        const ctx1 = document.getElementById('myChart1');
+        const ctx2 = document.getElementById('myChart2');
+        const ctx3 = document.getElementById('myChart3');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [30, 25, 20, 15, 10, 5, 0],
+                datasets: [{
+                    label: 'Mb/s',
+                    data: [1200, 200, 900, 1500, 1500, 700, 600],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: [30, 25, 20, 15, 10, 5, 0],
+                datasets: [{
+                    label: 'Mb/s',
+                    data: [1200, 200, 900, 1500, 1500, 700, 600],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: [30, 25, 20, 15, 10, 5, 0],
+                datasets: [{
+                    label: 'Mb/s',
+                    data: [40, 20, 90, 92, 15, 70, 60],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: [30, 25, 20, 15, 10, 5, 0],
+                datasets: [{
+                    label: 'Mb/s',
+                    data: [40, 20, 90, 92, 15, 70, 60],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx4 = document.getElementById('myChart4').getContext('2d');
+        new Chart(ctx4, {
+            type: 'pie',
+            data: {
+                labels: ['Usado', 'Livre'],
+                datasets: [{
+                    label: 'Uso do Disco',
+                    data: [300, 500],
+                    backgroundColor: [
+                        'rgb(255, 0, 0)',
+                        'rgb(36, 130, 50)'
+                    ]
+                }]
+            }
+        });
+    </script>
 </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    const ctx = document.getElementById('myChart');
-    const ctx1 = document.getElementById('myChart1');
-    const ctx2 = document.getElementById('myChart2');
-    const ctx3 = document.getElementById('myChart3');
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [30, 25, 20, 15, 10, 5, 0],
-            datasets: [{
-              label: 'Mb/s',
-              data: [1200, 200, 900, 1500, 1500, 700, 600],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-    new Chart(ctx1, {
-        type: 'line',
-        data: {
-            labels: [30, 25, 20, 15, 10, 5, 0],
-            datasets: [{
-              label: 'Mb/s',
-              data: [1200, 200, 900, 1500, 1500, 700, 600],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-    new Chart(ctx2, {
-        type: 'line',
-        data: {
-            labels: [30, 25, 20, 15, 10, 5, 0],
-            datasets: [{
-              label: 'Mb/s',
-              data: [40, 20, 90, 92, 15, 70, 60],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-    new Chart(ctx3, {
-        type: 'line',
-        data: {
-            labels: [30, 25, 20, 15, 10, 5, 0],
-            datasets: [{
-              label: 'Mb/s',
-              data: [40, 20, 90, 92, 15, 70, 60],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-    const ctx4 = document.getElementById('myChart4').getContext('2d');
-    const myChart = new Chart(ctx4, {
-        type: 'pie',
-        data: {
-            labels: ['Usado', 'Livre'],
-            datasets: [{
-                label: 'My First Dataset',
-                data: [300, 500],
-                backgroundColor: [
-                    'rgb(255, 0, 0, 1.0)',
-                    'rgb(36, 130, 50, 1.0)'
-                ]
-            }]
-        }
-    });
-</script>
