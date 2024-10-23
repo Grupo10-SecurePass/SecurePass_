@@ -13,6 +13,47 @@ function listar(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+function listarSuporte(req, res) {
+    avisoModel.listarSuporte().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function pesquisa(req, res) {
+    var pesquisa = req.body.pesquisaServer;
+
+    avisoModel.pesquisa(pesquisa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log("Houve um erro ao buscar os gerentes: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function pesquisaSuporte(req, res) {
+    var pesquisa = req.body.pesquisaServer;
+
+    avisoModel.pesquisaSuporte(pesquisa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log("Houve um erro ao buscar os gerentes: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 function listarPorUsuario(req, res) {
     var idUsuario = req.params.idUsuario;
@@ -132,5 +173,8 @@ module.exports = {
     pesquisarDescricao,
     publicar,
     editar,
-    deletar
+    deletar,
+    pesquisa,
+    listarSuporte,
+    pesquisaSuporte
 }

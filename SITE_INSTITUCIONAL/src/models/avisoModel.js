@@ -6,6 +6,34 @@ function listar() {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+function listarSuporte() {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    var instrucaoSql = `SELECT idUsuario, nome, stats FROM usuario WHERE cargo = "técnico";`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+function pesquisa(pesquisa) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    
+    var instrucaoSql = `SELECT idUsuario, nome, stats 
+                        FROM usuario 
+                        WHERE nome LIKE '%${pesquisa}%';`;
+    
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+function pesquisaSuporte(pesquisa) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    
+    var instrucaoSql = `SELECT idUsuario, nome, stats 
+                        FROM usuario 
+                        WHERE nome LIKE '%${pesquisa}%';`;
+    
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
 
 function pesquisarDescricao(texto) {
     console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pesquisarDescricao()");
@@ -82,5 +110,8 @@ module.exports = {
     pesquisarDescricao,
     publicar,
     editar,
-    deletar
+    deletar,
+    pesquisa,
+    listarSuporte,
+    pesquisaSuporte
 }

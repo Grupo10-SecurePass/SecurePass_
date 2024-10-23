@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/CadDash.css">
 </head>
-<body>
+<body onload="atualizarLista()">
 
     <div class="content">
         <button class="hamburger" onclick="toggleNavbar()">
@@ -51,7 +51,7 @@
             <input id="input_emailTecnico" type="text" placeholder="Email">
             <br>
             <br>
-            <input id="input_senhaTecnico" type="text" placeholder="Senha">   
+            <input id="input_senhaTecnico" type="password" placeholder="Senha">   
             <br>    
             <br>
             <button class="botao" onclick="cadastrarSuporte()">Cadastrar Técnico de Suporte</button>
@@ -59,11 +59,211 @@
             <br>
             <div class="mensagem"></div>
         </div>
-
-        <div class="historico"></div>
+        <div class="historico">
+            <div class="titulohistorico">
+                <p>Gerentes já cadastrados:</p>
+            </div>
+            <div class="espacolista">
+                <div class="espacopesquisa" id="espacopesquisa">
+                    <div class="search-container">
+                        <input type="text" id="input_pesquisa" placeholder="Pesquisar">
+                        <button type="submit" onclick="pesquisaSuporte()">
+                            <img src="./imagens/lupa.png" alt="Pesquisar">
+                        </button>
+                    </div>
+                </div>
+                <div class="listagerentes" id="listagerentes">
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
+        function atualizarLista() {
+        fetch("/avisos/listarSuporte")
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listagerentes");
+                        lista.className = "lista";
+                        lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listagerentes");
+                lista.innerHTML = "";
+
+                if (dados.length == 0) {
+                    lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
+                    return;
+                }
+
+                dados.sort(function (a, b) {
+                    if (a.stats.toUpperCase() === "INATIVO" && b.stats.toUpperCase() !== "INATIVO") {
+                        return 1;
+                    } else if (a.stats.toUpperCase() !== "INATIVO" && b.stats.toUpperCase() === "INATIVO") {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+
+                for (let i = 0; i < dados.length; i++){
+                    var card = dados[i];
+
+                    var divCard = document.createElement("a");
+                    divCard.className = "linklista";
+                    divCard.href = "#";
+
+                    var divCardGerente = document.createElement("div");
+                    divCardGerente.className = "cardgerente";
+
+                    var divFotoeNome = document.createElement("div");
+                    divFotoeNome.className = "fotoenome";
+
+                    var imgPerfil = document.createElement("img");
+                    imgPerfil.src = "./imagens/perfil.svg";
+                    imgPerfil.alt = "Foto de perfil";
+
+                    var nome = document.createElement("p");
+                    nome.innerText = card.nome;
+
+                    var status = document.createElement("div");
+                    status.className = "status";
+
+                    var statusAtivoInativo = document.createElement("p");
+                    statusAtivoInativo.innerText = card.stats.toUpperCase();
+                    if (card.stats.toUpperCase() == "ATIVO") {
+                        statusAtivoInativo.style.color = "black";
+                    } else if (card.stats.toUpperCase() == "INATIVO") {
+                        statusAtivoInativo.style.color = "red";
+                    }
+
+                    divFotoeNome.appendChild(imgPerfil);
+                    divFotoeNome.appendChild(nome);
+                    status.appendChild(statusAtivoInativo);
+                    divCardGerente.appendChild(divFotoeNome);
+                    divCardGerente.appendChild(status);
+                    divCard.appendChild(divCardGerente);
+                    lista.appendChild(divCard);
+                }
+            })
+            .catch(function (erro) {
+                console.error(erro);
+
+                const lista = document.getElementById("listagerentes");
+                lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
+            });
+        }
+
+        function pesquisaSuporte() {
+            var pesquisa = input_pesquisa.value;
+
+            if (pesquisa == "") {
+                window.alert("Preencha corretamente o campo de pesquisa");
+                return;
+            }
+
+            fetch("/avisos/pesquisaSuporte", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    pesquisaServer: pesquisa
+                }),
+            })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (respostaJson) {
+                console.log("Dados recebidos: ", respostaJson);
+                var lista = document.getElementById("listagerentes");
+                lista.innerHTML = "";
+
+                if (respostaJson.length > 0) {
+                    for (let i = 0; i < respostaJson.length; i++) {
+                        var card = respostaJson[i];
+
+                        var divCard = document.createElement("a");
+                        divCard.className = "linklista";
+                        divCard.href = "#";
+
+                        var divCardGerente = document.createElement("div");
+                        divCardGerente.className = "cardgerente";
+
+                        var divFotoeNome = document.createElement("div");
+                        divFotoeNome.className = "fotoenome";
+
+                        var imgPerfil = document.createElement("img");
+                        imgPerfil.src = "./imagens/perfil.svg";
+                        imgPerfil.alt = "Foto de perfil";
+
+                        var nome = document.createElement("p");
+                        nome.innerText = card.nome;
+
+                        var status = document.createElement("div");
+                        status.className = "status";
+
+                        var statusAtivoInativo = document.createElement("p");
+                        statusAtivoInativo.innerText = card.stats.toUpperCase();
+                        if (card.stats.toUpperCase() == "ATIVO") {
+                            statusAtivoInativo.style.color = "black";
+                        } else if (card.stats.toUpperCase() == "INATIVO") {
+                            statusAtivoInativo.style.color = "red";
+                        }
+
+                        divFotoeNome.appendChild(imgPerfil);
+                        divFotoeNome.appendChild(nome);
+                        status.appendChild(statusAtivoInativo);
+                        divCardGerente.appendChild(divFotoeNome);
+                        divCardGerente.appendChild(status);
+                        divCard.appendChild(divCardGerente);
+                        lista.appendChild(divCard);
+                    }
+                } else {
+                    lista.innerHTML = "<p>Não existe nenhum gerente com esse nome.</p>";
+                }
+
+                adicionarBotaoLimparPesquisa();
+            })
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
+            });
+
+            return false;
+        }
+
+        function adicionarBotaoLimparPesquisa() {
+            var container = document.getElementById("espacopesquisa");
+
+            var botaoLimpar = document.createElement("button");
+            botaoLimpar.className = "botão_limpar";
+            botaoLimpar.id = "botaoLimpar";
+            botaoLimpar.innerText = "Limpar Pesquisa";
+            botaoLimpar.onclick = limparPesquisa;
+            container.appendChild(botaoLimpar);
+        }
+
+        function limparPesquisa() {
+            var inputPesquisa = document.getElementById("input_pesquisa");
+            inputPesquisa.value = "";
+
+            var lista = document.getElementById("listagerentes");
+            lista.innerHTML = "";
+
+            var botaoLimpar = document.getElementById("botaoLimpar");
+            if (botaoLimpar) {
+                botaoLimpar.remove();
+            }
+
+            atualizarLista();
+        }
+
         function toggleNavbar() {
             const navMenu = document.getElementById('navMenu');
             const hamburger = document.querySelector('.hamburger');
@@ -92,12 +292,15 @@
                 senhaTecnicoVar == "" ||
                 cpfTecnicoVar == ""
             ) {
-                window.alert("Campos não devidamente preenchidos");
+                window.alert("Todos os campos devem ser preenchidos");
                 return;
             } else if (senhaTecnicoVar.length < 8) {
                 window.alert("A senha deve ter 8 ou mais caracteres");
                 return;
-            } 
+            } else if(emailTecnicoVar.indexOf("@") < 0 || emailTecnicoVar.indexOf(".") < 0){
+                window.alert("O E-mail deve ter @ e .");
+                return;
+            }
 
             fetch("/usuarios/cadastrarSuporte", {
                 method: "POST",
@@ -116,6 +319,7 @@
 
                 if (resposta.ok) {
                     window.alert("Cadastro de Gerente Realizado com sucesso");
+                    atualizarLista()
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
@@ -123,6 +327,11 @@
             .catch(function (erro) {
                 console.error("#ERRO: ", erro);
             });
+
+            input_nomeTecnico.value = "";
+            input_cpfTecnico.value = "";
+            input_emailTecnico.value = "";
+            input_senhaTecnico.value = "";
 
             return false;
         }

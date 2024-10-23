@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./css/CadDash.css">
     <script src="./js/sessao.js"></script>
 </head>
-<body onload="atualizarFeed()">
+<body onload="atualizarLista()">
     <div class="content">
         <button class="hamburger" onclick="toggleNavbar()">
             <div class="bar"></div>
@@ -40,16 +40,16 @@
     <div class="geral">
         <div class="formulario">
             <h2>Cadastro - Gerente</h2>
-            <input id="input_nomeGerente" type="text" placeholder="Nome Completo">
+            <input id="input_nomeGerente" type="text" placeholder="Nome Completo" required>
             <br>
             <br>
-            <input id="input_cpfGerente" type="text" placeholder="CPF">
+            <input id="input_cpfGerente" type="text" placeholder="CPF" required>
             <br>
             <br>
-            <input id="input_emailGerente" type="text" placeholder="Email">
+            <input id="input_emailGerente" type="text" placeholder="Email" required>
             <br>
             <br>
-            <input id="input_senhaGerente" type="password" placeholder="Senha">   
+            <input id="input_senhaGerente" type="password" placeholder="Senha" required>   
             <br>    
             <br>
             <button class="botao" onclick="cadastrarGerente()">Cadastrar Gerente</button>
@@ -62,11 +62,11 @@
                 <p>Gerentes já cadastrados:</p>
             </div>
             <div class="espacolista">
-                <div class="espacopesquisa">
+                <div class="espacopesquisa" id="espacopesquisa">
                     <div class="search-container">
-                        <input type="text" placeholder="Pesquisar">
-                        <button type="submit">
-                            <img src="" alt="Pesquisar">
+                        <input type="text" id="input_pesquisa" placeholder="Pesquisar">
+                        <button type="submit" onclick="pesquisaGerente()">
+                            <img src="./imagens/lupa.png" alt="Pesquisar">
                         </button>
                     </div>
                 </div>
@@ -77,16 +77,16 @@
     </div>
 
     <script>
-        function atualizarFeed() {
+        function atualizarLista() {
         fetch("/avisos/listar")
             .then(function (resposta) {
                 if (resposta.ok) {
-                    if (resposta.status === 204) {
-                        const lista = document.getElementById("listagerentes");
-                        lista.innerHTML = "<p>Nenhum resultado encontrado.</p>";
-                        throw "Nenhum resultado encontrado!";
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listagerentes");
+                        lista.className = "lista";
+                        lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
+                        return [];
                     }
-
                     return resposta.json();
                 } else {
                     throw "Houve um erro na API!";
@@ -95,13 +95,29 @@
             .then(function (dados) {
                 console.log("Dados recebidos: ", JSON.stringify(dados));
                 var lista = document.getElementById("listagerentes");
-                lista.innerHTML = ""; // Limpa a lista antes de adicionar novos itens
+                lista.innerHTML = "";
 
-                dados.forEach((card) => {
-                    // Criação dos elementos do card
+                if (dados.length == 0) {
+                    lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
+                    return;
+                }
+
+                dados.sort(function (a, b) {
+                    if (a.stats.toUpperCase() === "INATIVO" && b.stats.toUpperCase() !== "INATIVO") {
+                        return 1;
+                    } else if (a.stats.toUpperCase() !== "INATIVO" && b.stats.toUpperCase() === "INATIVO") {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+
+                for (let i = 0; i < dados.length; i++){
+                    var card = dados[i];
+
                     var divCard = document.createElement("a");
                     divCard.className = "linklista";
-                    divCard.href = "#"; // Evita href vazio
+                    divCard.href = "#";
 
                     var divCardGerente = document.createElement("div");
                     divCardGerente.className = "cardgerente";
@@ -114,37 +130,137 @@
                     imgPerfil.alt = "Foto de perfil";
 
                     var nome = document.createElement("p");
-                    nome.innerText = card.nome; // Atribui o nome ao <p>
+                    nome.innerText = card.nome;
 
                     var status = document.createElement("div");
                     status.className = "status";
 
                     var statusAtivoInativo = document.createElement("p");
-                    statusAtivoInativo.innerText = card.stats; // Atribui o status ao <p>
+                    statusAtivoInativo.innerText = card.stats.toUpperCase();
+                    if (card.stats.toUpperCase() == "ATIVO") {
+                        statusAtivoInativo.style.color = "black";
+                    } else if (card.stats.toUpperCase() == "INATIVO") {
+                        statusAtivoInativo.style.color = "red";
+                    }
 
-                    // Monta o card
                     divFotoeNome.appendChild(imgPerfil);
                     divFotoeNome.appendChild(nome);
-
                     status.appendChild(statusAtivoInativo);
-
                     divCardGerente.appendChild(divFotoeNome);
                     divCardGerente.appendChild(status);
-
                     divCard.appendChild(divCardGerente);
-
-                    // Adiciona o card à lista
                     lista.appendChild(divCard);
-                });
+                }
             })
             .catch(function (erro) {
                 console.error(erro);
 
-                // Exibe uma mensagem de erro amigável
                 const lista = document.getElementById("listagerentes");
                 lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
             });
-    }
+        }
+
+        function pesquisaGerente() {
+            var pesquisa = input_pesquisa.value;
+
+            if (pesquisa == "") {
+                window.alert("Preencha corretamente o campo de pesquisa");
+                return;
+            }
+
+            fetch("/avisos/pesquisa", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    pesquisaServer: pesquisa
+                }),
+            })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (respostaJson) {
+                console.log("Dados recebidos: ", respostaJson);
+                var lista = document.getElementById("listagerentes");
+                lista.innerHTML = "";
+
+                if (respostaJson.length > 0) {
+                    for (let i = 0; i < respostaJson.length; i++) {
+                        var card = respostaJson[i];
+
+                        var divCard = document.createElement("a");
+                        divCard.className = "linklista";
+                        divCard.href = "#";
+
+                        var divCardGerente = document.createElement("div");
+                        divCardGerente.className = "cardgerente";
+
+                        var divFotoeNome = document.createElement("div");
+                        divFotoeNome.className = "fotoenome";
+
+                        var imgPerfil = document.createElement("img");
+                        imgPerfil.src = "./imagens/perfil.svg";
+                        imgPerfil.alt = "Foto de perfil";
+
+                        var nome = document.createElement("p");
+                        nome.innerText = card.nome;
+
+                        var status = document.createElement("div");
+                        status.className = "status";
+
+                        var statusAtivoInativo = document.createElement("p");
+                        statusAtivoInativo.innerText = card.stats.toUpperCase();
+                        if (card.stats.toUpperCase() == "ATIVO") {
+                            statusAtivoInativo.style.color = "black";
+                        } else if (card.stats.toUpperCase() == "INATIVO") {
+                            statusAtivoInativo.style.color = "red";
+                        }
+
+                        divFotoeNome.appendChild(imgPerfil);
+                        divFotoeNome.appendChild(nome);
+                        status.appendChild(statusAtivoInativo);
+                        divCardGerente.appendChild(divFotoeNome);
+                        divCardGerente.appendChild(status);
+                        divCard.appendChild(divCardGerente);
+                        lista.appendChild(divCard);
+                    }
+                } else {
+                    lista.innerHTML = "<p>Não existe nenhum gerente com esse nome.</p>";
+                }
+
+                adicionarBotaoLimparPesquisa();
+            })
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
+            });
+
+            return false;
+        }
+
+        function adicionarBotaoLimparPesquisa() {
+            var container = document.getElementById("espacopesquisa");
+
+            var botaoLimpar = document.createElement("button");
+            botaoLimpar.className = "botão_limpar";
+            botaoLimpar.id = "botaoLimpar";
+            botaoLimpar.innerText = "Limpar Pesquisa";
+            botaoLimpar.onclick = limparPesquisa;
+            container.appendChild(botaoLimpar);
+        }
+
+        function limparPesquisa() {
+            var inputPesquisa = document.getElementById("input_pesquisa");
+            inputPesquisa.value = "";
+
+            var lista = document.getElementById("listagerentes");
+            lista.innerHTML = "";
+
+            var botaoLimpar = document.getElementById("botaoLimpar");
+            if (botaoLimpar) {
+                botaoLimpar.remove();
+            }
+
+            atualizarLista();
+        }
 
         function toggleNavbar() {
             const navMenu = document.getElementById('navMenu');
@@ -174,12 +290,15 @@
                 senhaGerenteVar == "" ||
                 cpfGerenteVar == ""
             ) {
-                window.alert("Campos não devidamente preenchidos");
+                window.alert("Todos os campos devem ser preenchidos");
                 return;
             } else if (senhaGerenteVar.length < 8) {
                 window.alert("A senha deve ter 8 ou mais caracteres");
                 return;
-            } 
+            } else if(emailGerenteVar.indexOf("@") < 0 || emailGerenteVar.indexOf(".") < 0){
+                window.alert("O E-mail deve ter @ e .");
+                return;
+            }
 
             fetch("/usuarios/cadastrarGerente", {
                 method: "POST",
@@ -198,6 +317,7 @@
 
                 if (resposta.ok) {
                     window.alert("Cadastro de Gerente Realizado com sucesso");
+                    atualizarLista();
                 } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                 }
@@ -205,6 +325,11 @@
             .catch(function (erro) {
                 console.error("#ERRO: ", erro);
             });
+
+            input_nomeGerente.value = "";
+            input_emailGerente.value = "";
+            input_senhaGerente.value = "";
+            input_cpfGerente.value = "";
 
             return false;
         }
