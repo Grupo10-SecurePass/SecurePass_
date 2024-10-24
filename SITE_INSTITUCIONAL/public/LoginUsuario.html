@@ -30,7 +30,7 @@
                 <option selected disabled value="#">Selecione um cargo</option>
                 <option value="representante">Representante</option>
                 <option value="gerente"> Gerente de TI </option>
-                <option value="suporte">Técnico de Suporte</option>
+                <option value="técnico">Técnico de Suporte</option>
               </select>
             
             <br>    
@@ -97,7 +97,7 @@ function entrar() {
                     }else if(sessionStorage.CARGO_USUARIO == "gerente"){
                         window.location = "./CadTecnicoSuporte.html"
                     }else{
-                        window.location = "./dashboard.html"
+                        window.location = "./dashSuporte.html"
                     }
 
                 });

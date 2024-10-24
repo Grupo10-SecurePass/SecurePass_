@@ -150,21 +150,32 @@ function editar(req, res) {
 }
 
 function deletar(req, res) {
-    var idAviso = req.params.idAviso;
+    var cpf = req.params.cpf;
+    console.log("CPF recebido na rota:", cpf);
 
-    avisoModel.deletar(idAviso)
-        .then(
-            function (resultado) {
-                res.json(resultado);
-            }
-        )
-        .catch(
-            function (erro) {
-                console.log(erro);
-                console.log("Houve um erro ao deletar o post: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            }
-        );
+    avisoModel.deletar(cpf)
+        .then(function (resultado) {
+            console.log("Resultado da exclusão:", resultado);
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.error("Erro ao deletar:", erro);
+            res.status(500).json({ mensagem: "Erro ao deletar gerente", erro: erro.sqlMessage });
+        });
+}
+function deletarSuporte(req, res) {
+    var cpf = req.params.cpf;
+    console.log("CPF recebido na rota:", cpf);
+
+    avisoModel.deletarSuporte(cpf)
+        .then(function (resultado) {
+            console.log("Resultado da exclusão:", resultado);
+            res.json(resultado);
+        })
+        .catch(function (erro) {
+            console.error("Erro ao deletar:", erro);
+            res.status(500).json({ mensagem: "Erro ao deletar gerente", erro: erro.sqlMessage });
+        });
 }
 
 module.exports = {
@@ -176,5 +187,6 @@ module.exports = {
     deletar,
     pesquisa,
     listarSuporte,
-    pesquisaSuporte
+    pesquisaSuporte,
+    deletarSuporte
 }

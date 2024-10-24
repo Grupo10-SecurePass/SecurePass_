@@ -53,6 +53,7 @@ header{
   display: flex;
   justify-content: space-between;
   gap: 80px;
+  font-size: 18px;
 }
 .div_links{
   display: flex;
@@ -73,7 +74,7 @@ header{
   color: #FCFFFC;
   display: flex;
   justify-content: space-between;
-  width: 35%;
+  width: 40%;
 }
 .div_logcad a{
   text-decoration: none;
@@ -109,7 +110,7 @@ header{
   border: #248232 solid 2px;
   background-color: #040F0F;
   color: #FCFFFC;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   transition: border 0.3s ease;
@@ -234,99 +235,10 @@ header{
 
 footer{
   width: 100%;
-  height: 170px;
+  height: 100px;
   background-color: #FCFFFC;
-}
-.mae_footer{
-  width: 100%;
-  height: 150px;
-  display: flex;
-  justify-content: space-between;
-}
-.mae_texto_btn{
-  width: 25%;
-  height: 100%;
-  display: flex;
-  justify-content: start;
-  align-items: start;
-  flex-direction: column;
-  color: #020808;
-  padding: 20px;
-}
-.mae_texto_btn p{
-}
-.mae_texto_btn button{
-  padding: 5px 30px;
-  border-radius: 10px;
-  border: #248232 solid 2px;
-  background-color: #040F0F;
-  color: #FCFFFC;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  transition: border 0.3s ease;
-}
-.mae_texto_btn button:hover{
-  background-color: #071818;
-  border: #27cb3f solid 2px;
-}
-.links_footer{
-  width: 30%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.links_footer a{
-  text-decoration: none;
-  color: #020808;
-}
-.links_footer a:hover{
-  color: #616161;
-}
-.links_acima{
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 40%;
-  padding: 20px;
-}
-.link_acima_esquerda{
-  width: 50%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.link_acima_direita{
-  width: 50%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.links_debaixo{
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 40%;
-  padding: 20px;
-}
-.link_debaixo_esquerda{
-  width: 50%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.link_debaixo_direita{
-  width: 50%;
-  height: 40px;
-  display: flex;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
 }
 .direitos{
   width: 100%;

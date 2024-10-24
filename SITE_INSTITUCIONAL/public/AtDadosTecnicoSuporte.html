@@ -7,45 +7,67 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
     <title>Atualizar Suporte</title>
-    <link rel="stylesheet" href="../public/css/cadastroGerente.css">
+    <link rel="stylesheet" href="./css/cadastroGerente.css">
 </head>
 <body>
-
-    <div class="container">
-        <h1>Dados de um Suporte já cadastrado </h1>
-
-        <form action="#" method="post">
-            <div class="form-group">
-                <label for="nome">Nome: </label>
-                <input type="text" id="nome" >
+    <div class="mae">
+        <div class="espacohamburger"></div>
+        <div class="mae_container">
+            <div class="container">
+                <div class="espacotitulo">
+                    <h1>Dados de um Tecnico já cadastrado </h1>
+                </div>
+                <div class="espaco_formu">
+                    <div class="espaco_inputs">
+                        <input type="text" id="nomeTecnico" placeholder="">
+                        <input type="text" id="cpfTecnico" placeholder="">
+                        <input type="text" id="emailTecnico" placeholder="">
+                        <input type="text" id="empresaTecnico" disabled placeholder="">
+                        <input type="text" id="cargoTecnico" placeholder="">
+                        <input type="password" id="senhaTecnico" disabled placeholder="">
+                        <button type="submit" class="save">Savar alterações</button>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="button" onclick="deletar(cpf)" class="delete">
+                        Excluir Suporte
+                    </button>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" id="email">
-            </div>
-
-            <div class="form-group">
-                <label for="cargo">Cargo: </label>
-                <input type="text" id="cargo">
-            </div>
-
-            <div class="form-group">
-                <label for="setor">Setor :</label>
-                <input type="text" id="setor">
-            </div>
-                
-            <div class="form-group">
-                <label for="senha">Senha: </label>
-                <input type="password"  id="senha">
-            </div>
-
-            <div class="buttons">
-             <button type="submit" class="save">Savar alterações</button>
-             <button type="button" class="delete">Excluir Suporte</button>
-            </div>
-        </form>
-    </div>
-    
+        </div>
+    </div>   
 </body>
 </html>
+<script>
+    var tecnico = JSON.parse(localStorage.getItem("tecnicoSelecionado"));
+
+    document.getElementById("nomeTecnico").placeholder = tecnico.nome;
+    document.getElementById("cpfTecnico").placeholder = tecnico.CPF;
+    document.getElementById("emailTecnico").placeholder = tecnico.email;
+    document.getElementById("empresaTecnico").placeholder = tecnico.nome_empresa;
+    document.getElementById("cargoTecnico").placeholder = tecnico.cargo;
+    document.getElementById("senhaTecnico").placeholder = tecnico.senha;
+
+    var cpf = tecnico.CPF;
+
+    function deletar(cpf) {
+        console.log("Função de deletar gerente pelo CPF:" + cpf);
+        fetch(`/avisos/deletarSuporte/${cpf}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                window.alert("Técnico excluído com sucesso!");
+                window.location = "./CadSuporte.html";
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (erro) {
+            console.log(`#ERRO: ${erro}`);
+        });
+    }
+</script>
