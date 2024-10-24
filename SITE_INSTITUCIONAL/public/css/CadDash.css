@@ -188,7 +188,7 @@ body {
   width: 100%;
 }
 
-/* Estilos do menu hamburger */
+
 .hamburger {
   background: none;
   border: none;
@@ -196,10 +196,10 @@ body {
   padding: 5px;
   position: absolute;
   top: 10px;
-  left: 10px; /* Posição inicial do hamburger */
+  left: 10px; 
   z-index: 3;
   display: block;
-  transition: left 0.3s ease; /* Transição suave para a nova posição */
+  transition: left 0.3s ease; 
 }
 
 .bar {
@@ -211,7 +211,7 @@ body {
   transition: 0.3s;
 }
 
-/* Estilos do botão de fechar (close-btn) */
+
 .close-btn {
   background: #040f0f;
   border: none;
@@ -237,7 +237,7 @@ body {
 .nav-menu {
   position: fixed;
   top: 0;
-  left: -250px; /* Inicialmente fora da tela */
+  left: -250px; 
   height: 100%;
   width: 250px;
   background: #040f0f;
@@ -256,7 +256,7 @@ body {
 }
 
 .nav-menu.show ~ .hamburger {
-  left: 270px; /* Mover o hamburger para o lado da navbar ao abrir */
+  left: 270px; 
 }
 
 .nav-links {

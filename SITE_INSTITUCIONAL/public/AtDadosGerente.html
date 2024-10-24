@@ -1,15 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+
+<html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <title>Cadastro Gerente</title>
+
     <link rel="stylesheet" href="./css/cadastroGerente.css">
+
+    <title>Cadastro Gerente</title>
+
 </head>
+
 <body>
+
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+            <div class="separator"></div>
+            <div class="nav-links">
+                <a href="#">Gestão Gerente</a>
+                <a href="index.html">Home/Página Principal</a>
+                <a href="#">Perfil</a>
+            </div>
+            <a href="#" class="logout">Sair</a>
+        </nav>
+    </div>
+
     <div class="mae">
         <div class="espacohamburger"></div>
         <div class="mae_container">
@@ -25,7 +55,7 @@
                         <input type="text" id="empresaGerente" disabled placeholder="">
                         <input type="text" id="cargoGerente" placeholder="">
                         <input type="password" id="senhaGerente" disabled placeholder="">
-                        <button type="submit" class="save">Savar alterações</button>
+                        <button type="submit" class="save">Salvar alterações</button>
                     </div>
                 </div>
                 <div class="buttons">
@@ -35,39 +65,59 @@
                 </div>
             </div>
         </div>
-    </div>    
-</body>
-</html>
-<script>
-    var gerente = JSON.parse(localStorage.getItem("gerenteSelecionado"));
+    </div>
 
-    document.getElementById("nomeGerente").placeholder = gerente.nome;
-    document.getElementById("cpfGerente").placeholder = gerente.CPF;
-    document.getElementById("emailGerente").placeholder = gerente.email;
-    document.getElementById("empresaGerente").placeholder = gerente.nome_empresa;
-    document.getElementById("cargoGerente").placeholder = gerente.cargo;
-    document.getElementById("senhaGerente").placeholder = gerente.senha;
+    <script>
+        function Navbar() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const closeBtn = document.querySelector('.close-btn');
 
-    var cpf = gerente.CPF;
-
-    function deletar(cpf) {
-        console.log("Função de deletar gerente pelo CPF:" + cpf);
-        fetch(`/avisos/deletar/${cpf}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                window.alert("Gerente excluído com sucesso!");
-                window.location = "./CadGerente.html";
-            } else if (resposta.status == 404) {
-                window.alert("Deu 404!");
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                setTimeout(() => {
+                    hamburger.style.display = 'block';
+                    closeBtn.style.display = 'none';
+                }, 300);
             } else {
-                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                hamburger.style.display = 'none';
+                closeBtn.style.display = 'block';
+                navMenu.classList.add('show');
             }
-        }).catch(function (erro) {
-            console.log(`#ERRO: ${erro}`);
-        });
-    }
-</script>
+        }
+
+        var gerente = JSON.parse(localStorage.getItem("gerenteSelecionado"));
+        document.getElementById("nomeGerente").placeholder = gerente.nome;
+        document.getElementById("cpfGerente").placeholder = gerente.CPF;
+        document.getElementById("emailGerente").placeholder = gerente.email;
+        document.getElementById("empresaGerente").placeholder = gerente.nome_empresa;
+        document.getElementById("cargoGerente").placeholder = gerente.cargo;
+        document.getElementById("senhaGerente").placeholder = gerente.senha;
+
+        var cpf = gerente.CPF;
+
+        function deletar(cpf) {
+            console.log("Função de deletar gerente pelo CPF:" + cpf);
+            fetch(`/avisos/deletar/${cpf}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    window.alert("Gerente excluído com sucesso!");
+                    window.location = "./CadGerente.html";
+                } else if (resposta.status == 404) {
+                    window.alert("Deu 404!");
+                } else {
+                    throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                }
+            }).catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

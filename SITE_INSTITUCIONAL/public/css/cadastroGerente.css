@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,23 +7,23 @@
     font-family: "Nunito Sans", system-ui;
 }
 
-body{
+body {
     background-color: #040F0F;
     color: #f0f0f0;
 }
 
-.mae{
+.mae {
     display: flex;
     width: 100%;
     height: 695px;
 }
 
-.espacohamburger{
+.espacohamburger {
     width: 15%;
     height: 100%;
 }
 
-.mae_container{
+.mae_container {
     width: 85%;
     height: 100%;
     display: flex;
@@ -40,7 +41,7 @@ body{
     justify-content: start;
 }
 
-.espacotitulo{
+.espacotitulo {
     width: 55%;
     height: 50px;
     display: flex;
@@ -52,13 +53,14 @@ h1 {
     font-size: 25px;
 }
 
-.espaco_formu{
+.espaco_formu {
     width: 60%;
     display: flex;
     justify-content: end;
     height: 500px;
 }
-.espaco_inputs{
+
+.espaco_inputs {
     display: flex;
     justify-content: end;
     flex-direction: column;
@@ -79,7 +81,8 @@ input {
     color: #FCFFFC;
     width: 40%;
 }
-.save:hover{
+
+.save:hover {
     background-color: #1c6527;
 }
 
@@ -91,7 +94,7 @@ input {
     align-items: end;
 }
 
-button{
+button {
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
@@ -103,6 +106,127 @@ button{
     color: white;
     height: 40px;
 }
-.delete:hover{
+
+.delete:hover {
     background-color: #2D3A3A;
 }
+
+
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #fcfffc;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.nav-menu {
+    position: absolute;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    width: 250px;
+    background: #040f0f;
+    padding-top: 10px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-menu.show {
+    left: 0;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.nav-menu a {
+    display: block;
+    color: #fcfffc;
+    padding: 15px;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.nav-menu a:hover {
+    background-color: #2D3A3A;
+    color: #fcfffc;
+    transition: background-color 0.8s ease;
+}
+
+.close-btn {
+    background-color: #040f0f00;
+    border: none;
+    color: #fcfffc;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: -50px;
+    z-index: 5;
+    transition: right 0.3s ease;
+}
+
+.close-btn .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #fcfffc;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.logo {
+    width: 180px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+    align-self: center;
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background: #fcfffc;
+    margin: 5px auto;
+}
+
+.logout {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: #fcfffc;
+    font-size: 18px;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.logout:hover {
+    background: #f00;
+}
+
