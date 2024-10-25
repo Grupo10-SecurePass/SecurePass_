@@ -139,7 +139,7 @@ body {
   height: 390px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   overflow-y: auto;
   overflow-x: hidden;
 }

@@ -1,7 +1,8 @@
 var avisoModel = require("../models/avisoModel");
 
 function listar(req, res) {
-    avisoModel.listar().then(function (resultado) {
+    var fkResponsavel = req.body.fkResponsavelServer;
+    avisoModel.listar(fkResponsavel).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -14,7 +15,22 @@ function listar(req, res) {
     });
 }
 function listarSuporte(req, res) {
-    avisoModel.listarSuporte().then(function (resultado) {
+    var fkResponsavel = req.body.fkResponsavelServer;
+    avisoModel.listarSuporte(fkResponsavel).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function listarMaquina(req, res) {
+    var nrEmpresa = req.body.nrEmpresaSever;
+    avisoModel.listarMaquina(nrEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -44,6 +60,21 @@ function pesquisaSuporte(req, res) {
     var pesquisa = req.body.pesquisaServer;
 
     avisoModel.pesquisaSuporte(pesquisa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log("Houve um erro ao buscar os gerentes: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function pesquisaMaquina(req, res) {
+    var pesquisa = req.body.pesquisaServer;
+    var nrEmpresa = req.body.nrEmpresaServer;
+
+    avisoModel.pesquisaMaquina(pesquisa, nrEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -188,5 +219,7 @@ module.exports = {
     pesquisa,
     listarSuporte,
     pesquisaSuporte,
-    deletarSuporte
+    deletarSuporte,
+    listarMaquina,
+    pesquisaMaquina
 }

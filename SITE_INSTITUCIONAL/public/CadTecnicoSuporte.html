@@ -28,10 +28,10 @@
             <div class="separator"></div>
 
             <div class="nav-links">
-                <a href="#">Gestão TS</a>
-                <a href="#">Home/Página Principal</a>
-                <a href="#">Dashboard</a>
-                <a href="#">Perfil</a>
+                <a href="./CadTecnicoSuporte.html">Gestão TS</a>
+                <a href="./index.html">Home/Página Principal</a>
+                <a href="./dashGerente.html">Dashboard</a>
+                <a href="./">Perfil</a>
             </div>
 
             <a href="#" class="logout">Sair</a>
@@ -80,7 +80,16 @@
 
     <script>
         function atualizarLista() {
-        fetch("/avisos/listarSuporte")
+            var fkResponsavel = sessionStorage.getItem("ID_USUARIO");
+            console.log(fkResponsavel)
+            
+        fetch("/avisos/listarSuporte", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fkResponsavelServer: fkResponsavel
+                }),
+            })
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.status == 204) {

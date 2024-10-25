@@ -3,17 +3,23 @@ var router = express.Router();
 
 var avisoController = require("../controllers/avisoController");
 
-router.get("/listar", function (req, res) {
+router.post("/listar", function (req, res) {
     avisoController.listar(req, res);
 });
-router.get("/listarSuporte", function (req, res) {
+router.post("/listarSuporte", function (req, res) {
     avisoController.listarSuporte(req, res);
+});
+router.post("/listarMaquina", function (req, res) {
+    avisoController.listarMaquina(req, res);
 });
 router.post("/pesquisa", function (req, res) {
     avisoController.pesquisa(req, res);
 });
 router.post("/pesquisaSuporte", function (req, res) {
     avisoController.pesquisaSuporte(req, res);
+});
+router.post("/pesquisaMaquina", function (req, res) {
+    avisoController.pesquisaMaquina(req, res);
 });
 
 router.get("/listar/:idUsuario", function (req, res) {

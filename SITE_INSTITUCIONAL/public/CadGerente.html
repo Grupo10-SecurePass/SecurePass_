@@ -28,9 +28,10 @@
             <div class="separator"></div>
 
             <div class="nav-links">
-                <a href="#">Gestão Gerente</a>
-                <a href="#">Home/Página Principal</a>
-                <a href="#">Perfil</a>
+                <a href="./CadGerente.html">Gestão Gerente</a>
+                <a href="./CadMaquina.html">Gestão de Máquinas</a>
+                <a href="./">Perfil</a>
+                <a href="./index.html">Home/Página Principal</a>
             </div>
 
             <a href="#" class="logout">Sair</a>
@@ -78,7 +79,16 @@
 
     <script>
         function atualizarLista() {
-        fetch("/avisos/listar")
+            var fkResponsavel = sessionStorage.getItem("ID_USUARIO");
+            console.log(fkResponsavel)
+
+        fetch("/avisos/listar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fkResponsavelServer: fkResponsavel
+                }),
+            })
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.status == 204) {
