@@ -1,20 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
-body{
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000&display=swap');
+
+body {
     color: #FCFFFC;
     font-family: "Nunito Sans", system-ui;
 }
 
-.geral{
-
+.geral {
   display: flex;  
   align-items: center;
   justify-content: center;
   height: 95vh;
-
+  position: relative;
 }
 
-.card{
+.back-arrow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 
+.arrow-image {
+  width: 100%; 
+  height: 40px;
+}
+
+.card {
     height: 460px;
     width: 420px;
     background-color: rgb(0, 0, 0);
@@ -24,57 +34,42 @@ body{
     justify-content: center;
     font-family: 'Nunito Sans';
     color: #FCFFFC;
-    box-shadow:0 0 10px black;
+    box-shadow: 0 0 10px black;
 }
-  
-  .formulario {
+
+.formulario {
     display: flex;  
     width: 90%;
     justify-content: space-around;
     flex-direction: column;
-  }
+}
 
-  .formulario h2 {
+.formulario h2 {
     display: flex;
     justify-content: center;
-  }
- 
-  
-  .formulario input {
-    border: 3px solid #248232;
-    font-family: 'Nunito Sans';
-    height: 32px;
-    border-radius: 10px;  
-   
-  }
+}
 
-  .formulario select{
+.formulario input,
+.formulario select {
     border: 3px solid #248232;
     font-family: 'Nunito Sans';
     height: 32px;
     border-radius: 10px;  
-    color: #5e5e5e;
-   
-  }
-  
-  
-  .botao {
+}
+
+.botao {
     cursor: pointer;    
     border: 0;
     border-radius: 10px;
     background-color: #248232;
     color: #ffffff;
-    font-size:13px;
+    font-size: 13px;
     width: 130px;
     height: 40px;
     align-self: center;
-  
-  }
+}
 
-  .mensagem{
-
+.mensagem {
     font-size: 20px;
     font-family: 'Nunito Sans';
-    
 }
-  

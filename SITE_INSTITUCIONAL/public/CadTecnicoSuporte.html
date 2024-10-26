@@ -29,12 +29,11 @@
 
             <div class="nav-links">
                 <a href="./CadTecnicoSuporte.html">Gestão TS</a>
-                <a href="./index.html">Home/Página Principal</a>
                 <a href="./dashGerente.html">Dashboard</a>
                 <a href="./">Perfil</a>
             </div>
 
-            <a href="#" class="logout">Sair</a>
+            <a href="index.html" class="logout">Sair</a>
         </nav>
     </div>
 
@@ -61,7 +60,7 @@
         </div>
         <div class="historico">
             <div class="titulohistorico">
-                <p>Gerentes já cadastrados:</p>
+                <p>Técnicos já cadastrados:</p>
             </div>
             <div class="espacolista">
                 <div class="espacopesquisa" id="espacopesquisa">
@@ -177,7 +176,7 @@
                 console.error(erro);
 
                 const lista = document.getElementById("listagerentes");
-                lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
+                lista.innerHTML = `<p>Erro ao carregar os técnicos: ${erro}</p>`;
             });
         }
 
