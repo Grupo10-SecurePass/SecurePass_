@@ -21,6 +21,9 @@ router.post("/pesquisaSuporte", function (req, res) {
 router.post("/pesquisaMaquina", function (req, res) {
     avisoController.pesquisaMaquina(req, res);
 });
+router.post("/dadosPerfil", function (req, res) {
+    avisoController.dadosPerfil(req, res);
+});
 
 router.get("/listar/:idUsuario", function (req, res) {
     avisoController.listarPorUsuario(req, res);

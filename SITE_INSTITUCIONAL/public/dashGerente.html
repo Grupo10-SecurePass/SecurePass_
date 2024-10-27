@@ -29,11 +29,21 @@
             <div class="nav-links">
                 <a href="./CadTecnicoSuporte.html">Gestão TS</a>
                 <a href="./dashGerente.html">Dashboard</a>
-                <a href="#">Perfil</a>
+                <a href="./dadosGerente.html">Perfil</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
         </nav>
+    </div>
+
+    <div class="alert-icon" onclick="toggleAlertSidebar()">⚠️</div>
+    <div id="alertSidebar" class="alert-sidebar">
+        <div class="alert-header">Alertas</div>
+        <div class="alert-list" id="alertList">
+            <div class="alert">
+                <p>No dia <strong>25/10/2024</strong>, o servidor <strong>DESKTOP-17C842E</strong> teve a CPU em uso em <strong>99%</strong> às <strong>18h14min</strong>.</p>
+            </div>
+        </div>
     </div>
 
     <div class="mae">
@@ -120,6 +130,11 @@
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+        function toggleAlertSidebar() {
+            const sidebar = document.getElementById('alertSidebar');
+            sidebar.classList.toggle('show');
+        }
+
     function Navbar() {
         const navMenu = document.getElementById('navMenu');
         const hamburger = document.querySelector('.hamburger');

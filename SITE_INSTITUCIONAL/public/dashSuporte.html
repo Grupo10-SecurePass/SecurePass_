@@ -27,15 +27,24 @@
             <div class="separator"></div>
 
             <div class="nav-links">
-                <a href="dashSuporte.html">Dashboard</a>
+                <a href="./dashSuporte.html">Dashboard</a>
                 <a href="#">Alertas</a>
-                <a href="#">Perfil</a>
+                <a href="./dadosTecnico.html">Perfil</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
         </nav>
     </div>
 
+    <div class="alert-icon" onclick="toggleAlertSidebar()">⚠️</div>
+    <div id="alertSidebar" class="alert-sidebar">
+        <div class="alert-header">Alertas</div>
+        <div class="alert-list" id="alertList">
+            <div class="alert">
+                <p>No dia <strong>25/10/2024</strong>, o servidor <strong>DESKTOP-17C842E</strong> teve a CPU em uso em <strong>99%</strong> às <strong>18h14min</strong>.</p>
+            </div>
+        </div>
+    </div>
     
     <div class="mae">
         <div class="lateral"></div>
@@ -116,6 +125,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        function toggleAlertSidebar() {
+            const sidebar = document.getElementById('alertSidebar');
+            sidebar.classList.toggle('show');
+        }
+
         function Navbar() {
             const navMenu = document.getElementById('navMenu');
             const hamburger = document.querySelector('.hamburger');
@@ -228,13 +242,13 @@
         new Chart(ctx4, {
             type: 'pie',
             data: {
-                labels: ['Usado', 'Livre'],
+                labels: ['Livre', 'Usado'],
                 datasets: [{
                     label: 'Uso do Disco',
-                    data: [300, 500],
+                    data: [50, 30],
                     backgroundColor: [
-                        'rgb(255, 0, 0)',
-                        'rgb(36, 130, 50)'
+                        'rgb(36, 130, 50)',
+                        'rgb(255, 0, 0)'
                     ]
                 }]
             }

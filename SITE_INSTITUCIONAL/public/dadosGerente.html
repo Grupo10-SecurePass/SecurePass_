@@ -10,11 +10,11 @@
 
     <link rel="stylesheet" href="./css/cadastroGerente.css">
 
-    <title>Dados do Gerente</title>
+    <title>Seus dados - Gerente</title>
 
 </head>
 
-<body>
+<body onload="perfil()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -44,17 +44,17 @@
         <div class="espacohamburger"></div>
         <div class="mae_container">
             <div class="container">
-                <div class="espacotitulo">
-                    <h1>Dados de um Gerente já cadastrado </h1>
+                <div class="espacotitulo" style="width: 20%;">
+                    <h1>Seus dados</h1>
                 </div>
                 <div class="espaco_formu">
                     <div class="espaco_inputs">
-                        <input type="text" id="nomeGerente" placeholder="">
-                        <input type="text" id="cpfGerente" placeholder="">
-                        <input type="text" id="emailGerente" placeholder="">
-                        <input type="text" id="empresaGerente" disabled placeholder="">
-                        <input type="text" id="cargoGerente" placeholder="">
-                        <input type="password" id="senhaGerente" disabled placeholder="">
+                        <input type="text" id="nomeRepresentante" placeholder="">
+                        <input type="text" id="cpfRepresentante" placeholder="">
+                        <input type="text" id="emailRepresentante" placeholder="">
+                        <input type="text" id="empresaRepresentante" disabled placeholder="">
+                        <input type="text" id="cargoRepresentante" placeholder="">
+                        <input type="password" id="senhaRepresentante" disabled placeholder="">
                         <button type="submit" class="save">Salvar alterações</button>
                     </div>
                 </div>
@@ -86,35 +86,40 @@
             }
         }
 
-        var gerente = JSON.parse(localStorage.getItem("gerenteSelecionado"));
-        document.getElementById("nomeGerente").placeholder = gerente.nome;
-        document.getElementById("cpfGerente").placeholder = gerente.CPF;
-        document.getElementById("emailGerente").placeholder = gerente.email;
-        document.getElementById("empresaGerente").placeholder = gerente.nome_empresa;
-        document.getElementById("cargoGerente").placeholder = gerente.cargo;
-        document.getElementById("senhaGerente").placeholder = gerente.senha;
+        function perfil() {
+            var idUsuario = sessionStorage.getItem("ID_USUARIO");
 
-        var cpf = gerente.CPF;
-
-        function deletar(cpf) {
-            console.log("Função de deletar gerente pelo CPF:" + cpf);
-            fetch(`/avisos/deletar/${cpf}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(function (resposta) {
+            fetch("/avisos/dadosPerfil", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ idUsuarioServer: idUsuario }),
+            })
+            .then((resposta) => {
                 if (resposta.ok) {
-                    window.alert("Gerente excluído com sucesso!");
-                    window.location = "./CadGerente.html";
-                } else if (resposta.status == 404) {
-                    window.alert("Deu 404!");
+                    return resposta.json();
                 } else {
-                    throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                    throw "Houve um erro ao tentar realizar o cadastro!";
                 }
-            }).catch(function (erro) {
-                console.log(`#ERRO: ${erro}`);
+            })
+            .then((dados) => {
+                if (dados.length > 0) {
+                    var usuario = dados[0];
+
+                    document.getElementById("nomeRepresentante").placeholder = usuario.nome;
+                    document.getElementById("senhaRepresentante").placeholder = usuario.senha;
+                    document.getElementById("empresaRepresentante").placeholder = usuario.nomeEmpresa;
+                    document.getElementById("cpfRepresentante").placeholder = sessionStorage.getItem("CPF_USUARIO");
+                    document.getElementById("emailRepresentante").placeholder = sessionStorage.getItem("EMAIL_USUARIO");
+                    document.getElementById("cargoRepresentante").placeholder = sessionStorage.getItem("CARGO_USUARIO");
+                } else {
+                    console.warn("Nenhum dado encontrado para o usuário.");
+                }
+            })
+            .catch((erro) => {
+                console.error("#ERRO: ", erro);
             });
+
+            return false;
         }
     </script>
 

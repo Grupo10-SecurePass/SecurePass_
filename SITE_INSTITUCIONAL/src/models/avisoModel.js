@@ -61,6 +61,24 @@ function pesquisaMaquina(pesquisa, nrEmpresa) {
     
     return database.executar(instrucaoSql);
 }
+function dadosPerfil(idUsuario) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    
+    var instrucaoSql = `SELECT 
+                            usuario.nome AS nome, 
+                            usuario.senha AS senha, 
+                            empresa.nome AS nomeEmpresa 
+                        FROM 
+                            usuario 
+                        INNER JOIN 
+                            empresa ON usuario.fkNR = empresa.NR 
+                        WHERE 
+                            usuario.idUsuario = '${idUsuario}';`;
+    
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
 
 function pesquisarDescricao(texto) {
     console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pesquisarDescricao()");
@@ -161,5 +179,6 @@ module.exports = {
     pesquisaSuporte,
     deletarSuporte,
     listarMaquina,
-    pesquisaMaquina
+    pesquisaMaquina,
+    dadosPerfil
 }
