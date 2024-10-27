@@ -230,3 +230,19 @@ button {
     background: #f00;
 }
 
+.texto-abaixo-botao {
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-right: 20px;
+}
+
+.texto-canto-inferior {
+    text-align: right;
+    font-size: 18px;
+    color: #666;
+    font-weight: bold;
+    margin-top: 20px;
+}

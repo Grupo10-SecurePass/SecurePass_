@@ -14,31 +14,33 @@
 
 </head>
 
-<body onload="perfil()">
+<div class="content">
+    <button class="hamburger" onclick="Navbar()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </button>
 
-    <div class="content">
-        <button class="hamburger" onclick="Navbar()">
+    <nav id="navMenu" class="nav-menu">
+        <button class="close-btn" onclick="Navbar()">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
         </button>
 
-        <nav id="navMenu" class="nav-menu">
-            <button class="close-btn" onclick="Navbar()">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </button>
-            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
-            <div class="separator"></div>
-            <div class="nav-links">
-                <a href="./CadGerente.html">Gestão Gerente</a>
-                <a href="./CadMaquina.html">Gestão de Máquinas</a>
-                <a href="./">Perfil</a>
-            </div>
-            <a href="index.html" class="logout">Sair</a>
-        </nav>
-    </div>
+        <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+        <div class="separator"></div>
+
+        <div class="nav-links">
+            <a href="./CadTecnicoSuporte.html">Gestão TS</a>
+            <a href="./dashGerente.html">Dashboard</a>
+            <a href="./dadosGerente.html">Perfil</a>
+        </div>
+
+        <a href="index.html" class="logout">Sair</a>
+    </nav>
+</div>
 
     <div class="mae">
         <div class="espacohamburger"></div>
@@ -56,13 +58,15 @@
                         <input type="text" id="cargoRepresentante" placeholder="">
                         <input type="password" id="senhaRepresentante" disabled placeholder="">
                         <button type="submit" class="save">Salvar alterações</button>
+
+                        <p class="texto-abaixo-botao">
+                            Clique no botão acima apenas quando você tiver mudado alguma informação pessoal.
+                        </p>
                     </div>
                 </div>
-                <div class="buttons">
-                    <button type="button" onclick="deletar(cpf)" class="delete">
-                        Excluir Gerente
-                    </button>
-                </div>
+                <p class="texto-canto-inferior">
+                    Seu cargo: <strong>Gerente</strong>
+                </p>
             </div>
         </div>
     </div>
