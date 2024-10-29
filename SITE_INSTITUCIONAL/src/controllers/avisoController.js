@@ -146,19 +146,19 @@ function pesquisarDescricao(req, res) {
         );
 }
 
-function publicar(req, res) {
-    var titulo = req.body.titulo;
+function publicarFeedback(req, res) {
     var descricao = req.body.descricao;
-    var idUsuario = req.params.idUsuario;
+    var emailUsuario = req.params.emailUsuario;
+    var nomeUsuario = req.params.nomeUsuario;
 
-    if (titulo == undefined) {
-        res.status(400).send("O título está indefinido!");
-    } else if (descricao == undefined) {
+    if (descricao == undefined) {
         res.status(400).send("A descrição está indefinido!");
-    } else if (idUsuario == undefined) {
-        res.status(403).send("O id do usuário está indefinido!");
+    } else if (emailUsuario == undefined) {
+        res.status(403).send("O email do usuário está indefinido!");
+    } else if (nomeUsuario == undefined) {
+        res.status(403).send("O nome do usuário está indefinido!");
     } else {
-        avisoModel.publicar(titulo, descricao, idUsuario)
+        avisoModel.publicarFeedback(descricao, emailUsuario, nomeUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -172,6 +172,33 @@ function publicar(req, res) {
                 }
             );
     }
+}
+function listarFeedbacks(req, res) {
+    var emailUsuario = req.body.emailUsuarioSever;
+    avisoModel.listarFeedbacks(emailUsuario).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function listarFeedbacksGeral(req, res) {
+    avisoModel.listarFeedbacksGeral().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
 }
 
 function editar(req, res) {
@@ -227,7 +254,9 @@ module.exports = {
     listar,
     listarPorUsuario,
     pesquisarDescricao,
-    publicar,
+    publicarFeedback,
+    listarFeedbacks,
+    listarFeedbacksGeral,
     editar,
     deletar,
     pesquisa,

@@ -62,7 +62,7 @@ h1 {
 
 .espaco_inputs {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     flex-direction: column;
     gap: 20px;
     width: 80%;

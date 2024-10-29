@@ -31,6 +31,7 @@
                 <a href="./CadTecnicoSuporte.html">Gestão TS</a>
                 <a href="./dashGerente.html">Dashboard</a>
                 <a href="./dadosGerente.html">Perfil</a>
+                <a href="./feedbackGer.html">Feedback</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
@@ -94,7 +95,7 @@
                     if (resposta.status == 204) {
                         var lista = document.getElementById("listagerentes");
                         lista.className = "lista";
-                        lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
+                        lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
                         return [];
                     }
                     return resposta.json();
@@ -108,7 +109,7 @@
                 lista.innerHTML = "";
 
                 if (dados.length == 0) {
-                    lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
+                    lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
                     return;
                 }
 

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/feedback.css">
+    <title>Feedback | SecurePass</title>
+</head>
+<body onload="atualizarLista()">
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="./CadGerente.html">Gestão Gerente</a>
+                <a href="./CadMaquina.html">Gestão de Máquinas</a>
+                <a href="./dadosRepresentante.html">Perfil</a>
+                <a href="./feedbackRep.html">Feedback</a>
+            </div>
+
+            <a href="index.html" class="logout">Sair</a>
+        </nav>
+    </div>
+
+    <div class="geral">
+        <form class="formulario" id="form_postagem" method="post" onsubmit="return publicar()">
+            <h2>Dê seu Feedback</h2>
+            <textarea name="descricao" id="textarea_descricao" maxlength="500" rows="5" placeholder="Escreva aqui o seu feedback"></textarea>
+            <br>
+            <button class="botao">Enviar Feddback</button>
+            <br>
+            <br>
+            <div id="div_mensagem" class="mensagem"></div>
+        </form>
+        <div class="historico">
+            <div class="titulohistorico">
+                <p>Feedbacks enviados:</p>
+            </div>
+            <div class="espacolista">
+                <div class="listagerentes" id="listafeedbacks">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function limparFormulario() {
+        document.getElementById("form_postagem").reset();
+    }
+
+    function publicar() {
+        var emailUsuario = sessionStorage.EMAIL_USUARIO;
+        var nomeUsuario = sessionStorage.NOME_USUARIO;
+
+        var corpo = {
+            descricao: form_postagem.descricao.value
+        }
+
+        fetch(`/avisos/publicarFeedback/${emailUsuario}/${nomeUsuario}`, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(corpo)
+        }).then(function (resposta) {
+
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                window.alert("Post realizado com sucesso");
+                limparFormulario();
+                atualizarLista();
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+        return false;
+
+    }
+
+    function Navbar() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                hamburger.style.left = '10px'; 
+            } else {
+                navMenu.classList.add('show');
+                hamburger.style.left = '260px'; 
+            }
+    }
+
+    function atualizarLista() {
+        var emailUsuario = sessionStorage.EMAIL_USUARIO;
+
+        fetch("/avisos/listarFeedbacks", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    emailUsuarioSever: emailUsuario
+                }),
+            })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listafeedbacks");
+                        lista.className = "lista";
+                        lista.innerHTML = "<p>Ainda não há nenhuma máquina cadastrada.</p>";
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listafeedbacks");
+                lista.innerHTML = "";
+
+                if (dados.length == 0) {
+                    lista.innerHTML = "<p>Ainda não há nenhum feedback.</p>";
+                    return;
+                }
+
+                for (let i = 0; i < dados.length; i++){
+                    var card = dados[i];
+
+                    var divCardFeedback = document.createElement("div");
+                    divCardFeedback.className = "cardfeedback";
+
+                    var espacoDescricao = document.createElement("div")
+                    espacoDescricao.className = "espacodescricao";
+                    var descricao = document.createElement("p");
+                    descricao.innerText = card.descricao;
+                    descricao.className = "descricao";
+
+                    var espacoExcluir = document.createElement("div");
+                    espacoExcluir.className = "espacoexcluir";
+                    var excluir = document.createElement("a")
+                    excluir.innerText = "EXCLUIR"
+                    excluir.className = "excluir";
+                    excluir.href = "";
+
+                    divCardFeedback.appendChild(espacoDescricao);
+                    divCardFeedback.appendChild(espacoExcluir);
+                    espacoDescricao.appendChild(descricao);
+                    espacoExcluir.appendChild(excluir);
+                    lista.append(divCardFeedback)
+                }
+            })
+            .catch(function (erro) {
+                console.error(erro);
+
+                const lista = document.getElementById("listafeedbacks");
+                lista.innerHTML = `<p>Erro ao carregar os feedbacks: ${erro}</p>`;
+            });
+    }
+</script>

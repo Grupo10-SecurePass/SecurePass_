@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="./css/feedbackGeral.css">
+</head>
+<body onload="atualizarLista()">
+    <div class="espacoseta">
+        <a href="index.html" class="back-arrow">
+            <img src="./imagens/arrow.png" class="arrow-image" />
+        </a>
+    </div>
+    <div class="cotainer">
+        <div class="listafeedbacksGerais">
+            <div class="espacologo">
+                <img src="./imagens/SecurePass SVGLogoNavBar.svg" alt="">
+            </div>
+            <div class="espacolista">
+                <div class="listagerentes" id="listafeedbacks">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function atualizarLista() {
+    fetch("/avisos/listarFeedbacksGeral", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    var lista = document.getElementById("listafeedbacks");
+                    lista.className = "lista";
+                    lista.innerHTML = "<p>Ainda não há nenhum feedback.</p>";
+                    return [];
+                }
+                return resposta.json();
+            } else {
+                throw "Houve um erro na API!";
+            }
+        })
+        .then(function (dados) {
+            console.log("Dados recebidos: ", JSON.stringify(dados));
+            var lista = document.getElementById("listafeedbacks");
+            lista.innerHTML = "";
+
+            if (dados.length == 0) {
+                lista.innerHTML = "<p>Ainda não há nenhum feedback.</p>";
+                return;
+            }
+
+            for (let i = 0; i < dados.length; i++){
+                var card = dados[i];
+
+                var divCardFeedback = document.createElement("div");
+                divCardFeedback.className = "cardfeedback";
+
+                var espacoDescricao = document.createElement("div")
+                espacoDescricao.className = "espacodescricao";
+                var descricao = document.createElement("p");
+                descricao.innerText = card.descricao;
+                descricao.className = "descricao";
+
+                divCardFeedback.appendChild(espacoDescricao);
+                espacoDescricao.appendChild(descricao);
+                lista.append(divCardFeedback);
+            }
+        })
+        .catch(function (erro) {
+            console.error(erro);
+
+            const lista = document.getElementById("listafeedbacks");
+            lista.innerHTML = `<p>Erro ao carregar os feedbacks: ${erro}</p>`;
+        });
+    }
+</script>

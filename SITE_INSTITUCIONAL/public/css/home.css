@@ -220,6 +220,27 @@ header{
   width: 60%;
   font-size: 25px;
 }
+.btn_feed{
+  display: flex;
+  width: 50%;
+  z-index: 2;
+  position: absolute;
+}
+.btn_feed button{
+  padding: 5px 30px;
+  border-radius: 10px;
+  border: #248232 solid 2px;
+  background-color: #040F0F;
+  color: #FCFFFC;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  transition: border 0.3s ease;
+}
+.btn_feed button:hover{
+  background-color: #071818;
+  border: #2dfe4d solid 2px;
+}
 .fundo_qa{
   width: 100%;
   height: 610px;
@@ -229,7 +250,7 @@ header{
 }
 .fundo_qa p{
   color: #2D3A3A;
-  font-size: 500px;
+  font-size: 350px;
   opacity: 0.15;
 }
 

@@ -1,5 +1,3 @@
-CadMaquina
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +30,7 @@ CadMaquina
                 <a href="./CadGerente.html">Gestão Gerente</a>
                 <a href="./CadMaquina.html">Gestão de Máquinas</a>
                 <a href="./dadosRepresentante.html">Perfil</a>
+                <a href="./feedbackRep.html">Feedback</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
@@ -70,7 +69,7 @@ CadMaquina
 </html>
 <script>
 
-function Navbar() {
+    function Navbar() {
             const navMenu = document.getElementById('navMenu');
             const hamburger = document.querySelector('.hamburger');
 
@@ -81,7 +80,7 @@ function Navbar() {
                 navMenu.classList.add('show');
                 hamburger.style.left = '260px'; 
             }
-        }
+    }
 
     function atualizarLista() {
             var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
@@ -140,7 +139,7 @@ function Navbar() {
                             stats: this.dataset.stats
                         };
                         salvarMaquinaNoLocalStorage(maquina);
-                        window.location.href = "./AtDadosGerente.html";
+                        window.location.href = "";
                     });
 
                     var divFotoeNome = document.createElement("div");

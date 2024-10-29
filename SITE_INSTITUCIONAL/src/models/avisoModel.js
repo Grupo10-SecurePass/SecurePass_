@@ -122,11 +122,25 @@ function listarPorUsuario(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-function publicar(titulo, descricao, idUsuario) {
-    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function publicar(): ", titulo, descricao, idUsuario);
+function publicarFeedback(descricao, emailUsuario, nomeUsuario) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function publicar(): ", descricao, emailUsuario, nomeUsuario);
     var instrucaoSql = `
-        INSERT INTO aviso (titulo, descricao, fk_usuario) VALUES ('${titulo}', '${descricao}', ${idUsuario});
+        INSERT INTO feedback (nome, email, descricao) VALUES ('${nomeUsuario}', '${emailUsuario}', '${descricao}');
     `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+function listarFeedbacks(emailUsuario) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    var instrucaoSql = `SELECT * FROM feedback 
+    WHERE email = '${emailUsuario}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+function listarFeedbacksGeral() {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    var instrucaoSql = `SELECT * FROM feedback;`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -171,7 +185,9 @@ module.exports = {
     listar,
     listarPorUsuario,
     pesquisarDescricao,
-    publicar,
+    publicarFeedback,
+    listarFeedbacks,
+    listarFeedbacksGeral,
     editar,
     deletar,
     pesquisa,

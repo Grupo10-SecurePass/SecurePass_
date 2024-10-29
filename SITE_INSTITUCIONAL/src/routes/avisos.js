@@ -33,8 +33,14 @@ router.get("/pesquisar/:descricao", function (req, res) {
     avisoController.pesquisarDescricao(req, res);
 });
 
-router.post("/publicar/:idUsuario", function (req, res) {
-    avisoController.publicar(req, res);
+router.post("/publicarFeedback/:emailUsuario/:nomeUsuario", function (req, res) {
+    avisoController.publicarFeedback(req, res);
+});
+router.post("/listarFeedbacks", function (req, res) {
+    avisoController.listarFeedbacks(req, res);
+});
+router.get("/listarFeedbacksGeral", function (req, res) {
+    avisoController.listarFeedbacksGeral(req, res);
 });
 
 router.put("/editar/:idAviso", function (req, res) {
