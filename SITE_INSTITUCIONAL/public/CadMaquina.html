@@ -40,8 +40,32 @@
     <div class="geral">
         <div class="formulario">
             <h2>Cadastro de Máquina</h2>
-            <input id="input_nome" type="text" placeholder="Nome da Máquina (deve ser único)">
-            <br>
+        
+            <div class="input-container">
+                <label for="input_nome">Nome da Máquina:</label>
+                <input id="input_nome" type="text" placeholder="Nome da Máquina (deve ser único)">
+            </div>
+        
+            <div class="input-container">
+                <label for="input_CPU">Limite CPU:</label>
+                <input id="input_CPU" type="text" placeholder="Insira o limite de uso da CPU (em %)">
+            </div>
+        
+            <div class="input-container">
+                <label for="input_rede">Limite de uso rede:</label>
+                <input id="input_rede" type="text" placeholder="Insira o limite de uso de rede (em Mb/s)">
+            </div>
+    
+            <div class="input-container">
+                <label for="input_RAM">Limite RAM:</label>
+                <input id="input_RAM" type="text" placeholder="Insira o limite de uso de RAM (em %)">
+            </div>
+        
+            <div class="input-container">
+                <label for="input_disco">Limite Disco:</label>
+                <input id="input_disco" type="text" placeholder="Insira o limite de uso de Disco (em %)">
+            </div>
+        
             <button class="botao" onclick="cadastrar()">Adicionar máquina</button>
             <br>
             <br>

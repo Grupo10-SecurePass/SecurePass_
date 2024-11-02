@@ -40,25 +40,34 @@
 
     <div class="geral">
         <div class="formulario">
-            <h2>Cadastro - Técnico de Suporte </h2>
-
-            <input id="input_nomeTecnico" type="text" placeholder="Nome Completo">
-            <br>
-            <br>
-            <input id="input_cpfTecnico" type="text" placeholder="CPF">
-            <br>
-            <br>
-            <input id="input_emailTecnico" type="text" placeholder="Email">
-            <br>
-            <br>
-            <input id="input_senhaTecnico" type="password" placeholder="Senha">   
-            <br>    
-            <br>
+            <h2>Cadastro - Técnico de Suporte</h2>
+        
+            <div class="input-container">
+                <label for="input_nomeTecnico">Nome Completo:</label>
+                <input id="input_nomeTecnico" type="text" placeholder="Nome Completo" required>
+            </div>
+        
+            <div class="input-container">
+                <label for="input_cpfTecnico">CPF:</label>
+                <input id="input_cpfTecnico" type="text" placeholder="CPF" required>
+            </div>
+        
+            <div class="input-container">
+                <label for="input_emailTecnico">Email:</label>
+                <input id="input_emailTecnico" type="email" placeholder="Email" required>
+            </div>
+        
+            <div class="input-container">
+                <label for="input_senhaTecnico">Senha:</label>
+                <input id="input_senhaTecnico" type="password" placeholder="Senha" required>
+            </div>
+        
             <button class="botao" onclick="cadastrarSuporte()">Cadastrar Técnico de Suporte</button>
             <br>
             <br>
             <div class="mensagem"></div>
         </div>
+        
         <div class="historico">
             <div class="titulohistorico">
                 <p>Técnicos já cadastrados:</p>
