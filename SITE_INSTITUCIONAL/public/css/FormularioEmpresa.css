@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000&display=swap');
+
+
+.formulario {
+    display: flex;  
+    width: 90%;
+    height: 80%;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.formulario h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.label_input{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <title> Cadastro Empresa | SecurePass</title>
-    <link rel="stylesheet" href="./css/CadLog.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+    rel="stylesheet">
+  <title> Cadastro Empresa | SecurePass</title>
+  <link rel="stylesheet" href="./css/CadLog.css">
+  <link rel="stylesheet" href="./css/FormularioEmpresa.css">
 </head>
+
 <body>
 
   <div class="geral">
@@ -17,36 +22,45 @@
       <img src="./imagens/arrow.png" class="arrow-image" />
     </a>
     <img src="imagens/Logo.png" alt="Logo" class="logo">
-<div class="card">
+    <div class="card">
       <div class="formulario">
 
-            <h2>Cadastro de Empresa</h2>
-            <br>
-            <input id="input_nomeEmpresa" type="text" placeholder="Nome da empresa">
-            <br>
-            <input id="input_cnpj" type="text" placeholder="CNPJ da empresa">
-            <br>
-            <input id="input_emailEmpresa" type="text" placeholder="Email de cadastro">
-            <br>    
-            <button class="botao" onclick="cadastrar()">Cadastrar</button>
+        <h2>Cadastro de Empresa</h2>
+        <div class = "label_input">
+          <label for="input_nomeEmpresa">Nome Fantasia:</label>
+          <input id="input_nomeEmpresa" type="text" placeholder="Nome da empresa">
         </div>
+
+        <div class = "label_input">
+        <label for="input_razaoSocial">Razão Social:</label>
+        <input id="input_razaoSocial" type="text" placeholder="Razão Social">
+        </div>
+
+        <div class = "label_input">
+        <label for="input_cnpj">CNPJ:</label>
+        <input id="input_cnpj" type="text" placeholder="CNPJ da empresa">
+        </div>
+
+        <button class="botao" onclick="cadastrar()">Cadastrar</button>
       </div>
-        <div id="divmsg" class="mensagem"></div>
+    </div>
+    <div id="divmsg" class="mensagem"></div>
 
-        
 
- </div>
- 
+
+  </div>
+
 </body>
+
 </html>
 
 <script>
 
-function entrar(){
+  function entrar() {
     window.location = "./LoginUsuario.html"
-}
+  }
 
-function cadastrar() {
+  function cadastrar() {
 
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
@@ -57,20 +71,20 @@ function cadastrar() {
     min = Math.ceil(1000);
     max = Math.floor(6000);
     var NR = Math.floor(Math.random() * (max - min) + min);
-    
-    
+
+
     // Verificando se há algum campo em branco
     if (
       nomeEmpresaVar == "" ||
       emailEmpresaVar == "" ||
-      cnpjVar == "" 
+      cnpjVar == ""
     ) {
-      
+
       divmsg.innerHTML =
         "Campos não devidamente preenchidos!";
 
     } else {
-      
+
     }
 
     // Enviando o valor da nova input

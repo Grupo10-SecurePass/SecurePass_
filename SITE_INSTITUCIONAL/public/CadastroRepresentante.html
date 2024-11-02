@@ -1,119 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
     <title>Cadastro Representante | SecurePass</title>
     <link rel="stylesheet" href="./css/CadLog.css">
+    <link rel="stylesheet" href="./css/FormularioCadRepresentante.css">
 </head>
+
 <body>
 
-  <div class="geral">
+    <div class="geral">
 
-    <a href="./index.html" class="back-arrow">
-        <img src="./imagens/arrow.png" class="arrow-image" />
-    </a>
-    <img src="imagens/Logo.png" alt="Logo" class="logo">
+        <a href="./index.html" class="back-arrow">
+            <img src="./imagens/arrow.png" class="arrow-image" />
+        </a>
+        <img src="imagens/Logo.png" alt="Logo" class="logo">
 
-    <div class="card">
-        <div class="formulario">
+        <div class="card_representante">
+            <div class="formulario">
 
-            <h2>Cadastro - Representante</h2>
+                <h2>Cadastro - Representante</h2>
+                <div class="label_input">
+                    <label for="input_nome">Nome Completo:</label>
+                    <input id="input_nome" type="text" placeholder="Nome Completo">
+                </div>
 
-            <input id="input_nome" type="text" placeholder="Nome Completo">
-            <br>
-            <input id="input_cpf" type="text" placeholder="CPF">
-            <br>
-            <input id="input_email" type="text" placeholder="Email">
-            <br>
-            <input id="input_senha" type="text" placeholder="Senha">
-            <br>    
-            <input id="input_nr" type="text" placeholder="NR (Número de Registro)">
-            <br>
-            <button class="botao" onclick="cadastrar()">Cadastrar</button>
+                <div class="label_input">
+                    <label for="input_cpf">CPF:</label>
+                    <input id="input_cpf" type="text" placeholder="CPF">
+                </div>
+
+                <div class="label_input">
+                    <label for="input_email">Email:</label>
+                    <input id="input_email" type="text" placeholder="Email">
+                </div>
+
+                <div class="label_input">
+                    <label for="input_senha">Senha:</label>
+                    <input id="input_senha" type="text" placeholder="Senha">
+                </div>
+
+                <div class="label_input">
+                    <label for="input_nr">Número de Registro:</label>
+                    <input id="input_nr" type="text" placeholder="NR (Número de Registro)">
+                </div>
+
+                <div class="space-btn">
+                    <button class="botao" onclick="cadastrar()">Cadastrar</button>
+                </div>
+
+            </div>
         </div>
+
     </div>
 
- </div>
-
 </body>
+
 </html>
 
 <script>
 
-  function cadastrar() {
-      // Obtém os valores dos campos
-      var nomeVar = input_nome.value;
-      var cpfVar = input_cpf.value;
-      var emailVar = input_email.value;
-      var senhaVar = input_senha.value;
-      var idEmpresaVincular = Number(input_nr.value);
+    function cadastrar() {
+        // Obtém os valores dos campos
+        var nomeVar = input_nome.value;
+        var cpfVar = input_cpf.value;
+        var emailVar = input_email.value;
+        var senhaVar = input_senha.value;
+        var idEmpresaVincular = Number(input_nr.value);
 
-      // Verifica se todos os campos estão preenchidos
-      if (nomeVar == "" || cpfVar == "" || emailVar == "" || senhaVar == "" || idEmpresaVincular == "") {
-          alert("Preencha todos os campos corretamente");
-          return false;
-      }
+        // Verifica se todos os campos estão preenchidos
+        if (nomeVar == "" || cpfVar == "" || emailVar == "" || senhaVar == "" || idEmpresaVincular == "") {
+            alert("Preencha todos os campos corretamente");
+            return false;
+        }
 
-      // Chama a função assíncrona para verificar o NR
-      verificarNR(idEmpresaVincular, function(resultadoVerificacao) {
-          if (resultadoVerificacao == "certo") {
-              // Se o NR for válido, realiza o cadastro
-              fetch("/usuarios/cadastrar", {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                      nomeServer: nomeVar,
-                      cpfServer: cpfVar,
-                      emailServer: emailVar,
-                      senhaServer: senhaVar,
-                      idEmpresaVincularServer: idEmpresaVincular
-                  }),
-              })
-              .then(function(resposta) {
-                  console.log("resposta: ", resposta);
-                  if (resposta.ok) {
-                      setTimeout(() => {
-                          window.location = "LoginUsuario.html";
-                      }, 800);
-                  } else {
-                      throw "Houve um erro ao tentar realizar o cadastro!";
-                  }
-              })
-              .catch(function(resposta) {
-                  console.log(`#ERRO: ${resposta}`);
-              });
-          } else {
-              alert("O NR informado não pertence a nenhuma empresa cadastrada.");
-          }
-      });
+        // Chama a função assíncrona para verificar o NR
+        verificarNR(idEmpresaVincular, function (resultadoVerificacao) {
+            if (resultadoVerificacao == "certo") {
+                // Se o NR for válido, realiza o cadastro
+                fetch("/usuarios/cadastrar", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        nomeServer: nomeVar,
+                        cpfServer: cpfVar,
+                        emailServer: emailVar,
+                        senhaServer: senhaVar,
+                        idEmpresaVincularServer: idEmpresaVincular
+                    }),
+                })
+                    .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+                        if (resposta.ok) {
+                            setTimeout(() => {
+                                window.location = "LoginUsuario.html";
+                            }, 800);
+                        } else {
+                            throw "Houve um erro ao tentar realizar o cadastro!";
+                        }
+                    })
+                    .catch(function (resposta) {
+                        console.log(`#ERRO: ${resposta}`);
+                    });
+            } else {
+                alert("O NR informado não pertence a nenhuma empresa cadastrada.");
+            }
+        });
 
-      return false;
-  }
+        return false;
+    }
 
-  function verificarNR(idEmpresaVincular, callback) {
-      fetch(`/empresas/verificarNR?idEmpresaVincular=${idEmpresaVincular}`, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-          }
-      })
-      .then(function(resposta) {
-          if (resposta.ok) {
-              callback("certo"); // NR encontrado
-          } else {
-              callback("erro"); // NR não encontrado
-          }
-      })
-      .catch(function(error) {
-          console.error(error);
-          callback("erro");
-      });
-  }
+    function verificarNR(idEmpresaVincular, callback) {
+        fetch(`/empresas/verificarNR?idEmpresaVincular=${idEmpresaVincular}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    callback("certo"); // NR encontrado
+                } else {
+                    callback("erro"); // NR não encontrado
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+                callback("erro");
+            });
+    }
 </script>
-

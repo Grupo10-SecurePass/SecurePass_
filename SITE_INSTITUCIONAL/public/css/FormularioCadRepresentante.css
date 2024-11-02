@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000&display=swap');
+
+
+.formulario {
+    display: flex;  
+    width: 90%;
+    height: 100%;
+    gap: 10px;
+    flex-direction: column;
+
+    & .space-btn{
+        padding: 10px;
+
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.card_representante{
+    height: auto;
+    width: 420px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito Sans';
+    color: #FCFFFC;
+    box-shadow: 0 0 10px black;
+}
+
+.formulario h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.label_input{
+    display: flex;
+    flex-direction: column;
+}

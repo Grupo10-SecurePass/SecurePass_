@@ -37,18 +37,6 @@ body {
     box-shadow: 0 0 10px black;
 }
 
-.formulario {
-    display: flex;  
-    width: 90%;
-    justify-content: space-around;
-    flex-direction: column;
-}
-
-.formulario h2 {
-    display: flex;
-    justify-content: center;
-}
-
 .formulario input,
 .formulario select {
     border: 3px solid #248232;
