@@ -37,16 +37,6 @@
         </nav>
     </div>
 
-    <div class="alert-icon" onclick="toggleAlertSidebar()">⚠️</div>
-    <div id="alertSidebar" class="alert-sidebar">
-        <div class="alert-header">Alertas</div>
-        <div class="alert-list" id="alertList">
-            <div class="alert">
-                <p>No dia <strong>25/10/2024</strong>, o servidor <strong>DESKTOP-17C842E</strong> teve a CPU em uso em <strong>99%</strong> às <strong>18h14min</strong>.</p>
-            </div>
-        </div>
-    </div>
-
     <div class="mae">
         <div class="lateral"></div>
         <div class="quadros">
@@ -65,6 +55,19 @@
                     </div>
                     <div class="btn_filtro">
                         <button>Filtrar</button>
+                    </div>
+                </div>
+                <div class="filtro">
+                    <div class="escolha">
+                        <div class="textodata">
+                            <p>Escolha o servidor que você deseja monitorar</p>
+                            <select name="escolherServidor" id="">
+                                <option value="#" selected disabled>Escolher</option>
+                            </select>
+                        </div>
+                        <div class="aviso">
+                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor cadastrado.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="rede">

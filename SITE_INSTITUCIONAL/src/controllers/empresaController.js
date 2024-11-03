@@ -33,21 +33,21 @@ function buscarPorId(req, res) {
 
 function cadastrar(req, res) {
   var nomeEmpresa = req.body.nomeEmpresaServer;
-  var emailEmpresa = req.body.emailEmpresaServer;
+  var razaoSocial = req.body.razaoSocialServer;
   var cnpj = req.body.cnpjServer;
   var NR = req.body.NRempresaServer;
 
   if(nomeEmpresa == undefined){
     res.status(400).send("Seu nome de empresa está indefinido!");
-  }else if(emailEmpresa == undefined){
-    res.status(400).send("Seu email de empresa está indefinido!");
+  }else if(razaoSocial == undefined){
+    res.status(400).send("Sua razão social de empresa está indefinido!");
   }else if(cnpj == undefined){
     res.status(400).send("Seu cnpj está indefinido!");
   }else if(NR == undefined){
     res.status(400).send("Seu NR está indefinido!");
   }else{
   
-    empresaModel.cadastrar(nomeEmpresa, emailEmpresa, cnpj, NR)
+    empresaModel.cadastrar(nomeEmpresa, razaoSocial, cnpj, NR)
       .then(
         function (resultado){
           res.json(resultado)

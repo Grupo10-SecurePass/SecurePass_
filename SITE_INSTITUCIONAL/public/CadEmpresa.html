@@ -65,7 +65,7 @@
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
     var nomeEmpresaVar = input_nomeEmpresa.value;
-    var emailEmpresaVar = input_emailEmpresa.value;
+    var razaoSocialVar = input_razaoSocial.value;
     var cnpjVar = input_cnpj.value;
 
     min = Math.ceil(1000);
@@ -76,7 +76,7 @@
     // Verificando se há algum campo em branco
     if (
       nomeEmpresaVar == "" ||
-      emailEmpresaVar == "" ||
+      razaoSocialVar == "" ||
       cnpjVar == ""
     ) {
 
@@ -97,7 +97,7 @@
         // crie um atributo que recebe o valor recuperado aqui
         // Agora vá para o arquivo routes/usuario.js
         nomeEmpresaServer: nomeEmpresaVar,
-        emailEmpresaServer: emailEmpresaVar,
+        razaoSocialServer: razaoSocialVar,
         cnpjServer: cnpjVar,
         NRempresaServer: NR
       }),
