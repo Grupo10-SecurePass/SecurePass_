@@ -19,6 +19,36 @@ body {
     justify-content: center;
 }
 
+.alerta{
+    padding: 5px;
+    color: #FCFFFC;
+    background-color: rgba(233, 2, 2, 0.803);
+    border: #f00 1px solid;
+    width: 87%;
+    height: 5%;
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.alerta button {
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: #2D3A3A;
+    font-size: 1.7em;
+}
+
+#texto_alerta {
+    font-size: 1.4em;
+    width: 100%;
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+}
+
 /* Estilos da área do Dashboard */
 .mae {
     display: flex;

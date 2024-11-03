@@ -1,14 +1,17 @@
 var alertas = [];
 
-function obterdados(idAquario) {
-    fetch(`/medidas/tempo-real/${idAquario}`)
+function obterdados() {
+    fetch(`/medidas/tempo-real`)
         .then(resposta => {
             if (resposta.status == 200) {
                 resposta.json().then(resposta => {
 
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-                    alertar(resposta, idAquario);
+                    alertar(resposta);
+
+                    
+
                 });
             } else {
                 console.error(`Nenhum dado encontrado para o id ${idAquario} ou erro na API`);
@@ -20,7 +23,7 @@ function obterdados(idAquario) {
 
 }
 
-function alertar(resposta, idAquario) {
+function alertar(resposta) {
     var temp = resposta[0].temperatura;
 
     var grauDeAviso = '';

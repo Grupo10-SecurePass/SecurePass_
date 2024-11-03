@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Suporte</title>
     <link rel="stylesheet" href="./css/dashSuporte.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./js/alerta.js"></script>
 </head>
 <body>
-    
+    <div class="alerta">
+        <div id="texto_alerta">
+            Máquina <span id="dispositivo_alerta">ip-029-083</span>apresentando alerta: <span id="alerta_descricao">Porcentual de uso de CPU está em risco! CPU: 85%</span>
+        </div>
+        
+        <button onclick="fechar()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
             <div class="bar"></div>
@@ -115,6 +125,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        setInterval(obterdados(), 60000)
+
         function toggleAlertSidebar() {
             const sidebar = document.getElementById('alertSidebar');
             sidebar.classList.toggle('show');
