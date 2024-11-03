@@ -9,6 +9,7 @@
     <title> Login | SecurePass</title>
     <script src="./js/sessao.js"></script>
     <link rel="stylesheet" href="./css/CadLog.css">
+    <link rel="stylesheet" href="./css/FormularioEmpresa.css">
 </head>
 <body>
 
@@ -21,27 +22,33 @@
 
     <div class="card">
         <div class="formulario">
-
             <h2>Login</h2>
-            <br>
-            <br>
-            <input id="input_email" type="text" placeholder="Email">
-            <br>
-            <br>
-            <input id="input_senha" type="password" placeholder="Senha">
-            <br>
-            <br>
-            <select name="cargo" id="inputCargo">
-                <option selected disabled value="#">Selecione um cargo</option>
-                <option value="representante">Representante</option>
-                <option value="gerente"> Gerente de TI </option>
-                <option value="técnico">Técnico de Suporte</option>
-              </select>
-            
-            <br>    
-            <br>
+        
+            <div class="label_input">
+                <label for="input_email">Email:</label>
+                <input id="input_email" type="text" placeholder="Email">
+            </div>
+        
+            <div class="label_input">
+                <label for="input_senha">Senha:</label>
+                <input id="input_senha" type="password" placeholder="Senha">
+            </div>
+        
+            <div class="label_input">
+                <label for="inputCargo">Cargo:</label>
+                <select name="cargo" id="inputCargo">
+                    <option selected disabled value="#">Selecione um cargo</option>
+                    <option value="representante">Representante</option>
+                    <option value="gerente">Gerente de TI</option>
+                    <option value="técnico">Técnico de Suporte</option>
+                </select>
+            </div>
+        <br>
             <button class="botao" onclick="entrar()">Entrar</button>
-              <div id="mensagem_erro"></div>
+            
+            <div id="mensagem_erro" class="mensagem"></div>
+        </div>
+        
         </div>
     </div>
 

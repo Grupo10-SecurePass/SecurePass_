@@ -45,15 +45,34 @@
                 </div>
                 <div class="espaco_formu">
                     <div class="espaco_inputs">
-                        <input type="text" id="nomeTecnico" placeholder="">
-                        <input type="text" id="cpfTecnico" placeholder="">
-                        <input type="text" id="emailTecnico" placeholder="">
-                        <input type="text" id="empresaTecnico" disabled placeholder="">
-                        <input type="text" id="cargoTecnico" placeholder="">
-                        <input type="password" id="senhaTecnico" disabled placeholder="">
-                        <button type="submit" class="save">Savar alterações</button>
+                        <div class="label_input">
+                            <label for="nomeTecnico"><b>Nome do Técnico:</b></label>
+                            <input type="text" id="nomeTecnico" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="cpfTecnico"><b>CPF do Técnico:</b></label>
+                            <input type="text" id="cpfTecnico" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="emailTecnico"><b>Email do Técnico:</b></label>
+                            <input type="text" id="emailTecnico" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="empresaTecnico"><b>Empresa do Técnico:</b></label>
+                            <input type="text" id="empresaTecnico" disabled value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="cargoTecnico"><b>Cargo do Técnico:</b></label>
+                            <input type="text" id="cargoTecnico" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="senhaTecnico"><b>Senha do Técnico:</b></label>
+                            <input type="password" id="senhaTecnico" disabled value="">
+                        </div>
+                        <button type="submit" class="save">Salvar alterações</button>
                     </div>
                 </div>
+                
                 <div class="buttons">
                     <button type="button" onclick="deletar(cpf)" class="delete">
                         Excluir Suporte
@@ -86,12 +105,12 @@ function Navbar() {
         
     var tecnico = JSON.parse(localStorage.getItem("tecnicoSelecionado"));
 
-    document.getElementById("nomeTecnico").placeholder = tecnico.nome;
-    document.getElementById("cpfTecnico").placeholder = tecnico.CPF;
-    document.getElementById("emailTecnico").placeholder = tecnico.email;
-    document.getElementById("empresaTecnico").placeholder = tecnico.nome_empresa;
-    document.getElementById("cargoTecnico").placeholder = tecnico.cargo;
-    document.getElementById("senhaTecnico").placeholder = tecnico.senha;
+    document.getElementById("nomeTecnico").value = tecnico.nome;
+    document.getElementById("cpfTecnico").value = tecnico.CPF;
+    document.getElementById("emailTecnico").value = tecnico.email;
+    document.getElementById("empresaTecnico").value = tecnico.nome_empresa;
+    document.getElementById("cargoTecnico").value = tecnico.cargo;
+    document.getElementById("senhaTecnico").value = tecnico.senha;
 
     var cpf = tecnico.CPF;
 

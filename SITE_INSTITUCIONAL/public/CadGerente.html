@@ -41,23 +41,33 @@
     <div class="geral">
         <div class="formulario">
             <h2>Cadastro - Gerente</h2>
-            <input id="input_nomeGerente" type="text" placeholder="Nome Completo" required>
-            <br>
-            <br>
-            <input id="input_cpfGerente" type="text" placeholder="CPF" required>
-            <br>
-            <br>
-            <input id="input_emailGerente" type="text" placeholder="Email" required>
-            <br>
-            <br>
-            <input id="input_senhaGerente" type="password" placeholder="Senha" required>   
-            <br>    
-            <br>
+            
+            <div class="input-container">
+                <label for="input_nomeGerente"><b>Nome Completo:</b></label>
+                <input id="input_nomeGerente" type="text" required>
+            </div>
+        
+            <div class="input-container">
+                <label for="input_cpfGerente"><b>CPF:</b></label>
+                <input id="input_cpfGerente" type="text" required>
+            </div>
+        
+            <div class="input-container">
+                <label for="input_emailGerente"><b>Email:</b></label>
+                <input id="input_emailGerente" type="text" required>
+            </div>
+        
+            <div class="input-container">
+                <label for="input_senhaGerente"><b>Senha:</b></label>
+                <input id="input_senhaGerente" type="password" required>
+            </div>
+        
             <button class="botao" onclick="cadastrarGerente()">Cadastrar Gerente</button>
             <br>
-            <br>
+            
             <div class="mensagem"></div>
         </div>
+        
         <div class="historico">
             <div class="titulohistorico">
                 <p>Gerentes já cadastrados:</p>

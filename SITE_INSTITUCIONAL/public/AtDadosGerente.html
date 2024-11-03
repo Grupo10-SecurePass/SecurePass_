@@ -50,15 +50,34 @@
                 </div>
                 <div class="espaco_formu">
                     <div class="espaco_inputs">
-                        <input type="text" id="nomeGerente" placeholder="">
-                        <input type="text" id="cpfGerente" placeholder="">
-                        <input type="text" id="emailGerente" placeholder="">
-                        <input type="text" id="empresaGerente" disabled placeholder="">
-                        <input type="text" id="cargoGerente" placeholder="">
-                        <input type="password" id="senhaGerente" disabled placeholder="">
+                        <div class="label_input">
+                            <label for="nomeGerente"><b>Nome do Gerente:</b></label>
+                            <input type="text" id="nomeGerente" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="cpfGerente"><b>CPF:</b></label>
+                            <input type="text" id="cpfGerente" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="emailGerente"><b>Email:</b></label>
+                            <input type="text" id="emailGerente" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="empresaGerente"><b>Empresa:</b></label>
+                            <input type="text" id="empresaGerente" disabled value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="cargoGerente"><b>Cargo:</b></label>
+                            <input type="text" id="cargoGerente" value="">
+                        </div>
+                        <div class="label_input">
+                            <label for="senhaGerente"><b>Senha:</b></label>
+                            <input type="password" id="senhaGerente" disabled value="">
+                        </div>
                         <button type="submit" class="save">Salvar alterações</button>
                     </div>
                 </div>
+
                 <div class="buttons">
                     <button type="button" onclick="deletar(cpf)" class="delete">
                         Excluir Gerente
@@ -88,12 +107,12 @@
         }
 
         var gerente = JSON.parse(localStorage.getItem("gerenteSelecionado"));
-        document.getElementById("nomeGerente").placeholder = gerente.nome;
-        document.getElementById("cpfGerente").placeholder = gerente.CPF;
-        document.getElementById("emailGerente").placeholder = gerente.email;
-        document.getElementById("empresaGerente").placeholder = gerente.nome_empresa;
-        document.getElementById("cargoGerente").placeholder = gerente.cargo;
-        document.getElementById("senhaGerente").placeholder = gerente.senha;
+        document.getElementById("nomeGerente").value = gerente.nome;
+        document.getElementById("cpfGerente").value = gerente.CPF;
+        document.getElementById("emailGerente").value = gerente.email;
+        document.getElementById("empresaGerente").value = gerente.nome_empresa;
+        document.getElementById("cargoGerente").value = gerente.cargo;
+        document.getElementById("senhaGerente").value = gerente.senha;
 
         var cpf = gerente.CPF;
 

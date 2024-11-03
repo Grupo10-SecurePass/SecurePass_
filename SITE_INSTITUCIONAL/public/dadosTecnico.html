@@ -39,23 +39,41 @@
                     <h1>Seus dados</h1>
                 </div>
                 <div class="espaco_formu">
-                    <div class="espaco_inputs">
-                        <input type="text" id="nomeRepresentante" placeholder="">
-                        <input type="text" id="cpfRepresentante" placeholder="">
-                        <input type="text" id="emailRepresentante" placeholder="">
-                        <input type="text" id="empresaRepresentante" disabled placeholder="">
-                        <input type="text" id="cargoRepresentante" placeholder="">
-                        <input type="password" id="senhaRepresentante" disabled placeholder="">
-                        <button type="submit" class="save">Salvar alterações</button>
-            
-                        <p class="texto-abaixo-botao">
-                            Clique no botão acima apenas quando você tiver mudado alguma informação pessoal.
-                        </p>
-                    </div>
-                </div>
-                <p class="texto-canto-inferior">
-                    Seu cargo: <strong>Técnico de Suporte</strong>
-                </p>
+    <div class="espaco_inputs">
+        <div class="input-container">
+            <label for="nomeRepresentante"><b>Nome:</b></label>
+            <input type="text" id="nomeRepresentante" value="">
+        </div>
+
+        <div class="input-container">
+            <label for="cpfRepresentante"><b>CPF:</b></label>
+            <input type="text" id="cpfRepresentante" value="">
+        </div>
+
+        <div class="input-container">
+            <label for="emailRepresentante"><b>Email:</b></label>
+            <input type="text" id="emailRepresentante" value="">
+        </div>
+
+        <div class="input-container">
+            <label for="empresaRepresentante"><b>Empresa:</b></label>
+            <input type="text" id="empresaRepresentante" disabled value="">
+        </div>
+
+        <div class="input-container">
+            <label for="cargoRepresentante"><b>Cargo:</b></label>
+            <input type="text" id="cargoRepresentante" value="">
+        </div>
+
+        <div class="input-container">
+            <label for="senhaRepresentante"><b>Senha:</b></label>
+            <input type="password" id="senhaRepresentante" disabled value="">
+        </div>
+
+        <button type="submit" class="save">Salvar alterações</button>
+    </div>
+</div>
+
             </div>
         </div>
     </div>
@@ -98,12 +116,12 @@
                 if (dados.length > 0) {
                     var usuario = dados[0];
 
-                    document.getElementById("nomeRepresentante").placeholder = usuario.nome;
-                    document.getElementById("senhaRepresentante").placeholder = usuario.senha;
-                    document.getElementById("empresaRepresentante").placeholder = usuario.nomeEmpresa;
-                    document.getElementById("cpfRepresentante").placeholder = sessionStorage.getItem("CPF_USUARIO");
-                    document.getElementById("emailRepresentante").placeholder = sessionStorage.getItem("EMAIL_USUARIO");
-                    document.getElementById("cargoRepresentante").placeholder = sessionStorage.getItem("CARGO_USUARIO");
+                    document.getElementById("nomeRepresentante").value = usuario.nome;
+                    document.getElementById("senhaRepresentante").value = usuario.senha;
+                    document.getElementById("empresaRepresentante").value = usuario.nomeEmpresa;
+                    document.getElementById("cpfRepresentante").value = sessionStorage.getItem("CPF_USUARIO");
+                    document.getElementById("emailRepresentante").value = sessionStorage.getItem("EMAIL_USUARIO");
+                    document.getElementById("cargoRepresentante").value = sessionStorage.getItem("CARGO_USUARIO");
                 } else {
                     console.warn("Nenhum dado encontrado para o usuário.");
                 }
