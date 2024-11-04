@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/cadastroGerente.css">
+    <script src="./js/senha.js"></script>
     <title>Seus dados - Técnico</title>
 </head>
 <body onload="perfil()">
@@ -42,32 +43,41 @@
     <div class="espaco_inputs">
         <div class="input-container">
             <label for="nomeRepresentante"><b>Nome:</b></label>
-            <input type="text" id="nomeRepresentante" value="">
+            <input type="text" id="nomeRepresentante">
         </div>
 
         <div class="input-container">
             <label for="cpfRepresentante"><b>CPF:</b></label>
-            <input type="text" id="cpfRepresentante" value="">
+            <input type="text" id="cpfRepresentante">
         </div>
 
         <div class="input-container">
             <label for="emailRepresentante"><b>Email:</b></label>
-            <input type="text" id="emailRepresentante" value="">
+            <input type="text" id="emailRepresentante">
         </div>
 
         <div class="input-container">
             <label for="empresaRepresentante"><b>Empresa:</b></label>
-            <input type="text" id="empresaRepresentante" disabled value="">
+            <input type="text" id="empresaRepresentante">
         </div>
 
         <div class="input-container">
             <label for="cargoRepresentante"><b>Cargo:</b></label>
-            <input type="text" id="cargoRepresentante" value="">
+            <input type="text" id="cargoRepresentante">
         </div>
 
         <div class="input-container">
             <label for="senhaRepresentante"><b>Senha:</b></label>
-            <input type="password" id="senhaRepresentante" disabled value="">
+            <div class="label_input_senha">
+                <input type="password" id="input_senha">
+                <div class="ver">
+                    <label for="ver_senha" class="label_ver_senha">
+                        <i class="img-eye-close" id="olhoFechado"></i>
+                        <i class="img-eye-open" id="olhoAberto"></i>
+                        <input id="ver_senha" type="checkbox" onclick="senha()" class="check_senha">
+                    </label>
+                </div>
+            </div>
         </div>
 
         <button type="submit" class="save">Salvar alterações</button>

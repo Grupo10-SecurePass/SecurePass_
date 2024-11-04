@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="./css/cadastroGerente.css">
 
+    <script src="./js/senha.js"></script>
+
     <title>Dados do Gerente</title>
 
 </head>
@@ -52,27 +54,36 @@
                     <div class="espaco_inputs">
                         <div class="label_input">
                             <label for="nomeGerente"><b>Nome do Gerente:</b></label>
-                            <input type="text" id="nomeGerente" value="">
+                            <input type="text" id="nomeGerente">
                         </div>
                         <div class="label_input">
                             <label for="cpfGerente"><b>CPF:</b></label>
-                            <input type="text" id="cpfGerente" value="">
+                            <input type="text" id="cpfGerente">
                         </div>
                         <div class="label_input">
                             <label for="emailGerente"><b>Email:</b></label>
-                            <input type="text" id="emailGerente" value="">
+                            <input type="text" id="emailGerente">
                         </div>
                         <div class="label_input">
                             <label for="empresaGerente"><b>Empresa:</b></label>
-                            <input type="text" id="empresaGerente" disabled value="">
+                            <input type="text" id="empresaGerente">
                         </div>
                         <div class="label_input">
                             <label for="cargoGerente"><b>Cargo:</b></label>
-                            <input type="text" id="cargoGerente" value="">
+                            <input type="text" id="cargoGerente">
                         </div>
                         <div class="label_input">
                             <label for="senhaGerente"><b>Senha:</b></label>
-                            <input type="password" id="senhaGerente" disabled value="">
+                            <div class="label_input_senha">
+                                <input type="password" id="input_senha">
+                                <div class="ver">
+                                    <label for="ver_senha" class="label_ver_senha">
+                                        <i class="img-eye-close" id="olhoFechado"></i>
+                                        <i class="img-eye-open" id="olhoAberto"></i>
+                                        <input id="ver_senha" type="checkbox" onclick="senha()" class="check_senha">
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="save">Salvar alterações</button>
                     </div>

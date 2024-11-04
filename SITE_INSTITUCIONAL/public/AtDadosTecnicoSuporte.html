@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
     <title>Atualizar Suporte</title>
     <link rel="stylesheet" href="./css/cadastroGerente.css">
+    <script src="./js/senha.js"></script>
+
 </head>
+
 <body>
 
     <div class="content">
@@ -47,32 +53,41 @@
                     <div class="espaco_inputs">
                         <div class="label_input">
                             <label for="nomeTecnico"><b>Nome do Técnico:</b></label>
-                            <input type="text" id="nomeTecnico" value="">
+                            <input type="text" id="nomeTecnico">
                         </div>
                         <div class="label_input">
                             <label for="cpfTecnico"><b>CPF do Técnico:</b></label>
-                            <input type="text" id="cpfTecnico" value="">
+                            <input type="text" id="cpfTecnico">
                         </div>
                         <div class="label_input">
                             <label for="emailTecnico"><b>Email do Técnico:</b></label>
-                            <input type="text" id="emailTecnico" value="">
+                            <input type="text" id="emailTecnico">
                         </div>
                         <div class="label_input">
                             <label for="empresaTecnico"><b>Empresa do Técnico:</b></label>
-                            <input type="text" id="empresaTecnico" disabled value="">
+                            <input type="text" id="empresaTecnico>
                         </div>
                         <div class="label_input">
                             <label for="cargoTecnico"><b>Cargo do Técnico:</b></label>
-                            <input type="text" id="cargoTecnico" value="">
+                            <input type="text" id="cargoTecnico">
                         </div>
                         <div class="label_input">
                             <label for="senhaTecnico"><b>Senha do Técnico:</b></label>
-                            <input type="password" id="senhaTecnico" disabled value="">
+                            <div class="label_input_senha">
+                                <input type="password" id="input_senha">
+                                <div class="ver">
+                                    <label for="ver_senha" class="label_ver_senha">
+                                        <i class="img-eye-close" id="olhoFechado"></i>
+                                        <i class="img-eye-open" id="olhoAberto"></i>
+                                        <input id="ver_senha" type="checkbox" onclick="senha()" class="check_senha">
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="save">Salvar alterações</button>
                     </div>
                 </div>
-                
+
                 <div class="buttons">
                     <button type="button" onclick="deletar(cpf)" class="delete">
                         Excluir Suporte
@@ -80,29 +95,30 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </body>
+
 </html>
 <script>
 
-function Navbar() {
-            const navMenu = document.getElementById('navMenu');
-            const hamburger = document.querySelector('.hamburger');
-            const closeBtn = document.querySelector('.close-btn');
+    function Navbar() {
+        const navMenu = document.getElementById('navMenu');
+        const hamburger = document.querySelector('.hamburger');
+        const closeBtn = document.querySelector('.close-btn');
 
-            if (navMenu.classList.contains('show')) {
-                navMenu.classList.remove('show');
-                setTimeout(() => {
-                    hamburger.style.display = 'block';
-                    closeBtn.style.display = 'none';
-                }, 300);
-            } else {
-                hamburger.style.display = 'none';
-                closeBtn.style.display = 'block';
-                navMenu.classList.add('show');
-            }
+        if (navMenu.classList.contains('show')) {
+            navMenu.classList.remove('show');
+            setTimeout(() => {
+                hamburger.style.display = 'block';
+                closeBtn.style.display = 'none';
+            }, 300);
+        } else {
+            hamburger.style.display = 'none';
+            closeBtn.style.display = 'block';
+            navMenu.classList.add('show');
         }
-        
+    }
+
     var tecnico = JSON.parse(localStorage.getItem("tecnicoSelecionado"));
 
     document.getElementById("nomeTecnico").value = tecnico.nome;
