@@ -1,0 +1,413 @@
+/* Importação da fonte Nunito Sans */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+/* Reset e estilo básico */
+* {
+    font-family: "Nunito Sans", system-ui;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    background-color: #FCFFFC; /* Cor de fundo padrão */
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.alerta{
+    padding: 5px;
+    color: #FCFFFC;
+    background-color: rgba(233, 2, 2, 0.803);
+    border: #f00 1px solid;
+    width: 87%;
+    height: 5%;
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.alerta button {
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: #2D3A3A;
+    font-size: 1.7em;
+}
+
+#texto_alerta {
+    font-size: 1.4em;
+    width: 100%;
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilos da área do Dashboard */
+.mae {
+    display: flex;
+    width: 100%;
+    height: 695px;
+    align-items: center;
+}
+
+.lateral {
+    width: 5%;
+    height: 100%;
+}
+
+.quadros {
+    width: 90%;
+    height: 620px;
+    display: flex;
+    gap: 30px;
+}
+
+.div1 {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.filtro {
+    width: 100%;
+    height: 70px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.escolha {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 85%;
+    gap: 10px;
+}
+
+.textodata {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 80%;
+}
+
+.textodata p {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.textodata select {
+    width: 20%;
+}
+
+.aviso {
+    font-size: 10px;
+}
+
+.rede {
+    width: 100%;
+    height: 480px;
+    background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.espacotitulorede {
+    width: 100%;
+    height: 35px;
+}
+
+.espacotitulorede p {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.titulograficorede1 {
+    width: 90%;
+    height: 25px;
+    display: flex;
+    align-items: end;
+}
+
+.espacografico1rede {
+    width: 85%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico1rede {
+    width: 100%;
+}
+
+.linha {
+    width: 95%;
+    height: 1px;
+    background-color: #040F0F;
+}
+
+.titulograficorede2 {
+    width: 90%;
+    height: 25px;
+    display: flex;
+    align-items: end;
+}
+
+.espacografico2rede {
+    width: 85%;
+    height: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico2rede {
+    width: 75%;
+}
+
+.div2 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tempo {
+    width: 100%;
+    height: 295px;
+    background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.espacotitulotempo {
+    width: 100%;
+    height: 30px;
+}
+
+.espacotitulotempo p {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.espacograficotempo {
+    width: 85%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graficotempo {
+    width: 85%;
+}
+
+.frequencia_cpu {
+    width: 100%;
+    height: 295px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cpu {
+    height: 100%;
+    width: 100%;
+    background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.titulocpu {
+    width: 100%;
+    height: 35px;
+}
+
+.titulocpu p {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.espacograficocpu {
+    width: 90%;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.graficocpu {
+    width: 80%;
+}
+
+.disco {
+    height: 100%;
+    width: 35%;
+    background-color: #FCFFFC;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.titulodisco {
+    width: 100%;
+    height: 35px;
+}
+
+.titulodisco p {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.espacograficodisco {
+    width: 100%;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos para o Menu Lateral */
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #fcfffc;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.nav-menu {
+    position: absolute;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    width: 250px;
+    background: #040f0f;
+    padding-top: 10px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-menu.show {
+    left: 0;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.nav-menu a {
+    display: block;
+    color: #fcfffc;
+    padding: 15px;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.nav-menu a:hover {
+    background-color: #2D3A3A;
+    color: #fcfffc;
+    transition: background-color 0.8s ease;
+}
+
+.close-btn {
+    background: #fcfffc;
+    border: none;
+    color: #040f0f;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: -50px;
+    z-index: 5;
+    transition: right 0.3s ease;
+}
+.close-btn .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #040F0F;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.logo {
+    width: 180px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+    align-self: center;
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background: #fcfffc;
+    margin: 5px auto;
+}
+
+.logout {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: #fcfffc;
+    font-size: 18px;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.logout:hover {
+    background: #f00;
+}
+
+.hamburger.active .bar {
+    background-color: #040F0F;
+}

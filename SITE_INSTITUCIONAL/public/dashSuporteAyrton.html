@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Suporte</title>
+    <link rel="stylesheet" href="./css/dashSuporteAyrton.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./js/alerta.js"></script>
+</head>
+
+<body>
+    <div class="alerta">
+        <div id="texto_alerta">
+            Máquina <span id="dispositivo_alerta">ip-029-083</span>apresentando alerta: <span
+                id="alerta_descricao">Porcentual de uso de CPU está em risco! CPU: 85%</span>
+        </div>
+
+        <button onclick="fechar()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="./dashSuporte.html">Dashboard</a>
+                <a href="./dadosTecnico.html">Perfil</a>
+                <a href="./feedbackTs.html">Feedback</a>
+            </div>
+
+            <a href="index.html" class="logout">Sair</a>
+        </nav>
+    </div>
+
+    <div class="mae">
+        <div class="lateral"></div>
+        <div class="quadros">
+            <div class="div1">
+                <div class="filtro">
+                    <div class="escolha">
+                        <div class="textodata">
+                            <p>Escolha o servidor que você deseja monitorar</p>
+                            <select name="escolherServidor" id="">
+                                <option value="#" selected disabled>Escolher</option>
+                            </select>
+                        </div>
+                        <div class="aviso">
+                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor
+                                cadastrado.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="rede">
+                    <div class="espacotitulorede">
+                        <p>Alertas</p>
+                    </div>
+                    <div class="titulograficorede1">
+                        <p>Alertas de frequência da CPU e tempo de resposta:</p>
+                    </div>
+                    <div class="espacografico1rede">
+                        <div class="grafico1rede">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="div2">
+                <div class="tempo">
+                    <div class="espacotitulotempo">
+                        <p>Tempo de resposta:</p>
+                    </div>
+                    <div class="espacograficotempo">
+                        <div class="graficotempo">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="frequencia_cpu">
+                    <div class="cpu">
+                        <div class="titulocpu">
+                            <p>Frequência da CPU:</p>
+                        </div>
+                        <div class="espacograficocpu">
+                            <div class="graficocpu">
+                                <canvas id="myChart3"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        setInterval(obterdados(), 60000)
+
+        function toggleAlertSidebar() {
+            const sidebar = document.getElementById('alertSidebar');
+            sidebar.classList.toggle('show');
+        }
+
+        function Navbar() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const closeBtn = document.querySelector('.close-btn');
+
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                setTimeout(() => {
+                    hamburger.style.display = 'block';
+                    closeBtn.style.display = 'none';
+                }, 300);
+            } else {
+                hamburger.style.display = 'none';
+                closeBtn.style.display = 'block';
+                navMenu.classList.add('show');
+                hamburger.classList.add('active');
+            }
+        }
+
+        const ctx = document.getElementById('myChart');
+        const ctx2 = document.getElementById('myChart2');
+        const ctx3 = document.getElementById('myChart3');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["29/10", "30/10", "31/10", "01/11", "02/11", "03/11"],
+                datasets: [{
+                    label: 'Quantidade alertas',
+                    data: [1, 2, 0, 0, 3, 1],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: [150, 120, 90, 60, 30, 0],
+                datasets: [{
+                    label: 'ms',
+                    data: [20, 90, 92, 15, 70, 60],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: [880, 120, 90, 60, 30, 0],
+                datasets: [{
+                    label: 'GHz',
+                    data: [20, 90, 92, 15, 70, 60],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx4 = document.getElementById('myChart4').getContext('2d');
+        new Chart(ctx4, {
+            type: 'pie',
+            data: {
+                labels: ['Livre', 'Usado'],
+                datasets: [{
+                    label: 'Uso do Disco',
+                    data: [50, 30],
+                    backgroundColor: [
+                        'rgb(36, 130, 50)',
+                        'rgb(255, 0, 0)'
+                    ]
+                }]
+            }
+        });
+    </script>
+</body>
+
+</html>
