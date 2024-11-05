@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/CadDash.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/CadMaq.css">
     <title> Cadastro de Máquina | SecurePass</title>
 </head>
+
 <body onload="atualizarLista()">
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -40,35 +44,56 @@
     <div class="geral">
         <div class="formulario">
             <h2>Cadastro de Máquina</h2>
-        
-            <div class="input-container">
-                <label for="input_nome">Nome da Máquina:</label>
-                <input id="input_nome" type="text" placeholder="Nome da Máquina (deve ser único)">
-            </div>
-        
-            <div class="input-container">
-                <label for="input_CPU">Limite CPU:</label>
-                <input id="input_CPU" type="text" placeholder="Insira o limite de uso da CPU (em %)">
-            </div>
-        
-            <div class="input-container">
-                <label for="input_rede">Limite de uso rede:</label>
-                <input id="input_rede" type="text" placeholder="Insira o limite de uso de rede (em Mb/s)">
-            </div>
+
+            <div class="cadastro">
+                <div class="items">
+                    <div class="input-container">
+                        <label for="input_nome">Nome da Máquina:</label>
+                        <input id="input_nome" type="text" placeholder="Nome da Máquina (deve ser único)">
+                    </div>
+
+                    <div class="input-container">
+                        <label for="input_CPU">Limite CPU:</label>
+                        <input id="input_CPU" type="text" placeholder="Limite máximo de uso da CPU (em %)">
+                    </div>
+
+                    <div class="input-container">
+                        <label for="input_CPU">Limite frequência CPU:</label>
+                        <input id="input_CPU" type="text" placeholder="Limite mínimo de frequência da CPU (em GHz)">
+                    </div>
+
+                    <div class="input-container">
+                        <label for="input_CPU">Limite tempo de resposta:</label>
+                        <input id="input_CPU" type="text" placeholder="Limite máximo de tempo de resposta (em ms)">
+                    </div>
+
+                </div>
+                <div class="items">
+                    <div class="input-container">
+                        <label for="input_rede">Limite de upload rede:</label>
+                        <input id="input_rede" type="text" placeholder="Limite mínimo de uso de rede (em Mb/s)">
+                    </div>
     
-            <div class="input-container">
-                <label for="input_RAM">Limite RAM:</label>
-                <input id="input_RAM" type="text" placeholder="Insira o limite de uso de RAM (em %)">
+                    <div class="input-container">
+                        <label for="input_rede">Limite de download rede:</label>
+                        <input id="input_rede" type="text" placeholder="Limite mínimo de uso de rede (em Mb/s)">
+                    </div>
+
+                    <div class="input-container">
+                        <label for="input_RAM">Limite RAM:</label>
+                        <input id="input_RAM" type="text" placeholder="Limite máximo de uso de RAM (em %)">
+                    </div>
+    
+                    <div class="input-container">
+                        <label for="input_disco">Limite Disco:</label>
+                        <input id="input_disco" type="text" placeholder="Limite máximo de uso de Disco (em %)">
+                    </div>
+                    
+                </div>
             </div>
-        
-            <div class="input-container">
-                <label for="input_disco">Limite Disco:</label>
-                <input id="input_disco" type="text" placeholder="Insira o limite de uso de Disco (em %)">
-            </div>
-        
+
             <button class="botao" onclick="cadastrar()">Adicionar máquina</button>
-            <br>
-            <br>
+            
             <div id="div_mensagem" class="mensagem"></div>
         </div>
         <div class="historico">
@@ -90,33 +115,34 @@
         </div>
     </div>
 </body>
+
 </html>
 <script>
 
     function Navbar() {
-            const navMenu = document.getElementById('navMenu');
-            const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const hamburger = document.querySelector('.hamburger');
 
-            if (navMenu.classList.contains('show')) {
-                navMenu.classList.remove('show');
-                hamburger.style.left = '10px'; 
-            } else {
-                navMenu.classList.add('show');
-                hamburger.style.left = '260px'; 
-            }
+        if (navMenu.classList.contains('show')) {
+            navMenu.classList.remove('show');
+            hamburger.style.left = '10px';
+        } else {
+            navMenu.classList.add('show');
+            hamburger.style.left = '260px';
+        }
     }
 
     function atualizarLista() {
-            var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
-            console.log(nrEmpresa)
+        var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
+        console.log(nrEmpresa)
 
         fetch("/avisos/listarMaquina", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    nrEmpresaSever: nrEmpresa
-                }),
-            })
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nrEmpresaSever: nrEmpresa
+            }),
+        })
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.status == 204) {
@@ -140,7 +166,7 @@
                     return;
                 }
 
-                for (let i = 0; i < dados.length; i++){
+                for (let i = 0; i < dados.length; i++) {
                     var card = dados[i];
 
                     var divCard = document.createElement("a");
@@ -155,7 +181,7 @@
                     divCardMaquina.dataset.nome = card.nome;
                     divCardMaquina.dataset.stats = card.stats;
 
-                    divCardMaquina.addEventListener("click", function() {
+                    divCardMaquina.addEventListener("click", function () {
                         var maquina = {
                             idDispositivo: this.dataset.idDispositivo,
                             fkNR: this.dataset.fkNR,
@@ -203,27 +229,27 @@
                 lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
             });
     }
-    
+
     function pesquisaMaquina() {
-            var pesquisa = input_pesquisa.value;
-            var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
+        var pesquisa = input_pesquisa.value;
+        var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
 
-            if (pesquisa == "") {
-                window.alert("Preencha corretamente o campo de pesquisa");
-                return;
-            }
+        if (pesquisa == "") {
+            window.alert("Preencha corretamente o campo de pesquisa");
+            return;
+        }
 
-            var lista = document.getElementById("listamaquinas");
-            lista.innerHTML = "";
+        var lista = document.getElementById("listamaquinas");
+        lista.innerHTML = "";
 
-            fetch("/avisos/pesquisaMaquina", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    pesquisaServer: pesquisa,
-                    nrEmpresaServer: nrEmpresa
-                }),
-            })
+        fetch("/avisos/pesquisaMaquina", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                pesquisaServer: pesquisa,
+                nrEmpresaServer: nrEmpresa
+            }),
+        })
             .then(function (resposta) {
                 if (resposta.status == 204) {
                     adicionarBotaoLimparPesquisa();
@@ -252,7 +278,7 @@
                         divCardMaquina.dataset.nome = card.nome;
                         divCardMaquina.dataset.stats = card.stats;
 
-                        divCardMaquina.addEventListener("click", function() {
+                        divCardMaquina.addEventListener("click", function () {
                             var maquina = {
                                 idDispositivo: this.dataset.idDispositivo,
                                 fkNR: this.dataset.fkNR,
@@ -302,50 +328,50 @@
                 console.error("#ERRO: ", erro);
             });
 
-            return false;
+        return false;
+    }
+
+    function salvarMaquinaNoLocalStorage(maquina) {
+        localStorage.setItem("maquinaSelecionado", JSON.stringify(maquina));
+    }
+
+    function adicionarBotaoLimparPesquisa() {
+        var container = document.getElementById("espacopesquisa");
+
+        if (!document.getElementById("botaoLimpar")) {
+            var botaoLimpar = document.createElement("button");
+            botaoLimpar.className = "botão_limpar";
+            botaoLimpar.id = "botaoLimpar";
+            botaoLimpar.innerText = "Limpar Pesquisa";
+            botaoLimpar.onclick = limparPesquisa;
+            container.appendChild(botaoLimpar);
+        }
+    }
+
+    function limparPesquisa() {
+        var inputPesquisa = document.getElementById("input_pesquisa");
+        inputPesquisa.value = "";
+
+        var lista = document.getElementById("listamaquinas");
+        lista.innerHTML = "";
+
+        var botaoLimpar = document.getElementById("botaoLimpar");
+        if (botaoLimpar) {
+            botaoLimpar.remove();
         }
 
-        function salvarMaquinaNoLocalStorage(maquina) {
-            localStorage.setItem("maquinaSelecionado", JSON.stringify(maquina));
-        }
-
-        function adicionarBotaoLimparPesquisa() {
-            var container = document.getElementById("espacopesquisa");
-
-            if (!document.getElementById("botaoLimpar")) {
-                var botaoLimpar = document.createElement("button");
-                botaoLimpar.className = "botão_limpar";
-                botaoLimpar.id = "botaoLimpar";
-                botaoLimpar.innerText = "Limpar Pesquisa";
-                botaoLimpar.onclick = limparPesquisa;
-                container.appendChild(botaoLimpar);
-            }
-        }
-
-        function limparPesquisa() {
-            var inputPesquisa = document.getElementById("input_pesquisa");
-            inputPesquisa.value = "";
-
-            var lista = document.getElementById("listamaquinas");
-            lista.innerHTML = "";
-
-            var botaoLimpar = document.getElementById("botaoLimpar");
-            if (botaoLimpar) {
-                botaoLimpar.remove();
-            }
-
-            atualizarLista();
-        }
+        atualizarLista();
+    }
 
     function cadastrar() {
         var nomeVar = input_nome.value;
         var fkNRVar = sessionStorage.NR_EMPRESA;
 
         if (
-            nomeVar == "" 
+            nomeVar == ""
         ) {
             window.alert('Campos não devidamente preenchidos.')
-        }else {
+        } else {
             fetch("/maquinas/cadastrar", {
                 method: "POST",
                 headers: {
@@ -372,7 +398,7 @@
                     console.log(`#ERRO: ${resposta}`);
                 });
 
-                input_nome.value = "";
+            input_nome.value = "";
 
             return false;
         }
