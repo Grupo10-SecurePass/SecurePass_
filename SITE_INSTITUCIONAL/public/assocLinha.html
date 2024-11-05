@@ -42,7 +42,7 @@
     <div class="geral">
         <div class="formulario">
             <h2>Associação de Linha</h2>
-        <!-- ARRUMA ESSE CSS FILHA -->
+       
             <div class="input-container">
                 <label for="input_linha"><b> Selecione uma linha </b></label>
                 <select name="" id="input_linha" placeholder="Selecione a linha da sua empresa"> 
@@ -110,7 +110,7 @@
                     if (resposta.status == 204) {
                         var lista = document.getElementById("listamaquinas");
                         lista.className = "lista";
-                        lista.innerHTML = "<p>Ainda não há nenhuma máquina cadastrada.</p>";
+                        lista.innerHTML = "<p>Ainda não há nenhuma linha cadastrada.</p>";
                         return [];
                     }
                     return resposta.json();
