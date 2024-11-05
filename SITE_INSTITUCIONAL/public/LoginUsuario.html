@@ -10,6 +10,7 @@
     <script src="./js/sessao.js"></script>
     <link rel="stylesheet" href="./css/CadLog.css">
     <link rel="stylesheet" href="./css/FormularioEmpresa.css">
+    <script src="./js/senha.js"></script>
 </head>
 <body>
 
@@ -31,7 +32,16 @@
         
             <div class="label_input">
                 <label for="input_senha">Senha:</label>
-                <input id="input_senha" type="password" placeholder="Senha">
+                <div class="label_input_senha">
+                    <input id="input_senha" type="password" placeholder="Senha">
+                    <div class="ver">
+                        <label for="ver_senha" class="label_ver_senha">
+                            <i class="img-eye-close" id="olhoFechado"></i>
+                            <i class="img-eye-open" id="olhoAberto"></i>
+                            <input id="ver_senha" type="checkbox" onclick="senha()" class="check_senha">
+                        </label>
+                    </div>
+                </div>
             </div>
         
             <div class="label_input">

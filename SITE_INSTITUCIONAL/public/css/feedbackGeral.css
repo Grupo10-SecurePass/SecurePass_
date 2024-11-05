@@ -61,7 +61,7 @@ body {
 
 .historico {
   height: 570px;
-  width: 50%;
+  width: 60%;
   display: flex;  
   background-color: #ffffff;
   flex-direction: column;
