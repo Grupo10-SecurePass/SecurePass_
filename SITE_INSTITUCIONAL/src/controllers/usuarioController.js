@@ -4,18 +4,18 @@ var aquarioModel = require("../models/aquarioModel");
 function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var cargo = req.body.cargoServer
+    var fkCargo = req.body.fkCargoServer
 
     if (email == undefined) {
         res.status(400).send("Seu email está indefinido!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
-    } else if (cargo == undefined) {
+    } else if (fkCargo == undefined) {
         res.status(400).send("Seu cargo está indefinido!");
     }
     else {
 
-        usuarioModel.autenticar(email, senha, cargo)
+        usuarioModel.autenticar(email, senha, fkCargo)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -27,9 +27,9 @@ function autenticar(req, res) {
                             idUsuario: resultadoAutenticar[0].idUsuario,
                             email: resultadoAutenticar[0].email,
                             nome: resultadoAutenticar[0].nome,
-                            cargo: resultadoAutenticar[0].cargo,
+                            cargo: resultadoAutenticar[0].fkCargo,
                             cpf: resultadoAutenticar[0].CPF,
-                            stats: resultadoAutenticar[0].stats,
+                            status: resultadoAutenticar[0].status,
                             fkNR: resultadoAutenticar[0].fkNR
                         })
 

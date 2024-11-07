@@ -46,7 +46,7 @@
         
             <div class="label_input">
                 <label for="inputCargo">Cargo:</label>
-                <select name="cargo" id="inputCargo">
+                <select name="cargo" id="inputCargo" >
                     <option selected disabled value="#">Selecione um cargo</option>
                     <option value="representante">Representante</option>
                     <option value="gerente">Gerente de TI</option>
@@ -73,10 +73,10 @@ function entrar() {
 
         var emailVar = input_email.value;
         var senhaVar = input_senha.value;
-        var cargoVar = inputCargo.value;
+        var fkCargoVar = inputCargo.value;
 
 
-        if (emailVar == "" || senhaVar == "" || cargoVar == "#") {
+        if (emailVar == "" || senhaVar == "" || fkCargoVar == "#") {
             mensagem_erro.innerHTML = "Os campos para login estão preenchidos de forma incorreta!";
             
             return false;
@@ -93,7 +93,7 @@ function entrar() {
             body: JSON.stringify({
                 emailServer: emailVar,
                 senhaServer: senhaVar,
-                cargoServer: cargoVar
+                fkCargoServer: fkCargoVar
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
@@ -105,14 +105,14 @@ function entrar() {
                     console.log(json);
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.CARGO_USUARIO = json.cargo;
-                    sessionStorage.CPF_USUARIO = json.cpf;
-                    sessionStorage.STATS_USUARIO = json.stats;
+                    sessionStorage.CARGO_USUARIO = json.fkCargo;
+                    sessionStorage.CPF_USUARIO = json.CPF;
+                    sessionStorage.STATUS_USUARIO = json.status;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.idUsuario;
                     sessionStorage.NR_EMPRESA = json.fkNR;
 
-                    if(sessionStorage.STATS_USUARIO == "inativo"){
+                    if(sessionStorage.STATUS_USUARIO == "inativo"){
                         mensagem_erro.innerHTML = "Seu estado no nosso sistema está como inativo, caso esteja incorreto, por favor verificar com sua empresa.";
                     }else if(sessionStorage.CARGO_USUARIO == "representante"){
                         window.location = "./CadGerente.html"
