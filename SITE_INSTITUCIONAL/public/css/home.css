@@ -48,6 +48,9 @@ header{
 .logo{
   width: 100%;
 }
+.menu-toggle{
+  display: none;
+}
 .div_pailinks{
   width: 35%;
   display: flex;
@@ -269,4 +272,1655 @@ footer{
 }
 .direitos p{
   font-weight: 400;
+}
+
+@media only screen and (max-width: 1920px){
+  .secao1{
+    width: 100%;
+    height: 800px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/fundoHome.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+    background-size: cover;
+  }
+  header{
+    width: 100%;
+    height: 80px;
+    background-color: #2ba84a53;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .div_logo{
+    height: 100%;
+    width: 55%;
+    justify-content: start;
+    align-items: center;
+    display: flex;
+  }
+  .caixa_logo{
+    height: 60px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+  }
+  .caixa_logo a{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 100%;
+  }
+  .menu-toggle{
+    display: none;
+  }
+  .div_pailinks{
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    font-size: 22px;
+  }
+  .div_links{
+    display: flex;
+    width: 85%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .div_links a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_links a:hover {
+    color: #BCC2C0;
+  }
+  .div_logcad{
+    color: #FCFFFC;
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+  }
+  .div_logcad a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_logcad a:hover {
+    color: #BCC2C0;
+  }
+  
+  .mae_frase{
+    width: 100%;
+    height: 540px;
+    padding: 60px;
+    display: flex;
+    align-items: end;
+  }
+  .filha_frase{
+    z-index: 2;
+    width: 50%;
+  }
+  .filha_frase h1{
+    color: #ffffff;
+    font-size: 115px;
+  }
+  .btn_cad{
+    display: flex;
+    width: 100%;
+  }
+  .btn_cad button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_cad button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .seta{
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+  }
+  .seta_baixo{
+    padding: 10px;
+  }
+  .material-symbols-outlined{
+    color: #2BA84A;
+  }
+  
+  .secao2{
+    width: 100%;
+    height: 780px;
+    background-color: #040F0F;
+    position: relative;
+  }
+  .mae_texto{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_sobrenos{
+    color: #fff;
+    width: 60%;
+    font-size: 30px;
+    
+  }
+  .fundo_sobrenos{
+    width: 100%;
+    height: 800px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .fundo_sobrenos p{
+    color: #2BA84A;
+    font-size: 340px;
+    opacity: 0.05;
+  }
+  
+  .secao3{
+    width: 100%;
+    height: 780px;
+  }
+  .background2{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/secao3index.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .mae_destaques{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 660px;
+  }
+  .titulo_destaque{
+    display: flex;
+    padding: 30px;
+  }
+  .titulo_destaque h1{
+    color: #FCFFFC;
+    font-size: 60px;
+    font-weight: 400;
+  }
+  .texto_destaque{
+    display: flex;
+    color: #FCFFFC;
+    justify-content: end;
+    padding: 30px;
+  }
+  .destaques{
+    text-align: end;
+    width: 90%;
+    font-size: 27px;
+  }
+  
+  .secao4{
+    width: 100%;
+    height: 700px;
+    background-color: #040F0F;
+  }
+  .mae_texto_secao4{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_qa{
+    color: #fff;
+    width: 60%;
+    font-size: 35px;
+  }
+  .btn_feed{
+    display: flex;
+    width: 50%;
+    z-index: 2;
+    position: absolute;
+  }
+  .btn_feed button{
+    padding: 10px 50px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_feed button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .fundo_qa{
+    width: 100%;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .fundo_qa p{
+    color: #2D3A3A;
+    font-size: 450px;
+    opacity: 0.15;
+  }
+  
+  footer{
+    width: 100%;
+    height: 120px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+  }
+  .direitos{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .direitos p{
+    font-weight: 400;
+  }
+}
+@media only screen and (max-width: 1200px){
+  .secao1{
+    width: 100%;
+    height: 600px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/fundoHome.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  header{
+    width: 100%;
+    height: 65px;
+    background-color: #2ba84a53;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .div_logo{
+    height: 100%;
+    width: 55%;
+    justify-content: start;
+    align-items: center;
+    display: flex;
+  }
+  .caixa_logo{
+    height: 60px;
+    width: 20%;
+    display: flex;
+    align-items: center;
+  }
+  .caixa_logo a{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 100%;
+  }
+  .menu-toggle{
+    display: none;
+  }
+  .div_pailinks{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    font-size: 17px;
+  }
+  .div_links{
+    display: flex;
+    width: 85%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .div_links a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_links a:hover {
+    color: #BCC2C0;
+  }
+  .div_logcad{
+    color: #FCFFFC;
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+  }
+  .div_logcad a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_logcad a:hover {
+    color: #BCC2C0;
+  }
+  
+  .mae_frase{
+    width: 100%;
+    height: 410px;
+    padding: 60px;
+    display: flex;
+    align-items: end;
+  }
+  .filha_frase{
+    z-index: 2;
+    width: 50%;
+  }
+  .filha_frase h1{
+    color: #ffffff;
+    font-size: 80px;
+  }
+  .btn_cad{
+    display: flex;
+    width: 100%;
+  }
+  .btn_cad button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_cad button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .seta{
+    width: 100%;
+    height: 130px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+  }
+  .seta_baixo{
+    padding: 10px;
+  }
+  .material-symbols-outlined{
+    color: #2BA84A;
+  }
+  
+  .secao2{
+    width: 100%;
+    height: 560px;
+    background-color: #040F0F;
+    position: relative;
+  }
+  .mae_texto{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_sobrenos{
+    color: #fff;
+    width: 60%;
+    font-size: 20px;
+    
+  }
+  .fundo_sobrenos{
+    width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .fundo_sobrenos p{
+    color: #2BA84A;
+    font-size: 250px;
+    opacity: 0.05;
+  }
+  
+  .secao3{
+    width: 100%;
+    height: 560px;
+  }
+  .background2{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/secao3index.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .mae_destaques{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 660px;
+  }
+  .titulo_destaque{
+    display: flex;
+    padding: 30px;
+  }
+  .titulo_destaque h1{
+    color: #FCFFFC;
+    font-size: 35px;
+    font-weight: 400;
+    padding: 0;
+  }
+  .texto_destaque{
+    display: flex;
+    color: #FCFFFC;
+    justify-content: end;
+    padding: 30px;
+  }
+  .destaques{
+    text-align: end;
+    width: 90%;
+    font-size: 20px;
+  }
+  
+  .secao4{
+    width: 100%;
+    height: 560px;
+    background-color: #040F0F;
+  }
+  .mae_texto_secao4{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_qa{
+    color: #fff;
+    width: 60%;
+    font-size: 22px;
+  }
+  .btn_feed{
+    display: flex;
+    width: 50%;
+    z-index: 2;
+    position: absolute;
+  }
+  .btn_feed button{
+    padding: 2px 20px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_feed button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .fundo_qa{
+    width: 100%;
+    height: 610px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .fundo_qa p{
+    color: #2D3A3A;
+    font-size: 260px;
+    opacity: 0.15;
+  }
+  
+  footer{
+    width: 100%;
+    height: 100px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+  }
+  .direitos{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .direitos p{
+    font-weight: 400;
+  }
+}
+@media only screen and (max-width: 992px){
+  .secao1{
+    width: 100%;
+    height: 600px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/fundoHome.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  header{
+    width: 100%;
+    height: 65px;
+    background-color: #2ba84a53;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .div_logo{
+    height: 100%;
+    width: 35%;
+    justify-content: start;
+    align-items: center;
+    display: flex;
+  }
+  .caixa_logo{
+    height: 60px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+  }
+  .caixa_logo a{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 100%;
+  }
+  .menu-toggle{
+    display: none;
+  }
+  .div_pailinks{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    font-size: 16px;
+  }
+  .div_links{
+    display: flex;
+    width: 85%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .div_links a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_links a:hover {
+    color: #BCC2C0;
+  }
+  .div_logcad{
+    color: #FCFFFC;
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+  }
+  .div_logcad a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_logcad a:hover {
+    color: #BCC2C0;
+  }
+  
+  .mae_frase{
+    width: 100%;
+    height: 420px;
+    padding: 60px;
+    display: flex;
+    align-items: end;
+  }
+  .filha_frase{
+    z-index: 2;
+    width: 50%;
+  }
+  .filha_frase h1{
+    color: #ffffff;
+    font-size: 80px;
+  }
+  .btn_cad{
+    display: flex;
+    width: 100%;
+  }
+  .btn_cad button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_cad button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .seta{
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+  }
+  .seta_baixo{
+    padding: 10px;
+  }
+  .material-symbols-outlined{
+    color: #2BA84A;
+  }
+  
+  .secao2{
+    width: 100%;
+    height: 600px;
+    background-color: #040F0F;
+    position: relative;
+  }
+  .mae_texto{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_sobrenos{
+    color: #fff;
+    width: 60%;
+    font-size: 18px;
+    
+  }
+  .fundo_sobrenos{
+    width: 100%;
+    height: 650px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .fundo_sobrenos p{
+    color: #2BA84A;
+    font-size: 210px;
+    opacity: 0.05;
+  }
+  
+  .secao3{
+    width: 100%;
+    height: 600px;
+  }
+  .background2{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/secao3index.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .mae_destaques{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 660px;
+  }
+  .titulo_destaque{
+    display: flex;
+    padding: 30px;
+  }
+  .titulo_destaque h1{
+    color: #FCFFFC;
+    font-size: 40px;
+    font-weight: 400;
+  }
+  .texto_destaque{
+    display: flex;
+    color: #FCFFFC;
+    justify-content: end;
+    padding: 30px;
+  }
+  .destaques{
+    text-align: end;
+    width: 90%;
+    font-size: 18px;
+  }
+  
+  .secao4{
+    width: 100%;
+    height: 500px;
+    background-color: #040F0F;
+  }
+  .mae_texto_secao4{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_qa{
+    color: #fff;
+    width: 60%;
+    font-size: 20px;
+  }
+  .btn_feed{
+    display: flex;
+    width: 50%;
+    z-index: 2;
+    position: absolute;
+  }
+  .btn_feed button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_feed button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .fundo_qa{
+    width: 100%;
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .fundo_qa p{
+    color: #2D3A3A;
+    font-size: 220px;
+    opacity: 0.15;
+  }
+  
+  footer{
+    width: 100%;
+    height: 100px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+  }
+  .direitos{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .direitos p{
+    font-weight: 400;
+  }
+}
+@media only screen and (max-width: 768px){
+  .secao1{
+    width: 100%;
+    height: 600px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/fundoHome.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  header{
+    width: 100%;
+    height: 65px;
+    background-color: #2ba84a53;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .div_logo{
+    height: 100%;
+    width: 15%;
+    justify-content: start;
+    align-items: center;
+    display: flex;
+  }
+  .caixa_logo{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .caixa_logo a{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 100%;
+  }
+  .menu-toggle{
+    display: none;
+  }
+  .div_pailinks{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    font-size: 17px;
+  }
+  .div_links{
+    display: flex;
+    width: 90%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .div_links a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_links a:hover {
+    color: #BCC2C0;
+  }
+  .div_logcad{
+    color: #FCFFFC;
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+  }
+  .div_logcad a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_logcad a:hover {
+    color: #BCC2C0;
+  }
+  
+  .mae_frase{
+    width: 100%;
+    height: 400px;
+    padding: 60px;
+    display: flex;
+    align-items: end;
+  }
+  .filha_frase{
+    z-index: 2;
+    width: 50%;
+  }
+  .filha_frase h1{
+    color: #ffffff;
+    font-size: 70px;
+  }
+  .btn_cad{
+    display: flex;
+    width: 100%;
+  }
+  .btn_cad button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_cad button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .seta{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+  }
+  .seta_baixo{
+    padding: 10px;
+  }
+  .material-symbols-outlined{
+    color: #2BA84A;
+  }
+  
+  .secao2{
+    width: 100%;
+    height: 540px;
+    background-color: #040F0F;
+    position: relative;
+  }
+  .mae_texto{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_sobrenos{
+    color: #fff;
+    width: 70%;
+    font-size: 15px;
+  }
+  .fundo_sobrenos{
+    width: 100%;
+    height: 570px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .fundo_sobrenos p{
+    color: #2BA84A;
+    font-size: 160px;
+    opacity: 0.05;
+  }
+  
+  .secao3{
+    width: 100%;
+    height: 540px;
+  }
+  .background2{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/secao3index.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .mae_destaques{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 660px;
+  }
+  .titulo_destaque{
+    display: flex;
+    padding: 30px;
+  }
+  .titulo_destaque h1{
+    color: #FCFFFC;
+    font-size: 30px;
+    font-weight: 400;
+  }
+  .texto_destaque{
+    display: flex;
+    color: #FCFFFC;
+    justify-content: end;
+    padding: 30px;
+  }
+  .destaques{
+    text-align: end;
+    width: 90%;
+    font-size: 15px;
+  }
+  
+  .secao4{
+    width: 100%;
+    height: 450px;
+    background-color: #040F0F;
+  }
+  .mae_texto_secao4{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_qa{
+    color: #fff;
+    width: 60%;
+    font-size: 15px;
+  }
+  .btn_feed{
+    display: flex;
+    width: 50%;
+    z-index: 2;
+    position: absolute;
+  }
+  .btn_feed button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_feed button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .fundo_qa{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .fundo_qa p{
+    color: #2D3A3A;
+    font-size: 180px;
+    opacity: 0.15;
+  }
+  
+  footer{
+    width: 100%;
+    height: 80px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+  }
+  .direitos{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .direitos p{
+    font-weight: 400;
+  }
+}
+@media only screen and (max-width: 600px){
+  .secao1{
+    width: 100%;
+    height: 600px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/fundoHome.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  header{
+    width: 100%;
+    height: 65px;
+    background-color: #2ba84a53;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .div_logo{
+    height: 100%;
+    width: 20%;
+    justify-content: start;
+    align-items: center;
+    display: flex;
+  }
+  .caixa_logo{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .caixa_logo a{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 100%;
+  }
+  .div_pailinks {
+    display: none;
+  }
+  .menu-toggle {
+    display: block;
+    background-color: transparent;
+    border: none;
+    color: #FCFFFC;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .div_pailinks.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 65px;
+    right: 0;
+    background-color: #040F0F;
+    width: 100%;
+    padding: 10px 0;
+    align-items: center;
+    z-index: 3;
+  }
+  .div_pailinks.open a {
+    display: block;
+    padding: 10px 0;
+    color: #FCFFFC;
+  }
+
+  .div_links{
+    display: flex;
+    width: 85%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .div_links a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_links a:hover {
+    color: #BCC2C0;
+  }
+  .div_logcad{
+    color: #FCFFFC;
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    align-items: center;
+  }
+  .div_logcad a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_logcad a:hover {
+    color: #BCC2C0;
+  }
+  
+  .mae_frase{
+    width: 100%;
+    height: 400px;
+    padding: 60px;
+    display: flex;
+    align-items: end;
+  }
+  .filha_frase{
+    z-index: 2;
+    width: 50%;
+  }
+  .filha_frase h1{
+    color: #ffffff;
+    font-size: 60px;
+  }
+  .btn_cad{
+    display: flex;
+    width: 100%;
+  }
+  .btn_cad button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_cad button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .seta{
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+  }
+  .seta_baixo{
+    padding: 10px;
+  }
+  .material-symbols-outlined{
+    color: #2BA84A;
+  }
+  
+  .secao2{
+    width: 100%;
+    height: 400px;
+    background-color: #040F0F;
+    position: relative;
+  }
+  .mae_texto{
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_sobrenos{
+    color: #fff;
+    width: 80%;
+    font-size: 12px;
+    
+  }
+  .fundo_sobrenos{
+    width: 100%;
+    height: 420px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .fundo_sobrenos p{
+    color: #2BA84A;
+    font-size: 110px;
+    opacity: 0.05;
+  }
+  
+  .secao3{
+    width: 100%;
+    height: 400px;
+  }
+  .background2{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/secao3index.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .mae_destaques{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 660px;
+  }
+  .titulo_destaque{
+    display: flex;
+    padding: 10px;
+  }
+  .titulo_destaque h1{
+    color: #FCFFFC;
+    font-size: 30px;
+    font-weight: 400;
+  }
+  .texto_destaque{
+    display: flex;
+    color: #FCFFFC;
+    justify-content: end;
+    padding: 30px;
+  }
+  .destaques{
+    text-align: end;
+    width: 90%;
+    font-size: 12px;
+  }
+  
+  .secao4{
+    width: 100%;
+    height: 350px;
+    background-color: #040F0F;
+  }
+  .mae_texto_secao4{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_qa{
+    color: #fff;
+    font-size: 12px;
+    width: 60%;
+  }
+  .btn_feed{
+    display: flex;
+    width: 50%;
+    z-index: 2;
+    position: absolute;
+  }
+  .btn_feed button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_feed button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .fundo_qa{
+    width: 100%;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .fundo_qa p{
+    color: #2D3A3A;
+    font-size: 130px;
+    opacity: 0.15;
+  }
+  
+  footer{
+    width: 100%;
+    height: 70px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+  }
+  .direitos{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .direitos p{
+    font-weight: 400;
+  }
+}
+@media only screen and (max-width: 480px){
+  .secao1{
+    width: 100%;
+    height: 600px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/fundoHome.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  header{
+    width: 100%;
+    height: 65px;
+    background-color: #2ba84a53;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .div_logo{
+    height: 100%;
+    width: 20%;
+    justify-content: start;
+    align-items: center;
+    display: flex;
+  }
+  .caixa_logo{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .caixa_logo a{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 100%;
+  }
+  .div_pailinks {
+    display: none;
+  }
+  .menu-toggle {
+    display: block;
+    background-color: transparent;
+    border: none;
+    color: #FCFFFC;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .div_pailinks.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 65px;
+    right: 0;
+    background-color: #040F0F;
+    width: 100%;
+    padding: 10px 0;
+    align-items: center;
+    z-index: 3;
+  }
+  .div_pailinks.open a {
+    display: block;
+    padding: 10px 0;
+    color: #FCFFFC;
+  }
+
+  .div_links{
+    display: flex;
+    width: 85%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .div_links a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_links a:hover {
+    color: #BCC2C0;
+  }
+  .div_logcad{
+    color: #FCFFFC;
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    align-items: center;
+  }
+  .div_logcad a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_logcad a:hover {
+    color: #BCC2C0;
+  }
+  
+  .mae_frase{
+    width: 100%;
+    height: 400px;
+    padding: 60px;
+    display: flex;
+    align-items: end;
+  }
+  .filha_frase{
+    z-index: 2;
+    width: 70%;
+  }
+  .filha_frase h1{
+    color: #ffffff;
+    font-size: 55px;
+  }
+  .btn_cad{
+    display: flex;
+    width: 100%;
+  }
+  .btn_cad button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+    width: 100%;
+  }
+  .btn_cad button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .seta{
+    width: 100%;
+    height: 140px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+  }
+  .seta_baixo{
+    padding: 10px;
+  }
+  .material-symbols-outlined{
+    color: #2BA84A;
+  }
+  
+  .secao2{
+    width: 100%;
+    height: 400px;
+    background-color: #040F0F;
+    position: relative;
+  }
+  .mae_texto{
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_sobrenos{
+    color: #fff;
+    width: 80%;
+    font-size: 10px;
+    
+  }
+  .fundo_sobrenos{
+    width: 100%;
+    height: 420px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .fundo_sobrenos p{
+    color: #2BA84A;
+    font-size: 100px;
+    opacity: 0.05;
+  }
+  
+  .secao3{
+    width: 100%;
+    height: 350px;
+  }
+  .background2{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/secao3index.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .mae_destaques{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 660px;
+  }
+  .titulo_destaque{
+    display: flex;
+    padding: 10px;
+  }
+  .titulo_destaque h1{
+    color: #FCFFFC;
+    font-size: 25px;
+    font-weight: 400;
+  }
+  .texto_destaque{
+    display: flex;
+    color: #FCFFFC;
+    justify-content: end;
+    padding: 30px;
+  }
+  .destaques{
+    text-align: end;
+    width: 90%;
+    font-size: 10px;
+  }
+  
+  .secao4{
+    width: 100%;
+    height: 310px;
+    background-color: #040F0F;
+  }
+  .mae_texto_secao4{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 50px;
+  }
+  .texto_qa{
+    color: #fff;
+    font-size: 10px;
+    width: 60%;
+  }
+  .btn_feed{
+    display: flex;
+    width: 50%;
+    z-index: 2;
+    position: absolute;
+  }
+  .btn_feed button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 9px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_feed button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .fundo_qa{
+    width: 100%;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .fundo_qa p{
+    color: #2D3A3A;
+    font-size: 100px;
+    opacity: 0.15;
+  }
+  
+  footer{
+    width: 100%;
+    height: 70px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+  }
+  .direitos{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .direitos p{
+    font-weight: 400;
+  }
 }

@@ -20,6 +20,7 @@
             </a>
           </div>
         </div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         <div class="div_pailinks">
           <div class="div_links">
             <a href="#secao2">Sobre Nós</a>
@@ -37,7 +38,7 @@
         <div class="filha_frase">
           <h1>Monitoramento Perspicaz</h1>
           <div class="btn_cad">
-            <button onclick="CadastrarEmpresa()">Clique aqui e cadastre sua empresa</button>
+            <button onclick="window.location='./CadEmpresa.html'">Clique aqui e cadastre sua empresa</button>
           </div>
         </div>
       </div>
@@ -76,7 +77,6 @@
         </div>
         <div class="texto_destaque">
           <div class="destaques">
-            <p>Diferenciais da SecurePass: <br><br>
               - Dashboards completas: Oferecemos dashboards de recursos de hardware em um tempo aproximadamnete real e de longo prazo, proporcionando 
               uma visão clara e contínua do desempenho dos seus servidores. <br><br>
               - Alertas preventivos : Desenvolvemos alertas personalizados não apenas em caso de incidentes,mas para a prevenção dos mesmos  
@@ -111,11 +111,9 @@
   </footer>
 </body>
 </html>
-
 <script>
-
-function CadastrarEmpresa(){
-  window.location = "./CadEmpresa.html"
-}
-
+  function toggleMenu() {
+    const menu = document.querySelector('.div_pailinks');
+    menu.classList.toggle('open');
+  }
 </script>
