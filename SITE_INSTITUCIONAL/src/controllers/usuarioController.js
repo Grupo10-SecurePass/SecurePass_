@@ -30,7 +30,8 @@ function autenticar(req, res) {
                             cargo: resultadoAutenticar[0].fkCargo,
                             cpf: resultadoAutenticar[0].CPF,
                             status: resultadoAutenticar[0].status,
-                            fkNR: resultadoAutenticar[0].fkNR
+                            fkNR: resultadoAutenticar[0].fkNR,
+                            fkLinha: resultadoAutenticar[0].fkLinha
                         })
 
                     } else if (resultadoAutenticar.length == 0) {
@@ -166,9 +167,25 @@ function cadastrarSuporte(req, res) {
     }
 }
 
+function listarCargo(req,res) {
+    
+    usuarioModel.listarCargo().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     autenticar,
     cadastrar,
     cadastrarGerente,
-    cadastrarSuporte
+    cadastrarSuporte,
+    listarCargo
 }

@@ -64,15 +64,16 @@
         document.getElementById("form_postagem").reset();
     }
 
+
     function publicar() {
-        var emailUsuario = sessionStorage.EMAIL_USUARIO;
-        var nomeUsuario = sessionStorage.NOME_USUARIO;
+        var idUsuario = 1;
+        var NR = 5223;
 
         var corpo = {
             descricao: form_postagem.descricao.value
         }
 
-        fetch(`/avisos/publicarFeedback/${emailUsuario}/${nomeUsuario}`, {
+        fetch(`/avisos/publicarFeedback/${idUsuario}/${NR}`, {
             method: "post",
             headers: {
                 "Content-Type": "application/json"
@@ -113,21 +114,18 @@
     }
 
     function atualizarLista() {
-        var emailUsuario = sessionStorage.EMAIL_USUARIO;
+        var idUsuario = 1;
 
-        fetch("/avisos/listarFeedbacks", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    emailUsuarioSever: emailUsuario
-                }),
+        fetch(`/avisos/listarFeedbacks/${idUsuario}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
             })
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.status == 204) {
                         var lista = document.getElementById("listafeedbacks");
                         lista.className = "lista";
-                        lista.innerHTML = "<p>Ainda não há nenhuma máquina cadastrada.</p>";
+                        lista.innerHTML = "<p>Ainda não há nenhum feedback.</p>";
                         return [];
                     }
                     return resposta.json();

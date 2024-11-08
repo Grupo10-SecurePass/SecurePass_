@@ -33,10 +33,10 @@ router.get("/pesquisar/:descricao", function (req, res) {
     avisoController.pesquisarDescricao(req, res);
 });
 
-router.post("/publicarFeedback/:emailUsuario/:nomeUsuario", function (req, res) {
+router.post("/publicarFeedback/:idUsuario/:NR", function (req, res) {
     avisoController.publicarFeedback(req, res);
 });
-router.post("/listarFeedbacks", function (req, res) {
+router.get("/listarFeedbacks/:idUsuario", function (req, res) {
     avisoController.listarFeedbacks(req, res);
 });
 router.get("/listarFeedbacksGeral", function (req, res) {

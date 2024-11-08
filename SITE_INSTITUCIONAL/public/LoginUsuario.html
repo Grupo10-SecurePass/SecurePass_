@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./css/FormularioEmpresa.css">
     <script src="./js/senha.js"></script>
 </head>
-<body>
+<body onload="atualizarLista()">
 
   <div class="geral">
 
@@ -48,9 +48,6 @@
                 <label for="inputCargo">Cargo:</label>
                 <select name="cargo" id="inputCargo" >
                     <option selected disabled value="#">Selecione um cargo</option>
-                    <option value="representante">Representante</option>
-                    <option value="gerente">Gerente de TI</option>
-                    <option value="técnico">Técnico de Suporte</option>
                 </select>
             </div>
         <br>
@@ -68,6 +65,56 @@
 </html>
 
 <script>
+
+function atualizarLista(){
+
+        fetch("/usuarios/listarCargo", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listamaquinas");
+                        lista.className = "lista";
+                        lista.innerHTML = "<p>Ainda não há nenhuma máquina cadastrada.</p>";
+                        window.alert("Não achou nenhum cargo")
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listamaquinas");
+
+
+                for (let i = 0; i < dados.length; i++) {
+                    var cargo = dados[i];
+                    var id = cargo.idCargo
+                    var nome = cargo.nome
+                    console.log(cargo)
+                    console.log(id)
+
+                    var opcao = document.createElement("option");
+                    opcao.value = `${id}`
+                    opcao.innerHTML = nome
+                    
+
+                    
+                    inputCargo.appendChild(opcao);    
+                }
+            })
+            .catch(function (erro) {
+                console.error(erro);
+
+                console.log("Deu erro")
+            });
+    
+}
 
 function entrar() {
 
@@ -105,8 +152,8 @@ function entrar() {
                     console.log(json);
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.CARGO_USUARIO = json.fkCargo;
-                    sessionStorage.CPF_USUARIO = json.CPF;
+                    sessionStorage.CARGO_USUARIO = json.cargo;
+                    sessionStorage.CPF_USUARIO = json.cpf;
                     sessionStorage.STATUS_USUARIO = json.status;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.idUsuario;
@@ -114,9 +161,9 @@ function entrar() {
 
                     if(sessionStorage.STATUS_USUARIO == "inativo"){
                         mensagem_erro.innerHTML = "Seu estado no nosso sistema está como inativo, caso esteja incorreto, por favor verificar com sua empresa.";
-                    }else if(sessionStorage.CARGO_USUARIO == "representante"){
-                        window.location = "./CadGerente.html"
-                    }else if(sessionStorage.CARGO_USUARIO == "gerente"){
+                    }else if(sessionStorage.CARGO_USUARIO == 1){
+                        window.location = "./assocLinha.html"
+                    }else if(sessionStorage.CARGO_USUARIO == 2){
                         window.location = "./CadTecnicoSuporte.html"
                     }else{
                         window.location = "./dashSuporte.html"

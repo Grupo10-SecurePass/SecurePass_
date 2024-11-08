@@ -148,17 +148,19 @@ function pesquisarDescricao(req, res) {
 
 function publicarFeedback(req, res) {
     var descricao = req.body.descricao;
-    var emailUsuario = req.params.emailUsuario;
-    var nomeUsuario = req.params.nomeUsuario;
+    var idUsuario = req.params.idUsuario;
+    var NR = req.params.NR;
+
+    console.log(`No controller o idUsuario é ${idUsuario}`)
 
     if (descricao == undefined) {
         res.status(400).send("A descrição está indefinido!");
-    } else if (emailUsuario == undefined) {
-        res.status(403).send("O email do usuário está indefinido!");
-    } else if (nomeUsuario == undefined) {
-        res.status(403).send("O nome do usuário está indefinido!");
+    } else if (idUsuario == undefined) {
+        res.status(403).send("O id do usuário está indefinido!");
+    } else if (NR == undefined) {
+        res.status(403).send("O NR do usuário está indefinido!");
     } else {
-        avisoModel.publicarFeedback(descricao, emailUsuario, nomeUsuario)
+        avisoModel.publicarFeedback(descricao, idUsuario, NR)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -174,8 +176,9 @@ function publicarFeedback(req, res) {
     }
 }
 function listarFeedbacks(req, res) {
-    var emailUsuario = req.body.emailUsuarioSever;
-    avisoModel.listarFeedbacks(emailUsuario).then(function (resultado) {
+    var idUsuario = req.params.idUsuario;
+
+    avisoModel.listarFeedbacks(idUsuario).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
