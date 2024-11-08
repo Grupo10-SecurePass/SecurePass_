@@ -78,23 +78,23 @@
 </html>
 
 <script>
+// Função para cadastrar um novo usuário
+function cadastrar() {
+    // Obtém os valores dos campos
+    var nomeVar = input_nome.value;
+    var cpfVar = input_cpf.value;
+    var emailVar = input_email.value;
+    var senhaVar = input_senha.value;
+    var idEmpresaVincular = Number(input_nr.value);
 
-    function cadastrar() {
-        // Obtém os valores dos campos
-        var nomeVar = input_nome.value;
-        var cpfVar = input_cpf.value;
-        var emailVar = input_email.value;
-        var senhaVar = input_senha.value;
-        var idEmpresaVincular = Number(input_nr.value);
+    // Verifica se todos os campos estão preenchidos
+    if (!nomeVar || !cpfVar || !emailVar || !senhaVar || idEmpresaVincular == "") {
+        alert("Preencha todos os campos corretamente");
+        return false;
+    }
 
-        // Verifica se todos os campos estão preenchidos
-        if (nomeVar == "" || cpfVar == "" || emailVar == "" || senhaVar == "" || idEmpresaVincular == "") {
-            alert("Preencha todos os campos corretamente");
-            return false;
-        }
-
-        // Chama a função assíncrona para verificar o NR
-        verificarNR(idEmpresaVincular, function (resultadoVerificacao) {
+    // Chama a função assíncrona para verificar o NR
+    verificarNR(idEmpresaVincular, function (resultadoVerificacao) {
             if (resultadoVerificacao == "certo") {
                 // Se o NR for válido, realiza o cadastro
                 fetch("/usuarios/cadastrar", {

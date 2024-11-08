@@ -51,6 +51,7 @@ function autenticar(req, res) {
 
 }
 
+
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var cpf = req.body.cpfServer;
@@ -58,15 +59,15 @@ function cadastrar(req, res) {
     var senha = req.body.senhaServer;
     var fkNR = req.body.idEmpresaVincularServer;
 
-    if (nome == undefined) {
+    if (!nome) {
         res.status(400).send("Seu nome está undefined!");
-    } else if (cpf == undefined) {
+    } else if (!cpf) {
         res.status(400).send("Seu cpf está undefined!");
-    } else if (email == undefined) {
+    } else if (!email) {
         res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
+    } else if (!senha) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (fkNR == undefined) {
+    } else if (!fkNR) {
         res.status(400).send("Sua empresa a vincular está undefined!");
     } else {
         usuarioModel.cadastrar(fkNR, nome, cpf, email, senha)
@@ -74,8 +75,8 @@ function cadastrar(req, res) {
                 res.json(resultado);
             })
             .catch((erro) => {
-                console.log(erro);
-                res.status(500).json(erro.sqlMessage);
+                console.error("Erro ao cadastrar usuário:", erro);
+                res.status(500).json({ error: erro.sqlMessage });
             });
     }
 }
