@@ -4,6 +4,7 @@
   box-sizing: border-box;
   margin: 0;
   scroll-behavior: smooth;
+  transition: all 0.3s ease;
 }
 
 .secao1{
@@ -277,7 +278,7 @@ footer{
 @media only screen and (max-width: 1920px){
   .secao1{
     width: 100%;
-    height: 800px;
+    height: 690px;
   }
   .background{
     width: 100%;
@@ -290,7 +291,7 @@ footer{
   }
   header{
     width: 100%;
-    height: 80px;
+    height: 70px;
     background-color: #2ba84a53;
     display: flex;
     justify-content: space-around;
@@ -322,15 +323,15 @@ footer{
     display: none;
   }
   .div_pailinks{
-    width: 35%;
+    width: 40%;
     display: flex;
     justify-content: space-between;
     gap: 80px;
-    font-size: 22px;
+    font-size: 20px;
   }
   .div_links{
     display: flex;
-    width: 85%;
+    width: 80%;
     height: 100%;
     justify-content: space-between;
     align-items: center;
@@ -360,7 +361,7 @@ footer{
   
   .mae_frase{
     width: 100%;
-    height: 540px;
+    height: 460px;
     padding: 60px;
     display: flex;
     align-items: end;
@@ -371,7 +372,7 @@ footer{
   }
   .filha_frase h1{
     color: #ffffff;
-    font-size: 115px;
+    font-size: 90px;
   }
   .btn_cad{
     display: flex;
@@ -383,7 +384,7 @@ footer{
     border: #248232 solid 2px;
     background-color: #040F0F;
     color: #FCFFFC;
-    font-size: 25px;
+    font-size: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     transition: border 0.3s ease;
@@ -394,7 +395,7 @@ footer{
   }
   .seta{
     width: 100%;
-    height: 180px;
+    height: 170px;
     display: flex;
     align-items: end;
     justify-content: end;
@@ -408,7 +409,7 @@ footer{
   
   .secao2{
     width: 100%;
-    height: 780px;
+    height: 680px;
     background-color: #040F0F;
     position: relative;
   }
@@ -421,25 +422,25 @@ footer{
   .texto_sobrenos{
     color: #fff;
     width: 60%;
-    font-size: 30px;
+    font-size: 22px;
     
   }
   .fundo_sobrenos{
     width: 100%;
-    height: 800px;
+    height: 780px;
     display: flex;
     justify-content: end;
     align-items: end;
   }
   .fundo_sobrenos p{
     color: #2BA84A;
-    font-size: 340px;
+    font-size: 320px;
     opacity: 0.05;
   }
   
   .secao3{
     width: 100%;
-    height: 780px;
+    height: 680px;
   }
   .background2{
     width: 100%;
@@ -457,7 +458,7 @@ footer{
   }
   .titulo_destaque{
     display: flex;
-    padding: 30px;
+    padding: 25px;
   }
   .titulo_destaque h1{
     color: #FCFFFC;
@@ -473,12 +474,12 @@ footer{
   .destaques{
     text-align: end;
     width: 90%;
-    font-size: 27px;
+    font-size: 22px;
   }
   
   .secao4{
     width: 100%;
-    height: 700px;
+    height: 620px;
     background-color: #040F0F;
   }
   .mae_texto_secao4{
@@ -490,7 +491,7 @@ footer{
   .texto_qa{
     color: #fff;
     width: 60%;
-    font-size: 35px;
+    font-size: 23px;
   }
   .btn_feed{
     display: flex;
@@ -504,7 +505,7 @@ footer{
     border: #248232 solid 2px;
     background-color: #040F0F;
     color: #FCFFFC;
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     transition: border 0.3s ease;
@@ -515,14 +516,14 @@ footer{
   }
   .fundo_qa{
     width: 100%;
-    height: 800px;
+    height: 700px;
     display: flex;
     justify-content: center;
     align-items: end;
   }
   .fundo_qa p{
     color: #2D3A3A;
-    font-size: 450px;
+    font-size: 350px;
     opacity: 0.15;
   }
   
@@ -1922,5 +1923,294 @@ footer{
   }
   .direitos p{
     font-weight: 400;
+  }
+}
+@media only screen and (max-width: 320px){
+  .secao1{
+    width: 100%;
+    height: 530px;
+  }
+  .background{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/fundoHome.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  header{
+    width: 100%;
+    height: 40px;
+    background-color: #2ba84a53;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .div_logo{
+    height: 100%;
+    width: 30%;
+    justify-content: start;
+    align-items: center;
+    display: flex;
+  }
+  .caixa_logo{
+    height: 60px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+  }
+  .caixa_logo a{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo{
+    width: 100%;
+  }
+  .div_pailinks {
+    display: none;
+  }
+  .menu-toggle {
+    display: block;
+    background-color: transparent;
+    border: none;
+    color: #FCFFFC;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .div_pailinks.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #040F0F;
+    width: 100%;
+    padding: 10px 0;
+    align-items: center;
+    z-index: 3;
+  }
+  .div_pailinks.open a {
+    display: block;
+    padding: 10px 0;
+    color: #FCFFFC;
+  }
+
+  .div_links{
+    display: flex;
+    width: 85%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .div_links a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_links a:hover {
+    color: #BCC2C0;
+  }
+  .div_logcad{
+    color: #FCFFFC;
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    align-items: center;
+  }
+  .div_logcad a{
+    text-decoration: none;
+    color: #FCFFFC;
+    transition: color 0.3s ease;
+  }
+  .div_logcad a:hover {
+    color: #BCC2C0;
+  }
+  
+  .mae_frase{
+    width: 100%;
+    height: 500px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+  }
+  .filha_frase{
+    z-index: 2;
+    width: 80%;
+  }
+  .filha_frase h1{
+    color: #ffffff;
+    font-size: 35px;
+  }
+  .btn_cad{
+    display: flex;
+    width: 100%;
+  }
+  .btn_cad button{
+    padding: 6px 0px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+    width: 100%;
+  }
+  .btn_cad button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .seta{
+    width: 100%;
+    height: 1px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+  }
+  .seta_baixo{
+    padding: 10px;
+  }
+  .material-symbols-outlined{
+    color: #2BA84A;
+  }
+  
+  .secao2{
+    width: 100%;
+    height: 300px;
+    background-color: #040F0F;
+    position: relative;
+  }
+  .mae_texto{
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    padding: 30px;
+  }
+  .texto_sobrenos{
+    color: #fff;
+    width: 80%;
+    font-size: 8px;
+  }
+  .fundo_sobrenos{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+  }
+  .fundo_sobrenos p{
+    color: #2BA84A;
+    font-size: 60px;
+    opacity: 0.05;
+  }
+  
+  .secao3{
+    width: 100%;
+    height: 300px;
+  }
+  .background2{
+    width: 100%;
+    height: 100%;
+    background-image: url("../imagens/secao3index.svg");
+    background-color: #020808;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  .mae_destaques{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 660px;
+  }
+  .titulo_destaque{
+    display: flex;
+    padding: 10px;
+  }
+  .titulo_destaque h1{
+    color: #FCFFFC;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .texto_destaque{
+    display: flex;
+    color: #FCFFFC;
+    justify-content: end;
+    padding: 10px;
+  }
+  .destaques{
+    text-align: end;
+    width: 90%;
+    font-size: 8px;
+  }
+  
+  .secao4{
+    width: 100%;
+    height: 250px;
+    background-color: #040F0F;
+  }
+  .mae_texto_secao4{
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    padding: 20px;
+  }
+  .texto_qa{
+    color: #fff;
+    font-size: 8px;
+    width: 60%;
+  }
+  .btn_feed{
+    display: flex;
+    width: 50%;
+    z-index: 2;
+    position: absolute;
+  }
+  .btn_feed button{
+    padding: 5px 30px;
+    border-radius: 10px;
+    border: #248232 solid 2px;
+    background-color: #040F0F;
+    color: #FCFFFC;
+    font-size: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: border 0.3s ease;
+  }
+  .btn_feed button:hover{
+    background-color: #071818;
+    border: #2dfe4d solid 2px;
+  }
+  .fundo_qa{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+  }
+  .fundo_qa p{
+    color: #2D3A3A;
+    font-size: 70px;
+    opacity: 0.15;
+  }
+  
+  footer{
+    width: 100%;
+    height: 50px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+  }
+  .direitos{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .direitos p{
+    font-weight: 400;
+    font-size: 8px;
   }
 }
