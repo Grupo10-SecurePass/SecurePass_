@@ -27,6 +27,14 @@ function listarMaquina(nrEmpresa) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+function listarLinha(nrEmpresa) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    var instrucaoSql = `SELECT * FROM linha 
+    WHERE fkNR = '${nrEmpresa}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 function pesquisa(pesquisa) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
     
@@ -55,6 +63,16 @@ function pesquisaMaquina(pesquisa, nrEmpresa) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
     
     var instrucaoSql = `SELECT * FROM dispositivo 
+    WHERE nome LIKE '%${pesquisa}%' AND fkNR = '${nrEmpresa}'`;
+    
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    
+    return database.executar(instrucaoSql);
+}
+function pesquisaLinha(pesquisa, nrEmpresa) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    
+    var instrucaoSql = `SELECT * FROM linha 
     WHERE nome LIKE '%${pesquisa}%' AND fkNR = '${nrEmpresa}'`;
     
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -196,5 +214,7 @@ module.exports = {
     deletarSuporte,
     listarMaquina,
     pesquisaMaquina,
+    listarLinha,
+    pesquisaLinha,
     dadosPerfil
 }

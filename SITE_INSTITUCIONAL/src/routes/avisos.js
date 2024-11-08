@@ -12,6 +12,9 @@ router.post("/listarSuporte", function (req, res) {
 router.post("/listarMaquina", function (req, res) {
     avisoController.listarMaquina(req, res);
 });
+router.post("/listarLinha", function (req, res) {
+    avisoController.listarMaquina(req, res);
+});
 router.post("/pesquisa", function (req, res) {
     avisoController.pesquisa(req, res);
 });
@@ -21,6 +24,9 @@ router.post("/pesquisaSuporte", function (req, res) {
 router.post("/pesquisaMaquina", function (req, res) {
     avisoController.pesquisaMaquina(req, res);
 });
+router.post("/pesquisaLinha", function (req, res) {
+    avisoController.pesquisaLinha(req, res);
+}); 
 router.post("/dadosPerfil", function (req, res) {
     avisoController.dadosPerfil(req, res);
 });

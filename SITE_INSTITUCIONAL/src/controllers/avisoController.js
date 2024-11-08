@@ -42,6 +42,20 @@ function listarMaquina(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+function listarLinha(req, res) {
+    var nrEmpresa = req.body.nrEmpresaSever;
+    avisoModel.listarLinha(nrEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 function pesquisa(req, res) {
     var pesquisa = req.body.pesquisaServer;
 
@@ -71,6 +85,21 @@ function pesquisaSuporte(req, res) {
     });
 }
 function pesquisaMaquina(req, res) {
+    var pesquisa = req.body.pesquisaServer;
+    var nrEmpresa = req.body.nrEmpresaServer;
+
+    avisoModel.pesquisaMaquina(pesquisa, nrEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!");
+        }
+    }).catch(function (erro) {
+        console.log("Houve um erro ao buscar os gerentes: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function pesquisaLinha(req, res) {
     var pesquisa = req.body.pesquisaServer;
     var nrEmpresa = req.body.nrEmpresaServer;
 
@@ -268,5 +297,7 @@ module.exports = {
     deletarSuporte,
     listarMaquina,
     pesquisaMaquina,
+    listarLinha,
+    pesquisaLinha,
     dadosPerfil
 }

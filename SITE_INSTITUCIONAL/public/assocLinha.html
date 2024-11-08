@@ -70,9 +70,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="listagerentes" id="listamaquinas">
+                <div class="listagerentes" id="listalinhas">
                 </div>
             </div>
+            <p>Acesse as equipes de cada linha clicando nelas. Você terá também a opção de cadastrar novos gerentes.</p>
         </div>
     </div>
 
@@ -98,7 +99,7 @@
         var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
         console.log(nrEmpresa)
 
-        fetch("/avisos/listarMaquina", {
+        fetch("/avisos/listarLinha", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -108,9 +109,9 @@
             .then(function (resposta) {
                 if (resposta.ok) {
                     if (resposta.status == 204) {
-                        var lista = document.getElementById("listamaquinas");
+                        var lista = document.getElementById("listalinhas");
                         lista.className = "lista";
-                        lista.innerHTML = "<p>Ainda não há nenhuma linha cadastrada.</p>";
+                        lista.innerHTML = "<p>Ainda não há nenhuma linha associada.</p>";
                         return [];
                     }
                     return resposta.json();
@@ -120,11 +121,11 @@
             })
             .then(function (dados) {
                 console.log("Dados recebidos: ", JSON.stringify(dados));
-                var lista = document.getElementById("listamaquinas");
+                var lista = document.getElementById("listalinhas");
                 lista.innerHTML = "";
 
                 if (dados.length == 0) {
-                    lista.innerHTML = "<p>Ainda não há nenhuma máquina cadastrada.</p>";
+                    lista.innerHTML = "<p>Ainda não há nenhuma linha associada.</p>";
                     return;
                 }
 
@@ -135,22 +136,22 @@
                     divCard.className = "linklista";
                     divCard.href = "#";
 
-                    var divCardMaquina = document.createElement("div");
-                    divCardMaquina.className = "cardgerente";
+                    var divCardLinha = document.createElement("div");
+                    divCardLinha.className = "cardlinha";
 
-                    divCardMaquina.dataset.idDispositivo = card.idDispositivo;
-                    divCardMaquina.dataset.fkNR = card.fkNR;
-                    divCardMaquina.dataset.nome = card.nome;
-                    divCardMaquina.dataset.stats = card.stats;
+                    divCardLinha.dataset.idLinha = card.idLinha;
+                    divCardLinha.dataset.fkNR = card.fkNR;
+                    divCardLinha.dataset.nome = card.nome;
+                    divCardLinha.dataset.status = card.status;
 
-                    divCardMaquina.addEventListener("click", function () {
-                        var maquina = {
-                            idDispositivo: this.dataset.idDispositivo,
+                    divCardLinha.addEventListener("click", function () {
+                        var linha = {
+                            idLinha: this.dataset.idLinha,
                             fkNR: this.dataset.fkNR,
                             nome: this.dataset.nome,
-                            stats: this.dataset.stats
+                            status: this.dataset.status
                         };
-                        salvarMaquinaNoLocalStorage(maquina);
+                        salvarMaquinaNoLocalStorage(linha);
                         window.location.href = "";
                     });
 
@@ -168,27 +169,27 @@
                     status.className = "status";
 
                     var statusAtivoInativo = document.createElement("p");
-                    statusAtivoInativo.innerText = card.stats.toUpperCase();
-                    if (card.stats.toUpperCase() == "ATIVO") {
+                    statusAtivoInativo.innerText = card.status.toUpperCase();
+                    if (card.status.toUpperCase() == "ATIVO") {
                         statusAtivoInativo.style.color = "black";
-                    } else if (card.stats.toUpperCase() == "INATIVO") {
+                    } else if (card.status.toUpperCase() == "INATIVO") {
                         statusAtivoInativo.style.color = "red";
                     }
 
                     divFotoeNome.appendChild(imgPerfil);
                     divFotoeNome.appendChild(nome);
                     status.appendChild(statusAtivoInativo);
-                    divCardMaquina.appendChild(divFotoeNome);
-                    divCardMaquina.appendChild(status);
-                    divCard.appendChild(divCardMaquina);
+                    divCardLinha.appendChild(divFotoeNome);
+                    divCardLinha.appendChild(status);
+                    divCard.appendChild(divCardLinha);
                     lista.appendChild(divCard);
                 }
             })
             .catch(function (erro) {
                 console.error(erro);
 
-                const lista = document.getElementById("listamaquinas");
-                lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
+                const lista = document.getElementById("listalinhas");
+                lista.innerHTML = `<p>Erro ao carregar as linhas: ${erro}</p>`;
             });
     }
 
@@ -201,7 +202,7 @@
             return;
         }
 
-        var lista = document.getElementById("listamaquinas");
+        var lista = document.getElementById("listalinhas");
         lista.innerHTML = "";
 
         fetch("/avisos/pesquisaLinha", {
@@ -221,7 +222,7 @@
             })
             .then(function (respostaJson) {
                 console.log("Dados recebidos: ", respostaJson);
-                var lista = document.getElementById("listamaquinas");
+                var lista = document.getElementById("listalinhas");
                 lista.innerHTML = "";
 
                 if (respostaJson.length > 0) {
@@ -232,22 +233,22 @@
                         divCard.className = "linklista";
                         divCard.href = "#";
 
-                        var divCardMaquina = document.createElement("div");
-                        divCardMaquina.className = "cardgerente";
+                        var divCardLinha = document.createElement("div");
+                        divCardLinha.className = "cardlinha";
 
-                        divCardMaquina.dataset.idDispositivo = card.idDispositivo;
-                        divCardMaquina.dataset.fkNR = card.fkNR;
-                        divCardMaquina.dataset.nome = card.nome;
-                        divCardMaquina.dataset.stats = card.stats;
+                        divCardLinha.dataset.idLinha = card.idLinha;
+                        divCardLinha.dataset.fkNR = card.fkNR;
+                        divCardLinha.dataset.nome = card.nome;
+                        divCardLinha.dataset.status = card.status;
 
-                        divCardMaquina.addEventListener("click", function () {
-                            var maquina = {
-                                idDispositivo: this.dataset.idDispositivo,
+                        divCardLinha.addEventListener("click", function () {
+                            var linha = {
+                                idLinha: this.dataset.idLinha,
                                 fkNR: this.dataset.fkNR,
                                 nome: this.dataset.nome,
-                                stats: this.dataset.stats
+                                status: this.dataset.status
                             };
-                            salvarMaquinaNoLocalStorage(maquina);
+                            salvarLinhaNoLocalStorage(linha);
                             window.location.href = "./AtDadosGerente.html";
                         });
 
@@ -265,19 +266,19 @@
                         status.className = "status";
 
                         var statusAtivoInativo = document.createElement("p");
-                        statusAtivoInativo.innerText = card.stats.toUpperCase();
-                        if (card.stats.toUpperCase() == "ATIVO") {
+                        statusAtivoInativo.innerText = card.status.toUpperCase();
+                        if (card.status.toUpperCase() == "ATIVO") {
                             statusAtivoInativo.style.color = "black";
-                        } else if (card.stats.toUpperCase() == "INATIVO") {
+                        } else if (card.status.toUpperCase() == "INATIVO") {
                             statusAtivoInativo.style.color = "red";
                         }
 
                         divFotoeNome.appendChild(imgPerfil);
                         divFotoeNome.appendChild(nome);
                         status.appendChild(statusAtivoInativo);
-                        divCardMaquina.appendChild(divFotoeNome);
-                        divCardMaquina.appendChild(status);
-                        divCard.appendChild(divCardMaquina);
+                        divCardLinha.appendChild(divFotoeNome);
+                        divCardLinha.appendChild(status);
+                        divCard.appendChild(divCardLinha);
                         lista.appendChild(divCard);
                     }
                 } else {
@@ -293,8 +294,8 @@
         return false;
     }
 
-    function salvarMaquinaNoLocalStorage(maquina) {
-        localStorage.setItem("maquinaSelecionado", JSON.stringify(maquina));
+    function salvarLinhaNoLocalStorage(linha) {
+        localStorage.setItem("linhaSelecionado", JSON.stringify(linha));
     }
 
     function adicionarBotaoLimparPesquisa() {
@@ -314,7 +315,7 @@
         var inputPesquisa = document.getElementById("input_pesquisa");
         inputPesquisa.value = "";
 
-        var lista = document.getElementById("listamaquinas");
+        var lista = document.getElementById("listalinhas");
         lista.innerHTML = "";
 
         var botaoLimpar = document.getElementById("botaoLimpar");
@@ -325,7 +326,7 @@
         atualizarLista();
     }
 
-    function cadastrar() {
+    function associarLinha() {
         var nomeVar = input_nome.value;
         var fkNRVar = sessionStorage.NR_EMPRESA;
 
@@ -334,7 +335,7 @@
         ) {
             window.alert('Campos não devidamente preenchidos.')
         } else {
-            fetch("/maquinas/cadastrar", {
+            fetch("/linhas/associarLinha", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -348,12 +349,12 @@
                     console.log("resposta: ", resposta);
 
                     if (resposta.ok) {
-                        window.alert('Máquina cadastrada com sucesso')
+                        window.alert('Linha associada com sucesso')
                         atualizarLista();
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
 
-                        div_mensagem.innerHTML = "Já existe uma máquina com esse mesmo nome!"
+                        div_mensagem.innerHTML = "Já existe uma linha com esse mesmo nome!"
                     }
                 })
                 .catch(function (resposta) {
