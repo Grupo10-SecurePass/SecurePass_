@@ -43,14 +43,14 @@
             <h2>Associação de Linha</h2>
        
             <div class="input-container">
-                <label for="input_linha"><b> Selecione uma linha </b></label>
-                <select name="" id="input_linha" placeholder="Selecione a linha da sua empresa"> 
+                <label for="inputLinha"><b> Selecione uma linha </b></label>
+                <select name="" id="inputLinha" placeholder="Selecione a linha da sua empresa"> 
                     <option selected>Selecione a linha da sua empresa</option>
                 </select>
             </div>
         
 
-            <button class="botao" onclick="associarLinha()">Associar Linha </button>
+            <button class="botao" onclick="cadastrar()">Associar Linha </button>
             <br>
             
             <div class="mensagem"></div>
@@ -94,103 +94,55 @@
         }
     }
 
-    function atualizarLista() {
-        var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
-        console.log(nrEmpresa)
+    function atualizarLista(){
 
-        fetch("/avisos/listarLinha", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                nrEmpresaSever: nrEmpresa
-            }),
-        })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    if (resposta.status == 204) {
-                        var lista = document.getElementById("listalinhas");
-                        lista.className = "lista";
-                        lista.innerHTML = "<p>Ainda não há nenhuma linha associada.</p>";
-                        return [];
-                    }
-                    return resposta.json();
-                } else {
-                    throw "Houve um erro na API!";
-                }
-            })
-            .then(function (dados) {
-                console.log("Dados recebidos: ", JSON.stringify(dados));
+fetch("/avisos/listarLinha", {
+    method: "GET" ,
+    headers: { "Content-Type": "application/json" },
+
+})
+    .then(function (resposta) {
+        if (resposta.ok) {
+            if (resposta.status == 204) {
                 var lista = document.getElementById("listalinhas");
-                lista.innerHTML = "";
+                lista.className = "listalinhas";
+                lista.innerHTML = "<p>Ainda não há nenhuma linha associada.</p>";
+                window.alert("Não achou nenhuma linha")
+                return [];
+            }
+            return resposta.json();
+        } else {
+            throw "Houve um erro na API!";
+        }
+    })
+    .then(function (dados) {
+        console.log("Dados recebidos: ", JSON.stringify(dados));
+        var lista = document.getElementById("listalinhas");
 
-                if (dados.length == 0) {
-                    lista.innerHTML = "<p>Ainda não há nenhuma linha associada.</p>";
-                    return;
-                }
 
-                for (let i = 0; i < dados.length; i++) {
-                    var card = dados[i];
+        for (let i = 0; i < dados.length; i++) {
+            var linha = dados[i];
+            var id = linha.idLinha
+            var nome = linha.nome
+            console.log(linha)
+            console.log(id)
 
-                    var divCard = document.createElement("a");
-                    divCard.className = "linklista";
-                    divCard.href = "#";
+            var opcao = document.createElement("option");
+            opcao.value = `${id}`
+            opcao.innerHTML = nome
+            
 
-                    var divCardLinha = document.createElement("div");
-                    divCardLinha.className = "cardlinha";
+            
+            inputLinha.appendChild(opcao);    
+        }
+    })
+    .catch(function (erro) {
+        console.error(erro);
 
-                    divCardLinha.dataset.idLinha = card.idLinha;
-                    divCardLinha.dataset.fkNR = card.fkNR;
-                    divCardLinha.dataset.nome = card.nome;
-                    divCardLinha.dataset.status = card.status;
+        console.log("Deu erro")
+    });
 
-                    divCardLinha.addEventListener("click", function () {
-                        var linha = {
-                            idLinha: this.dataset.idLinha,
-                            fkNR: this.dataset.fkNR,
-                            nome: this.dataset.nome,
-                            status: this.dataset.status
-                        };
-                        salvarMaquinaNoLocalStorage(linha);
-                        window.location.href = "";
-                    });
-
-                    var divFotoeNome = document.createElement("div");
-                    divFotoeNome.className = "fotoenome";
-
-                    var imgPerfil = document.createElement("img");
-                    imgPerfil.src = "./imagens/vetorservidor.svg";
-                    imgPerfil.alt = "Foto de perfil";
-
-                    var nome = document.createElement("p");
-                    nome.innerText = card.nome;
-
-                    var status = document.createElement("div");
-                    status.className = "status";
-
-                    var statusAtivoInativo = document.createElement("p");
-                    statusAtivoInativo.innerText = card.status.toUpperCase();
-                    if (card.status.toUpperCase() == "ATIVO") {
-                        statusAtivoInativo.style.color = "black";
-                    } else if (card.status.toUpperCase() == "INATIVO") {
-                        statusAtivoInativo.style.color = "red";
-                    }
-
-                    divFotoeNome.appendChild(imgPerfil);
-                    divFotoeNome.appendChild(nome);
-                    status.appendChild(statusAtivoInativo);
-                    divCardLinha.appendChild(divFotoeNome);
-                    divCardLinha.appendChild(status);
-                    divCard.appendChild(divCardLinha);
-                    lista.appendChild(divCard);
-                }
-            })
-            .catch(function (erro) {
-                console.error(erro);
-
-                const lista = document.getElementById("listalinhas");
-                lista.innerHTML = `<p>Erro ao carregar as linhas: ${erro}</p>`;
-            });
-    }
+}
 
     function pesquisaLinha() {
         var pesquisa = input_pesquisa.value;
@@ -325,22 +277,22 @@
         atualizarLista();
     }
 
-    function associarLinha() {
-        var nomeVar = input_nome.value;
+    function cadastrar() { 
+        var linhaVar = inputLinha.value;
         var fkNRVar = sessionStorage.NR_EMPRESA;
 
         if (
-            nomeVar == ""
+            linhaVar == ""
         ) {
             window.alert('Campos não devidamente preenchidos.')
         } else {
-            fetch("/linhas/associarLinha", {
+            fetch("/maquinas/cadastrar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    nomeServer: nomeVar,
+                    linhaServer: linhaVar,
                     fkNRServer: fkNRVar
                 }),
             })
@@ -360,7 +312,7 @@
                     console.log(`#ERRO: ${resposta}`);
                 });
 
-            input_nome.value = "";
+                inputLinha.value = "";
 
             return false;
         }

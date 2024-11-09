@@ -42,7 +42,7 @@ function listarMaquina(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
-function listarLinha(req, res) {
+function listarLinha(req,res) {
     var nrEmpresa = req.body.nrEmpresaSever;
     avisoModel.listarLinha(nrEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
