@@ -7,8 +7,117 @@ body {
   height: 100vh;
 }
 
+.edit_pai{
+  z-index: 999;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  
+  backdrop-filter: blur(2px);
+}
+
+.edit_pai input {
+  border: 3px solid #000000;
+  background-color: #FCFFFC;
+  font-family: 'Nunito Sans';
+  height: 32px;
+  border-radius: 10px;  
+  width: 300px;
+}
+
+.edit_data{
+  position: absolute;
+  background-color: #fcfffc;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 60%;
+  height: 90vh;
+
+  padding: 1%;
+
+  border: #2D3A3A;
+  border-radius: 2%;
+  
+}
+
+.edit_campos{
+  width: 90%;
+}
+
+.atualizar_dispositivo{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+
+}
+
+.limites {
+
+  width: 100%;
+  display: flex;  
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.fechar{
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 40px;
+  height: 40px;
+
+}
+
+.fechar button{
+  border: 0;
+  background-color: #ffffff;
+}
+
+.botao_fechar_edit{
+  background-image: url(../imagens/x-circle.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+  border-radius: 200px;
+}
+
+.botao_deletar {
+  cursor: pointer;    
+  border: 0;
+  border-radius: 10px;
+  background-color: #f00;
+  color: #ffffff;
+  font-size: 13px;
+  width: 130px;
+  height: 40px; 
+
+  align-self: flex-end;
+}
+
+.botao_status{
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
 .geral {
-  width: 95%;
+  width: 100%;
   margin-top: 40px;
   display: flex;
   justify-content: space-evenly;
@@ -17,17 +126,18 @@ body {
 
 .formulario {
   height: 600px;
-  width: 55%;
+  width: 35%;
   display: flex;  
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   background-color: #ffffff;
+  padding: 1%;
 }
 
 .cadastro{
   width: 80%;
-  height: 70%;
+  height: 30%;
   display: flex;
   justify-content: space-around;
 }
@@ -36,6 +146,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+}
+
+.items_cadastro{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .input-container {
@@ -86,7 +202,7 @@ body {
 
 .historico {
   height: 570px;
-  width: 35%;
+  width: 55%;
   display: flex;  
   background-color: #ffffff;
   flex-direction: column;

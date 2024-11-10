@@ -158,6 +158,7 @@ function entrar() {
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.idUsuario;
                     sessionStorage.NR_EMPRESA = json.fkNR;
+                    sessionStorage.LINHA = json.fkLinha;
 
                     if(sessionStorage.STATUS_USUARIO == "inativo"){
                         mensagem_erro.innerHTML = "Seu estado no nosso sistema está como inativo, caso esteja incorreto, por favor verificar com sua empresa.";

@@ -29,8 +29,8 @@ function listarSuporte(req, res) {
     });
 }
 function listarMaquina(req, res) {
-    var nrEmpresa = req.body.nrEmpresaSever;
-    avisoModel.listarMaquina(nrEmpresa).then(function (resultado) {
+    var fkLinha = req.body.linhaSever;
+    avisoModel.listarMaquina(fkLinha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -86,9 +86,9 @@ function pesquisaSuporte(req, res) {
 }
 function pesquisaMaquina(req, res) {
     var pesquisa = req.body.pesquisaServer;
-    var nrEmpresa = req.body.nrEmpresaServer;
+    var fkLinha = req.body.linhaServer;
 
-    avisoModel.pesquisaMaquina(pesquisa, nrEmpresa).then(function (resultado) {
+    avisoModel.pesquisaMaquina(pesquisa, fkLinha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

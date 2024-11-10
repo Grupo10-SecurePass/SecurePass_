@@ -19,10 +19,10 @@ function listarSuporte(fkResponsavel) {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
-function listarMaquina(nrEmpresa) {
+function listarMaquina(fkLinha) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
     var instrucaoSql = `SELECT * FROM dispositivo 
-    WHERE fkNR = '${nrEmpresa}';
+    WHERE fkLinha = '${fkLinha}';
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -58,11 +58,11 @@ function pesquisaSuporte(pesquisa) {
     
     return database.executar(instrucaoSql);
 }
-function pesquisaMaquina(pesquisa, nrEmpresa) {
+function pesquisaMaquina(pesquisa, fkLinha) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
     
     var instrucaoSql = `SELECT * FROM dispositivo 
-    WHERE nome LIKE '%${pesquisa}%' AND fkNR = '${nrEmpresa}'`;
+    WHERE nome LIKE '%${pesquisa}%' AND fkLinha = '${fkLinha}'`;
     
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     

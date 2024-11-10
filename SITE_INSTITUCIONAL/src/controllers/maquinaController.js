@@ -19,17 +19,98 @@ function buscarAquariosPorEmpresa(req, res) {
 
 function cadastrar(req, res) {
   var nome = req.body.nomeServer;
-  var fkNR = req.body.fkNRServer;
+  var fkLinha = req.body.fkLinhaServer;
+  var ipCatraca = req.body.ipCatracaServer
   console.log(nome)
-  console.log(fkNR)
+  console.log(fkLinha)
+  console.log(ipCatraca)
 
   if (nome == undefined) {
     res.status(400).send("O nome está indefinido!");
-  } else if (fkNR == undefined) {
-    res.status(400).send("A chave da empresa está indefinida!");
+  } else if (fkLinha == undefined) {
+    res.status(400).send("A chave da linha está indefinida!");
+  } else if (ipCatraca == undefined) {
+    res.status(400).send("O ip da catraca está indefinido!");
   } else {
 
-    maquinaModel.cadastrar(nome, fkNR)
+    maquinaModel.cadastrar(nome, fkLinha, ipCatraca)
+      .then((resultado) => {
+        res.status(201).json(resultado);
+      }
+      ).catch((erro) => {
+        console.log(erro);
+        console.log(
+          "\nHouve um erro ao realizar o cadastro! Erro: ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
+}
+
+function atualizar(req, res) {
+  var nome = req.body.nomeServer;
+  var ipCatraca = req.body.ipCatracaServer;
+  var idDispositivo = req.body.idDispositivoServer;
+  console.log(nome)
+  console.log(ipCatraca)
+  console.log(idDispositivo)
+
+  if (nome == undefined) {
+    res.status(400).send("O nome está indefinido!");
+  } else if (ipCatraca == undefined) {
+    res.status(400).send("O ip da catraca está indefinido!");
+  } else if (idDispositivo == undefined) {
+    res.status(400).send("O id do dispositivo está indefinido!");
+  } else {
+
+    maquinaModel.atualizar(nome, ipCatraca, idDispositivo)
+      .then((resultado) => {
+        res.status(201).json(resultado);
+      }
+      ).catch((erro) => {
+        console.log(erro);
+        console.log(
+          "\nHouve um erro ao realizar o cadastro! Erro: ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
+}
+
+function ativar(req, res) {
+  var idDispositivo = req.body.idDispositivoServer;
+  console.log(idDispositivo)
+
+  if (idDispositivo == undefined) {
+    res.status(400).send("O id do dispositivo está indefinido!");
+  } else {
+
+    maquinaModel.ativar(idDispositivo)
+      .then((resultado) => {
+        res.status(201).json(resultado);
+      }
+      ).catch((erro) => {
+        console.log(erro);
+        console.log(
+          "\nHouve um erro ao realizar o cadastro! Erro: ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
+}
+
+function desativar(req, res) {
+  var idDispositivo = req.body.idDispositivoServer;
+  console.log(idDispositivo)
+
+  if (idDispositivo == undefined) {
+    res.status(400).send("O id do dispositivo está indefinido!");
+  } else {
+
+    maquinaModel.desativar(idDispositivo)
       .then((resultado) => {
         res.status(201).json(resultado);
       }
@@ -46,5 +127,8 @@ function cadastrar(req, res) {
 
 module.exports = {
   buscarAquariosPorEmpresa,
-  cadastrar
+  cadastrar,
+  atualizar,
+  ativar,
+  desativar
 }

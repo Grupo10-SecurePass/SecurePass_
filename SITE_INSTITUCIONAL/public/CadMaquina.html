@@ -9,10 +9,99 @@
         href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="./css/CadMaq.css">
-    <title> Cadastro de Máquina | SecurePass</title>
+    <title>Cadastro de Máquina | SecurePass</title>
 </head>
 
 <body onload="atualizarLista()">
+    <section class="edit_pai" id="secao_pai" style="display: none;">
+        <div class="edit_data">
+            <div class="fechar">
+                <button class="botao_fechar_edit" onclick="fecharJanela()"></button>
+            </div>
+            <h1>Dados da Máquina</h1>
+            <div class="edit_campos">
+                <div class="atualizar_dispositivo">
+                    <div class="input-container">
+                        <label for="input_nome_update">Nome da Máquina:</label>
+                        <input id="input_nome_update" type="text" placeholder="Nome da Máquina (deve ser único)">
+                    </div>
+                    <div class="input-container">
+                        <label for="input_ipCatraca_update">IPV4 da catraca exemplar:</label>
+                        <input id="input_ipCatraca_update" type="text" placeholder="IP da catraca exemplar para métricas">
+                    </div>
+
+                    <button class="botao" id="botao_atualizar">Atualizar máquina</button>
+                </div>
+                <hr>
+                <div>
+                    <div class="limites">
+                        <h1>Definição de limites</h1>
+                        <div class="cadastro">
+                            <div class="items">
+                                <div class="input-container">
+                                    <label for="input_ocioso">CPU ociosa:</label>
+                                    <input id="input_ocioso" type="text" placeholder="Limite de ociosidade máxima (%)">
+                                </div>
+
+                                <div class="input-container">
+                                    <label for="input_CPU">Limite CPU:</label>
+                                    <input id="input_CPU" type="text" placeholder="Limite máximo de uso da CPU (em %)">
+                                </div>
+
+                                <div class="input-container">
+                                    <label for="input_CPU">Limite frequência CPU:</label>
+                                    <input id="input_CPU" type="text"
+                                        placeholder="Limite mínimo de frequência da CPU (em GHz)">
+                                </div>
+
+                                <div class="input-container">
+                                    <label for="input_CPU">Limite tempo de resposta:</label>
+                                    <input id="input_CPU" type="text"
+                                        placeholder="Limite máximo de tempo de resposta (em ms)">
+                                </div>
+
+                            </div>
+                            <div class="items">
+                                <div class="input-container">
+                                    <label for="input_rede">Limite de upload rede:</label>
+                                    <input id="input_rede" type="text"
+                                        placeholder="Limite mínimo de uso de rede (em Mb/s)">
+                                </div>
+
+                                <div class="input-container">
+                                    <label for="input_rede">Limite de download rede:</label>
+                                    <input id="input_rede" type="text"
+                                        placeholder="Limite mínimo de uso de rede (em Mb/s)">
+                                </div>
+
+                                <div class="input-container">
+                                    <label for="input_RAM">Limite RAM:</label>
+                                    <input id="input_RAM" type="text" placeholder="Limite máximo de uso de RAM (em %)">
+                                </div>
+
+                                <div class="input-container">
+                                    <label for="input_disco">Limite Disco:</label>
+                                    <input id="input_disco" type="text"
+                                        placeholder="Limite máximo de uso de Disco (em %)">
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
+                        <button class="botao" id="botao_limite">Adicionar limites</button>
+                        
+                        <div class="botao_status">
+                            <button class="botao" id="botao_ativar">Ativar Máquina</button>
+                            <button class="botao_deletar" id="botao_desativar">Desativar Máquina</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
             <div class="bar"></div>
@@ -47,54 +136,25 @@
             <h2>Cadastro de Máquina</h2>
 
             <div class="cadastro">
-                <div class="items">
+                <div class="items_cadastro">
                     <div class="input-container">
                         <label for="input_nome">Nome da Máquina:</label>
                         <input id="input_nome" type="text" placeholder="Nome da Máquina (deve ser único)">
                     </div>
 
                     <div class="input-container">
-                        <label for="input_CPU">Limite CPU:</label>
-                        <input id="input_CPU" type="text" placeholder="Limite máximo de uso da CPU (em %)">
-                    </div>
-
-                    <div class="input-container">
-                        <label for="input_CPU">Limite frequência CPU:</label>
-                        <input id="input_CPU" type="text" placeholder="Limite mínimo de frequência da CPU (em GHz)">
-                    </div>
-
-                    <div class="input-container">
-                        <label for="input_CPU">Limite tempo de resposta:</label>
-                        <input id="input_CPU" type="text" placeholder="Limite máximo de tempo de resposta (em ms)">
+                        <label for="input_ipCatraca">IPV4 da Catraca exemplar:</label>
+                        <input id="input_ipCatraca" type="text" placeholder="IP da catraca exemplar para métricas">
                     </div>
 
                 </div>
-                <div class="items">
-                    <div class="input-container">
-                        <label for="input_rede">Limite de upload rede:</label>
-                        <input id="input_rede" type="text" placeholder="Limite mínimo de uso de rede (em Mb/s)">
-                    </div>
-    
-                    <div class="input-container">
-                        <label for="input_rede">Limite de download rede:</label>
-                        <input id="input_rede" type="text" placeholder="Limite mínimo de uso de rede (em Mb/s)">
-                    </div>
 
-                    <div class="input-container">
-                        <label for="input_RAM">Limite RAM:</label>
-                        <input id="input_RAM" type="text" placeholder="Limite máximo de uso de RAM (em %)">
-                    </div>
-    
-                    <div class="input-container">
-                        <label for="input_disco">Limite Disco:</label>
-                        <input id="input_disco" type="text" placeholder="Limite máximo de uso de Disco (em %)">
-                    </div>
-                    
-                </div>
             </div>
 
             <button class="botao" onclick="cadastrar()">Adicionar máquina</button>
-            
+
+            <p>Antes de executar a aplicação na máquina, defina os limites de cada componente na edição de máquina!</p>
+
             <div id="div_mensagem" class="mensagem"></div>
         </div>
         <div class="historico">
@@ -134,14 +194,13 @@
     }
 
     function atualizarLista() {
-        var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
-        console.log(nrEmpresa)
+        var fkLinha = sessionStorage.getItem("LINHA");
 
         fetch("/avisos/listarMaquina", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                nrEmpresaSever: nrEmpresa
+                linhaSever: fkLinha
             }),
         })
             .then(function (resposta) {
@@ -172,25 +231,25 @@
 
                     var divCard = document.createElement("a");
                     divCard.className = "linklista";
-                    divCard.href = "#";
+                    
 
                     var divCardMaquina = document.createElement("div");
                     divCardMaquina.className = "cardgerente";
 
                     divCardMaquina.dataset.idDispositivo = card.idDispositivo;
-                    divCardMaquina.dataset.fkNR = card.fkNR;
+                    divCardMaquina.dataset.fkLinha = card.fkLinha;
                     divCardMaquina.dataset.nome = card.nome;
-                    divCardMaquina.dataset.stats = card.stats;
+                    divCardMaquina.dataset.status = card.status;
 
                     divCardMaquina.addEventListener("click", function () {
                         var maquina = {
                             idDispositivo: this.dataset.idDispositivo,
-                            fkNR: this.dataset.fkNR,
+                            fkLinha: this.dataset.fkLinha,
                             nome: this.dataset.nome,
-                            stats: this.dataset.stats
+                            status: this.dataset.status
                         };
                         salvarMaquinaNoLocalStorage(maquina);
-                        window.location.href = "";
+                        editar(card.idDispositivo)
                     });
 
                     var divFotoeNome = document.createElement("div");
@@ -207,10 +266,14 @@
                     status.className = "status";
 
                     var statusAtivoInativo = document.createElement("p");
-                    statusAtivoInativo.innerText = card.stats.toUpperCase();
-                    if (card.stats.toUpperCase() == "ATIVO") {
+
+                    if (card.status == '1') {
+                        statusAtivoInativo.innerText = "ATIVO"
+
                         statusAtivoInativo.style.color = "black";
-                    } else if (card.stats.toUpperCase() == "INATIVO") {
+                    } else if (card.status == '0') {
+                        statusAtivoInativo.innerText = "INATIVO"
+
                         statusAtivoInativo.style.color = "red";
                     }
 
@@ -233,7 +296,7 @@
 
     function pesquisaMaquina() {
         var pesquisa = input_pesquisa.value;
-        var nrEmpresa = sessionStorage.getItem("NR_EMPRESA");
+        var fkLinha = sessionStorage.getItem("LINHA");
 
         if (pesquisa == "") {
             window.alert("Preencha corretamente o campo de pesquisa");
@@ -248,7 +311,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 pesquisaServer: pesquisa,
-                nrEmpresaServer: nrEmpresa
+                linhaServer: fkLinha
             }),
         })
             .then(function (resposta) {
@@ -269,25 +332,25 @@
 
                         var divCard = document.createElement("a");
                         divCard.className = "linklista";
-                        divCard.href = "#";
+                        
 
                         var divCardMaquina = document.createElement("div");
                         divCardMaquina.className = "cardgerente";
 
                         divCardMaquina.dataset.idDispositivo = card.idDispositivo;
-                        divCardMaquina.dataset.fkNR = card.fkNR;
+                        divCardMaquina.dataset.fkLinha = card.fkLinha;
                         divCardMaquina.dataset.nome = card.nome;
-                        divCardMaquina.dataset.stats = card.stats;
+                        divCardMaquina.dataset.status = card.status;
 
                         divCardMaquina.addEventListener("click", function () {
                             var maquina = {
                                 idDispositivo: this.dataset.idDispositivo,
                                 fkNR: this.dataset.fkNR,
                                 nome: this.dataset.nome,
-                                stats: this.dataset.stats
+                                status: this.dataset.status
                             };
                             salvarMaquinaNoLocalStorage(maquina);
-                            window.location.href = "./AtDadosGerente.html";
+                            editar(card.idDispositivo)
                         });
 
                         var divFotoeNome = document.createElement("div");
@@ -304,11 +367,15 @@
                         status.className = "status";
 
                         var statusAtivoInativo = document.createElement("p");
-                        statusAtivoInativo.innerText = card.stats.toUpperCase();
-                        if (card.stats.toUpperCase() == "ATIVO") {
-                            statusAtivoInativo.style.color = "black";
-                        } else if (card.stats.toUpperCase() == "INATIVO") {
-                            statusAtivoInativo.style.color = "red";
+
+                        if (card.status == '1') {
+                        statusAtivoInativo.innerText = "ATIVO"
+
+                        statusAtivoInativo.style.color = "black";
+                        } else if (card.status == '0') {
+                        statusAtivoInativo.innerText = "INATIVO"
+
+                        statusAtivoInativo.style.color = "red";
                         }
 
                         divFotoeNome.appendChild(imgPerfil);
@@ -366,10 +433,11 @@
 
     function cadastrar() {
         var nomeVar = input_nome.value;
-        var fkNRVar = sessionStorage.NR_EMPRESA;
+        var fkLinhaVar = sessionStorage.LINHA;
+        var ipCatracaVar = input_ipCatraca.value;
 
         if (
-            nomeVar == ""
+            nomeVar == "" || ipCatracaVar == ""
         ) {
             window.alert('Campos não devidamente preenchidos.')
         } else {
@@ -380,7 +448,8 @@
                 },
                 body: JSON.stringify({
                     nomeServer: nomeVar,
-                    fkNRServer: fkNRVar
+                    fkLinhaServer: fkLinhaVar,
+                    ipCatracaServer: ipCatracaVar
                 }),
             })
                 .then(function (resposta) {
@@ -400,8 +469,136 @@
                 });
 
             input_nome.value = "";
+            input_ipCatraca.value = "";
 
             return false;
         }
     }
+
+    function fecharJanela(){
+        secao_pai.style.display = "none"
+    }
+
+    function editar(idDispositivo){
+        secao_pai.style.display = "flex"
+
+        botao_atualizar.onclick = () => atualizarMaquina(idDispositivo);
+        botao_limite.onclick = () => definirLimite(idDispositivo);
+        botao_ativar.onclick = () => ativarMaquina(idDispositivo);
+        botao_desativar.onclick = () => desativarMaquina(idDispositivo);
+
+    }
+
+    function atualizarMaquina(idDispositivo){
+        var nomeVar = input_nome_update.value;
+        var ipCatracaVar = input_ipCatraca_update.value;
+
+        if (
+            nomeVar == "" || ipCatracaVar == ""
+        ) {
+            window.alert('Campos não devidamente preenchidos.')
+        } else {
+            fetch("/maquinas/atualizar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nomeVar,
+                    ipCatracaServer: ipCatracaVar,
+                    idDispositivoServer: idDispositivo
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        window.alert('Máquina cadastrada com sucesso')
+                        atualizarLista();
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+
+                        div_mensagem.innerHTML = "Já existe uma máquina com esse mesmo nome!"
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            input_nome_update.value = "";
+            input_ipCatraca_update.value = ""
+
+            return false;
+        }
+    }
+
+    function ativarMaquina(idDispositivo){
+
+        if (
+            idDispositivo == ""
+        ) {
+            window.alert('Erro com id da máquina.')
+        } else {
+            fetch("/maquinas/ativarMaquina", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idDispositivoServer: idDispositivo
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        window.alert('Máquina ativada!')
+                        atualizarLista();
+                    } else {
+                        throw "Houve um erro ao tentar ativar a máquina!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            return false;
+        }
+    }
+
+    function desativarMaquina(idDispositivo){
+
+        if (
+            idDispositivo == ""
+        ) {
+            window.alert('Erro com id da máquina.')
+        } else {
+            fetch("/maquinas/desativarMaquina", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idDispositivoServer: idDispositivo
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        window.alert('Máquina desativada!')
+                        atualizarLista();
+                    } else {
+                        throw "Houve um erro ao tentar ativar a máquina!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+
+            return false;
+        }
+    }
+
 </script>
