@@ -27,7 +27,8 @@
                     </div>
                     <div class="input-container">
                         <label for="input_ipCatraca_update">IPV4 da catraca exemplar:</label>
-                        <input id="input_ipCatraca_update" type="text" placeholder="IP da catraca exemplar para métricas">
+                        <input id="input_ipCatraca_update" type="text"
+                            placeholder="IP da catraca exemplar para métricas">
                     </div>
 
                     <button class="botao" id="botao_atualizar">Atualizar máquina</button>
@@ -39,8 +40,8 @@
                         <div class="cadastro">
                             <div class="items">
                                 <div class="input-container">
-                                    <label for="input_ocioso">CPU ociosa:</label>
-                                    <input id="input_ocioso" type="text" placeholder="Limite de ociosidade máxima (%)">
+                                    <label for="input_PerdaPacote">Perda de Pacotes:</label>
+                                    <input id="input_PerdaPacote" type="text" placeholder="Limite de perda de pacotes (%)">
                                 </div>
 
                                 <div class="input-container">
@@ -49,28 +50,28 @@
                                 </div>
 
                                 <div class="input-container">
-                                    <label for="input_CPU">Limite frequência CPU:</label>
-                                    <input id="input_CPU" type="text"
+                                    <label for="input_FreqCPU">Limite frequência CPU:</label>
+                                    <input id="input_FreqCPU" type="text"
                                         placeholder="Limite mínimo de frequência da CPU (em GHz)">
                                 </div>
 
                                 <div class="input-container">
-                                    <label for="input_CPU">Limite tempo de resposta:</label>
-                                    <input id="input_CPU" type="text"
+                                    <label for="input_TempoResposta">Limite tempo de resposta:</label>
+                                    <input id="input_TempoResposta" type="text"
                                         placeholder="Limite máximo de tempo de resposta (em ms)">
                                 </div>
 
                             </div>
                             <div class="items">
                                 <div class="input-container">
-                                    <label for="input_rede">Limite de upload rede:</label>
-                                    <input id="input_rede" type="text"
+                                    <label for="input_UploadRede">Limite de upload rede:</label>
+                                    <input id="input_UploadRede" type="text"
                                         placeholder="Limite mínimo de uso de rede (em Mb/s)">
                                 </div>
 
                                 <div class="input-container">
-                                    <label for="input_rede">Limite de download rede:</label>
-                                    <input id="input_rede" type="text"
+                                    <label for="input_DownloadRede">Limite de download rede:</label>
+                                    <input id="input_DownloadRede" type="text"
                                         placeholder="Limite mínimo de uso de rede (em Mb/s)">
                                 </div>
 
@@ -88,9 +89,9 @@
                             </div>
                         </div>
 
-                        
+
                         <button class="botao" id="botao_limite">Adicionar limites</button>
-                        
+
                         <div class="botao_status">
                             <button class="botao" id="botao_ativar">Ativar Máquina</button>
                             <button class="botao_deletar" id="botao_desativar">Desativar Máquina</button>
@@ -231,7 +232,7 @@
 
                     var divCard = document.createElement("a");
                     divCard.className = "linklista";
-                    
+
 
                     var divCardMaquina = document.createElement("div");
                     divCardMaquina.className = "cardgerente";
@@ -249,7 +250,9 @@
                             status: this.dataset.status
                         };
                         salvarMaquinaNoLocalStorage(maquina);
-                        editar(card.idDispositivo)
+                        console.log(card.idDispositivo)
+                        console.log(maquina.idDispositivo)
+                        editar(maquina.idDispositivo)
                     });
 
                     var divFotoeNome = document.createElement("div");
@@ -332,7 +335,7 @@
 
                         var divCard = document.createElement("a");
                         divCard.className = "linklista";
-                        
+
 
                         var divCardMaquina = document.createElement("div");
                         divCardMaquina.className = "cardgerente";
@@ -350,7 +353,7 @@
                                 status: this.dataset.status
                             };
                             salvarMaquinaNoLocalStorage(maquina);
-                            editar(card.idDispositivo)
+                            editar(maquina.idDispositivo)
                         });
 
                         var divFotoeNome = document.createElement("div");
@@ -369,13 +372,13 @@
                         var statusAtivoInativo = document.createElement("p");
 
                         if (card.status == '1') {
-                        statusAtivoInativo.innerText = "ATIVO"
+                            statusAtivoInativo.innerText = "ATIVO"
 
-                        statusAtivoInativo.style.color = "black";
+                            statusAtivoInativo.style.color = "black";
                         } else if (card.status == '0') {
-                        statusAtivoInativo.innerText = "INATIVO"
+                            statusAtivoInativo.innerText = "INATIVO"
 
-                        statusAtivoInativo.style.color = "red";
+                            statusAtivoInativo.style.color = "red";
                         }
 
                         divFotoeNome.appendChild(imgPerfil);
@@ -452,16 +455,19 @@
                     ipCatracaServer: ipCatracaVar
                 }),
             })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
+                .then((resposta) => resposta.json())
+                .then((data) => {
+                    if (data.idDispositivo) {
+                        // Exibe o ID do dispositivo para confirmar que foi recebido
+                        console.log("ID do dispositivo cadastrado:", data.idDispositivo);
+                        window.alert(`Máquina cadastrada com sucesso! ID: ${data.idDispositivo}`);
 
-                    if (resposta.ok) {
-                        window.alert('Máquina cadastrada com sucesso')
+                        // Aqui você pode chamar uma função para cadastrar os limites usando o `idDispositivo`
+                        cadastrarLimites(data.idDispositivo);
+
                         atualizarLista();
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
-
-                        div_mensagem.innerHTML = "Já existe uma máquina com esse mesmo nome!"
                     }
                 })
                 .catch(function (resposta) {
@@ -475,11 +481,70 @@
         }
     }
 
-    function fecharJanela(){
-        secao_pai.style.display = "none"
+    function cadastrarLimites(idDispositivo) {
+        var limitePercCPU = 80.0;
+        var limitePercMEM = 75.0;
+        var limitePercDISCO = 90.0;
+        var limiteRedeEnviada = 1000.0;
+        var limiteRedeRecebida = 1000.0;
+        var limiteFreqCPU = 3.5;
+        var limitePerdaPacote = 10.0;
+        var limiteTempoResposta = 200.0;
+        var fkLinha = sessionStorage.LINHA;
+        
+        
+            fetch("/limites/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    percCPUServer: limitePercCPU,
+                    percCPUServer: limitePercCPU,
+                    percMEMServer: limitePercMEM,
+                    percDISCOServer: limitePercDISCO,
+                    redeEnviadaServer: limiteRedeEnviada,
+                    redeRecebidaServer: limiteRedeRecebida,
+                    freqCPUServer: limiteFreqCPU,
+                    perdaPacoteServer: limitePerdaPacote,
+                    tempoRespostaServer: limiteTempoResposta,
+                    idDispositivoServer: idDispositivo,
+                    fkLinhaServer: fkLinha
+                }),
+            })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    console.log("Limites definidos com sucesso.")
+                    atualizarLista();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
     }
 
-    function editar(idDispositivo){
+    function fecharJanela() {
+        secao_pai.style.display = "none"
+
+        input_CPU.value = "" 
+        input_PerdaPacote.value = "" 
+        input_FreqCPU.value = "" 
+        input_TempoResposta.value = "" 
+        input_UploadRede.value = "" 
+        input_DownloadRede.value = "" 
+        input_RAM.value = "" 
+        input_disco.value = "" 
+
+        input_nome_update.value = ""
+        input_ipCatraca_update.value = ""
+    }
+
+    function editar(idDispositivo) {
         secao_pai.style.display = "flex"
 
         botao_atualizar.onclick = () => atualizarMaquina(idDispositivo);
@@ -489,7 +554,7 @@
 
     }
 
-    function atualizarMaquina(idDispositivo){
+    function atualizarMaquina(idDispositivo) {
         var nomeVar = input_nome_update.value;
         var ipCatracaVar = input_ipCatraca_update.value;
 
@@ -513,7 +578,7 @@
                     console.log("resposta: ", resposta);
 
                     if (resposta.ok) {
-                        window.alert('Máquina cadastrada com sucesso')
+                        window.alert('Máquina atualizada com sucesso')
                         atualizarLista();
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
@@ -532,7 +597,7 @@
         }
     }
 
-    function ativarMaquina(idDispositivo){
+    function ativarMaquina(idDispositivo) {
 
         if (
             idDispositivo == ""
@@ -566,7 +631,7 @@
         }
     }
 
-    function desativarMaquina(idDispositivo){
+    function desativarMaquina(idDispositivo) {
 
         if (
             idDispositivo == ""
@@ -599,6 +664,81 @@
 
             return false;
         }
+    }
+
+    function definirLimite(idDispositivo){
+        var limitePercCPU = Number(input_CPU.value);
+        var limitePercMEM = Number(input_RAM.value);
+        var limitePercDISCO = Number(input_disco.value);
+        var limiteRedeEnviada = Number(input_UploadRede.value);
+        var limiteRedeRecebida = Number(input_DownloadRede.value);
+        var limiteFreqCPU = Number(input_FreqCPU.value);
+        var limitePerdaPacote = Number(input_PerdaPacote.value);
+        var limiteTempoResposta = Number(input_TempoResposta.value);
+        
+        if( isNaN(limitePercCPU) ||
+            isNaN(limitePercMEM) ||
+            isNaN(limitePercDISCO) ||
+            isNaN(limiteRedeEnviada) ||
+            isNaN(limiteRedeRecebida) ||
+            isNaN(limiteFreqCPU) ||
+            isNaN(limitePerdaPacote) ||
+            isNaN(limiteTempoResposta))
+            {
+                alert("Por favor, insira apenas números nos limites!")
+
+        }else if(!input_CPU.value || 
+        !input_RAM.value || 
+        !input_disco.value ||
+        !input_UploadRede.value || 
+        !input_DownloadRede.value ||
+        !input_FreqCPU.value || 
+        !input_PerdaPacote.value || 
+        !input_TempoResposta.value)
+        {
+            alert("Por favor, preencha todos os campos para adicionar os limites!")
+        } else{
+            
+            fetch("/limites/atualizar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    percCPUServer: limitePercCPU,
+                    percMEMServer: limitePercMEM,
+                    percDISCOServer: limitePercDISCO,
+                    redeEnviadaServer: limiteRedeEnviada,
+                    redeRecebidaServer: limiteRedeRecebida,
+                    freqCPUServer: limiteFreqCPU,
+                    perdaPacoteServer: limitePerdaPacote,
+                    tempoRespostaServer: limiteTempoResposta,
+                    idDispositivoServer: idDispositivo
+                }),
+            })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    window.alert("Limites definidos com sucesso.")
+                    input_CPU.value = "" 
+                    input_PerdaPacote.value = "" 
+                    input_FreqCPU.value = "" 
+                    input_TempoResposta.value = "" 
+                    input_UploadRede.value = "" 
+                    input_DownloadRede.value = "" 
+                    input_RAM.value = "" 
+                    input_disco.value = "" 
+                    atualizarLista();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+        }
+
     }
 
 </script>

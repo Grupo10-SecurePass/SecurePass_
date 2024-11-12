@@ -96,6 +96,9 @@ function atualizarLista(){
                     var cargo = dados[i];
                     var id = cargo.idCargo
                     var nome = cargo.nome
+                    if(nome == "tecnico"){
+                        nome = "técnico"
+                    }
                     console.log(cargo)
                     console.log(id)
 

@@ -8,12 +8,23 @@ function buscarAquariosPorEmpresa(empresaId) {
   return database.executar(instrucaoSql);
 }
 
-function cadastrar(nome, fkLinha, ipCatraca) {
+async function cadastrar(nome, fkLinha, ipCatraca) {
   
-  var instrucaoSql = `INSERT INTO dispositivo(nome, ipv4Catraca, fkLinha, status) VALUES ('${nome}', '${ipCatraca}', ${fkLinha}, 1)`;
+  var instrucaoSqlInserir = `INSERT INTO dispositivo(nome, ipv4Catraca, fkLinha, status) VALUES ('${nome}', '${ipCatraca}', ${fkLinha}, 1)`;
 
-  console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
+    await database.executar(instrucaoSqlInserir);
+
+    // Segunda instrução para obter o `idDispositivo` recém-inserido
+    var instrucaoSqlUltimoId = `SELECT MAX(idDispositivo) as idDispositivo FROM dispositivo`;
+
+    console.log("Executando a instrução SQL para pegar o último ID inserido: \n" + instrucaoSqlUltimoId);
+    
+    // Executa a instrução para pegar o ID e retorna o valor
+    const resultado = await database.executar(instrucaoSqlUltimoId);
+    console.log(resultado)
+    const idDispositivo = resultado[0].idDispositivo;
+
+    return idDispositivo;
 }
 
 function atualizar(nome, ipCatraca, idDispositivo) {

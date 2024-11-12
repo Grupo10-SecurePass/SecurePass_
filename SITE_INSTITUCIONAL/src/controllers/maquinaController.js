@@ -34,8 +34,9 @@ function cadastrar(req, res) {
   } else {
 
     maquinaModel.cadastrar(nome, fkLinha, ipCatraca)
-      .then((resultado) => {
-        res.status(201).json(resultado);
+      .then((idDispositivo) => {
+        console.log(`id do dispositivo no controler: ${idDispositivo}`)
+        res.status(201).json({idDispositivo: idDispositivo});
       }
       ).catch((erro) => {
         console.log(erro);

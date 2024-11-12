@@ -21,6 +21,7 @@ var avisosRouter = require("./src/routes/avisos");
 // var medidasRouter = require("./src/routes/medidas");
 var maquinasRouter = require("./src/routes/maquinas");
 var empresasRouter = require("./src/routes/empresas");
+var limitesRouter = require("./src/routes/limites");
 
 
 app.use(express.json());
@@ -35,6 +36,7 @@ app.use("/avisos", avisosRouter);
 // app.use("/medidas", medidasRouter);
 app.use("/maquinas", maquinasRouter);
 app.use("/empresas", empresasRouter);
+app.use("/limites", limitesRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
