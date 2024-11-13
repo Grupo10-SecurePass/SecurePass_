@@ -35,13 +35,13 @@ function cadastrarGerente(fkNRGerente, nomeGerente, cpfGerente, emailGerente, se
     return database.executar(instrucaoSql);
 }
 
-function cadastrarSuporte(fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, senhaTecnico, representanteTecnico) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, senhaTecnico, representanteTecnico);
+function cadastrarSuporte(fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, senhaTecnico, fkLinha) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, senhaTecnico);
     
     var instrucaoSql = `
         INSERT INTO usuario 
-        (fkNR, nome, cpf, email, senha, cargo, stats, fkResponsavel) 
-        VALUES ('${fkNRSuporte}', '${nomeTecnico}', '${cpfTecnico}', '${emailTecnico}', '${senhaTecnico}', 'tecnico', 'ativo', '${representanteTecnico}');
+        (fkNR, nome, cpf, email, senha, status, fkCargo, fkLinha) 
+        VALUES ('${fkNRSuporte}', '${nomeTecnico}', '${cpfTecnico}', '${emailTecnico}', '${senhaTecnico}', 1, 3, '${fkLinha}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

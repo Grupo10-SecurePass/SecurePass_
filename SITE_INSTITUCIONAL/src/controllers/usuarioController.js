@@ -126,31 +126,28 @@ function cadastrarGerente(req, res) {
 }
 
 function cadastrarSuporte(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    // Recupere os valores do front-end (por exemplo, do arquivo cadastro.html)
     var nomeTecnico = req.body.nomeTecnicoServer;
     var cpfTecnico = req.body.cpfTecnicoServer;
     var emailTecnico = req.body.emailTecnicoServer;
     var senhaTecnico = req.body.senhaTecnicoServer;
-    var representanteTecnico = req.body.representanteServer;
     var fkNRSuporte = req.body.fkNRServer;
+    var fkLinha = req.body.fkLinhaServer
 
-    // Faça as validações dos valores
+    // Validações dos valores
     if (fkNRSuporte == undefined) {
         res.status(400).send("Sua empresa a vincular está undefined!");
     } else if (nomeTecnico == undefined) {
         res.status(400).send("Seu nome está undefined!");
     } else if (cpfTecnico == undefined) {
-        res.status(400).send("Seu nome está undefined!");
+        res.status(400).send("Seu CPF está undefined!");
     } else if (emailTecnico == undefined) {
         res.status(400).send("Seu email está undefined!");
     } else if (senhaTecnico == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (representanteTecnico == undefined) {
-        res.status(400).send("Seu representante a vincular está undefined!");
     } else {
-
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarSuporte(fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, senhaTecnico, representanteTecnico)
+        usuarioModel.cadastrarSuporte(fkNRSuporte, nomeTecnico, cpfTecnico, emailTecnico, senhaTecnico, fkLinha)
             .then(
                 function (resultado) {
                     res.json(resultado);

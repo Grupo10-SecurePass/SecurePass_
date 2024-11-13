@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro | Técnico de Suporte</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./css/CadDash.css">
 </head>
+
 <body onload="atualizarLista()">
 
     <div class="content">
@@ -22,7 +26,7 @@
                 <div class="bar"></div>
                 <div class="bar"></div>
             </button>
-          
+
             <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
 
             <div class="separator"></div>
@@ -42,33 +46,33 @@
     <div class="geral">
         <div class="formulario">
             <h2>Cadastro - Técnico de Suporte</h2>
-        
+
             <div class="input-container">
                 <label for="input_nomeTecnico">Nome Completo:</label>
                 <input id="input_nomeTecnico" type="text" placeholder="Nome Completo" required>
             </div>
-        
+
             <div class="input-container">
                 <label for="input_cpfTecnico">CPF:</label>
                 <input id="input_cpfTecnico" type="text" placeholder="CPF" required>
             </div>
-        
+
             <div class="input-container">
                 <label for="input_emailTecnico">Email:</label>
                 <input id="input_emailTecnico" type="email" placeholder="Email" required>
             </div>
-        
+
             <div class="input-container">
                 <label for="input_senhaTecnico">Senha:</label>
                 <input id="input_senhaTecnico" type="password" placeholder="Senha" required>
             </div>
-        
+
             <button class="botao" onclick="cadastrarSuporte()">Cadastrar Técnico de Suporte</button>
             <br>
             <br>
             <div class="mensagem"></div>
         </div>
-        
+
         <div class="historico">
             <div class="titulohistorico">
                 <p>Técnicos já cadastrados:</p>
@@ -90,105 +94,106 @@
 
     <script>
         function atualizarLista() {
-            var fkResponsavel = sessionStorage.getItem("ID_USUARIO");
-            console.log(fkResponsavel)
-            
-        fetch("/avisos/listarSuporte", {
+            var Linha = sessionStorage.getItem("LINHA");
+            if (!Linha) {
+                console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
+                alert("Linha não definida. Por favor, selecione uma linha antes de continuar.");
+                return;
+            }
+            console.log("Linha selecionada:", Linha);
+
+            fetch("/avisos/listarSuporte", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    fkResponsavelServer: fkResponsavel
-                }),
+                body: JSON.stringify({ linhaServer: Linha }),
             })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    if (resposta.status == 204) {
-                        var lista = document.getElementById("listagerentes");
-                        lista.className = "lista";
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        if (resposta.status == 204) {
+                            var lista = document.getElementById("listagerentes");
+                            lista.className = "lista";
+                            lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
+                            return [];
+                        }
+                        return resposta.json();
+                    } else {
+                        throw "Houve um erro na API!";
+                    }
+                })
+                .then(function (dados) {
+                    console.log("Dados recebidos: ", dados);
+                    var lista = document.getElementById("listagerentes");
+                    lista.innerHTML = "";
+
+                    if (dados.length == 0) {
                         lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
-                        return [];
+                        return;
                     }
-                    return resposta.json();
-                } else {
-                    throw "Houve um erro na API!";
-                }
-            })
-            .then(function (dados) {
-                console.log("Dados recebidos: ", JSON.stringify(dados));
-                var lista = document.getElementById("listagerentes");
-                lista.innerHTML = "";
 
-                if (dados.length == 0) {
-                    lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
-                    return;
-                }
+                    dados.forEach(function (card) {
+                        var divCard = document.createElement("a");
+                        divCard.className = "linklista";
+                        divCard.href = "#";
 
-                for (let i = 0; i < dados.length; i++){
-                    var card = dados[i];
+                        var divCardGerente = document.createElement("div");
+                        divCardGerente.className = "cardgerente";
 
-                    var divCard = document.createElement("a");
-                    divCard.className = "linklista";
-                    divCard.href = "#";
+                        divCardGerente.dataset.nome = card.nome;
+                        divCardGerente.dataset.CPF = card.cpf;
+                        divCardGerente.dataset.email = card.email;
+                        divCardGerente.dataset.nome_empresa = card.nome_empresa;
+                        divCardGerente.dataset.senha = card.senha;
 
-                    var divCardGerente = document.createElement("div");
-                    divCardGerente.className = "cardgerente";
+                        divCardGerente.addEventListener("click", function () {
+                            var tecnico = {
+                                nome: this.dataset.nome,
+                                CPF: this.dataset.CPF,
+                                email: this.dataset.email,
+                                nome_empresa: this.dataset.nome_empresa,
+                                cargo: this.dataset.cargo,
+                                senha: this.dataset.senha,
+                            };
+                            salvarTecnicoNoLocalStorage(tecnico);
+                            window.location.href = "./AtDadosTecnicoSuporte.html";
+                        });
 
-                    divCardGerente.dataset.nome = card.nome;
-                    divCardGerente.dataset.CPF = card.CPF;
-                    divCardGerente.dataset.email = card.email;
-                    divCardGerente.dataset.nome_empresa = card.nome_empresa;
-                    divCardGerente.dataset.cargo = card.cargo;
-                    divCardGerente.dataset.senha = card.senha;
+                        var divFotoeNome = document.createElement("div");
+                        divFotoeNome.className = "fotoenome";
 
-                    divCardGerente.addEventListener("click", function() {
-                        var tecnico = {
-                            nome: this.dataset.nome,
-                            CPF: this.dataset.CPF,
-                            email: this.dataset.email,
-                            nome_empresa: this.dataset.nome_empresa,
-                            cargo: this.dataset.cargo,
-                            senha: this.dataset.senha
-                        };
-                        salvarTecnicoNoLocalStorage(tecnico);
-                        window.location.href = "./AtDadosTecnicoSuporte.html";
+                        var imgPerfil = document.createElement("img");
+                        imgPerfil.src = "./imagens/perfil.svg";
+                        imgPerfil.alt = "Foto de perfil";
+
+                        var nome = document.createElement("p");
+                        nome.innerText = card.nome;
+
+                        var status = document.createElement("div");
+                        status.className = "status";
+
+                        var statusAtivoInativo = document.createElement("p");
+                        if (card.status === 1) {
+                            statusAtivoInativo.innerText = "ATIVO";
+                            statusAtivoInativo.style.color = "black";
+                        } else {
+                            statusAtivoInativo.innerText = "INATIVO";
+                            statusAtivoInativo.style.color = "red";
+                        }
+
+                        divFotoeNome.appendChild(imgPerfil);
+                        divFotoeNome.appendChild(nome);
+                        status.appendChild(statusAtivoInativo);
+                        divCardGerente.appendChild(divFotoeNome);
+                        divCardGerente.appendChild(status);
+                        divCard.appendChild(divCardGerente);
+                        lista.appendChild(divCard);
                     });
+                })
+                .catch(function (erro) {
+                    console.error("Erro ao buscar os técnicos:", erro);
 
-                    var divFotoeNome = document.createElement("div");
-                    divFotoeNome.className = "fotoenome";
-
-                    var imgPerfil = document.createElement("img");
-                    imgPerfil.src = "./imagens/perfil.svg";
-                    imgPerfil.alt = "Foto de perfil";
-
-                    var nome = document.createElement("p");
-                    nome.innerText = card.nome;
-
-                    var status = document.createElement("div");
-                    status.className = "status";
-
-                    var statusAtivoInativo = document.createElement("p");
-                    statusAtivoInativo.innerText = card.stats.toUpperCase();
-                    if (card.stats.toUpperCase() == "ATIVO") {
-                        statusAtivoInativo.style.color = "black";
-                    } else if (card.stats.toUpperCase() == "INATIVO") {
-                        statusAtivoInativo.style.color = "red";
-                    }
-
-                    divFotoeNome.appendChild(imgPerfil);
-                    divFotoeNome.appendChild(nome);
-                    status.appendChild(statusAtivoInativo);
-                    divCardGerente.appendChild(divFotoeNome);
-                    divCardGerente.appendChild(status);
-                    divCard.appendChild(divCardGerente);
-                    lista.appendChild(divCard);
-                }
-            })
-            .catch(function (erro) {
-                console.error(erro);
-
-                const lista = document.getElementById("listagerentes");
-                lista.innerHTML = `<p>Erro ao carregar os técnicos: ${erro}</p>`;
-            });
+                    const lista = document.getElementById("listagerentes");
+                    lista.innerHTML = `<p>Erro ao carregar os técnicos: ${erro}</p>`;
+                });
         }
 
         function pesquisaSuporte() {
@@ -209,90 +214,99 @@
                     pesquisaServer: pesquisa
                 }),
             })
-            .then(function (resposta) {
-                if (resposta.status == 204) {
-                    adicionarBotaoLimparPesquisa();
-                    return [];
-                }
-                return resposta.json();
-            })
-            .then(function (respostaJson) {
-                console.log("Dados recebidos: ", respostaJson);
-                var lista = document.getElementById("listagerentes");
-                lista.innerHTML = "";
-
-                if (respostaJson.length > 0) {
-                    for (let i = 0; i < respostaJson.length; i++) {
-                        var card = respostaJson[i];
-
-                        var divCard = document.createElement("a");
-                        divCard.className = "linklista";
-                        divCard.href = "#";
-
-                        var divCardGerente = document.createElement("div");
-                        divCardGerente.className = "cardgerente";
-
-                        divCardGerente.dataset.nome = card.nome;
-                        divCardGerente.dataset.CPF = card.CPF;
-                        divCardGerente.dataset.email = card.email;
-                        divCardGerente.dataset.nome_empresa = card.nome_empresa;
-                        divCardGerente.dataset.cargo = card.cargo;
-                        divCardGerente.dataset.senha = card.senha;
-
-                        divCardGerente.addEventListener("click", function() {
-                            var tecnico = {
-                                nome: this.dataset.nome,
-                                CPF: this.dataset.CPF,
-                                email: this.dataset.email,
-                                nome_empresa: this.dataset.nome_empresa,
-                                cargo: this.dataset.cargo,
-                                senha: this.dataset.senha
-                            };
-                            salvarTecnicoNoLocalStorage(tecnico);
-                            window.location.href = "./AtDadosTecnicoSuporte.html";
-                        });
-
-                        var divFotoeNome = document.createElement("div");
-                        divFotoeNome.className = "fotoenome";
-
-                        var imgPerfil = document.createElement("img");
-                        imgPerfil.src = "./imagens/perfil.svg";
-                        imgPerfil.alt = "Foto de perfil";
-
-                        var nome = document.createElement("p");
-                        nome.innerText = card.nome;
-
-                        var status = document.createElement("div");
-                        status.className = "status";
-
-                        var statusAtivoInativo = document.createElement("p");
-                        statusAtivoInativo.innerText = card.stats.toUpperCase();
-                        if (card.stats.toUpperCase() == "ATIVO") {
-                            statusAtivoInativo.style.color = "black";
-                        } else if (card.stats.toUpperCase() == "INATIVO") {
-                            statusAtivoInativo.style.color = "red";
-                        }
-
-                        divFotoeNome.appendChild(imgPerfil);
-                        divFotoeNome.appendChild(nome);
-                        status.appendChild(statusAtivoInativo);
-                        divCardGerente.appendChild(divFotoeNome);
-                        divCardGerente.appendChild(status);
-                        divCard.appendChild(divCardGerente);
-                        lista.appendChild(divCard);
+                .then(function (resposta) {
+                    if (resposta.status == 204) {
+                        adicionarBotaoLimparPesquisa();
+                        return [];
                     }
-                } else {
-                    lista.innerHTML = `<p style="color: #FCFFFC">Não existe nenhum técnico de suporte com esse nome.</p>`;
-                }
+                    return resposta.json();
+                })
+                .then(function (respostaJson) {
+                    console.log("Dados recebidos: ", respostaJson);
+                    var lista = document.getElementById("listagerentes");
+                    lista.innerHTML = "";
 
-                adicionarBotaoLimparPesquisa();
-            })
-            .catch(function (erro) {
-                console.error("#ERRO: ", erro);
-            });
+                    if (respostaJson.length > 0) {
+                        for (let i = 0; i < respostaJson.length; i++) {
+                            var card = respostaJson[i];
+
+                            var divCard = document.createElement("a");
+                            divCard.className = "linklista";
+                            divCard.href = "#";
+
+                            var divCardGerente = document.createElement("div");
+                            divCardGerente.className = "cardgerente";
+
+                            divCardGerente.dataset.nome = card.nome;
+                            divCardGerente.dataset.cpf = card.cpf;
+                            divCardGerente.dataset.email = card.email;
+                            divCardGerente.dataset.cargo = card.cargo;
+                            divCardGerente.dataset.status = card.status;
+
+                            divCardGerente.addEventListener("click", function () {
+                                var tecnico = {
+                                    nome: this.dataset.nome,
+                                    CPF: this.dataset.cpf,  // Corrigido para 'cpf' no lugar de 'CPF'
+                                    email: this.dataset.email,
+                                    nome_empresa: this.dataset.nome_empresa,  // Verifique se a propriedade 'nome_empresa' existe
+                                    cargo: this.dataset.cargo,
+                                    senha: this.dataset.senha  // Verifique se a propriedade 'senha' existe
+                                };
+                                salvarTecnicoNoLocalStorage(tecnico);
+                                window.location.href = "./AtDadosTecnicoSuporte.html";
+                            });
+
+                            var divFotoeNome = document.createElement("div");
+                            divFotoeNome.className = "fotoenome";
+
+                            var imgPerfil = document.createElement("img");
+                            imgPerfil.src = "./imagens/perfil.svg";
+                            imgPerfil.alt = "Foto de perfil";
+
+                            var nome = document.createElement("p");
+                            nome.innerText = card.nome;
+
+                            var status = document.createElement("div");
+                            status.className = "status";
+
+                            var statusAtivoInativo = document.createElement("p");
+
+                            // Verifique o valor de card.status
+                            console.log("Status do card:", card.status);
+
+                            // Comparar diretamente com os valores numéricos 1 e 0
+                            if (card.status === 1) { // Para "ATIVO"
+                                statusAtivoInativo.innerText = "ATIVO";
+                                statusAtivoInativo.style.color = "black";
+                            } else if (card.status === 0) { // Para "INATIVO"
+                                statusAtivoInativo.innerText = "INATIVO";
+                                statusAtivoInativo.style.color = "red";
+                            } else {
+                                statusAtivoInativo.innerText = "Status desconhecido"; // Caso o valor não seja nem 1 nem 0
+                                statusAtivoInativo.style.color = "gray";
+                            }
+
+                            divFotoeNome.appendChild(imgPerfil);
+                            divFotoeNome.appendChild(nome);
+                            status.appendChild(statusAtivoInativo);
+                            divCardGerente.appendChild(divFotoeNome);
+                            divCardGerente.appendChild(status);
+                            divCard.appendChild(divCardGerente);
+                            lista.appendChild(divCard);
+                        }
+                    } else {
+                        lista.innerHTML = `<p style="color: #FCFFFC">Não existe nenhum técnico de suporte com esse nome.</p>`;
+                    }
+
+                    adicionarBotaoLimparPesquisa();
+                })
+                .catch(function (erro) {
+                    console.error("#ERRO: ", erro);
+                });
 
             return false;
         }
+
 
         function salvarTecnicoNoLocalStorage(tecnico) {
             localStorage.setItem("tecnicoSelecionado", JSON.stringify(tecnico));
@@ -332,10 +346,10 @@
 
             if (navMenu.classList.contains('show')) {
                 navMenu.classList.remove('show');
-                hamburger.style.left = '10px'; 
+                hamburger.style.left = '10px';
             } else {
                 navMenu.classList.add('show');
-                hamburger.style.left = '260px'; 
+                hamburger.style.left = '260px';
             }
         }
 
@@ -344,22 +358,22 @@
             var cpfTecnicoVar = input_cpfTecnico.value;
             var emailTecnicoVar = input_emailTecnico.value;
             var senhaTecnicoVar = input_senhaTecnico.value;
+            var fkLinha = sessionStorage.getItem("LINHA");
 
-            var representante = sessionStorage.getItem("ID_USUARIO");
             var fkNR = sessionStorage.getItem("NR_EMPRESA");
 
             if (
-                nomeTecnicoVar == "" ||
-                emailTecnicoVar == "" ||
-                senhaTecnicoVar == "" ||
-                cpfTecnicoVar == ""
+                nomeTecnicoVar === "" ||
+                emailTecnicoVar === "" ||
+                senhaTecnicoVar === "" ||
+                cpfTecnicoVar === ""
             ) {
                 window.alert("Todos os campos devem ser preenchidos");
                 return;
             } else if (senhaTecnicoVar.length < 8) {
                 window.alert("A senha deve ter 8 ou mais caracteres");
                 return;
-            } else if(emailTecnicoVar.indexOf("@") < 0 || emailTecnicoVar.indexOf(".") < 0){
+            } else if (!emailTecnicoVar.includes("@") || !emailTecnicoVar.includes(".")) {
                 window.alert("O E-mail deve ter @ e .");
                 return;
             }
@@ -372,23 +386,23 @@
                     cpfTecnicoServer: cpfTecnicoVar,
                     emailTecnicoServer: emailTecnicoVar,
                     senhaTecnicoServer: senhaTecnicoVar,
-                    representanteServer: representante,
-                    fkNRServer: fkNR
+                    fkNRServer: fkNR,
+                    fkLinhaServer: fkLinha
                 }),
             })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
 
-                if (resposta.ok) {
-                    window.alert("Cadastro de Suporte Realizado com sucesso");
-                    atualizarLista()
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (erro) {
-                console.error("#ERRO: ", erro);
-            });
+                    if (resposta.ok) {
+                        window.alert("Cadastro de Suporte Realizado com sucesso");
+                        atualizarLista();
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (erro) {
+                    console.error("#ERRO: ", erro);
+                });
 
             input_nomeTecnico.value = "";
             input_cpfTecnico.value = "";
@@ -400,4 +414,5 @@
     </script>
 
 </body>
+
 </html>

@@ -15,8 +15,8 @@ function listar(req, res) {
     });
 }
 function listarSuporte(req, res) {
-    var fkResponsavel = req.body.fkResponsavelServer;
-    avisoModel.listarSuporte(fkResponsavel).then(function (resultado) {
+    var Linha = req.body.linhaServer;
+    avisoModel.listarSuporte(Linha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -75,15 +75,16 @@ function pesquisaSuporte(req, res) {
 
     avisoModel.pesquisaSuporte(pesquisa).then(function (resultado) {
         if (resultado.length > 0) {
-            res.status(200).json(resultado);
+            res.status(200).json(resultado); // Retorna os dados encontrados
         } else {
-            res.status(204).send("Nenhum resultado encontrado!");
+            res.status(204).send("Nenhum resultado encontrado!"); // Caso não encontre nada
         }
     }).catch(function (erro) {
-        console.log("Houve um erro ao buscar os gerentes: ", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
+        console.log("Houve um erro ao buscar os suportes: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage); // Retorna erro em caso de falha
     });
 }
+
 function pesquisaMaquina(req, res) {
     var pesquisa = req.body.pesquisaServer;
     var fkLinha = req.body.linhaServer;
