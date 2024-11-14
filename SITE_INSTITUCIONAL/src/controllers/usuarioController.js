@@ -87,7 +87,6 @@ function cadastrarGerente(req, res) {
     var cpfGerente = req.body.cpfGerenteServer;
     var emailGerente = req.body.emailGerenteServer; // Corrigido
     var senhaGerente = req.body.senhaGerenteServer; // Corrigido
-    var representanteGerente = req.body.representanteServer; // Corrigido para 'Server'
     var fkNRGerente = req.body.fkNRServer;
 
 
@@ -102,12 +101,10 @@ function cadastrarGerente(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senhaGerente == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (representanteGerente == undefined) {
-        res.status(400).send("Seu representante a vincular está undefined!");
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarGerente(fkNRGerente, nomeGerente, cpfGerente, emailGerente, senhaGerente, representanteGerente)
+        usuarioModel.cadastrarGerente(fkNRGerente, nomeGerente, cpfGerente, emailGerente, senhaGerente)
             .then(
                 function (resultado) {
                     res.json(resultado);

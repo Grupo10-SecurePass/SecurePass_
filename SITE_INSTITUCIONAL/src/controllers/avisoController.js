@@ -1,8 +1,8 @@
 var avisoModel = require("../models/avisoModel");
 
 function listar(req, res) {
-    var fkResponsavel = req.body.fkResponsavelServer;
-    avisoModel.listar(fkResponsavel).then(function (resultado) {
+    var fkNR = req.body.fkNRServer;
+    avisoModel.listar(fkNR).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

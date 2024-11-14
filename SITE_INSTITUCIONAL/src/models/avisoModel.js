@@ -1,19 +1,27 @@
 var database = require("../database/config");
 
-function listar(idEmpresa) {
+function listar(fkNR) {
     console.log("Executando a função listar() para exibir os gerentes\n");
 
     var instrucaoSql = `
-   SELECT usuario.idUsuario, usuario.nome, usuario.cpf, usuario.email, usuario.senha, cargo.nome AS cargo, usuario.status, empresa.nome AS nome_empresa
-FROM usuario
-JOIN empresa ON usuario.fkNR = empresa.NR
-JOIN cargo ON usuario.fkCargo = cargo.idCargo
-WHERE cargo.nome = 'gerente' AND empresa.NR = '${idEmpresa}' ;
+        SELECT 
+            usuario.idUsuario, 
+            usuario.nome, 
+            usuario.cpf, 
+            usuario.email, 
+            usuario.senha, 
+            cargo.nome AS cargo, 
+            usuario.status
+        FROM usuario
+        JOIN empresa ON usuario.fkNR = empresa.NR
+        JOIN cargo ON usuario.fkCargo = cargo.idCargo
+        WHERE cargo.nome = 'gerente' AND empresa.NR = ${fkNR};
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
 
 function listarSuporte(Linha) {
     console.log("Executando a função listarSuporte() para exibir os técnicos de suporte\n");
