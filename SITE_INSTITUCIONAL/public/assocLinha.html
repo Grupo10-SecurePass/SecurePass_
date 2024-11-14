@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/linhas.css">
     <script src="./js/sessao.js"></script>
 </head>
-<body onload="atualizarLista()">
+<body onload="atualizarSelect()">
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
             <div class="bar"></div>
@@ -94,9 +94,9 @@
         }
     }
 
-    function atualizarLista(){
+    function atualizarSelect(){
 
-fetch("/avisos/listarLinha", {
+fetch("/avisos/listarLinhaEmpresa", {
     method: "GET" ,
     headers: { "Content-Type": "application/json" },
 
@@ -274,7 +274,7 @@ fetch("/avisos/listarLinha", {
             botaoLimpar.remove();
         }
 
-        atualizarLista();
+        atualizarSelect();
     }
 
     function cadastrar() { 
@@ -286,8 +286,8 @@ fetch("/avisos/listarLinha", {
         ) {
             window.alert('Campos não devidamente preenchidos.')
         } else {
-            fetch("/maquinas/cadastrar", {
-                method: "POST",
+            fetch("/avisos/associar", {
+                method: "GET", 
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -301,7 +301,7 @@ fetch("/avisos/listarLinha", {
 
                     if (resposta.ok) {
                         window.alert('Linha associada com sucesso')
-                        atualizarLista();
+                        atualizarSelect();
                     } else {
                         throw "Houve um erro ao tentar realizar o cadastro!";
 

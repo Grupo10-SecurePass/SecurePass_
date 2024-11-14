@@ -42,9 +42,12 @@ function listarMaquina(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
-function listarLinha(req,res) {
+
+
+
+function listarLinhaEmpresa(req,res) {
     var nrEmpresa = req.body.nrEmpresaSever;
-    avisoModel.listarLinha(nrEmpresa).then(function (resultado) {
+    avisoModel.listarLinhaEmpresa(nrEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -56,6 +59,30 @@ function listarLinha(req,res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+
+
+function associarLinha(req, res) {
+    var idLinha = req.body.idLinha;
+    var nrEmpresa = req.body.nrEmpresa;
+
+    avisoModel.associarLinha(idLinha, nrEmpresa)
+        .then(function (resultado) {
+            if (resultado.affectedRows > 0) {
+                res.status(200).send("Linha associada com sucesso à empresa!");
+            } else {
+                res.status(204).send("Nenhuma linha foi associada.");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao associar linha com a empresa: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
+
+
+
 function pesquisa(req, res) {
     var pesquisa = req.body.pesquisaServer;
 
@@ -298,7 +325,8 @@ module.exports = {
     deletarSuporte,
     listarMaquina,
     pesquisaMaquina,
-    listarLinha,
+    listarLinhaEmpresa,
+    associarLinha,
     pesquisaLinha,
     dadosPerfil
 }

@@ -12,8 +12,9 @@ router.post("/listarSuporte", function (req, res) {
 router.post("/listarMaquina", function (req, res) {
     avisoController.listarMaquina(req, res);
 });
-router.get("/listarLinha", function (req, res) {
-    avisoController.listarLinha(req, res);
+
+router.get("/listarLinhaEmpresa", function (req, res) {
+    avisoController.listarLinhaEmpresa(req, res);
 });
 router.post("/pesquisa", function (req, res) {
     avisoController.pesquisa(req, res);
@@ -58,6 +59,10 @@ router.delete("/deletar/:cpf", function (req, res) {
 });
 router.delete("/deletarSuporte/:cpf", function (req, res) {
     avisoController.deletarSuporte(req, res);
+});
+
+router.get("/associar", function (req, res) {
+    avisoController.associarLinha(req, res);
 });
 
 module.exports = router;
