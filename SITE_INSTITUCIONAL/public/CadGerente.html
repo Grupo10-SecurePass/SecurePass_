@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro | Gerente</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./css/CadDash.css">
     <script src="./js/sessao.js"></script>
 </head>
+
 <body onload="atualizarLista()">
     <div class="content">
         <button class="hamburger" onclick="toggleNavbar()">
@@ -40,33 +44,33 @@
     <div class="geral">
         <div class="formulario">
             <h2>Cadastro - Gerente</h2>
-            
+
             <div class="input-container">
                 <label for="input_nomeGerente"><b>Nome Completo:</b></label>
                 <input id="input_nomeGerente" type="text" required>
             </div>
-        
+
             <div class="input-container">
                 <label for="input_cpfGerente"><b>CPF:</b></label>
                 <input id="input_cpfGerente" type="text" required>
             </div>
-        
+
             <div class="input-container">
                 <label for="input_emailGerente"><b>Email:</b></label>
                 <input id="input_emailGerente" type="text" required>
             </div>
-        
+
             <div class="input-container">
                 <label for="input_senhaGerente"><b>Senha:</b></label>
                 <input id="input_senhaGerente" type="password" required>
             </div>
-        
+
             <button class="botao" onclick="cadastrarGerente()">Cadastrar Gerente</button>
             <br>
-            
+
             <div class="mensagem"></div>
         </div>
-        
+
         <div class="historico">
             <div class="titulohistorico">
                 <p>Gerentes já cadastrados:</p>
@@ -88,140 +92,41 @@
 
     <script>
         function atualizarLista() {
-            var fkResponsavel = sessionStorage.getItem("ID_USUARIO");
-            console.log(fkResponsavel)
 
-        fetch("/avisos/listar", {
+            var fkNR = sessionStorage.getItem("NR_EMPRESA");
+
+            fetch("/avisos/listar", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    fkResponsavelServer: fkResponsavel
+                    fkNRServer: fkNR
                 }),
             })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    if (resposta.status == 204) {
-                        var lista = document.getElementById("listagerentes");
-                        lista.className = "lista";
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        if (resposta.status == 204) {
+                            var lista = document.getElementById("listagerentes");
+                            lista.className = "lista";
+                            lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
+                            return [];
+                        }
+                        return resposta.json();
+                    } else {
+                        throw "Houve um erro na API!";
+                    }
+                })
+                .then(function (dados) {
+                    console.log("Dados recebidos: ", JSON.stringify(dados));
+                    var lista = document.getElementById("listagerentes");
+                    lista.innerHTML = "";
+
+                    if (dados.length == 0) {
                         lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
-                        return [];
-                    }
-                    return resposta.json();
-                } else {
-                    throw "Houve um erro na API!";
-                }
-            })
-            .then(function (dados) {
-                console.log("Dados recebidos: ", JSON.stringify(dados));
-                var lista = document.getElementById("listagerentes");
-                lista.innerHTML = "";
-
-                if (dados.length == 0) {
-                    lista.innerHTML = "<p>Ainda não há nenhum gerente cadastrado.</p>";
-                    return;
-                }
-
-                for (let i = 0; i < dados.length; i++){
-                    var card = dados[i];
-
-                    var divCard = document.createElement("a");
-                    divCard.className = "linklista";
-                    divCard.href = "#";
-
-                    var divCardGerente = document.createElement("div");
-                    divCardGerente.className = "cardgerente";
-
-                    divCardGerente.dataset.nome = card.nome;
-                    divCardGerente.dataset.CPF = card.CPF;
-                    divCardGerente.dataset.email = card.email;
-                    divCardGerente.dataset.nome_empresa = card.nome_empresa;
-                    divCardGerente.dataset.cargo = card.cargo;
-                    divCardGerente.dataset.senha = card.senha;
-
-                    divCardGerente.addEventListener("click", function() {
-                        var gerente = {
-                            nome: this.dataset.nome,
-                            CPF: this.dataset.CPF,
-                            email: this.dataset.email,
-                            nome_empresa: this.dataset.nome_empresa,
-                            cargo: this.dataset.cargo,
-                            senha: this.dataset.senha
-                        };
-                        salvarGerenteNoLocalStorage(gerente);
-                        window.location.href = "./AtDadosGerente.html";
-                    });
-
-                    var divFotoeNome = document.createElement("div");
-                    divFotoeNome.className = "fotoenome";
-
-                    var imgPerfil = document.createElement("img");
-                    imgPerfil.src = "./imagens/perfil.svg";
-                    imgPerfil.alt = "Foto de perfil";
-
-                    var nome = document.createElement("p");
-                    nome.innerText = card.nome;
-
-                    var status = document.createElement("div");
-                    status.className = "status";
-
-                    var statusAtivoInativo = document.createElement("p");
-                    statusAtivoInativo.innerText = card.stats.toUpperCase();
-                    if (card.stats.toUpperCase() == "ATIVO") {
-                        statusAtivoInativo.style.color = "black";
-                    } else if (card.stats.toUpperCase() == "INATIVO") {
-                        statusAtivoInativo.style.color = "red";
+                        return;
                     }
 
-                    divFotoeNome.appendChild(imgPerfil);
-                    divFotoeNome.appendChild(nome);
-                    status.appendChild(statusAtivoInativo);
-                    divCardGerente.appendChild(divFotoeNome);
-                    divCardGerente.appendChild(status);
-                    divCard.appendChild(divCardGerente);
-                    lista.appendChild(divCard);
-                }
-            })
-            .catch(function (erro) {
-                console.error(erro);
-
-                const lista = document.getElementById("listagerentes");
-                lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
-            });
-    }
-
-        function pesquisaGerente() {
-            var pesquisa = input_pesquisa.value;
-
-            if (pesquisa == "") {
-                window.alert("Preencha corretamente o campo de pesquisa");
-                return;
-            }
-
-            var lista = document.getElementById("listagerentes");
-            lista.innerHTML = "";
-
-            fetch("/avisos/pesquisa", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    pesquisaServer: pesquisa
-                }),
-            })
-            .then(function (resposta) {
-                if (resposta.status == 204) {
-                    adicionarBotaoLimparPesquisa();
-                    return [];
-                }
-                return resposta.json();
-            })
-            .then(function (respostaJson) {
-                console.log("Dados recebidos: ", respostaJson);
-                var lista = document.getElementById("listagerentes");
-                lista.innerHTML = "";
-
-                if (respostaJson.length > 0) {
-                    for (let i = 0; i < respostaJson.length; i++) {
-                        var card = respostaJson[i];
+                    for (let i = 0; i < dados.length; i++) {
+                        var card = dados[i];
 
                         var divCard = document.createElement("a");
                         divCard.className = "linklista";
@@ -237,12 +142,11 @@
                         divCardGerente.dataset.cargo = card.cargo;
                         divCardGerente.dataset.senha = card.senha;
 
-                        divCardGerente.addEventListener("click", function() {
+                        divCardGerente.addEventListener("click", function () {
                             var gerente = {
                                 nome: this.dataset.nome,
                                 CPF: this.dataset.CPF,
                                 email: this.dataset.email,
-                                nome_empresa: this.dataset.nome_empresa,
                                 cargo: this.dataset.cargo,
                                 senha: this.dataset.senha
                             };
@@ -264,10 +168,11 @@
                         status.className = "status";
 
                         var statusAtivoInativo = document.createElement("p");
-                        statusAtivoInativo.innerText = card.stats.toUpperCase();
-                        if (card.stats.toUpperCase() == "ATIVO") {
+                        if (card.status == 1) {
+                            statusAtivoInativo.innerText = "ATIVO";
                             statusAtivoInativo.style.color = "black";
-                        } else if (card.stats.toUpperCase() == "INATIVO") {
+                        } else {
+                            statusAtivoInativo.innerText = "INATIVO";
                             statusAtivoInativo.style.color = "red";
                         }
 
@@ -279,15 +184,122 @@
                         divCard.appendChild(divCardGerente);
                         lista.appendChild(divCard);
                     }
-                } else {
-                    lista.innerHTML = `<p style="color: #FCFFFC">Não existe nenhum gerente com esse nome.</p>`;
-                }
+                })
+                .catch(function (erro) {
+                    console.error(erro);
 
-                adicionarBotaoLimparPesquisa();
+                    const lista = document.getElementById("listagerentes");
+                    lista.innerHTML = `<p>Erro ao carregar os gerentes: ${erro}</p>`;
+                });
+        }
+
+        function pesquisaGerente() {
+            var pesquisa = input_pesquisa.value;
+
+            if (pesquisa == "") {
+                window.alert("Preencha corretamente o campo de pesquisa");
+                return;
+            }
+
+            var lista = document.getElementById("listagerentes");
+            lista.innerHTML = "";
+
+            fetch("/avisos/pesquisa", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    pesquisaServer: pesquisa
+                }),
             })
-            .catch(function (erro) {
-                console.error("#ERRO: ", erro);
-            });
+                .then(function (resposta) {
+                    if (resposta.status == 204) {
+                        adicionarBotaoLimparPesquisa();
+                        return [];
+                    }
+                    return resposta.json();
+                })
+                .then(function (respostaJson) {
+                    console.log("Dados recebidos: ", respostaJson);
+                    var lista = document.getElementById("listagerentes");
+                    lista.innerHTML = "";
+
+                    if (respostaJson.length > 0) {
+                        for (let i = 0; i < respostaJson.length; i++) {
+                            var card = respostaJson[i];
+
+                            var divCard = document.createElement("a");
+                            divCard.className = "linklista";
+                            divCard.href = "#";
+
+                            var divCardGerente = document.createElement("div");
+                            divCardGerente.className = "cardgerente";
+
+                            divCardGerente.dataset.nome = card.nome;
+                            divCardGerente.dataset.CPF = card.CPF;
+                            divCardGerente.dataset.email = card.email;
+                            divCardGerente.dataset.cargo = card.cargo;
+                            divCardGerente.dataset.senha = card.senha;
+
+                            divCardGerente.addEventListener("click", function () {
+                                var gerente = {
+                                    nome: this.dataset.nome,
+                                    CPF: this.dataset.CPF,
+                                    email: this.dataset.email,
+                                    nome_empresa: this.dataset.nome_empresa,
+                                    cargo: this.dataset.cargo,
+                                    senha: this.dataset.senha
+                                };
+                                salvarGerenteNoLocalStorage(gerente);
+                                window.location.href = "./AtDadosGerente.html";
+                            });
+
+                            var divFotoeNome = document.createElement("div");
+                            divFotoeNome.className = "fotoenome";
+
+                            var imgPerfil = document.createElement("img");
+                            imgPerfil.src = "./imagens/perfil.svg";
+                            imgPerfil.alt = "Foto de perfil";
+
+                            var nome = document.createElement("p");
+                            nome.innerText = card.nome;
+
+                            var status = document.createElement("div");
+                            status.className = "status";
+
+                            var statusAtivoInativo = document.createElement("p");
+
+                            // Verifique o valor de card.status
+                            console.log("Status do card:", card.status);
+
+                            // Comparar diretamente com os valores numéricos 1 e 0
+                            if (card.status === 1) { // Para "ATIVO"
+                                statusAtivoInativo.innerText = "ATIVO";
+                                statusAtivoInativo.style.color = "black";
+                            } else if (card.status === 0) { // Para "INATIVO"
+                                statusAtivoInativo.innerText = "INATIVO";
+                                statusAtivoInativo.style.color = "red";
+                            } else {
+                                statusAtivoInativo.innerText = "Status desconhecido"; // Caso o valor não seja nem 1 nem 0
+                                statusAtivoInativo.style.color = "gray";
+                            }
+
+                            divFotoeNome.appendChild(imgPerfil);
+                            divFotoeNome.appendChild(nome);
+                            status.appendChild(statusAtivoInativo);
+                            divCardGerente.appendChild(divFotoeNome);
+                            divCardGerente.appendChild(status);
+                            divCard.appendChild(divCardGerente);
+                            lista.appendChild(divCard);
+                        }
+                    } else {
+                        lista.innerHTML = `<p style="color: #FCFFFC">Não existe nenhum gerente com esse nome.</p>`;
+                    }
+
+                    adicionarBotaoLimparPesquisa();
+                })
+                .catch(function (erro) {
+                    console.error("#ERRO: ", erro);
+                });
 
             return false;
         }
@@ -330,10 +342,10 @@
 
             if (navMenu.classList.contains('show')) {
                 navMenu.classList.remove('show');
-                hamburger.style.left = '10px'; 
+                hamburger.style.left = '10px';
             } else {
                 navMenu.classList.add('show');
-                hamburger.style.left = '260px'; 
+                hamburger.style.left = '260px';
             }
         }
 
@@ -343,7 +355,6 @@
             var senhaGerenteVar = input_senhaGerente.value;
             var cpfGerenteVar = input_cpfGerente.value;
 
-            var representante = sessionStorage.getItem("ID_USUARIO");
             var fkNR = sessionStorage.getItem("NR_EMPRESA");
 
             if (
@@ -357,7 +368,7 @@
             } else if (senhaGerenteVar.length < 8) {
                 window.alert("A senha deve ter 8 ou mais caracteres");
                 return;
-            } else if(emailGerenteVar.indexOf("@") < 0 || emailGerenteVar.indexOf(".") < 0){
+            } else if (emailGerenteVar.indexOf("@") < 0 || emailGerenteVar.indexOf(".") < 0) {
                 window.alert("O E-mail deve ter @ e .");
                 return;
             }
@@ -370,23 +381,22 @@
                     cpfGerenteServer: cpfGerenteVar,
                     emailGerenteServer: emailGerenteVar,
                     senhaGerenteServer: senhaGerenteVar,
-                    representanteServer: representante,
                     fkNRServer: fkNR
                 }),
             })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
 
-                if (resposta.ok) {
-                    window.alert("Cadastro de Gerente Realizado com sucesso");
-                    atualizarLista();
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (erro) {
-                console.error("#ERRO: ", erro);
-            });
+                    if (resposta.ok) {
+                        window.alert("Cadastro de Gerente Realizado com sucesso");
+                        atualizarLista();
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (erro) {
+                    console.error("#ERRO: ", erro);
+                });
 
             input_nomeGerente.value = "";
             input_emailGerente.value = "";
@@ -397,4 +407,5 @@
         }
     </script>
 </body>
+
 </html>

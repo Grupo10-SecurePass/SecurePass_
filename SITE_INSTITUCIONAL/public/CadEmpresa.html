@@ -42,11 +42,12 @@
         </div>
 
         <button class="botao" onclick="cadastrar()">Cadastrar</button>
+
+        <!-- Mensagem de status após cadastro -->
+        <div id="divmsg" class="mensagem"></div>
+
       </div>
     </div>
-    <div id="divmsg" class="mensagem"></div>
-
-
 
   </div>
 
@@ -55,53 +56,62 @@
 </html>
 
 <script>
+function entrar() {
+  window.location = "./LoginUsuario.html";
+}
 
-  function entrar() {
-    window.location = "./LoginUsuario.html"
-  }
+function mostrarMensagem(mensagem) {
+  const divmsg = document.getElementById("divmsg");
+  divmsg.innerHTML = mensagem;
+  divmsg.classList.add("show");
 
-  function cadastrar() {
-    var nomeEmpresaVar = input_nomeEmpresa.value;
-    var razaoSocialVar = input_razaoSocial.value;
-    var cnpjVar = input_cnpj.value;
+  // Redireciona para a página de login após 5 segundos
+  setTimeout(() => {
+    window.location = "./LoginUsuario.html"; // Redireciona para a página de login
+  }, 3000); // Redirecionamento após 5 segundos
+}
+
+function cadastrar() {
+  var nomeEmpresaVar = input_nomeEmpresa.value;
+  var razaoSocialVar = input_razaoSocial.value;
+  var cnpjVar = input_cnpj.value;
 
     min = Math.ceil(1000);
     max = Math.floor(6000);
     var NR = Math.floor(Math.random() * (max - min) + min);
 
-    if (!nomeEmpresaVar || !razaoSocialVar || !cnpjVar) {
-      divmsg.innerHTML = "Campos não devidamente preenchidos!";
-      return;
-    }
-
-    fetch("/empresas/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nomeEmpresaServer: nomeEmpresaVar,
-        razaoSocialServer: razaoSocialVar,
-        cnpjServer: cnpjVar,
-        NRempresaServer: NR,
-      }),
-    })
-      .then((resposta) => {
-        console.log(resposta); // Verifique o que o servidor está retornando
-        if (resposta.ok) {
-          divmsg.innerHTML = `O número de registro da sua empresa é: ${NR}<br>Cadastro realizado com sucesso! <a onclick="entrar()">Entre aqui</a>`;
-        } else {
-          resposta.text().then((text) => {
-            divmsg.innerHTML = text;
-          });
-        }
-      })
-      .catch((erro) => {
-        console.error("Erro ao tentar realizar o cadastro:", erro);
-        divmsg.innerHTML = "Ocorreu um erro ao tentar se cadastrar. Tente novamente mais tarde.";
-      });
-
+  if (!nomeEmpresaVar || !razaoSocialVar || !cnpjVar) {
+    mostrarMensagem("Campos não devidamente preenchidos!");
+    return;
   }
 
-
+  fetch("/empresas/cadastrar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      nomeEmpresaServer: nomeEmpresaVar,
+      razaoSocialServer: razaoSocialVar,
+      cnpjServer: cnpjVar,
+      NRempresaServer: NR,
+    }),
+  })
+    .then((resposta) => {
+      console.log(resposta); // Verifique o que o servidor está retornando
+      if (resposta.ok) {
+        mostrarMensagem(
+          `O número de registro da sua empresa é: ${NR}<br>Cadastro realizado com sucesso!`
+        );
+      } else {
+        resposta.text().then((text) => {
+          mostrarMensagem(text);
+        });
+      }
+    })
+    .catch((erro) => {
+      console.error("Erro ao tentar realizar o cadastro:", erro);
+      mostrarMensagem("Ocorreu um erro ao tentar se cadastrar. Tente novamente mais tarde.");
+    });
+}
 </script>

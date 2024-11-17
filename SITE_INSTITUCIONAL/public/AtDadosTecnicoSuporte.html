@@ -47,7 +47,7 @@
         <div class="mae_container">
             <div class="container">
                 <div class="espacotitulo">
-                    <h1>Dados de um Tecnico já cadastrado </h1>
+                    <h1>Dados de um Técnico já cadastrado </h1>
                 </div>
                 <div class="espaco_formu">
                     <div class="espaco_inputs">
@@ -65,7 +65,7 @@
                         </div>
                         <div class="label_input">
                             <label for="empresaTecnico"><b>Empresa do Técnico:</b></label>
-                            <input type="text" id="empresaTecnico>
+                            <input type="text" id="empresaTecnico">
                         </div>
                         <div class="label_input">
                             <label for="cargoTecnico"><b>Cargo do Técnico:</b></label>
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="save">Salvar alterações</button>
+                        <button type="submit" onclick="editarTecnico()" class="save">Salvar alterações</button>
                     </div>
                 </div>
 
@@ -99,8 +99,9 @@
 </body>
 
 </html>
-<script>
 
+<script>
+    // Função para exibir ou ocultar o menu de navegação
     function Navbar() {
         const navMenu = document.getElementById('navMenu');
         const hamburger = document.querySelector('.hamburger');
@@ -119,19 +120,75 @@
         }
     }
 
+    // Carregar os dados do técnico do localStorage
     var tecnico = JSON.parse(localStorage.getItem("tecnicoSelecionado"));
+    console.log(tecnico); // Verifique o conteúdo dos dados do técnico
 
-    document.getElementById("nomeTecnico").value = tecnico.nome;
-    document.getElementById("cpfTecnico").value = tecnico.CPF;
-    document.getElementById("emailTecnico").value = tecnico.email;
-    document.getElementById("empresaTecnico").value = tecnico.nome_empresa;
-    document.getElementById("cargoTecnico").value = tecnico.cargo;
-    document.getElementById("senhaTecnico").value = tecnico.senha;
+    if (tecnico) {
+        // Preenche os campos com os dados do técnico, caso existam
+        document.getElementById("nomeTecnico").value = tecnico.nome || ''; // nome
+        document.getElementById("cpfTecnico").value = tecnico.cpf || '';   // CPF
+        document.getElementById("emailTecnico").value = tecnico.email || ''; // email
+        document.getElementById("empresaTecnico").value = tecnico.empresa || ''; // empresa
+        document.getElementById("cargoTecnico").value = tecnico.cargo || ''; // cargo
+    } else {
+        console.log('Erro: Dados do técnico não encontrados no localStorage.');
+    }
 
-    var cpf = tecnico.CPF;
+    // CPF para ser usado na URL de requisição
+    var cpf = tecnico ? tecnico.cpf : null;
 
-    function deletar(cpf) {
-        console.log("Função de deletar gerente pelo CPF:" + cpf);
+    // Função para editar os dados do técnico
+    function editarTecnico() {
+        // Pega os dados do formulário
+        const nome = document.getElementById("nomeTecnico").value;
+        const cpf = document.getElementById("cpfTecnico").value;
+        const email = document.getElementById("emailTecnico").value;
+        const empresa = document.getElementById("empresaTecnico").value;
+        const cargo = document.getElementById("cargoTecnico").value;
+
+        // Cria o objeto de dados para enviar
+        const dados = {
+            nome: nome,
+            cpf: cpf,
+            email: email,
+            empresa: empresa, // empresa ajustado aqui
+            cargo: cargo, // cargo ajustado aqui
+        };
+
+        // Envia uma requisição PUT para o servidor
+        fetch(`/editar/${cpf}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dados)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Dados atualizados com sucesso!");
+                    window.location.reload(); // Atualiza a página após a alteração
+                } else {
+                    alert("Erro ao atualizar dados!");
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert("Houve um erro ao tentar atualizar os dados.");
+            });
+    }
+
+    // Função para deletar o técnico
+    function deletar() {
+        if (!tecnico) {
+            alert("Erro: Técnico não encontrado no localStorage.");
+            return;
+        }
+
+        const cpf = tecnico.cpf;
+
+        console.log("Função de deletar técnico pelo CPF:" + cpf);
         fetch(`/avisos/deletarSuporte/${cpf}`, {
             method: "DELETE",
             headers: {
@@ -140,11 +197,11 @@
         }).then(function (resposta) {
             if (resposta.ok) {
                 window.alert("Técnico excluído com sucesso!");
-                window.location = "./CadSuporte.html";
+                window.location = "./CadSuporte.html";  // Redireciona após a exclusão
             } else if (resposta.status == 404) {
-                window.alert("Deu 404!");
+                window.alert("Erro: Técnico não encontrado!");
             } else {
-                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                throw ("Houve um erro ao tentar realizar a exclusão! Código da resposta: " + resposta.status);
             }
         }).catch(function (erro) {
             console.log(`#ERRO: ${erro}`);
