@@ -262,23 +262,17 @@ function listarFeedbacksGeral(req, res) {
 }
 
 function editar(req, res) {
-    var novaDescricao = req.body.descricao;
-    var idAviso = req.params.idAviso;
+    var novoDado = req.body;  // Recebe todos os dados a serem atualizados
+    var cpfUsuario = req.params.cpf;  // Recebe o CPF do usuário a ser atualizado da URL
 
-    avisoModel.editar(novaDescricao, idAviso)
-        .then(
-            function (resultado) {
-                res.json(resultado);
-            }
-        )
-        .catch(
-            function (erro) {
-                console.log(erro);
-                console.log("Houve um erro ao realizar o post: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            }
-        );
-
+    usuarioModel.editar(novoDado, cpfUsuario)
+        .then(function(resultado) {
+            res.json(resultado);
+        })
+        .catch(function(erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
 }
 
 function deletar(req, res) {
@@ -295,20 +289,22 @@ function deletar(req, res) {
             res.status(500).json({ mensagem: "Erro ao deletar gerente", erro: erro.sqlMessage });
         });
 }
+
 function deletarSuporte(req, res) {
     var cpf = req.params.cpf;
     console.log("CPF recebido na rota:", cpf);
 
-    avisoModel.deletarSuporte(cpf)
+    usuarioModel.deletarSuporte(cpf)
         .then(function (resultado) {
             console.log("Resultado da exclusão:", resultado);
             res.json(resultado);
         })
         .catch(function (erro) {
             console.error("Erro ao deletar:", erro);
-            res.status(500).json({ mensagem: "Erro ao deletar gerente", erro: erro.sqlMessage });
+            res.status(500).json({ mensagem: "Erro ao deletar suporte", erro: erro.sqlMessage });
         });
 }
+
 
 module.exports = {
     listar,

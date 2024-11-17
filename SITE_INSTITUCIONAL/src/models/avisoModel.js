@@ -192,39 +192,70 @@ function listarFeedbacksGeral() {
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+function editar(novoDado, cpf) {
+    console.log("ACESSEI A FUNÇÃO DE EDITAR USUÁRIO \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function editarUsuario(): ", novoDado, cpf);
 
-function editar(novaDescricao, idAviso) {
-    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function editar(): ", novaDescricao, idAviso);
+    // Construção dinâmica da instrução SQL
+    var camposParaAtualizar = [];
+    
+    // Verificar se os dados a serem atualizados existem no objeto novoDado
+    if (novoDado.nome) camposParaAtualizar.push(`nome = '${novoDado.nome}'`);
+    if (novoDado.email) camposParaAtualizar.push(`email = '${novoDado.email}'`);
+    if (novoDado.senha) camposParaAtualizar.push(`senha = '${novoDado.senha}'`);
+    if (novoDado.status) camposParaAtualizar.push(`status = ${novoDado.status}`);
+    if (novoDado.fkCargo) camposParaAtualizar.push(`fkCargo = ${novoDado.fkCargo}`);
+    if (novoDado.fkLinha) camposParaAtualizar.push(`fkLinha = ${novoDado.fkLinha}`);
+    if (novoDado.fkNR) camposParaAtualizar.push(`fkNR = ${novoDado.fkNR}`);
+
+    // Se não houver dados para atualizar, retornar um erro
+    if (camposParaAtualizar.length === 0) {
+        console.log("Nenhum dado foi fornecido para atualização.");
+        return Promise.reject("Nenhum dado para atualizar.");
+    }
+
+    // Construção da query
     var instrucaoSql = `
-        UPDATE aviso SET descricao = '${novaDescricao}' WHERE id = ${idAviso};
+        UPDATE usuario 
+        SET ${camposParaAtualizar.join(", ")}
+        WHERE cpf = '${cpf}';
     `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+    // Executando a instrução no banco
+    return database.executar(instrucaoSql);
+}
+
+
+
+function deletarSuporte(cpf) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():", cpf);
+    
+    var instrucaoSql = `
+    UPDATE usuario 
+    SET fkResponsavel = NULL 
+    WHERE fkResponsavel = (
+        SELECT idUsuario FROM usuario WHERE CPF = '${cpf}'
+    );
+    DELETE FROM usuario WHERE CPF = '${cpf}';
+    `;
+    
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 function deletar(cpf) {
     console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():", cpf);
+    
     var instrucaoSql = `
     UPDATE usuario 
     SET fkResponsavel = NULL 
     WHERE fkResponsavel = (
         SELECT idUsuario FROM usuario WHERE CPF = '${cpf}'
     );
-        DELETE FROM usuario WHERE CPF = '${cpf}';
+    DELETE FROM usuario WHERE CPF = '${cpf}';
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
-}
-function deletarSuporte(cpf) {
-    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():", cpf);
-    var instrucaoSql = `
-    UPDATE usuario 
-    SET fkResponsavel = NULL 
-    WHERE fkResponsavel = (
-        SELECT idUsuario FROM usuario WHERE CPF = '${cpf}'
-    );
-        DELETE FROM usuario WHERE CPF = '${cpf}';
-    `;
+    
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -243,7 +274,6 @@ function associarLinha(idLinha, nrEmpresa) {
 
     return database.executar(instrucaoSql);
 }
-
 
 module.exports = {
     listar,

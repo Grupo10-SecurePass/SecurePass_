@@ -50,13 +50,14 @@ router.get("/listarFeedbacksGeral", function (req, res) {
     avisoController.listarFeedbacksGeral(req, res);
 });
 
-router.put("/editar/:idAviso", function (req, res) {
+router.put("/editar/:cpf", function (req, res) {
     avisoController.editar(req, res);
 });
 
 router.delete("/deletar/:cpf", function (req, res) {
     avisoController.deletar(req, res);
 });
+
 router.delete("/deletarSuporte/:cpf", function (req, res) {
     avisoController.deletarSuporte(req, res);
 });
