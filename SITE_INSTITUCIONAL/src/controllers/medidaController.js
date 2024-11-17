@@ -131,6 +131,78 @@ function Upload(req, res) {
     });
 }
 
+function Download(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.Download(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function RAM(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.RAM(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function CPU(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.CPU(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function DISCO(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.DISCO(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
@@ -138,5 +210,9 @@ module.exports = {
     TempoResposta,
     TempoRespostaCalor,
     Freq,
-    Upload
+    Upload,
+    Download,
+    RAM,
+    CPU,
+    DISCO
 }

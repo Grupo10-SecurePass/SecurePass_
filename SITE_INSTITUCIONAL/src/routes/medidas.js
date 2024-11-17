@@ -31,4 +31,20 @@ router.get("/Upload/:idDispositivo", function (req, res) {
     medidaController.Upload(req, res);
 });
 
+router.get("/Download/:idDispositivo", function (req, res) {
+    medidaController.Download(req, res);
+});
+
+router.get("/RAM/:idDispositivo", function (req, res) {
+    medidaController.RAM(req, res);
+});
+
+router.get("/CPU/:idDispositivo", function (req, res) {
+    medidaController.CPU(req, res);
+});
+
+router.get("/DISCO/:idDispositivo", function (req, res) {
+    medidaController.DISCO(req, res);
+});
+
 module.exports = router;

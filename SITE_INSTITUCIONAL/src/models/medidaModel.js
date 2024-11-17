@@ -84,9 +84,57 @@ function Upload(idDispositivo) {
 
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
-            AND fkComponente = 6 
+            AND fkComponente = 5 
             ORDER BY dataRegistro
             LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function Download(idDispositivo) {
+
+    var instrucaoSql = `SELECT registro as valor FROM captura 
+            WHERE fkDispositivo = ${idDispositivo} 
+            AND fkComponente = 4 
+            ORDER BY dataRegistro
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function RAM(idDispositivo) {
+
+    var instrucaoSql = `SELECT registro as valor FROM captura 
+            WHERE fkDispositivo = ${idDispositivo} 
+            AND fkComponente = 2 
+            ORDER BY dataRegistro
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function CPU(idDispositivo) {
+
+    var instrucaoSql = `SELECT registro as valor FROM captura 
+            WHERE fkDispositivo = ${idDispositivo} 
+            AND fkComponente = 1 
+            ORDER BY dataRegistro
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function DISCO(idDispositivo) {
+
+    var instrucaoSql = `SELECT registro as valor FROM captura 
+            WHERE fkDispositivo = ${idDispositivo} 
+            AND fkComponente = 3 
+            ORDER BY dataRegistro
+            LIMIT 1;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -99,5 +147,9 @@ module.exports = {
     TempoResposta,
     TempoRespostaCalor,
     Freq,
-    Upload
+    Upload,
+    Download,
+    RAM,
+    CPU,
+    DISCO
 }
