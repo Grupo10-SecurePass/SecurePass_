@@ -1,3 +1,4 @@
+const { listarMaquina } = require("../controllers/maquinaController");
 var database = require("../database/config");
 
 function buscarAquariosPorEmpresa(empresaId) {
@@ -51,10 +52,18 @@ function desativar(idDispositivo) {
   return database.executar(instrucaoSql);
 }
 
+function listarMaquinaDash(fkLinha) {
+  console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+  var instrucaoSql = `SELECT * FROM dispositivo WHERE fkLinha = ${fkLinha} AND status = 1;`;
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
 module.exports = {
   buscarAquariosPorEmpresa,
   cadastrar,
   atualizar,
   ativar,
-  desativar
+  desativar,
+  listarMaquinaDash
 }

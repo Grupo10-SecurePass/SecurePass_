@@ -19,21 +19,45 @@ body {
     justify-content: center;
 }
 
+.todosAlertas{    
+    width: 87%;
+    height: 80px;
+    
+    position: fixed;
+    top: 0;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
 .alerta{
     padding: 5px;
     color: #FCFFFC;
     background-color: rgba(233, 2, 2, 0.803);
     border: #f00 1px solid;
+
     width: 87%;
     height: 5%;
+
     position: fixed;
     top: 0;
+
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    margin-top: 0%;
+    z-index: 0;
 }
 
-.alerta button {
+.conteudoAlerta{
+    width: 100%;
+    display: flex;
+}
+
+.botaoAlerta {
     border: 0;
     background-color: transparent;
     cursor: pointer;

@@ -9,14 +9,8 @@
     <script src="./js/alerta.js"></script>
 </head>
 <body>
-    <div class="alerta">
-        <div id="texto_alerta">
-            Máquina <span id="dispositivo_alerta">ip-029-083</span>apresentando alerta: <span id="alerta_descricao">Porcentual de uso de CPU está em risco! CPU: 85%</span>
-        </div>
+    <div class="todosAlertas" id="div_alertas">
         
-        <button onclick="fechar()">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
     </div>
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -54,8 +48,8 @@
                     <div class="escolha">
                         <div class="textodata">
                             <p>Escolha o servidor que você deseja monitorar</p>
-                            <select name="escolherServidor" id="">
-                                <option value="#" selected disabled>Escolher</option>
+                            <select name="escolherServidor" id="inputCargo">
+                                
                             </select>
                         </div>
                         <div class="aviso">
@@ -125,7 +119,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        setInterval(obterdados(), 60000)
+
+        let UploadChart;
 
         function toggleAlertSidebar() {
             const sidebar = document.getElementById('alertSidebar');
@@ -151,18 +146,114 @@
             }
         }
 
-        const ctx = document.getElementById('myChart');
-        const ctx1 = document.getElementById('myChart1');
-        const ctx2 = document.getElementById('myChart2');
-        const ctx3 = document.getElementById('myChart3');
+        function obterMaquinas() {
+        var fkLinha = sessionStorage.LINHA;
 
-        new Chart(ctx, {
+        fetch(`/maquinas/listarMaquinaDash/${fkLinha}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listamaquinas");
+                        window.alert("Não achou nenhuma máquina")
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listamaquinas");
+
+
+                for (let i = 0; i < dados.length; i++) {
+                    var maquina = dados[i];
+                    var id = maquina.idDispositivo
+                    var nome = maquina.nome
+
+                    console.log(maquina)
+                    console.log(id)
+
+                    var opcao = document.createElement("option");
+                    opcao.value = `${id}`
+                    opcao.innerHTML = nome
+
+
+                    inputCargo.appendChild(opcao);
+                }
+
+                obterDadosUpload();
+                obterDadosDownload();
+                obterDadosRAM();
+                obterDadosCPU();
+                obterDadosDISCO();
+
+            })
+            .catch(function (erro) {
+                console.error(erro);
+
+                console.log("Deu erro")
+            });
+
+    }
+
+    function obterDadosUpload() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/Upload/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+
+                    plotarUpload(resposta);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    let labelNRT = ["2min", "1.5min", "1min", "30s", "0"];
+
+    function plotarUpload(resposta) {
+
+        let dados = [];
+
+        for (i = resposta.length - 1; i >= 0; i--) {
+            var registro = resposta[i];
+            console.log(registro.valor)
+
+            if (dados.length >= labelNRT.length) {
+                dados.shift();
+            }
+
+            dados.push(registro.valor);
+
+        }
+
+        if (UploadChart) {
+            UploadChart.destroy();
+        }
+
+        // Criar o novo gráfico
+        const ctx = document.getElementById('myChart');
+        UploadChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: [880, 440, 120, 60, 30, 0],
+                labels: labelNRT,
                 datasets: [{
                     label: 'Mb/s',
-                    data: [200, 900, 1500, 1500, 700, 600],
+                    data: dados,
                     borderWidth: 2,
                     backgroundColor: 'rgba(36, 130, 50, 1)',
                     borderColor: 'rgba(36, 130, 50, 1)'
@@ -176,6 +267,21 @@
                 }
             }
         });
+
+        console.log(dados)
+
+    }
+
+
+    setInterval(() => {
+        obterDadosUpload();
+    }, 30000);
+
+        const ctx1 = document.getElementById('myChart1');
+        const ctx2 = document.getElementById('myChart2');
+        const ctx3 = document.getElementById('myChart3');
+
+        
 
         new Chart(ctx1, {
             type: 'line',

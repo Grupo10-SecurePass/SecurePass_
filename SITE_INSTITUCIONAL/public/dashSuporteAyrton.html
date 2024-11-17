@@ -8,19 +8,15 @@
     <link rel="stylesheet" href="./css/dashSuporteAyrton.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="./js/alerta.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 </head>
 
-<body>
-    <div class="alerta">
-        <div id="texto_alerta">
-            Máquina <span id="dispositivo_alerta">ip-029-083</span>apresentando alerta: <span
-                id="alerta_descricao">Porcentual de uso de CPU está em risco! CPU: 85%</span>
-        </div>
+<body onload="obterMaquinas(), exibirAlerta()">
+    <div class="todosAlertas" id="div_alertas">
 
-        <button onclick="fechar()">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
     </div>
+
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
             <div class="bar"></div>
@@ -57,14 +53,19 @@
                     <div class="escolha">
                         <div class="textodata">
                             <p>Escolha o servidor que você deseja monitorar</p>
-                            <select name="escolherServidor" id="">
-                                <option value="#" selected disabled>Escolher</option>
+                            <select name="escolherServidor" id="inputCargo">
+
                             </select>
                         </div>
                         <div class="aviso">
                             <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor
                                 cadastrado.</p>
                         </div>
+                    </div>
+                </div>
+                <div class="mapaCalor">
+                    <div id="chartCalor">
+
                     </div>
                 </div>
                 <div class="rede">
@@ -109,45 +110,146 @@
     </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        setInterval(obterdados(), 60000)
+</body>
 
-        function toggleAlertSidebar() {
-            const sidebar = document.getElementById('alertSidebar');
-            sidebar.classList.toggle('show');
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    let tempoRespostaChart;
+    let AlertaChart;
+    let FrequenciaChart;
+
+    function obterMaquinas() {
+        var fkLinha = sessionStorage.LINHA;
+
+        fetch(`/maquinas/listarMaquinaDash/${fkLinha}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listamaquinas");
+                        window.alert("Não achou nenhuma máquina")
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listamaquinas");
+
+
+                for (let i = 0; i < dados.length; i++) {
+                    var maquina = dados[i];
+                    var id = maquina.idDispositivo
+                    var nome = maquina.nome
+
+                    console.log(maquina)
+                    console.log(id)
+
+                    var opcao = document.createElement("option");
+                    opcao.value = `${id}`
+                    opcao.innerHTML = nome
+
+
+                    inputCargo.appendChild(opcao);
+                }
+
+                obterDadosAlertaVEL();
+                obterDadosTempoResposta();
+                obterDadosTempoRespostaCalor();
+                obterDadosFreq();
+
+            })
+            .catch(function (erro) {
+                console.error(erro);
+
+                console.log("Deu erro")
+            });
+
+
+
+    }
+
+    function toggleAlertSidebar() {
+        const sidebar = document.getElementById('alertSidebar');
+        sidebar.classList.toggle('show');
+    }
+
+    function Navbar() {
+        const navMenu = document.getElementById('navMenu');
+        const hamburger = document.querySelector('.hamburger');
+        const closeBtn = document.querySelector('.close-btn');
+
+        if (navMenu.classList.contains('show')) {
+            navMenu.classList.remove('show');
+            setTimeout(() => {
+                hamburger.style.display = 'block';
+                closeBtn.style.display = 'none';
+            }, 300);
+        } else {
+            hamburger.style.display = 'none';
+            closeBtn.style.display = 'block';
+            navMenu.classList.add('show');
+            hamburger.classList.add('active');
+        }
+    }
+
+    function obterDadosAlertaVEL() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/alertaVEL/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    // resposta.reverse();
+
+                    plotarAlertaVEL(resposta);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarAlertaVEL(resposta) {
+
+
+        let labels = [];
+        let dados = [];
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            console.log(registro.data)
+            console.log(registro.quantidade)
+
+            labels.push(registro.data);
+            dados.push(registro.quantidade);
+
         }
 
-        function Navbar() {
-            const navMenu = document.getElementById('navMenu');
-            const hamburger = document.querySelector('.hamburger');
-            const closeBtn = document.querySelector('.close-btn');
-
-            if (navMenu.classList.contains('show')) {
-                navMenu.classList.remove('show');
-                setTimeout(() => {
-                    hamburger.style.display = 'block';
-                    closeBtn.style.display = 'none';
-                }, 300);
-            } else {
-                hamburger.style.display = 'none';
-                closeBtn.style.display = 'block';
-                navMenu.classList.add('show');
-                hamburger.classList.add('active');
-            }
+        if (AlertaChart) {
+            AlertaChart.destroy();
         }
 
         const ctx = document.getElementById('myChart');
-        const ctx2 = document.getElementById('myChart2');
-        const ctx3 = document.getElementById('myChart3');
 
-        new Chart(ctx, {
+        AlertaChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["29/10", "30/10", "31/10", "01/11", "02/11", "03/11"],
+                labels: labels,
                 datasets: [{
                     label: 'Quantidade alertas',
-                    data: [1, 2, 0, 0, 3, 1],
+                    data: dados,
                     borderWidth: 2,
                     backgroundColor: 'rgba(36, 130, 50, 1)',
                     borderColor: 'rgba(36, 130, 50, 1)'
@@ -162,13 +264,69 @@
             }
         });
 
-        new Chart(ctx2, {
+
+        console.log(labels)
+        console.log(dados)
+
+    }
+
+    setInterval(() => {
+        obterDadosAlertaVEL();
+    }, 30000);
+
+
+    function obterDadosTempoResposta() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/TempoResposta/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+
+                    plotarTempoResposta(resposta);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    let labelNRT = ["2min", "1.5min", "1min", "30s", "0"];
+
+    function plotarTempoResposta(resposta) {
+
+        let dados = [];
+
+        for (i = resposta.length - 1; i >= 0; i--) {
+            var registro = resposta[i];
+            console.log(registro.valor)
+
+            if (dados.length >= labelNRT.length) {
+                dados.shift();
+            }
+
+            dados.push(registro.valor);
+
+        }
+
+        if (tempoRespostaChart) {
+            tempoRespostaChart.destroy();
+        }
+
+        // Criar o novo gráfico
+        const ctx2 = document.getElementById('myChart2');
+        tempoRespostaChart = new Chart(ctx2, {
             type: 'line',
             data: {
-                labels: [150, 120, 90, 60, 30, 0],
+                labels: labelNRT,
                 datasets: [{
                     label: 'ms',
-                    data: [20, 90, 92, 15, 70, 60],
+                    data: dados,
                     borderWidth: 2,
                     backgroundColor: 'rgba(36, 130, 50, 1)',
                     borderColor: 'rgba(36, 130, 50, 1)'
@@ -183,13 +341,68 @@
             }
         });
 
-        new Chart(ctx3, {
+        console.log(dados)
+
+    }
+
+
+    setInterval(() => {
+        obterDadosTempoResposta();
+    }, 30000);
+
+
+    function obterDadosFreq() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/Freq/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+
+                    plotarFreq(resposta);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+
+
+    function plotarFreq(resposta) {
+
+        let dados = [];
+
+        for (i = resposta.length - 1; i >= 0; i--) {
+            var registro = resposta[i];
+            console.log(registro.valor)
+
+            if (dados.length >= labelNRT.length) {
+                dados.shift();
+            }
+
+            dados.push(registro.valor);
+
+        }
+
+        if (FrequenciaChart) {
+            FrequenciaChart.destroy();
+        }
+
+        const ctx3 = document.getElementById('myChart3');
+
+        FrequenciaChart = new Chart(ctx3, {
             type: 'line',
             data: {
-                labels: [880, 120, 90, 60, 30, 0],
+                labels: labelNRT,
                 datasets: [{
                     label: 'GHz',
-                    data: [20, 90, 92, 15, 70, 60],
+                    data: dados,
                     borderWidth: 2,
                     backgroundColor: 'rgba(36, 130, 50, 1)',
                     borderColor: 'rgba(36, 130, 50, 1)'
@@ -204,22 +417,165 @@
             }
         });
 
-        const ctx4 = document.getElementById('myChart4').getContext('2d');
-        new Chart(ctx4, {
-            type: 'pie',
-            data: {
-                labels: ['Livre', 'Usado'],
-                datasets: [{
-                    label: 'Uso do Disco',
-                    data: [50, 30],
-                    backgroundColor: [
-                        'rgb(36, 130, 50)',
-                        'rgb(255, 0, 0)'
-                    ]
-                }]
+        console.log(dados)
+
+    }
+
+
+    setInterval(() => {
+        obterDadosFreq();
+    }, 30000);
+
+
+
+</script>
+
+<script>
+
+    function obterDadosTempoRespostaCalor() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/TempoRespostaCalor/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+
+                    plotarTempoRespostaCalor(resposta);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
             }
-        });
-    </script>
-</body>
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarTempoRespostaCalor(resposta) {
+
+        var dias = []
+        var horario = []
+
+
+        var dia1 = []
+        var dia2 = []
+        var dia3 = []
+        var dia4 = []
+        var dia5 = []
+
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+
+            if (dias.indexOf(registro.dia) >= 0) {
+
+            } else {
+                dias.push(registro.dia);
+            }
+
+            switch (dias.indexOf(registro.dia)) {
+                case 0:
+                    dia1.push(registro.valor)
+                    break
+                case 1:
+                    dia2.push(registro.valor)
+                    break
+                case 2:
+                    dia3.push(registro.valor)
+                    break
+                case 3:
+                    dia4.push(registro.valor)
+                    break
+                case 4:
+                    dia5.push(registro.valor)
+                    break
+            }
+        }
+
+
+        var dados = {
+            1: dia1,
+            2: dia2,
+            3: dia3,
+            4: dia4,
+            5: dia5
+        };
+
+        for (var i = 0; i < dados[1].length; i++) {
+            horario.push(i + 'h')
+        }
+
+        var options = {
+            series: [],
+            chart: {
+                height: 185,
+                width: 600,
+                type: 'heatmap',
+            },
+            plotOptions: {
+                heatmap: {
+                    colorScale: {
+                        ranges: [
+                            { from: 0, to: 9, color: '#B5EFA4', name: 'Muito Baixo' },
+                            { from: 9, to: 15, color: '#50B63F', name: 'Baixo' },
+                            { from: 15, to: 30, color: '#e80700', name: 'Moderado' },
+                            { from: 30, to: 60, color: '#d80300', name: 'Alto' },
+                            { from: 60, to: 100, color: '#861c10', name: 'Excessivo' },
+                        ],
+                    },
+                },
+            },
+
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                categories: horario,
+                title: {
+                    text: 'Horario',
+                    align: 'center'
+                }
+            },
+            title: {
+                text: 'Mapa de calor',
+                align: 'center'
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " ms"
+                    },
+                    title: {
+                        formatter: function (horario) {
+                            return 'Dia ' + horario + ':';
+                        },
+                        style: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                style: {
+                    fontSize: '14px',
+                    fontFamily: 'Arial, sans-serif',
+                    color: '#fff',
+                },
+                theme: 'dark'
+            }
+        };
+
+        for (var i = 0; i < dias.length; i++) {
+            options.series.push({
+                name: dias[i].toString(),
+                data: dados[i + 1],
+            });
+        }
+
+        var chart = new ApexCharts(document.querySelector("#chartCalor"), options);
+        chart.render();
+    }
+
+
+</script>
 
 </html>

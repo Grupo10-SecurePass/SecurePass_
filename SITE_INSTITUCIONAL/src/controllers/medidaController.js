@@ -41,8 +41,102 @@ function buscarMedidasEmTempoReal(req, res) {
     });
 }
 
+function alertaVEL(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.alertaVEL(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function TempoResposta(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.TempoResposta(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function TempoRespostaCalor(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.TempoRespostaCalor(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function Freq(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.Freq(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function Upload(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.Upload(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
-
+    buscarMedidasEmTempoReal,
+    alertaVEL,
+    TempoResposta,
+    TempoRespostaCalor,
+    Freq,
+    Upload
 }

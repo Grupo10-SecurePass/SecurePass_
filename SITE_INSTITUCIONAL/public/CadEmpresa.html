@@ -26,19 +26,19 @@
       <div class="formulario">
 
         <h2>Cadastro de Empresa</h2>
-        <div class = "label_input">
+        <div class="label_input">
           <label for="input_nomeEmpresa">Nome Fantasia:</label>
           <input id="input_nomeEmpresa" type="text" placeholder="Nome da empresa">
         </div>
 
-        <div class = "label_input">
-        <label for="input_razaoSocial">Razão Social:</label>
-        <input id="input_razaoSocial" type="text" placeholder="Razão Social">
+        <div class="label_input">
+          <label for="input_razaoSocial">Razão Social:</label>
+          <input id="input_razaoSocial" type="text" placeholder="Razão Social">
         </div>
 
-        <div class = "label_input">
-        <label for="input_cnpj">CNPJ:</label>
-        <input id="input_cnpj" type="text" placeholder="CNPJ da empresa">
+        <div class="label_input">
+          <label for="input_cnpj">CNPJ:</label>
+          <input id="input_cnpj" type="text" placeholder="CNPJ da empresa">
         </div>
 
         <button class="botao" onclick="cadastrar()">Cadastrar</button>
@@ -61,47 +61,47 @@
   }
 
   function cadastrar() {
-  var nomeEmpresaVar = input_nomeEmpresa.value;
-  var razaoSocialVar = input_razaoSocial.value;
-  var cnpjVar = input_cnpj.value;
+    var nomeEmpresaVar = input_nomeEmpresa.value;
+    var razaoSocialVar = input_razaoSocial.value;
+    var cnpjVar = input_cnpj.value;
 
-  min = Math.ceil(1000);
-  max = Math.floor(6000);
-  var NR = Math.floor(Math.random() * (max - min) + min);
+    min = Math.ceil(1000);
+    max = Math.floor(6000);
+    var NR = Math.floor(Math.random() * (max - min) + min);
 
-  if (!nomeEmpresaVar || !razaoSocialVar || !cnpjVar) {
-    divmsg.innerHTML = "Campos não devidamente preenchidos!";
-    return;
-  }
-
-  fetch("/empresas/cadastrar", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    nomeEmpresaServer: nomeEmpresaVar,
-    razaoSocialServer: razaoSocialVar,
-    cnpjServer: cnpjVar,
-    NRempresaServer: NR,
-  }),
-})
-  .then((resposta) => {
-    console.log(resposta); // Verifique o que o servidor está retornando
-    if (resposta.ok) {
-      divmsg.innerHTML = `O número de registro da sua empresa é: ${NR}<br>Cadastro realizado com sucesso! <a onclick="entrar()">Entre aqui</a>`;
-    } else {
-      resposta.text().then((text) => {
-        divmsg.innerHTML = text;
-      });
+    if (!nomeEmpresaVar || !razaoSocialVar || !cnpjVar) {
+      divmsg.innerHTML = "Campos não devidamente preenchidos!";
+      return;
     }
-  })
-  .catch((erro) => {
-    console.error("Erro ao tentar realizar o cadastro:", erro);
-    divmsg.innerHTML = "Ocorreu um erro ao tentar se cadastrar. Tente novamente mais tarde.";
-  });
 
-}
+    fetch("/empresas/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nomeEmpresaServer: nomeEmpresaVar,
+        razaoSocialServer: razaoSocialVar,
+        cnpjServer: cnpjVar,
+        NRempresaServer: NR,
+      }),
+    })
+      .then((resposta) => {
+        console.log(resposta); // Verifique o que o servidor está retornando
+        if (resposta.ok) {
+          divmsg.innerHTML = `O número de registro da sua empresa é: ${NR}<br>Cadastro realizado com sucesso! <a onclick="entrar()">Entre aqui</a>`;
+        } else {
+          resposta.text().then((text) => {
+            divmsg.innerHTML = text;
+          });
+        }
+      })
+      .catch((erro) => {
+        console.error("Erro ao tentar realizar o cadastro:", erro);
+        divmsg.innerHTML = "Ocorreu um erro ao tentar se cadastrar. Tente novamente mais tarde.";
+      });
+
+  }
 
 
 </script>

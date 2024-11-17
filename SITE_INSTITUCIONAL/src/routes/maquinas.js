@@ -23,4 +23,8 @@ router.post("/desativarMaquina", function (req, res) {
   maquinaController.desativar(req, res);
 })
 
+router.get("/listarMaquinaDash/:fkLinha", function (req, res) {
+  maquinaController.listarMaquinaDash(req, res);
+})
+
 module.exports = router;

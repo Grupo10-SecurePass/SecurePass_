@@ -29,7 +29,75 @@ function buscarMedidasEmTempoReal(idAquario) {
     return database.executar(instrucaoSql);
 }
 
+function alertaVEL(idDispositivo) {
+
+    var instrucaoSql = `SELECT COUNT(idAlerta) as quantidade, CONCAT(DAY(MIN(dataAlerta)), "/", MONTH(MIN(dataAlerta))) as data FROM alerta 
+    WHERE fkComponente = 6 OR fkComponente = 8 
+    AND fkDispositivo = ${idDispositivo} 
+    GROUP BY DAY(dataAlerta), MONTH(dataAlerta) 
+    ORDER BY DAY(dataAlerta), MONTH(dataAlerta);`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function TempoResposta(idDispositivo) {
+
+    var instrucaoSql = `SELECT registro as valor FROM captura 
+            WHERE fkDispositivo = ${idDispositivo} 
+            AND fkComponente = 8 
+            ORDER BY dataRegistro
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function TempoRespostaCalor(idDispositivo) {
+
+    var instrucaoSql = `SELECT AVG(registro) as valor, 
+    CONCAT(DAY(dataRegistro), "/", MONTH(dataRegistro)) as dia, 
+    HOUR(dataRegistro) as hora 
+    FROM captura 
+    WHERE fkComponente = 8 AND fkDispositivo = ${idDispositivo} 
+    GROUP BY hora, dia 
+    ORDER BY dia, hora 
+    LIMIT 120;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function Freq(idDispositivo) {
+
+    var instrucaoSql = `SELECT registro as valor FROM captura 
+            WHERE fkDispositivo = ${idDispositivo} 
+            AND fkComponente = 6 
+            ORDER BY dataRegistro
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function Upload(idDispositivo) {
+
+    var instrucaoSql = `SELECT registro as valor FROM captura 
+            WHERE fkDispositivo = ${idDispositivo} 
+            AND fkComponente = 6 
+            ORDER BY dataRegistro
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasEmTempoReal,
+    alertaVEL,
+    TempoResposta,
+    TempoRespostaCalor,
+    Freq,
+    Upload
 }
