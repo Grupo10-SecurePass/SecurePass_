@@ -3,23 +3,23 @@ var router = express.Router();
 
 var guilhermeController = require("../controllers/guilhermeController");
 
-router.get("/obterPercentualCpu", function (req, res) {
+router.get("/obterPercentualCpu/:Linha", function (req, res) {
     guilhermeController.obterPercentualCpu(req, res);
 });
 
-router.get("/obterPercentualRam", function (req, res) {
+router.get("/obterPercentualRam/:Linha", function (req, res) {
     guilhermeController.obterPercentualRam(req, res);
 });
 
-router.get("/obterQtdAlertasRamCpu", function (req, res) {
+router.get("/obterQtdAlertasRamCpu/:Linha", function (req, res) {
     guilhermeController.obterQtdAlertasRamCpu(req, res);
 });
 
-router.get("/obterTempAlertas", function (req, res) {
+router.get("/obterTempAlertas/:Linha", function (req, res) {
     guilhermeController.obterTempAlertas(req, res);
 });
 
-router.get("/obterInfoAlertas", function (req, res) {
+router.get("/obterInfoAlertas/:Linha", function (req, res) {
     guilhermeController.obterInfoAlertas(req, res);
 });
 

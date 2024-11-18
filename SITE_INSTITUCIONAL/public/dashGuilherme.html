@@ -47,7 +47,7 @@
                     <div class="role">Técnico de Suporte</div>
                 </div>
                 <div class="profile-icon">
-                    <a href="./dadosGerente.html"><img src="Imagens/profile-user.png" alt="Icon" class="Icon">Perfil</a>
+                    <a href="dadosUsuario.html"><img src="Imagens/profile-user.png" alt="Icon" class="Icon">Perfil</a>
                 </div>
             </div>
 
@@ -133,6 +133,15 @@
 <script>
 
     window.onload = function () {
+
+        var Linha = sessionStorage.getItem("LINHA");
+        if (!Linha) {
+            console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
+            alert("Linha não definida. Por favor, selecione uma linha antes de continuar.");
+            return;
+        }
+        console.log("Linha selecionada:", Linha);
+
         let chartInstance = null; // Variável para armazenar a instância do gráfico de linha (CPU)
         let barChartInstance = null; // Variável para armazenar a instância do gráfico de barras (circularChart) CPU
         let ramChartInstance = null; // Variável para o gráfico de linha (RAM)
@@ -239,9 +248,18 @@
             return average;
         }
 
+        var Linha = sessionStorage.getItem("LINHA");
+        if (!Linha) {
+            console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
+            alert("Linha não definida. Por favor, selecione uma linha antes de continuar.");
+            return;
+        }
+        console.log("Linha selecionada:", Linha);
+
         // Função para buscar e atualizar os dados da CPU
         function fetchDataAndUpdateChart() {
-            fetch('guilherme/obterPercentualCpu')
+            console.log(Linha)
+            fetch(`guilherme/obterPercentualCpu/${Linha}`)
                 .then(response => response.json())
                 .then(function (data) {
                     console.log("Dados recebidos do servidor (CPU):", data);
@@ -348,9 +366,17 @@
             }
         }
 
+        var Linha = sessionStorage.getItem("LINHA");
+        if (!Linha) {
+            console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
+            alert("Linha não definida. Por favor, selecione uma linha antes de continuar.");
+            return;
+        }
+        console.log("Linha selecionada:", Linha);
+
         // Função para buscar e atualizar os dados da RAM
         function fetchDataAndUpdateRamChart() {
-            fetch('guilherme/obterPercentualRam')
+            fetch(`guilherme/obterPercentualRam/${Linha}`)
                 .then(response => response.json())
                 .then(function (data) {
                     console.log("Dados recebidos do servidor (RAM):", data);
@@ -365,7 +391,7 @@
         }
 
         function updateTemp() {
-            fetch('guilherme/obterTempAlertas')
+            fetch(`guilherme/obterTempAlertas/${Linha}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.length > 0) {
@@ -409,7 +435,7 @@
             const alertPieChartCtx = alertPieChartCanvas.getContext('2d');
 
             // Busca os dados dos alertas
-            fetch('guilherme/obterQtdAlertasRamCpu')
+            fetch(`guilherme/obterQtdAlertasRamCpu/${Linha}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log('Dados recebidos dos alertas:', data);  // Verifique o formato dos dados
@@ -463,7 +489,7 @@
         }
 
         function atualizarInfoAlertas() {
-            fetch("guilherme/obterInfoAlertas")  // Verifique se essa URL está correta
+            fetch(`guilherme/obterInfoAlertas/${Linha}`)  // Verifique se essa URL está correta
                 .then(response => {
                     console.log("Resposta recebida:", response);  // Log da resposta
                     if (!response.ok) {
@@ -564,60 +590,69 @@
     }
 
     document.getElementById('gerarRelatorio').addEventListener('click', function () {
-    // Função para coletar dados dos fetchs
-    async function coletarDados() {
-        try {
-            // Realizando as requisições
-            const cpuData = await fetch('guilherme/obterPercentualCpu').then(res => res.json());
-            const ramData = await fetch('guilherme/obterPercentualRam').then(res => res.json());
-            const alertasData = await fetch('guilherme/obterQtdAlertasRamCpu').then(res => res.json());
-            const tempoAlertaData = await fetch('guilherme/obterTempAlertas').then(res => res.json());
-            const infoAlertasData = await fetch('guilherme/obterInfoAlertas').then(res => res.json()); // Aqui está a adição
+        // Função para coletar dados dos fetchs
+        async function coletarDados() {
 
-            // Verificar se a quantidade de alertas foi corretamente retornada
-            const totalAlertasCPU = alertasData[0]?.totalAlertasCPU || 0;
-            const totalAlertasRAM = alertasData[0]?.totalAlertasRAM || 0;
+            var Linha = sessionStorage.getItem("LINHA");
+            if (!Linha) {
+                console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
+                alert("Linha não definida. Por favor, selecione uma linha antes de continuar.");
+                return;
+            }
+            console.log("Linha selecionada:", Linha);
 
-            // Estrutura os dados para o envio
-            const relatorioData = {
-                descricao: "Relatório detalhado sobre o desempenho dos sistemas monitorados. Foco nos dados de uso de CPU, RAM, alertas e tempo de ociosidade.",
-                cpu: {
-                    descricao: "Dados sobre o uso de CPU ao longo do dia.",
-                    historico: cpuData.map(item => ({
-                        horario: item.horario,
-                        uso: item.percentualCpu
-                    }))
-                },
-                ram: {
-                    descricao: "Dados sobre o uso de RAM ao longo do dia.",
-                    historico: ramData.map(item => ({
-                        horario: item.horario,
-                        uso: item.percentualRam
-                    }))
-                },
-                alertas: {
-                    descricao: "Dados sobre os alertas gerados ao longo do dia.",
-                    totalAlertasCPU: totalAlertasCPU,
-                    totalAlertasRAM: totalAlertasRAM,
-                    detalhes: `Foram registrados ${totalAlertasCPU} alertas de CPU e ${totalAlertasRAM} alertas de RAM.`
-                },
-                tempoEstavelEAlerta: {
-                    descricao: "Porcentagem de tempo que o sistema permaneceu em estado estável e alerta.",
-                    porcentagemAlerta: tempoAlertaData[0]?.porcentagemAlertas || 0,
-                    porcentagemEstavel: tempoAlertaData[0]?.porcentagemSemAlertas || 0,
-                },
-                infoAlertas: {
-                    descricao: "Detalhes dos alertas de CPU e RAM.",
-                    dados: infoAlertasData.map(alerta => ({
-                        componente: alerta.nomeComponente === 'PercCPU' ? 'CPU' : 'RAM',
-                        descricaoAlerta: alerta.descricaoAlerta,
-                        dataAlerta: new Date(alerta.dataAlerta).toLocaleString()
-                    }))
-                }
-            };
+            try {
+                // Realizando as requisições
+                const cpuData = await fetch(`guilherme/obterPercentualCpu/${Linha}`).then(res => res.json());
+                const ramData = await fetch(`guilherme/obterPercentualRam/${Linha}`).then(res => res.json());
+                const alertasData = await fetch(`guilherme/obterQtdAlertasRamCpu/${Linha}`).then(res => res.json());
+                const tempoAlertaData = await fetch(`guilherme/obterTempAlertas/${Linha}`).then(res => res.json());
+                const infoAlertasData = await fetch(`guilherme/obterInfoAlertas/${Linha}`).then(res => res.json()); // Aqui está a adição
 
-            // Montando a pergunta com os dados já prontos
-            const perguntaComDados = `
+                // Verificar se a quantidade de alertas foi corretamente retornada
+                const totalAlertasCPU = alertasData[0]?.totalAlertasCPU || 0;
+                const totalAlertasRAM = alertasData[0]?.totalAlertasRAM || 0;
+
+                // Estrutura os dados para o envio
+                const relatorioData = {
+                    descricao: "Relatório detalhado sobre o desempenho dos sistemas monitorados. Foco nos dados de uso de CPU, RAM, alertas e tempo de ociosidade.",
+                    cpu: {
+                        descricao: "Dados sobre o uso de CPU ao longo do dia.",
+                        historico: cpuData.map(item => ({
+                            horario: item.horario,
+                            uso: item.percentualCpu
+                        }))
+                    },
+                    ram: {
+                        descricao: "Dados sobre o uso de RAM ao longo do dia.",
+                        historico: ramData.map(item => ({
+                            horario: item.horario,
+                            uso: item.percentualRam
+                        }))
+                    },
+                    alertas: {
+                        descricao: "Dados sobre os alertas gerados ao longo do dia.",
+                        totalAlertasCPU: totalAlertasCPU,
+                        totalAlertasRAM: totalAlertasRAM,
+                        detalhes: `Foram registrados ${totalAlertasCPU} alertas de CPU e ${totalAlertasRAM} alertas de RAM.`
+                    },
+                    tempoEstavelEAlerta: {
+                        descricao: "Porcentagem de tempo que o sistema permaneceu em estado estável e alerta.",
+                        porcentagemAlerta: tempoAlertaData[0]?.porcentagemAlertas || 0,
+                        porcentagemEstavel: tempoAlertaData[0]?.porcentagemSemAlertas || 0,
+                    },
+                    infoAlertas: {
+                        descricao: "Detalhes dos alertas de CPU e RAM.",
+                        dados: infoAlertasData.map(alerta => ({
+                            componente: alerta.nomeComponente === 'PercCPU' ? 'CPU' : 'RAM',
+                            descricaoAlerta: alerta.descricaoAlerta,
+                            dataAlerta: new Date(alerta.dataAlerta).toLocaleString()
+                        }))
+                    }
+                };
+
+                // Montando a pergunta com os dados já prontos
+                const perguntaComDados = `
             Análise detalhada do desempenho do sistema com base nos seguintes dados:
 
             1. Uso de CPU:
@@ -640,59 +675,59 @@
             Por favor, forneça uma análise detalhada e bem organizada dos dados de uso de CPU, RAM, alertas e tempo de ociosidade do sistema e faça sempre uma conclusão. O foco deve ser na explicação clara e simples desses dados, sem incluir dados relacionados ao banco de dados. Organize a resposta em tópicos e listas, e inclua descrições sobre cada aspecto dos dados apresentados.
         `;
 
-            // Exibe no console os dados que serão enviados para a API
-            console.log("Dados enviados para a API:", perguntaComDados);
+                // Exibe no console os dados que serão enviados para a API
+                console.log("Dados enviados para a API:", perguntaComDados);
 
-            // Envia os dados para a API de geração de relatórios com uma solicitação para análise
-            const response = await fetch('http://localhost:3001/perguntar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    pergunta: perguntaComDados,
-                    contexto: relatorioData
-                })
-            });
+                // Envia os dados para a API de geração de relatórios com uma solicitação para análise
+                const response = await fetch('http://localhost:3001/perguntar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        pergunta: perguntaComDados,
+                        contexto: relatorioData
+                    })
+                });
 
-            // Coleta a resposta da API
-            const data = await response.json();
+                // Coleta a resposta da API
+                const data = await response.json();
 
-            // Verifica se a resposta da API contém um valor válido
-            const respostaText = data.resultado || 'A resposta da API está vazia ou não foi definida corretamente.';
+                // Verifica se a resposta da API contém um valor válido
+                const respostaText = data.resultado || 'A resposta da API está vazia ou não foi definida corretamente.';
 
-            // Exibe o card de resposta
-            const respostaCard = document.getElementById('resposta');
-            respostaCard.style.display = "block";
+                // Exibe o card de resposta
+                const respostaCard = document.getElementById('resposta');
+                respostaCard.style.display = "block";
 
-            // Adiciona a resposta da API ou mensagem de erro
-            document.getElementById('resposta-texto').innerText = respostaText;
+                // Adiciona a resposta da API ou mensagem de erro
+                document.getElementById('resposta-texto').innerText = respostaText;
 
-            // Exibe o ícone de fechar
-            const fecharIcone = document.querySelector('.fechar-icone');
-            fecharIcone.style.display = 'block';
+                // Exibe o ícone de fechar
+                const fecharIcone = document.querySelector('.fechar-icone');
+                fecharIcone.style.display = 'block';
 
-            // Aplica o efeito de fundo ofuscado
-            document.body.classList.add('ofuscado');
+                // Aplica o efeito de fundo ofuscado
+                document.body.classList.add('ofuscado');
 
-        } catch (error) {
-            console.error('Erro ao coletar ou enviar os dados:', error);
+            } catch (error) {
+                console.error('Erro ao coletar ou enviar os dados:', error);
 
-            // Exibe a mensagem de erro da API
-            const respostaCard = document.getElementById('resposta');
-            respostaCard.style.display = "block";
-            document.getElementById('resposta-texto').innerText = 'Erro ao coletar ou enviar os dados: ' + error.message;
+                // Exibe a mensagem de erro da API
+                const respostaCard = document.getElementById('resposta');
+                respostaCard.style.display = "block";
+                document.getElementById('resposta-texto').innerText = 'Erro ao coletar ou enviar os dados: ' + error.message;
 
-            // Exibe o ícone de fechar
-            const fecharIcone = document.querySelector('.fechar-icone');
-            fecharIcone.style.display = 'block';
+                // Exibe o ícone de fechar
+                const fecharIcone = document.querySelector('.fechar-icone');
+                fecharIcone.style.display = 'block';
 
-            // Aplica o efeito de fundo ofuscado
-            document.body.classList.add('ofuscado');
+                // Aplica o efeito de fundo ofuscado
+                document.body.classList.add('ofuscado');
+            }
         }
-    }
 
-    // Chama a função para coletar os dados e gerar o relatório
-    coletarDados();
-});
+        // Chama a função para coletar os dados e gerar o relatório
+        coletarDados();
+    });
 
 
 
