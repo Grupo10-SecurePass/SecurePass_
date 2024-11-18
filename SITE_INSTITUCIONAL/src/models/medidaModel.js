@@ -60,6 +60,8 @@ function TempoRespostaCalor(idDispositivo) {
     HOUR(dataRegistro) as hora 
     FROM captura 
     WHERE fkComponente = 8 AND fkDispositivo = ${idDispositivo} 
+    AND dataRegistro >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+    AND dataRegistro < CURDATE()
     GROUP BY hora, dia 
     ORDER BY dia, hora 
     LIMIT 120;`;

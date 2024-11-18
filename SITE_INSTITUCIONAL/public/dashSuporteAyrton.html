@@ -53,7 +53,7 @@
                     <div class="escolha">
                         <div class="textodata">
                             <p>Escolha o servidor que você deseja monitorar</p>
-                            <select name="escolherServidor" id="inputCargo">
+                            <select name="escolherServidor" onchange="obterDadosAlertaVEL(),obterDadosTempoResposta(),obterDadosTempoRespostaCalor(),obterDadosFreq()" id="inputCargo">
 
                             </select>
                         </div>
@@ -464,8 +464,9 @@
         var dia3 = []
         var dia4 = []
         var dia5 = []
+        
 
-        for (i = 0; i < resposta.length; i++) {
+        for (i = resposta.length - 1; i >= 0; i--) {
             var registro = resposta[i];
 
             if (dias.indexOf(registro.dia) >= 0) {
@@ -473,6 +474,11 @@
             } else {
                 dias.push(registro.dia);
             }
+
+        }
+
+        for(i = 0; i < resposta.length; i++){
+            var registro = resposta[i];
 
             switch (dias.indexOf(registro.dia)) {
                 case 0:
@@ -492,6 +498,7 @@
                     break
             }
         }
+
 
 
         var dados = {
