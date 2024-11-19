@@ -1,0 +1,249 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+
+    display: flex;
+    justify-content: center;
+}
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Main Content */
+.main-content {
+    width: 80%;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #c8e6c9; 
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+.header h1 {
+    font-size: 28px;
+    color: #2e7d32; 
+}
+.filters {
+    text-align: right;
+}
+.filters h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #388e3c; 
+}
+.filters button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #4caf50; 
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.filters button:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+}
+
+/* Histórico */
+
+.historico table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.historico table thead {
+    background-color: #2e7d32; 
+    color: white;
+}
+.historico table th,
+.historico table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.historico table tbody tr:nth-child(odd) {
+    background-color: #f1f8e9; 
+}
+.historico table tbody tr:hover {
+    background-color: #c8e6c9;  
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .filters {
+        text-align: center;
+    }
+}
+
+/* Ajuste para o botão de navegação */
+
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #fcfffc;
+    margin: 5px 0;
+    transition: 0.3s;
+} 
+ 
+.nav-menu {
+    position: absolute;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    width: 250px;
+    background: #040f0f;
+    padding-top: 10px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nav-menu.show {
+    left: 0;
+}
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.nav-menu a {
+    display: block;
+    color: #fcfffc;
+    padding: 15px;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.nav-menu a:hover {
+    background-color: #2D3A3A;
+    color: #fcfffc;
+    transition: background-color 0.8s ease;
+}
+
+.close-btn {
+    background: #fcfffc;
+    border: none;
+    color: #040f0f;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: -50px;
+    z-index: 5;
+    transition: right 0.3s ease;
+}
+.close-btn .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #040F0F;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+.logo {
+    width: 180px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+    align-self: center;
+}
+.separator {
+    width: 100%;
+    height: 1px;
+    background: #fcfffc;
+    margin: 5px auto;
+}
+
+/*  */
+.logout  {
+    width:88%;
+    text-align: center;
+    color: #fcfffc;
+    font-size: 18px;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.nav-link-space-logout{
+    display: flex;
+    align-items: end;
+    width: 100%;
+    height: 40%;
+}
+
+.logout a:hover {
+    background-color: #1b5e20;
+}
+
+.hamburger.active .bar {
+    background-color: #040F0F;
+}
+
+button.hamburger:hover .bar {
+    background-color: #66bb6a; 
+}
+
+
+button.hamburger:hover .bar {
+    background-color: #66bb6a; 
+}
+.nav-links a:hover, .logout:hover {
+    background-color: #1b5e20;
+}
+
+
+
+
