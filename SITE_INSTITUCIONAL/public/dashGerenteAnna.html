@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Gerente</title>
-    <link rel="stylesheet" href="./css/dashGerente.css">
+    <title>Dashboard de Alertas</title>
+    <link rel="stylesheet" href="./css/dashGerenteAnna.css">
 </head>
 <body>
 
@@ -38,21 +38,20 @@
             <a href="index.html" class="logout">Sair</a>
         </nav>
     </div>
-
-    <div class="mae">
+    <div class="geral">
         <div class="lateral"></div>
         <div class="quadros">
             <div class="div1">
                 <div class="filtro">
                     <div class="data">
                         <div class="textodata">
-                            <p>Selecione o período desejado: de</p>
+                            <p>Selecione o período desejado:  <br>de </p> 
                             <input type="date">
-                            <p>até</p>
+                            <p>até </p>
                             <input type="date">
                         </div>
                         <div class="aviso">
-                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento padrão da data de hoje e de 4 dias atrás.</p>
+                            <p> Por padrão, ao entrar na dashboard o monitoramento visivel é da data de hoje e de 7 dias atrás.</p>
                         </div>
                     </div>
                 
@@ -60,82 +59,79 @@
                         <button>Filtrar</button>
                     </div>
                 </div>
-                <div class="filtro">
-                    <div class="escolha">
-                        <div class="textodata">
-                            <p>Escolha o servidor que você deseja monitorar</p>
-                            <select name="escolherServidor" id="">
-                                <option value="#" selected disabled>Escolher</option>
-                            </select>
-                        </div>
-                        <div class="aviso">
-                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor cadastrado.</p>
-                        </div>
+            
+                <div class="divAlerta">
+                    <div class="titulo">
+                        <p>Quantidade de alertas por servidor</p>
                     </div>
-                </div>
-                <div class="rede">
-                    <div class="titulorede">
-                        <p>Rede</p>
-                    </div>
-                    <div class="titulografico1rede">
-                        <p>Média de velocidade de upload:</p>
-                    </div>
-                    <div class="grafico1rede">
-                        <div class="espacografico1">
-                            <div class="graficoupload">
+                    <div class="grafico">
+                        <div class="espacografico">
+                            <div class="graficoAlerta">
                                 <canvas id="myChart"></canvas>
-                            </div>
+                            </div>  
                         </div>
-                        <div class="legendagrafico1">
-                            <p>Média de velocidade: X Mb/s</p>
-                        </div>
+                       
                     </div>
-                    <div class="linha"></div>
-                    <div class="titulografico2rede">
-                        <p>Média de velocidade de download:</p>
-                    </div>
-                    <div class="grafico2rede">
-                        <div class="espacografico2">
-                            <div class="graficodownload">
-                                <canvas id="myChart1"></canvas>
-                            </div>
-                        </div>
-                        <div class="legendagrafico2">
-                            <p>Média de velocidade: X Mb/s</p>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="div2">
-                <div class="cpu">
-                    <div class="titulocpu">
-                        <p>Média de uso de CPU:</p>
+                <div class="a">
+                <div class="dispositivoW">
+                    <div class="tituloDispositivoW">
+                        <p>Dispositivo W</p>
                     </div>
-                    <div class="espacograficocpu">
-                        <div class="graficocpu">
-                            <canvas id="myChart2"></canvas>
+                    <div class="espacograficoDispositivoW">
+                        <div class="graficoDispositivoW">
+                            <canvas id="myChart1"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="risco">
-                    <div class="titulorisco">
-                        <p>Quantidade de máquinas que ficaram em risco:</p>
+                
+                <div class="dispositivoX">
+                    <div class="tituloDispositivoX">
+                        <p>Dispositivo X</p>
                     </div>
-                    <div class="graficolegenda">
-                        <div class="graficorisco">
+                    
+                        <div class="graficoDispositivoX">
                             <canvas id="myChart3"></canvas>
                         </div>
-                        <div class="riscolegenda">
-                            <p>A Linha Verde teve mais problemas com máquinas, totalizando X problemas.</p>
-                        </div>
-                    </div>
+                       
                 </div>
+            </div>
+    <div class="b">
+    <div class="dispositivoY">
+        <div class="tituloDispositivoY">
+            <p>Dispositivo Y</p>
+        </div>
+        <div class="espacograficoDispositivoY">
+            <div class="graficoDispositivoY">
+                <canvas id="myChart2"></canvas>
             </div>
         </div>
     </div>
+    
+    <div class="dispositivoZ">
+        <div class="tituloDispositivoZ">
+            <p>Dispositivo Z</p>
+        </div>
+        
+            <div class="graficoDispositivoZ">
+                <canvas id="myChart4"></canvas>
+            </div>
+    </div>
+
+          </div>   
+           
+        </div>
+    </div>
+
 </body>
 </html>
+
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
         function toggleAlertSidebar() {
             const sidebar = document.getElementById('alertSidebar');
@@ -160,24 +156,52 @@
             hamburger.classList.add('active');
         }
     }
+
+
+
     const ctx = document.getElementById('myChart');
     const ctx1 = document.getElementById('myChart1');
     const ctx2 = document.getElementById('myChart2');
     const ctx3 = document.getElementById('myChart3');
+    const ctx4 = document.getElementById('myChart4');
       
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Mb/s',
-              data: [1500, 1000, 1250, 1750, 2000],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['17/09', '18/09', '19/10', '20/10', '21/10'], // Rótulos no eixo X
+        datasets: [
+            {
+                label: 'DispositivoW', 
+                data: [1500, 1000, 1250, 1750, 2000], 
+                borderWidth: 2,
+                borderColor: 'rgba(36, 130, 50, 1)', 
+                backgroundColor: 'rgba(36, 130, 50, 1)' 
+            },
+            {
+                label: 'DispositivoX', //
+                data: [1200, 800, 1180, 1350, 1100], 
+                borderWidth: 2,
+                borderColor: 'rgba(0, 0, 255, 1)', 
+                backgroundColor: 'rgba(0, 0, 255, 1)' 
+            },
+            {
+                label: 'DispositivoY', 
+                data: [1100, 600, 1750, 1455, 1100], 
+                borderWidth: 2,
+                borderColor: 'rgba(178, 34, 34, 1)', 
+                backgroundColor: 'rgba(178, 34, 34, 1)'
+            },
+            {
+                label: 'DispositivoZ', 
+                data: [1150, 400, 450, 455, 410], 
+                borderWidth: 2,
+                borderColor: 'rgba(128, 128, 128, 1 )', 
+                backgroundColor: 'rgba(128, 128, 128, 1 )'
+            }
+        ]
+    },
+    options: {
             scales: {
               y: {
                 beginAtZero: true
@@ -185,16 +209,17 @@
             }
           }
     });
+
     new Chart(ctx1, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
             datasets: [{
-              label: 'Mb/s',
-              data: [1500, 1000, 1250, 1750, 2000],
+              label: 'Alertas',
+              data: [0, 20, 60, 80, 100],
               borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
             }]
         },
         options: {
@@ -206,15 +231,15 @@
           }
     });
     new Chart(ctx2, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
             datasets: [{
-              label: '%',
+              label: 'Alertas',
               data: [0, 20, 60, 80, 100],
               borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
             }]
         },
         options: {
@@ -230,11 +255,31 @@
         data: {
             labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
             datasets: [{
-              label: 'Qtd',
+              label: 'Alertas',
               data: [15, 10, 12, 17, 20],
               borderWidth: 2,
-              backgroundColor: 'rgba(178, 34, 34, 1)',
-              borderColor: 'rgba(178, 34, 34, 1)'
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Alertas',
+              data: [15, 10, 12, 17, 20],
+              borderWidth: 2,
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
             }]
         },
         options: {

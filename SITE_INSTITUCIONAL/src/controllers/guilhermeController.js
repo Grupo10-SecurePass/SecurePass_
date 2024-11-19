@@ -2,8 +2,9 @@ var guilhermeModel = require("../models/guilhermeModel");
 
 function obterPercentualCpu(req, res) {
     console.log("ACESSEI A CONTROLLER DE CPU");
+    var Linha = req.params.Linha;
 
-    guilhermeModel.obterPercentualCpu().then(function (resultado) {
+    guilhermeModel.obterPercentualCpu(Linha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -18,8 +19,9 @@ function obterPercentualCpu(req, res) {
 
 function obterPercentualRam(req, res) {
     console.log("ACESSEI A CONTROLLER DE RAM");
+    var Linha = req.params.Linha;
 
-    guilhermeModel.obterPercentualRam().then(function (resultado) {
+    guilhermeModel.obterPercentualRam(Linha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -34,8 +36,9 @@ function obterPercentualRam(req, res) {
 
 function obterQtdAlertasRamCpu(req, res) {
     console.log("ACESSEI A CONTROLLER DE ALERTAS RAM E CPU");
+    var Linha = req.params.Linha;
 
-    guilhermeModel.obterQtdAlertasRamCpu().then(function (resultado) {
+    guilhermeModel.obterQtdAlertasRamCpu(Linha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -50,8 +53,9 @@ function obterQtdAlertasRamCpu(req, res) {
 
 function obterTempAlertas(req, res) {
     console.log("ACESSEI A CONTROLLER DE TEMPO ESTÁVEL E EM ALERTA");
+    var Linha = req.params.Linha;
 
-    guilhermeModel.obterTempAlertas().then(function (resultado) {
+    guilhermeModel.obterTempAlertas(Linha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -66,8 +70,9 @@ function obterTempAlertas(req, res) {
 
 function obterInfoAlertas(req, res) {
     console.log("ACESSEI A CONTROLLER DE INFORMAÇÃO DOS ALERTAS");
+    var Linha = req.params.Linha;
 
-    guilhermeModel.obterInfoAlertas().then(function (resultado) {
+    guilhermeModel.obterInfoAlertas(Linha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

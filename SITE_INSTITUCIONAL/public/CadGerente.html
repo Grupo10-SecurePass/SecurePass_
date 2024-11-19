@@ -35,6 +35,7 @@
                 <a href="./assocLinha.html">Associação de Linhas / Cadastro de Gerente</a>
                 <a href="./dadosUsuario.html">Perfil</a>
                 <a href="./feedbackPublicar.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
@@ -140,7 +141,7 @@
                         divCardGerente.className = "cardgerente";
 
                         divCardGerente.dataset.nome = card.nome;
-                        divCardGerente.dataset.CPF = card.CPF;
+                        divCardGerente.dataset.cpf = card.cpf;
                         divCardGerente.dataset.email = card.email;
                         divCardGerente.dataset.nome_empresa = card.nome_empresa;
                         divCardGerente.dataset.cargo = card.cargo;
@@ -149,7 +150,7 @@
                         divCardGerente.addEventListener("click", function () {
                             var gerente = {
                                 nome: this.dataset.nome,
-                                CPF: this.dataset.CPF,
+                                cpf: this.dataset.cpf,
                                 email: this.dataset.email,
                                 cargo: this.dataset.cargo,
                                 senha: this.dataset.senha
@@ -239,7 +240,7 @@
                             divCardGerente.className = "cardgerente";
 
                             divCardGerente.dataset.nome = card.nome;
-                            divCardGerente.dataset.CPF = card.CPF;
+                            divCardGerente.dataset.cpf = card.cpf;
                             divCardGerente.dataset.email = card.email;
                             divCardGerente.dataset.cargo = card.cargo;
                             divCardGerente.dataset.senha = card.senha;
@@ -247,9 +248,8 @@
                             divCardGerente.addEventListener("click", function () {
                                 var gerente = {
                                     nome: this.dataset.nome,
-                                    CPF: this.dataset.CPF,
+                                    cpf: this.dataset.cpf,
                                     email: this.dataset.email,
-                                    nome_empresa: this.dataset.nome_empresa,
                                     cargo: this.dataset.cargo,
                                     senha: this.dataset.senha
                                 };
