@@ -45,9 +45,8 @@ function listarMaquina(req, res) {
 
 
 
-function listarLinhaEmpresa(req,res) {
-    var nrEmpresa = req.body.nrEmpresaSever;
-    avisoModel.listarLinhaEmpresa(nrEmpresa).then(function (resultado) {
+function listarLinha(req,res) {
+    avisoModel.listarLinha().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -60,10 +59,25 @@ function listarLinhaEmpresa(req,res) {
     });
 }
 
+function listarLinhaEmpresa(req,res) {
+    var fkEmpresa = req.body.nrEmpresaServer;
+
+    avisoModel.listarLinhaEmpresa(fkEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 function associarLinha(req, res) {
-    var idLinha = req.body.idLinha;
-    var nrEmpresa = req.body.nrEmpresa;
+    var idLinha = req.body.linhaServer;
+    var nrEmpresa = req.body.fkNRServer;
 
     avisoModel.associarLinha(idLinha, nrEmpresa)
         .then(function (resultado) {
@@ -79,9 +93,22 @@ function associarLinha(req, res) {
         });
 }
 
+function desassociarLinha(req, res) {
+    var idLinha = req.params.idLinha;
 
-
-
+    avisoModel.desassociarLinha(idLinha)
+        .then(function (resultado) {
+            if (resultado.affectedRows > 0) {
+                res.status(200).send("Linha desassociada com sucesso à empresa!");
+            } else {
+                res.status(204).send("Nenhuma linha foi desassociada.");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao associar linha com a empresa: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
 
 function pesquisa(req, res) {
     var pesquisa = req.body.pesquisaServer;
@@ -131,7 +158,7 @@ function pesquisaLinha(req, res) {
     var pesquisa = req.body.pesquisaServer;
     var nrEmpresa = req.body.nrEmpresaServer;
 
-    avisoModel.pesquisaMaquina(pesquisa, nrEmpresa).then(function (resultado) {
+    avisoModel.pesquisaLinha(pesquisa, nrEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -322,7 +349,9 @@ module.exports = {
     listarMaquina,
     pesquisaMaquina,
     listarLinhaEmpresa,
+    listarLinha,
     associarLinha,
+    desassociarLinha,
     pesquisaLinha,
     dadosPerfil
 }

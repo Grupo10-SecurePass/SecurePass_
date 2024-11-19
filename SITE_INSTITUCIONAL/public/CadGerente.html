@@ -92,9 +92,13 @@
     </div>
 
     <script>
+
+        var fkLinha = sessionStorage.getItem("LINHA_SELECIONADA")
+        console.log(`A linha selecionada é: ${fkLinha}`)
+        var fkNR = sessionStorage.getItem("NR_EMPRESA");
+
         function atualizarLista() {
 
-            var fkNR = sessionStorage.getItem("NR_EMPRESA");
 
             fetch("/avisos/listar", {
                 method: "POST",
@@ -354,8 +358,6 @@
             var emailGerenteVar = input_emailGerente.value;
             var senhaGerenteVar = input_senhaGerente.value;
             var cpfGerenteVar = input_cpfGerente.value;
-
-            var fkNR = sessionStorage.getItem("NR_EMPRESA");
 
             if (
                 nomeGerenteVar == "" ||

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhamento de Servidores</title>
+    <link rel="stylesheet" href="css/DashBia.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button> 
+
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="./dashSuporte.html">Dashboard</a>
+                <a href="./dadosTecnico.html">Perfil</a>
+                <a href="./feedbackTs.html">Feedback</a>
+            </div>
+
+             
+            <div class="nav-link-space-logout">
+                <a href="index.html" class="logout">Sair</a>
+            </div>
+
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1>Detalhamento de Servidores</h1>
+
+        <!-- Indicador 1: Uso dos Componentes -->
+        <section id="uso-componentes">
+            <h2>Uso dos Componentes</h2>
+            <div class="componentes">
+                <div class="componente" id="cpu">
+                    <h3>CPU</h3>
+                    <canvas id="cpuGauge"></canvas>
+                    <p id="cpuStatus"></p>
+                </div>
+                <div class="componente" id="ram">
+                    <h3>RAM</h3>
+                    <canvas id="ramGauge"></canvas>
+                    <p id="ramStatus"></p>
+                </div>
+                <div class="componente" id="disco">
+                    <h3>Disco</h3>
+                    <canvas id="discoGauge"></canvas>
+                    <p id="discoStatus"></p>
+                </div>
+                <div class="componente" id="latencia">
+                    <h3>Latência de Rede</h3>
+                    <canvas id="latenciaGauge"></canvas>
+                    <p id="latenciaStatus"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Indicador 2: Histórico de Alertas -->
+        <section id="historico-alertas">
+            <div class="navegacao-historico">
+                <button onclick="irParaHistorico()">Ver Histórico de Alertas</button>
+            </div>
+        </section>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html> 
+<script>
+     function Navbar() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const closeBtn = document.querySelector('.close-btn');
+
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                setTimeout(() => {
+                    hamburger.style.display = 'block';
+                    closeBtn.style.display = 'none';
+                }, 300);
+            } else {
+                hamburger.style.display = 'none';
+                closeBtn.style.display = 'block';
+                navMenu.classList.add('show');
+                hamburger.classList.add('active');
+            }
+        }
+// Função para criar gráficos Gauge para os componentes
+function criarGauge(canvasId, label, valor, ideal) {
+    new Chart(document.getElementById(canvasId), {
+        type: 'doughnut',
+        data: {
+            labels: [label, 'Livre'],
+            datasets: [{
+                data: [valor, 100 - valor],
+                backgroundColor: [valor > ideal ? '#ff0000' : '#36a2eb', '#dddddd'],
+            }]
+        },
+        options: {
+            cutout: '80%',
+            plugins: {
+                tooltip: { enabled: false },
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: `${label}: ${valor}% (Ideal: ${ideal}%)`,
+                },
+            },
+        },
+    });
+}
+
+// Função para carregar os indicadores de uso dos componentes
+function carregarComponentes() {
+    const componentes = [
+        { id: 'cpuGauge', label: 'CPU', valor: 75, ideal: 70 },
+        { id: 'ramGauge', label: 'RAM', valor: 85, ideal: 80 },
+        { id: 'discoGauge', label: 'Disco', valor: 40, ideal: 90 },
+        { id: 'latenciaGauge', label: 'Latência', valor: 30, ideal: 50 },
+    ];
+
+    componentes.forEach(componente => {
+        criarGauge(componente.id, componente.label, componente.valor, componente.ideal);
+        const status = document.getElementById(`${componente.id.replace('Gauge', 'Status')}`);
+        if (componente.valor > componente.ideal) {
+            status.textContent = `⚠️ Em risco: ${componente.valor}% (Ideal: ${componente.ideal}%)`;
+        } else {
+            status.textContent = `✅ Dentro dos parâmetros: ${componente.valor}%`;
+        }
+    });
+}
+
+// Função para carregar histórico de alertas
+function carregarHistorico(dias) {
+    // Simulação de dados históricos
+    const historico = {
+        7: [5, 10, 15, 20, 10, 8, 12],
+        15: [3, 8, 12, 18, 25, 14, 20, 10, 15, 5, 6, 8, 12, 10, 5],
+        30: Array.from({ length: 30 }, () => Math.floor(Math.random() * 30)),
+    };
+
+    const chartData = historico[dias];
+    const labels = Array.from({ length: dias }, (_, i) => `Dia ${i + 1}`);
+
+    const ctx = document.getElementById('historicoChart').getContext('2d');
+    if (window.historicoChart) {
+        window.historicoChart.destroy();
+    }
+
+    window.historicoChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `Frequência de Alertas (últimos ${dias} dias)`,
+                data: chartData,
+                borderColor: '#007bff',
+                tension: 0.3,
+                fill: false,
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true },
+            },
+        },
+    });
+}
+function irParaHistorico() {
+            window.location.href = "DashBia2.html";
+        }
+// Inicialização
+carregarComponentes();
+carregarHistorico(7);
+
+</script>
