@@ -16,7 +16,7 @@
 
 </head>
 
-<body>
+<body onload="teste()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -63,10 +63,6 @@
                         <div class="label_input">
                             <label for="emailGerente"><b>Email:</b></label>
                             <input type="text" id="emailGerente">
-                        </div>
-                        <div class="label_input">
-                            <label for="empresaGerente"><b>Empresa:</b></label>
-                            <input type="text" id="empresaGerente">
                         </div>
                         <div class="label_input">
                             <label for="cargoGerente"><b>Cargo:</b></label>
@@ -119,11 +115,13 @@
 
         var gerente = JSON.parse(localStorage.getItem("gerenteSelecionado"));
         document.getElementById("nomeGerente").value = gerente.nome;
-        document.getElementById("cpfGerente").value = gerente.CPF;
+        document.getElementById("cpfGerente").value = gerente.cpf;
         document.getElementById("emailGerente").value = gerente.email;
-        document.getElementById("empresaGerente").value = gerente.nome_empresa;
         document.getElementById("cargoGerente").value = gerente.cargo;
-        document.getElementById("senhaGerente").value = gerente.senha;
+        document.getElementById("input_senha").value = gerente.senha;
+        function teste(){
+            console.log(gerente)
+        }
 
         var cpf = gerente.CPF;
 
