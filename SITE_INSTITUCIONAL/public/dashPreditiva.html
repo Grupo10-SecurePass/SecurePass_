@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gerente</title>
+    <link rel="stylesheet" href="./css/dashPreditiva.css">
+</head>
+<body>
+
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="./CadTecnicoSuporte.html">Gestão TS</a>
+                <a href="./dashGerente.html">Dashboard</a>
+                <a href="./CadMaquina.html">Gestão de Máquinas</a>
+                <a href="./dadosGerente.html">Perfil</a>
+                <a href="./feedbackPublicar.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
+            </div>
+
+            <a href="index.html" class="logout">Sair</a>
+        </nav>
+    </div>
+
+    <div class="mae">
+        <div class="lateral"></div>
+        <div class="quadros">
+            <div class="div1">
+                <div class="filtro">
+                    <div class="escolha">
+                        <div class="textodata">
+                            <p>Olá Thiago, selecione qual máquina você deseja monitorar:</p>
+                        </div>
+                        <div class="aviso">
+                            <p>Seu cargo: Gerente <br>
+                                *Se você ainda não selecionou, os dados são da primeira máquina que foi cadastrada da linha.</p>
+                        </div>
+                    </div>
+                    <div class="select_filtro">
+                        <select name="escolherServidor" id="">
+                            <option value="#" selected disabled>Escolher</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="dispersao">
+                    <div class="titulodispersao">
+                        <p class="titu">Análise de Tendências</p>
+                        <p class="sub">Tendências de Utilização dos Recursos (Últimas 2 Semanas)</p>
+                    </div>
+                    <div class="grafico1dispersao">
+                        <div class="espacografico1">
+                            <div class="graficodispersao">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="legendagrafico1">
+                            <p>Acompanhe as tendências de utilização para identificar padrões de carga e planejar ações preventivas.</p>
+                            <p class="subleg">Dados de utilização diário de CPU e memória RAM das últimas 2 semanas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="desempenho">
+                    <div class="titulodispersao">
+                        <p class="titu">Análise de Tendências</p>
+                        <p class="sub">Tendências de Utilização dos Recursos (Últimas 2 Semanas)</p>
+                    </div>
+                    <div class="grafico1dispersao">
+                        <div class="espacografico1">
+                            <div class="graficodispersao">
+                                <canvas id="myChart1"></canvas>
+                            </div>
+                        </div>
+                        <div class="legendagrafico1">
+                            <p>Acompanhe as tendências de utilização para identificar padrões de carga e planejar ações preventivas.</p>
+                            <p class="subleg">Dados de utilização diário de CPU e memória RAM das últimas 2 semanas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="div2">
+                <div class="alertas">
+                    <div class="tituloalert">
+                        <p>Alertas de Capacidade - Projeção</p>
+                        <p class="subalert">Alertas preditivos para evitar falhas e manter a continuidade do serviço. Monitore estes avisos para tomar ações preventivas.</p>
+                    </div>
+                    <div class="espacoalertas">
+                        <div class="alerta">
+                            <p class="tituloalerta">Uso de CPU tende a passar do limite crítico.</p>
+                            <p class="descalerta">Monitore o consumo para evitar sobrecarga.
+                                Sugestão de Ação: Considere redistribuir a carga ou verificar processos intensivos para prevenir falhas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+        function toggleAlertSidebar() {
+            const sidebar = document.getElementById('alertSidebar');
+            sidebar.classList.toggle('show');
+        }
+
+    function Navbar() {
+        const navMenu = document.getElementById('navMenu');
+        const hamburger = document.querySelector('.hamburger');
+        const closeBtn = document.querySelector('.close-btn');
+
+        if (navMenu.classList.contains('show')) {
+            navMenu.classList.remove('show');
+            setTimeout(() => {
+                hamburger.style.display = 'block';
+                closeBtn.style.display = 'none';
+            }, 300);
+        } else {
+            hamburger.style.display = 'none';
+            closeBtn.style.display = 'block';
+            navMenu.classList.add('show');
+            hamburger.classList.add('active');
+        }
+    }
+    const ctx = document.getElementById('myChart');
+    const ctx1 = document.getElementById('myChart1');
+    const ctx2 = document.getElementById('myChart2');
+    const ctx3 = document.getElementById('myChart3');
+      
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Semana 1', 'Semana 2'],
+            datasets: [{
+              label: '%',
+              data: [20, 50],
+              borderWidth: 2,
+              backgroundColor: 'rgba(36, 130, 50, 1)',
+              borderColor: 'rgba(36, 130, 50, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Semana 1', 'Semana 2'],
+            datasets: [{
+              label: '%',
+              data: [30, 60],
+              borderWidth: 2,
+              backgroundColor: 'rgba(36, 130, 50, 1)',
+              borderColor: 'rgba(36, 130, 50, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+</script>
