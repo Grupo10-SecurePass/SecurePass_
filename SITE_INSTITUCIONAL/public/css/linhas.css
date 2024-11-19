@@ -97,7 +97,7 @@ body {
 
 .historico {
   height: 570px;
-  width: 35%;
+  width: 50%;
   display: flex;  
   background-color: #ffffff;
   flex-direction: column;
@@ -202,14 +202,15 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 5px;
+  cursor: pointer;
 }
 .cardgerente:hover{
   background-color: #dddddd;
 }
 .fotoenome{
   display: flex;
-  height: 30px;
-  width: 70%;
+  height: 100%;
+  width: 82%;
   gap: 20px;
   align-items: center;
 }
@@ -217,8 +218,16 @@ body {
   font-size: 18px;
   color: #040F0F;
 }
-.status p{
-  color: #040F0F;
+
+.status{
+  display: flex;
+  justify-content: center;
+
+  width: 18%;
+}
+
+.status a{
+  color: red;
 }
 .lista{
   color: #FCFFFC;

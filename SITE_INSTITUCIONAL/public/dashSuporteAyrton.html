@@ -53,7 +53,9 @@
                     <div class="escolha">
                         <div class="textodata">
                             <p>Escolha o servidor que você deseja monitorar</p>
-                            <select name="escolherServidor" onchange="obterDadosAlertaVEL(),obterDadosTempoResposta(),obterDadosTempoRespostaCalor(),obterDadosFreq()" id="inputCargo">
+                            <select name="escolherServidor"
+                                onchange="obterDadosAlertaVEL(),obterDadosTempoResposta(),obterDadosTempoRespostaCalor(),obterDadosFreq()"
+                                id="inputCargo">
 
                             </select>
                         </div>
@@ -64,9 +66,7 @@
                     </div>
                 </div>
                 <div class="mapaCalor">
-                    <div id="chartCalor">
-
-                    </div>
+                        <div id="chartCalor"></div>
                 </div>
                 <div class="rede">
                     <div class="espacotitulorede">
@@ -464,7 +464,7 @@
         var dia3 = []
         var dia4 = []
         var dia5 = []
-        
+
 
         for (i = resposta.length - 1; i >= 0; i--) {
             var registro = resposta[i];
@@ -477,7 +477,7 @@
 
         }
 
-        for(i = 0; i < resposta.length; i++){
+        for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
 
             switch (dias.indexOf(registro.dia)) {
@@ -516,7 +516,7 @@
         var options = {
             series: [],
             chart: {
-                height: 185,
+                height: 250,
                 width: 600,
                 type: 'heatmap',
             },

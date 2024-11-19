@@ -53,9 +53,18 @@ function listarMaquina(fkLinha) {
     return database.executar(instrucaoSql);
 }
 
-function listarLinhaEmpresa() {
+function listarLinha() {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
-    var instrucaoSql = `SELECT * FROM linha;`;
+    var instrucaoSql = `SELECT * FROM linha WHERE fkEmpresa IS NULL;`;
+   
+     
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function listarLinhaEmpresa(fkEmpresa) {
+    console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
+    var instrucaoSql = `SELECT * FROM linha WHERE fkEmpresa = ${fkEmpresa};`;
    
      
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -103,7 +112,7 @@ function pesquisaLinha(pesquisa, nrEmpresa) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
 
     var instrucaoSql = `SELECT * FROM linha 
-    WHERE nome LIKE '%${pesquisa}%' AND fkNR = '${nrEmpresa}'`;
+    WHERE nome LIKE '%${pesquisa}%' AND fkEmpresa = '${nrEmpresa}'`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
 
@@ -263,10 +272,23 @@ function deletar(cpf) {
 function associarLinha(idLinha, nrEmpresa) {
     console.log("Associando a linha com a empresa...");
 
-    // Instrução SQL para atualizar o fkEmpresa na tabela linha
     const instrucaoSql = `
         UPDATE linha
         SET fkEmpresa = '${nrEmpresa}'
+        WHERE idLinha = '${idLinha}';
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+    return database.executar(instrucaoSql);
+}
+
+function desassociarLinha(idLinha) {
+    console.log("Desassociando a linha com a empresa...");
+
+    const instrucaoSql = `
+        UPDATE linha
+        SET fkEmpresa = NULL
         WHERE idLinha = '${idLinha}';
     `;
 
@@ -291,7 +313,9 @@ module.exports = {
     listarMaquina,
     pesquisaMaquina,
     listarLinhaEmpresa,
+    listarLinha,
     associarLinha,
+    desassociarLinha,
     pesquisaLinha,
     dadosPerfil
 }
