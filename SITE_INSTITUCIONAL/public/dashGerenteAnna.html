@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Alertas</title>
+    <link rel="stylesheet" href="./css/dashGerenteAnna.css">
+</head>
+<body>
+
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="./CadTecnicoSuporte.html">Gestão TS</a>
+                <a href="./dashGerente.html">Dashboard</a>
+                <a href="./CadMaquina.html">Gestão de Máquinas</a>
+                <a href="./dadosGerente.html">Perfil</a>
+                <a href="./feedbackPublicar.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
+            </div>
+
+            <a href="index.html" class="logout">Sair</a>
+        </nav>
+    </div>
+    <div class="geral">
+        <div class="lateral"></div>
+        <div class="quadros">
+            <div class="div1">
+                <div class="filtro">
+                    <div class="data">
+                        <div class="textodata">
+                            <p>Selecione o período desejado:  <br>de </p> 
+                            <input type="date">
+                            <p>até </p>
+                            <input type="date">
+                        </div>
+                        <div class="aviso">
+                            <p> Por padrão, ao entrar na dashboard o monitoramento visivel é da data de hoje e de 7 dias atrás.</p>
+                        </div>
+                    </div>
+                
+                    <div class="btn_filtro">
+                        <button>Filtrar</button>
+                    </div>
+                </div>
+            
+                <div class="divAlerta">
+                    <div class="titulo">
+                        <p>Quantidade de alertas por servidor</p>
+                    </div>
+                    <div class="grafico">
+                        <div class="espacografico">
+                            <div class="graficoAlerta">
+                                <canvas id="myChart"></canvas>
+                            </div>  
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="div2">
+                <div class="a">
+                <div class="dispositivoW">
+                    <div class="tituloDispositivoW">
+                        <p>Dispositivo W</p>
+                    </div>
+                    <div class="espacograficoDispositivoW">
+                        <div class="graficoDispositivoW">
+                            <canvas id="myChart1"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dispositivoX">
+                    <div class="tituloDispositivoX">
+                        <p>Dispositivo X</p>
+                    </div>
+                    
+                        <div class="graficoDispositivoX">
+                            <canvas id="myChart3"></canvas>
+                        </div>
+                       
+                </div>
+            </div>
+    <div class="b">
+    <div class="dispositivoY">
+        <div class="tituloDispositivoY">
+            <p>Dispositivo Y</p>
+        </div>
+        <div class="espacograficoDispositivoY">
+            <div class="graficoDispositivoY">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dispositivoZ">
+        <div class="tituloDispositivoZ">
+            <p>Dispositivo Z</p>
+        </div>
+        
+            <div class="graficoDispositivoZ">
+                <canvas id="myChart4"></canvas>
+            </div>
+    </div>
+
+          </div>   
+           
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+        function toggleAlertSidebar() {
+            const sidebar = document.getElementById('alertSidebar');
+            sidebar.classList.toggle('show');
+        }
+
+    function Navbar() {
+        const navMenu = document.getElementById('navMenu');
+        const hamburger = document.querySelector('.hamburger');
+        const closeBtn = document.querySelector('.close-btn');
+
+        if (navMenu.classList.contains('show')) {
+            navMenu.classList.remove('show');
+            setTimeout(() => {
+                hamburger.style.display = 'block';
+                closeBtn.style.display = 'none';
+            }, 300);
+        } else {
+            hamburger.style.display = 'none';
+            closeBtn.style.display = 'block';
+            navMenu.classList.add('show');
+            hamburger.classList.add('active');
+        }
+    }
+
+
+
+    const ctx = document.getElementById('myChart');
+    const ctx1 = document.getElementById('myChart1');
+    const ctx2 = document.getElementById('myChart2');
+    const ctx3 = document.getElementById('myChart3');
+    const ctx4 = document.getElementById('myChart4');
+      
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['17/09', '18/09', '19/10', '20/10', '21/10'], // Rótulos no eixo X
+        datasets: [
+            {
+                label: 'DispositivoW', 
+                data: [1500, 1000, 1250, 1750, 2000], 
+                borderWidth: 2,
+                borderColor: 'rgba(36, 130, 50, 1)', 
+                backgroundColor: 'rgba(36, 130, 50, 1)' 
+            },
+            {
+                label: 'DispositivoX', //
+                data: [1200, 800, 1180, 1350, 1100], 
+                borderWidth: 2,
+                borderColor: 'rgba(0, 0, 255, 1)', 
+                backgroundColor: 'rgba(0, 0, 255, 1)' 
+            },
+            {
+                label: 'DispositivoY', 
+                data: [1100, 600, 1750, 1455, 1100], 
+                borderWidth: 2,
+                borderColor: 'rgba(178, 34, 34, 1)', 
+                backgroundColor: 'rgba(178, 34, 34, 1)'
+            },
+            {
+                label: 'DispositivoZ', 
+                data: [1150, 400, 450, 455, 410], 
+                borderWidth: 2,
+                borderColor: 'rgba(128, 128, 128, 1 )', 
+                backgroundColor: 'rgba(128, 128, 128, 1 )'
+            }
+        ]
+    },
+    options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Alertas',
+              data: [0, 20, 60, 80, 100],
+              borderWidth: 2,
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Alertas',
+              data: [0, 20, 60, 80, 100],
+              borderWidth: 2,
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Alertas',
+              data: [15, 10, 12, 17, 20],
+              borderWidth: 2,
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+    new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
+            datasets: [{
+              label: 'Alertas',
+              data: [15, 10, 12, 17, 20],
+              borderWidth: 2,
+              backgroundColor: 'rgba(255, 0, 0, 1)',
+              borderColor: 'rgba(255, 0, 0, 1)'
+            }]
+        },
+        options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+    });
+</script>
