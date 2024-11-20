@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Suporte</title>
+    <title>Dashboard de Velocidade de Resposta</title>
     <link rel="stylesheet" href="./css/dashSuporteAyrton.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="./js/alerta.js"></script>
@@ -36,9 +36,18 @@
             <div class="separator"></div>
 
             <div class="nav-links">
-                <a href="./dashSuporte.html">Dashboard</a>
-                <a href="./dadosTecnico.html">Perfil</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle">Dashboard</a>
+                    <div class="dropdown-menu">
+                        <a href="./dashSuporte.html">Geral</a>
+                        <a href="./dashSuporteAyrton.html">Velocidade de Resposta</a>
+                        <a href="./DashBia.html">Saúde</a>
+                        <a href="./dashGuilherme.html">Uso de Processos</a>
+                    </div>
+                </div>
+                <a href="./dadosUsuario.html">Perfil</a>
                 <a href="./feedbackTs.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
@@ -545,7 +554,7 @@
                 }
             },
             title: {
-                text: 'Mapa de calor',
+                text: 'Mapa de calor de Tempo de Resposta',
                 align: 'center'
             },
             tooltip: {

@@ -75,4 +75,8 @@ router.put("/desassociar/:idLinha", function (req, res) {
     avisoController.desassociarLinha(req, res);
 });
 
+router.delete("/deletarFeedbacks/:idFeedback", function (req, res) {
+    avisoController.deletarFeedbacks(req, res);
+});
+
 module.exports = router;

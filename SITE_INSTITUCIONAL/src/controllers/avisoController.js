@@ -332,6 +332,21 @@ function deletarSuporte(req, res) {
         });
 }
 
+function deletarFeedbacks(req, res) {
+    var idFeedback = req.params.idFeedback;
+
+    avisoModel.deletarFeedbacks(idFeedback).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 module.exports = {
     listar,
@@ -353,5 +368,6 @@ module.exports = {
     associarLinha,
     desassociarLinha,
     pesquisaLinha,
-    dadosPerfil
+    dadosPerfil,
+    deletarFeedbacks
 }

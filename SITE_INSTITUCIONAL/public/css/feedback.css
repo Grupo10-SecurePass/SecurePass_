@@ -135,6 +135,7 @@ body {
 .excluir{
   text-decoration: none;
   color: #ff0000;
+  cursor: pointer;
 }
 
 
@@ -197,7 +198,6 @@ body {
   display: flex; 
   flex-direction: column; 
   align-items: center; 
-  overflow: hidden; 
 }
 
 .nav-menu.show {
@@ -234,6 +234,62 @@ body {
   transition: background-color 0.8s ease; 
 }
 
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown toggle (botão ou link que ativa o menu) */
+.dropdown-toggle {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  display: inline-block;
+  font-size: 16px;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  background-color: #111;
+
+  display: none; /* Oculto inicialmente */
+  position: absolute;
+
+  top: 1px; /* Abaixo do botão */
+  left: 180px; /* Alinhado à esquerda do botão */
+  
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  min-width: 150px;
+}
+
+/* Itens do menu */
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 10px;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #444;
+}
+
+/* Exibe o menu ao passar o mouse no botão */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Botão ativo no hover */
+.dropdown-toggle:hover {
+  background-color: #248232;
+  color: white;
+}
+
+
 .logo {
   width: 180px; 
   margin-top: 30px; 
@@ -252,7 +308,7 @@ body {
 .logout {
   position: absolute;
   bottom: 10px;
-  width: 90%; 
+  width: 88%; 
   text-align: center;
   color: #fcfffc;
   font-size: 18px;

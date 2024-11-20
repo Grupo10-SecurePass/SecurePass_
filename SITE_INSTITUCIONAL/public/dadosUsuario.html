@@ -16,7 +16,7 @@
 
 </head>
 
-<body onload="perfil()">
+<body onload="perfil(), verificarNavBar()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -33,10 +33,8 @@
             </button>
             <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
             <div class="separator"></div>
-            <div class="nav-links">
-                <a href="./CadGerente.html">Gestão Gerente</a>
-                <a href="./dadosRepresentante.html">Perfil</a>
-                <a href="./feedbackRep.html">Feedback</a>
+            <div class="nav-links" id="nav_link_pagina">
+                <!-- Definido na função verificarNavBar() -->
             </div>
             <a href="index.html" class="logout">Sair</a>
         </nav>
@@ -99,6 +97,57 @@
     </div>
 
     <script>
+
+        function verificarNavBar(){
+            var fkCargo = sessionStorage.getItem("CARGO_USUARIO");
+
+            if(fkCargo == 1){
+                nav_link_pagina.innerHTML = `
+                <a href="./assocLinha.html">Linhas Associadas / Cadastro de Gerente</a>
+                <a href="./dadosUsuario.html">Perfil</a>
+                <a href="./feedbackPublicar.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
+                `;
+
+            }else if(fkCargo == 2){
+                nav_link_pagina.innerHTML = `
+                <a href="./CadTecnicoSuporte.html">Gestão TS</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle">Dashboard</a>
+                    <div class="dropdown-menu">
+                        <a href="./dashGerente.html">Geral</a>
+                        <a href="./dashGerenteAnna.html">Alertas</a>
+                        <a href="./dashPreditiva.html">Preditiva</a>
+                        <a href="./dashGerenteEnzo.html">Pacotes</a>
+                    </div>
+                </div>
+                <a href="./CadMaquina.html">Gestão de Máquinas</a>
+                <a href="./dadosUsuario.html">Perfil</a>
+                <a href="./feedbackGer.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
+                `;
+
+            }else{
+
+                nav_link_pagina.innerHTML = `
+                <div class="dropdown">
+                    <a class="dropdown-toggle">Dashboard</a>
+                    <div class="dropdown-menu">
+                        <a href="./dashSuporte.html">Geral</a>
+                        <a href="./dashSuporteAyrton.html">Velocidade de Resposta</a>
+                        <a href="./DashBia.html">Saúde</a>
+                        <a href="./dashGuilherme.html">Uso de Processos</a>
+                    </div>
+                </div>
+                <a href="./dadosUsuario.html">Perfil</a>
+                <a href="./feedbackTs.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
+                `;
+
+            }
+
+        }
+
         function Navbar() {
             const navMenu = document.getElementById('navMenu');
             const hamburger = document.querySelector('.hamburger');

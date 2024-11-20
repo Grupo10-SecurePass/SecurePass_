@@ -33,10 +33,19 @@
 
             <div class="nav-links">
                 <a href="./CadTecnicoSuporte.html">Gestão TS</a>
-                <a href="./dashGerente.html">Dashboard</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle">Dashboard</a>
+                    <div class="dropdown-menu">
+                        <a href="./dashGerente.html">Geral</a>
+                        <a href="./dashGerenteAnna.html">Alertas</a>
+                        <a href="./dashPreditiva.html">Preditiva</a>
+                        <a href="./dashGerenteEnzo.html">Pacotes</a>
+                    </div>
+                </div>
                 <a href="./CadMaquina.html">Gestão de Máquinas</a>
-                <a href="./dadosGerente.html">Perfil</a>
+                <a href="./dadosUsuario.html">Perfil</a>
                 <a href="./feedbackGer.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
@@ -92,45 +101,145 @@
         </div>
     </div>
 
-    <script>
-        function atualizarLista() {
-            var Linha = sessionStorage.getItem("LINHA");
-            if (!Linha) {
-                console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
-                alert("Linha não definida. Por favor, selecione uma linha antes de continuar.");
-                return;
-            }
-            console.log("Linha selecionada:", Linha);
+</body>
 
-            fetch("/avisos/listarSuporte", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ linhaServer: Linha }),
-            })
-                .then(function (resposta) {
-                    if (resposta.ok) {
-                        if (resposta.status == 204) {
-                            var lista = document.getElementById("listagerentes");
-                            lista.className = "lista";
-                            lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
-                            return [];
-                        }
-                        return resposta.json();
-                    } else {
-                        throw "Houve um erro na API!";
-                    }
-                })
-                .then(function (dados) {
-                    console.log("Dados recebidos: ", dados);
-                    var lista = document.getElementById("listagerentes");
-                    lista.innerHTML = "";
+<script>
+    function atualizarLista() {
+        var Linha = sessionStorage.getItem("LINHA");
+        if (!Linha) {
+            console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
+            return;
+        }
+        console.log("Linha selecionada:", Linha);
 
-                    if (dados.length == 0) {
+        fetch("/avisos/listarSuporte", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ linhaServer: Linha }),
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listagerentes");
+                        lista.className = "lista";
                         lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
-                        return;
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", dados);
+                var lista = document.getElementById("listagerentes");
+                lista.innerHTML = "";
+
+                if (dados.length == 0) {
+                    lista.innerHTML = "<p>Ainda não há nenhum técnico cadastrado.</p>";
+                    return;
+                }
+
+                dados.forEach(function (card) {
+                    var divCard = document.createElement("a");
+                    divCard.className = "linklista";
+                    divCard.href = "#";
+
+                    var divCardGerente = document.createElement("div");
+                    divCardGerente.className = "cardgerente";
+
+                    divCardGerente.dataset.nome = card.nome;
+                    divCardGerente.dataset.CPF = card.cpf;
+                    divCardGerente.dataset.email = card.email;
+                    divCardGerente.dataset.nome_empresa = card.nome_empresa;
+                    divCardGerente.dataset.senha = card.senha;
+
+                    divCardGerente.addEventListener("click", function () {
+                        var tecnico = {
+                            nome: this.dataset.nome,
+                            CPF: this.dataset.CPF,
+                            email: this.dataset.email,
+                            nome_empresa: this.dataset.nome_empresa,
+                            cargo: this.dataset.cargo,
+                            senha: this.dataset.senha,
+                        };
+                        salvarTecnicoNoLocalStorage(tecnico);
+                        window.location.href = "./AtDadosTecnicoSuporte.html";
+                    });
+
+                    var divFotoeNome = document.createElement("div");
+                    divFotoeNome.className = "fotoenome";
+
+                    var imgPerfil = document.createElement("img");
+                    imgPerfil.src = "./imagens/perfil.svg";
+                    imgPerfil.alt = "Foto de perfil";
+
+                    var nome = document.createElement("p");
+                    nome.innerText = card.nome;
+
+                    var status = document.createElement("div");
+                    status.className = "status";
+
+                    var statusAtivoInativo = document.createElement("p");
+                    if (card.status == 1) {
+                        statusAtivoInativo.innerText = "ATIVO";
+                        statusAtivoInativo.style.color = "black";
+                    } else {
+                        statusAtivoInativo.innerText = "INATIVO";
+                        statusAtivoInativo.style.color = "red";
                     }
 
-                    dados.forEach(function (card) {
+                    divFotoeNome.appendChild(imgPerfil);
+                    divFotoeNome.appendChild(nome);
+                    status.appendChild(statusAtivoInativo);
+                    divCardGerente.appendChild(divFotoeNome);
+                    divCardGerente.appendChild(status);
+                    divCard.appendChild(divCardGerente);
+                    lista.appendChild(divCard);
+                });
+            })
+            .catch(function (erro) {
+                console.error("Erro ao buscar os técnicos:", erro);
+
+                const lista = document.getElementById("listagerentes");
+                lista.innerHTML = `<p>Erro ao carregar os técnicos: ${erro}</p>`;
+            });
+    }
+
+    function pesquisaSuporte() {
+        var pesquisa = input_pesquisa.value;
+
+        if (pesquisa == "") {
+            window.alert("Preencha corretamente o campo de pesquisa");
+            return;
+        }
+
+        var lista = document.getElementById("listagerentes");
+        lista.innerHTML = "";
+
+        fetch("/avisos/pesquisaSuporte", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                pesquisaServer: pesquisa
+            }),
+        })
+            .then(function (resposta) {
+                if (resposta.status == 204) {
+                    adicionarBotaoLimparPesquisa();
+                    return [];
+                }
+                return resposta.json();
+            })
+            .then(function (respostaJson) {
+                console.log("Dados recebidos: ", respostaJson);
+                var lista = document.getElementById("listagerentes");
+                lista.innerHTML = "";
+
+                if (respostaJson.length > 0) {
+                    for (let i = 0; i < respostaJson.length; i++) {
+                        var card = respostaJson[i];
+
                         var divCard = document.createElement("a");
                         divCard.className = "linklista";
                         divCard.href = "#";
@@ -139,19 +248,19 @@
                         divCardGerente.className = "cardgerente";
 
                         divCardGerente.dataset.nome = card.nome;
-                        divCardGerente.dataset.CPF = card.cpf;
+                        divCardGerente.dataset.cpf = card.cpf;
                         divCardGerente.dataset.email = card.email;
-                        divCardGerente.dataset.nome_empresa = card.nome_empresa;
-                        divCardGerente.dataset.senha = card.senha;
+                        divCardGerente.dataset.cargo = card.cargo;
+                        divCardGerente.dataset.status = card.status;
 
                         divCardGerente.addEventListener("click", function () {
                             var tecnico = {
                                 nome: this.dataset.nome,
-                                CPF: this.dataset.CPF,
+                                CPF: this.dataset.cpf,  // Corrigido para 'cpf' no lugar de 'CPF'
                                 email: this.dataset.email,
-                                nome_empresa: this.dataset.nome_empresa,
+                                nome_empresa: this.dataset.nome_empresa,  // Verifique se a propriedade 'nome_empresa' existe
                                 cargo: this.dataset.cargo,
-                                senha: this.dataset.senha,
+                                senha: this.dataset.senha  // Verifique se a propriedade 'senha' existe
                             };
                             salvarTecnicoNoLocalStorage(tecnico);
                             window.location.href = "./AtDadosTecnicoSuporte.html";
@@ -171,12 +280,20 @@
                         status.className = "status";
 
                         var statusAtivoInativo = document.createElement("p");
-                        if (card.status == 1) {
+
+                        // Verifique o valor de card.status
+                        console.log("Status do card:", card.status);
+
+                        // Comparar diretamente com os valores numéricos 1 e 0
+                        if (card.status === 1) { // Para "ATIVO"
                             statusAtivoInativo.innerText = "ATIVO";
                             statusAtivoInativo.style.color = "black";
-                        } else {
+                        } else if (card.status === 0) { // Para "INATIVO"
                             statusAtivoInativo.innerText = "INATIVO";
                             statusAtivoInativo.style.color = "red";
+                        } else {
+                            statusAtivoInativo.innerText = "Status desconhecido"; // Caso o valor não seja nem 1 nem 0
+                            statusAtivoInativo.style.color = "gray";
                         }
 
                         divFotoeNome.appendChild(imgPerfil);
@@ -186,233 +303,126 @@
                         divCardGerente.appendChild(status);
                         divCard.appendChild(divCardGerente);
                         lista.appendChild(divCard);
-                    });
-                })
-                .catch(function (erro) {
-                    console.error("Erro ao buscar os técnicos:", erro);
+                    }
+                } else {
+                    lista.innerHTML = `<p style="color: #FCFFFC">Não existe nenhum técnico de suporte com esse nome.</p>`;
+                }
 
-                    const lista = document.getElementById("listagerentes");
-                    lista.innerHTML = `<p>Erro ao carregar os técnicos: ${erro}</p>`;
-                });
-        }
-
-        function pesquisaSuporte() {
-            var pesquisa = input_pesquisa.value;
-
-            if (pesquisa == "") {
-                window.alert("Preencha corretamente o campo de pesquisa");
-                return;
-            }
-
-            var lista = document.getElementById("listagerentes");
-            lista.innerHTML = "";
-
-            fetch("/avisos/pesquisaSuporte", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    pesquisaServer: pesquisa
-                }),
+                adicionarBotaoLimparPesquisa();
             })
-                .then(function (resposta) {
-                    if (resposta.status == 204) {
-                        adicionarBotaoLimparPesquisa();
-                        return [];
-                    }
-                    return resposta.json();
-                })
-                .then(function (respostaJson) {
-                    console.log("Dados recebidos: ", respostaJson);
-                    var lista = document.getElementById("listagerentes");
-                    lista.innerHTML = "";
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
+            });
 
-                    if (respostaJson.length > 0) {
-                        for (let i = 0; i < respostaJson.length; i++) {
-                            var card = respostaJson[i];
+        return false;
+    }
 
-                            var divCard = document.createElement("a");
-                            divCard.className = "linklista";
-                            divCard.href = "#";
 
-                            var divCardGerente = document.createElement("div");
-                            divCardGerente.className = "cardgerente";
+    function salvarTecnicoNoLocalStorage(tecnico) {
+        localStorage.setItem("tecnicoSelecionado", JSON.stringify(tecnico));
+    }
 
-                            divCardGerente.dataset.nome = card.nome;
-                            divCardGerente.dataset.cpf = card.cpf;
-                            divCardGerente.dataset.email = card.email;
-                            divCardGerente.dataset.cargo = card.cargo;
-                            divCardGerente.dataset.status = card.status;
+    function adicionarBotaoLimparPesquisa() {
+        var container = document.getElementById("espacopesquisa");
 
-                            divCardGerente.addEventListener("click", function () {
-                                var tecnico = {
-                                    nome: this.dataset.nome,
-                                    CPF: this.dataset.cpf,  // Corrigido para 'cpf' no lugar de 'CPF'
-                                    email: this.dataset.email,
-                                    nome_empresa: this.dataset.nome_empresa,  // Verifique se a propriedade 'nome_empresa' existe
-                                    cargo: this.dataset.cargo,
-                                    senha: this.dataset.senha  // Verifique se a propriedade 'senha' existe
-                                };
-                                salvarTecnicoNoLocalStorage(tecnico);
-                                window.location.href = "./AtDadosTecnicoSuporte.html";
-                            });
+        if (!document.getElementById("botaoLimpar")) {
+            var botaoLimpar = document.createElement("button");
+            botaoLimpar.className = "botão_limpar";
+            botaoLimpar.id = "botaoLimpar";
+            botaoLimpar.innerText = "Limpar Pesquisa";
+            botaoLimpar.onclick = limparPesquisa;
+            container.appendChild(botaoLimpar);
+        }
+    }
 
-                            var divFotoeNome = document.createElement("div");
-                            divFotoeNome.className = "fotoenome";
+    function limparPesquisa() {
+        var inputPesquisa = document.getElementById("input_pesquisa");
+        inputPesquisa.value = "";
 
-                            var imgPerfil = document.createElement("img");
-                            imgPerfil.src = "./imagens/perfil.svg";
-                            imgPerfil.alt = "Foto de perfil";
+        var lista = document.getElementById("listagerentes");
+        lista.innerHTML = "";
 
-                            var nome = document.createElement("p");
-                            nome.innerText = card.nome;
-
-                            var status = document.createElement("div");
-                            status.className = "status";
-
-                            var statusAtivoInativo = document.createElement("p");
-
-                            // Verifique o valor de card.status
-                            console.log("Status do card:", card.status);
-
-                            // Comparar diretamente com os valores numéricos 1 e 0
-                            if (card.status === 1) { // Para "ATIVO"
-                                statusAtivoInativo.innerText = "ATIVO";
-                                statusAtivoInativo.style.color = "black";
-                            } else if (card.status === 0) { // Para "INATIVO"
-                                statusAtivoInativo.innerText = "INATIVO";
-                                statusAtivoInativo.style.color = "red";
-                            } else {
-                                statusAtivoInativo.innerText = "Status desconhecido"; // Caso o valor não seja nem 1 nem 0
-                                statusAtivoInativo.style.color = "gray";
-                            }
-
-                            divFotoeNome.appendChild(imgPerfil);
-                            divFotoeNome.appendChild(nome);
-                            status.appendChild(statusAtivoInativo);
-                            divCardGerente.appendChild(divFotoeNome);
-                            divCardGerente.appendChild(status);
-                            divCard.appendChild(divCardGerente);
-                            lista.appendChild(divCard);
-                        }
-                    } else {
-                        lista.innerHTML = `<p style="color: #FCFFFC">Não existe nenhum técnico de suporte com esse nome.</p>`;
-                    }
-
-                    adicionarBotaoLimparPesquisa();
-                })
-                .catch(function (erro) {
-                    console.error("#ERRO: ", erro);
-                });
-
-            return false;
+        var botaoLimpar = document.getElementById("botaoLimpar");
+        if (botaoLimpar) {
+            botaoLimpar.remove();
         }
 
+        atualizarLista();
+    }
 
-        function salvarTecnicoNoLocalStorage(tecnico) {
-            localStorage.setItem("tecnicoSelecionado", JSON.stringify(tecnico));
+    function toggleNavbar() {
+        const navMenu = document.getElementById('navMenu');
+        const hamburger = document.querySelector('.hamburger');
+
+        if (navMenu.classList.contains('show')) {
+            navMenu.classList.remove('show');
+            hamburger.style.left = '10px';
+        } else {
+            navMenu.classList.add('show');
+            hamburger.style.left = '260px';
+        }
+    }
+
+    function cadastrarSuporte() {
+        var nomeTecnicoVar = input_nomeTecnico.value;
+        var cpfTecnicoVar = input_cpfTecnico.value;
+        var emailTecnicoVar = input_emailTecnico.value;
+        var senhaTecnicoVar = input_senhaTecnico.value;
+        var fkLinha = sessionStorage.getItem("LINHA");
+
+        var fkNR = sessionStorage.getItem("NR_EMPRESA");
+
+        if (
+            nomeTecnicoVar === "" ||
+            emailTecnicoVar === "" ||
+            senhaTecnicoVar === "" ||
+            cpfTecnicoVar === ""
+        ) {
+            window.alert("Todos os campos devem ser preenchidos");
+            return;
+        } else if (senhaTecnicoVar.length < 8) {
+            window.alert("A senha deve ter 8 ou mais caracteres");
+            return;
+        } else if (!emailTecnicoVar.includes("@") || !emailTecnicoVar.includes(".")) {
+            window.alert("O E-mail deve ter @ e .");
+            return;
         }
 
-        function adicionarBotaoLimparPesquisa() {
-            var container = document.getElementById("espacopesquisa");
+        fetch("/usuarios/cadastrarSuporte", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nomeTecnicoServer: nomeTecnicoVar,
+                cpfTecnicoServer: cpfTecnicoVar,
+                emailTecnicoServer: emailTecnicoVar,
+                senhaTecnicoServer: senhaTecnicoVar,
+                fkNRServer: fkNR,
+                fkLinhaServer: fkLinha
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
 
-            if (!document.getElementById("botaoLimpar")) {
-                var botaoLimpar = document.createElement("button");
-                botaoLimpar.className = "botão_limpar";
-                botaoLimpar.id = "botaoLimpar";
-                botaoLimpar.innerText = "Limpar Pesquisa";
-                botaoLimpar.onclick = limparPesquisa;
-                container.appendChild(botaoLimpar);
-            }
-        }
-
-        function limparPesquisa() {
-            var inputPesquisa = document.getElementById("input_pesquisa");
-            inputPesquisa.value = "";
-
-            var lista = document.getElementById("listagerentes");
-            lista.innerHTML = "";
-
-            var botaoLimpar = document.getElementById("botaoLimpar");
-            if (botaoLimpar) {
-                botaoLimpar.remove();
-            }
-
-            atualizarLista();
-        }
-
-        function toggleNavbar() {
-            const navMenu = document.getElementById('navMenu');
-            const hamburger = document.querySelector('.hamburger');
-
-            if (navMenu.classList.contains('show')) {
-                navMenu.classList.remove('show');
-                hamburger.style.left = '10px';
-            } else {
-                navMenu.classList.add('show');
-                hamburger.style.left = '260px';
-            }
-        }
-
-        function cadastrarSuporte() {
-            var nomeTecnicoVar = input_nomeTecnico.value;
-            var cpfTecnicoVar = input_cpfTecnico.value;
-            var emailTecnicoVar = input_emailTecnico.value;
-            var senhaTecnicoVar = input_senhaTecnico.value;
-            var fkLinha = sessionStorage.getItem("LINHA");
-
-            var fkNR = sessionStorage.getItem("NR_EMPRESA");
-
-            if (
-                nomeTecnicoVar === "" ||
-                emailTecnicoVar === "" ||
-                senhaTecnicoVar === "" ||
-                cpfTecnicoVar === ""
-            ) {
-                window.alert("Todos os campos devem ser preenchidos");
-                return;
-            } else if (senhaTecnicoVar.length < 8) {
-                window.alert("A senha deve ter 8 ou mais caracteres");
-                return;
-            } else if (!emailTecnicoVar.includes("@") || !emailTecnicoVar.includes(".")) {
-                window.alert("O E-mail deve ter @ e .");
-                return;
-            }
-
-            fetch("/usuarios/cadastrarSuporte", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    nomeTecnicoServer: nomeTecnicoVar,
-                    cpfTecnicoServer: cpfTecnicoVar,
-                    emailTecnicoServer: emailTecnicoVar,
-                    senhaTecnicoServer: senhaTecnicoVar,
-                    fkNRServer: fkNR,
-                    fkLinhaServer: fkLinha
-                }),
+                if (resposta.ok) {
+                    window.alert("Cadastro de Suporte Realizado com sucesso");
+                    atualizarLista();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
             })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
+            .catch(function (erro) {
+                console.error("#ERRO: ", erro);
+            });
 
-                    if (resposta.ok) {
-                        window.alert("Cadastro de Suporte Realizado com sucesso");
-                        atualizarLista();
-                    } else {
-                        throw "Houve um erro ao tentar realizar o cadastro!";
-                    }
-                })
-                .catch(function (erro) {
-                    console.error("#ERRO: ", erro);
-                });
+        input_nomeTecnico.value = "";
+        input_cpfTecnico.value = "";
+        input_emailTecnico.value = "";
+        input_senhaTecnico.value = "";
 
-            input_nomeTecnico.value = "";
-            input_cpfTecnico.value = "";
-            input_emailTecnico.value = "";
-            input_senhaTecnico.value = "";
+        return false;
+    }
+</script>
 
-            return false;
-        }
-    </script>
 
-</body>
 
 </html>
