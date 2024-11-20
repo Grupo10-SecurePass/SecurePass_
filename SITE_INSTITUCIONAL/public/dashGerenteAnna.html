@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Alertas</title>
+    <link rel="shortcut icon" href="./imagens/logoColorida.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/dashGerenteAnna.css">
 </head>
 <body>
@@ -133,6 +134,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+
+    // Funções NavBar
         function toggleAlertSidebar() {
             const sidebar = document.getElementById('alertSidebar');
             sidebar.classList.toggle('show');
@@ -157,16 +160,95 @@
         }
     }
 
+ // Funções NavBar
 
 
-    const ctx = document.getElementById('myChart');
+ function obterDadosGrafico() {
+
+fetch(`/anna/listar`, { cache: 'no-store' })
+.then(function (response) {
+    if (response.ok) {
+        response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            resposta.reverse();
+
+            plotarGrafico(resposta);
+
+        });
+    } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+    }
+})
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+}
+
+function plotarGrafico(resposta) {
+
+console.log('iniciando plotagem do gráfico...');
+
+// Criando estrutura para plotar gráfico - labels
+let labels = [];
+
+// Criando estrutura para plotar gráfico - dados
+let dados = {
+    labels: labels,
+    datasets: [{
+        label: 'dia',
+        data: [],
+        fill: false,
+        backgroundColor:"#8B0000",
+        borderColor: 'rgb(255,255,255)',
+        tension: 0.1
+    }]
+};
+
+console.log('----------------------------------------------')
+console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+console.log(resposta)
+
+// Inserindo valores recebidos em estrutura para plotar o gráfico
+for (i = 0; i < resposta.length; i++) {
+    var registro = resposta[i];
+    labels.push(registro.dia);
+    dados.datasets[0].data.push(registro.quantidade_alertas);
+    console.log("Dados Do Dataset"+dados);
+
+    
+}
+console.log('----------------------------------------------')
+console.log('O gráfico será plotado com os respectivos valores:')
+console.log('Labels:')
+console.log(labels)
+console.log('Dados:')
+console.log(dados.datasets)
+console.log('----------------------------------------------')
+
+// Criando estrutura para plotar gráfico - config
+const config = {
+    type: 'line',
+    data: dados,
+};
+
+// Adicionando gráfico criado em div na tela
+let myChart = new Chart(
+    document.getElementById(`myChart`),
+    config
+);
+
+// setTimeout(() => atualizarGrafico(idUsuario, dados, myChart), 2000);
+}
+
+
+
     const ctx1 = document.getElementById('myChart1');
     const ctx2 = document.getElementById('myChart2');
     const ctx3 = document.getElementById('myChart3');
     const ctx4 = document.getElementById('myChart4');
       
 
-new Chart(ctx, {
+/*new Chart(ctx, {
     type: 'line',
     data: {
         labels: ['17/09', '18/09', '19/10', '20/10', '21/10'], // Rótulos no eixo X
@@ -209,7 +291,7 @@ new Chart(ctx, {
             }
           }
     });
-
+*/
     new Chart(ctx1, {
         type: 'bar',
         data: {

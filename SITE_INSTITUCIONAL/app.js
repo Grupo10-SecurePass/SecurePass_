@@ -25,6 +25,7 @@ var maquinasRouter = require("./src/routes/maquinas");
 var empresasRouter = require("./src/routes/empresas");
 var limitesRouter = require("./src/routes/limites");
 var guilhermeRouter = require("./src/routes/guilherme");
+var annaRouter = require("./src/routes/anna");
 
 
 app.use(express.json());
@@ -42,6 +43,7 @@ app.use("/maquinas", maquinasRouter);
 app.use("/empresas", empresasRouter);
 app.use("/limites", limitesRouter);
 app.use("/guilherme", guilhermeRouter);
+app.use("/anna", annaRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
