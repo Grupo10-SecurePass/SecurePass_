@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="./imagens/logoColorida.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/dashGerenteAnna.css">
 </head>
-<body>
+<body onload="obterDados()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -134,8 +134,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
-    // Funções NavBar
         function toggleAlertSidebar() {
             const sidebar = document.getElementById('alertSidebar');
             sidebar.classList.toggle('show');
@@ -160,216 +158,50 @@
         }
     }
 
- // Funções NavBar
-
-
- function obterDadosGrafico() {
-
-fetch(`/anna/listar`, { cache: 'no-store' })
-.then(function (response) {
-    if (response.ok) {
-        response.json().then(function (resposta) {
-            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            resposta.reverse();
-
-            plotarGrafico(resposta);
-
-        });
-    } else {
-        console.error('Nenhum dado encontrado ou erro na API');
+    function obterDados(){
+        var linha = sessionStorage.getItem("LINHA")
+        console.log(linha)
+        fetch(`/anna/obterDados/${linha}`)
+            .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
+            console.log("Dados recebidos:", data);
+            atualizarGrafico(data);
+        })
+        .catch(function(err){
+            console.log(err);
+        })
     }
-})
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
-}
 
-function plotarGrafico(resposta) {
+    function atualizarGrafico(data) {
+       
+        const labels = data.map(item => item.diaAlerta);
+        const valores = data.map(item => item.quantidadeAlertas);
 
-console.log('iniciando plotagem do gráfico...');
+       
 
-// Criando estrutura para plotar gráfico - labels
-let labels = [];
-
-// Criando estrutura para plotar gráfico - dados
-let dados = {
-    labels: labels,
-    datasets: [{
-        label: 'dia',
-        data: [],
-        fill: false,
-        backgroundColor:"#8B0000",
-        borderColor: 'rgb(255,255,255)',
-        tension: 0.1
-    }]
-};
-
-console.log('----------------------------------------------')
-console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-console.log(resposta)
-
-// Inserindo valores recebidos em estrutura para plotar o gráfico
-for (i = 0; i < resposta.length; i++) {
-    var registro = resposta[i];
-    labels.push(registro.dia);
-    dados.datasets[0].data.push(registro.quantidade_alertas);
-    console.log("Dados Do Dataset"+dados);
-
-    
-}
-console.log('----------------------------------------------')
-console.log('O gráfico será plotado com os respectivos valores:')
-console.log('Labels:')
-console.log(labels)
-console.log('Dados:')
-console.log(dados.datasets)
-console.log('----------------------------------------------')
-
-// Criando estrutura para plotar gráfico - config
-const config = {
-    type: 'line',
-    data: dados,
-};
-
-// Adicionando gráfico criado em div na tela
-let myChart = new Chart(
-    document.getElementById(`myChart`),
-    config
-);
-
-// setTimeout(() => atualizarGrafico(idUsuario, dados, myChart), 2000);
-}
-
-
-
-    const ctx1 = document.getElementById('myChart1');
-    const ctx2 = document.getElementById('myChart2');
-    const ctx3 = document.getElementById('myChart3');
-    const ctx4 = document.getElementById('myChart4');
-      
-
-/*new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['17/09', '18/09', '19/10', '20/10', '21/10'], // Rótulos no eixo X
-        datasets: [
-            {
-                label: 'DispositivoW', 
-                data: [1500, 1000, 1250, 1750, 2000], 
-                borderWidth: 2,
-                borderColor: 'rgba(36, 130, 50, 1)', 
-                backgroundColor: 'rgba(36, 130, 50, 1)' 
+        const ctx = document.getElementById('myChart');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Dispositivo',
+                    data: valores,
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 0.5)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
             },
-            {
-                label: 'DispositivoX', //
-                data: [1200, 800, 1180, 1350, 1100], 
-                borderWidth: 2,
-                borderColor: 'rgba(0, 0, 255, 1)', 
-                backgroundColor: 'rgba(0, 0, 255, 1)' 
-            },
-            {
-                label: 'DispositivoY', 
-                data: [1100, 600, 1750, 1455, 1100], 
-                borderWidth: 2,
-                borderColor: 'rgba(178, 34, 34, 1)', 
-                backgroundColor: 'rgba(178, 34, 34, 1)'
-            },
-            {
-                label: 'DispositivoZ', 
-                data: [1150, 400, 450, 455, 410], 
-                borderWidth: 2,
-                borderColor: 'rgba(128, 128, 128, 1 )', 
-                backgroundColor: 'rgba(128, 128, 128, 1 )'
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-        ]
-    },
-    options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-*/
-    new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Alertas',
-              data: [0, 20, 60, 80, 100],
-              borderWidth: 2,
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              borderColor: 'rgba(255, 0, 0, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-    new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Alertas',
-              data: [0, 20, 60, 80, 100],
-              borderWidth: 2,
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              borderColor: 'rgba(255, 0, 0, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-    new Chart(ctx3, {
-        type: 'bar',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Alertas',
-              data: [15, 10, 12, 17, 20],
-              borderWidth: 2,
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              borderColor: 'rgba(255, 0, 0, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
-    new Chart(ctx4, {
-        type: 'bar',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Alertas',
-              data: [15, 10, 12, 17, 20],
-              borderWidth: 2,
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              borderColor: 'rgba(255, 0, 0, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-    });
+        });
+    }
+
 </script>
