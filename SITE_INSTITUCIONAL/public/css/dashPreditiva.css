@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+*{
+    font-family: "Nunito Sans", system-ui;
+    box-sizing: border-box;
+    margin: 0;
+}
+body{
+    background-color: #FCFFFC;
+}
+.mae{
+    display: flex;
+    width: 100%;
+    height: 695px;
+    align-items: center;
+}
+.lateral{
+    width: 5%;
+    height: 100%;
+}
+.quadros{
+    width: 90%;
+    height: 620px;
+    display: flex;
+    gap: 30px;
+}
+.div1{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.filtro {
+    width: 100%;
+    height: 60px;
+    background-color: #FCFFFC;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.escolha {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 70%;
+    gap: 1px;
+}
+
+.textodata {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.textodata p {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.textodata select {
+    width: 20%;
+}
+
+.aviso {
+    font-size: 10px;
+}
+.select_filtro{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+.select_filtro select{
+    width: 80%;
+    height: 25px;
+    background-color: #040F0F;
+    border: #248232 solid 2px;
+    border-radius: 4px;
+    color: #FCFFFC;
+}
+.btn_filtro{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.btn_filtro button{
+    padding: 10px 20px;
+    background-color: #248232;
+    color: #FCFFFC;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn_filtro button:hover{
+    background-color: #195d23;
+}
+.dispersao{
+    width: 100%;
+    height: 250px;
+    gap: 10px;
+    background-color: #FCFFFC;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.titulodispersao{
+    width: 100%;
+    height: 30px;
+}
+.titulodispersao .titu{
+    font-size: 20px;
+    font-weight: 600;
+}
+.titulodispersao .sub{
+    font-size: 10px;
+}
+.grafico1dispersao{
+    width: 90%;
+    height: 210px;
+    display: flex;
+}
+.espacografico1{
+    width: 75%;
+    height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.graficodispersao{
+    width: 90%;
+}
+.legendagrafico1{
+    font-size: 15px;
+    width: 35%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.subleg{
+    font-size: 10px;
+}
+.desempenho{
+    width: 100%;
+    height: 250px;
+    gap: 10px;
+    background-color: #FCFFFC;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.div2{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.alertas{
+    width: 100%;
+    height: 100%;
+    background-color: #FCFFFC;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.tituloalert{
+    width: 100%;
+    height: 60px;
+    font-weight: 600;
+    font-size: 25px;
+}
+.subalert{
+    font-size: 10px;
+}
+.espacoalertas{
+    width: 95%;
+    height: 530px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: scroll;
+}
+.espacoalertas::-webkit-scrollbar {
+  width: 5px;
+}
+.espacoalertas::-webkit-scrollbar-track {
+  background: #FCFFFC;
+}
+.espacoalertas::-webkit-scrollbar-thumb {
+  background-color: #040F0F;
+}
+.alerta{
+    width: 100%;
+    height: 70px;
+    background-color: #822424;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: center;
+}
+.tituloalerta{
+    color: #FCFFFC;
+    font-size: 17px;
+    font-weight: 600;
+}
+.descalerta{
+    color: #FCFFFC;
+    font-size: 12px;
+    text-align: inherit;
+}
+
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #fcfffc;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.nav-menu {
+    position: absolute;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    width: 250px;
+    background: #040f0f;
+    padding-top: 10px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-menu.show {
+    left: 0;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.nav-menu a {
+    display: block;
+    color: #fcfffc;
+    padding: 15px;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.nav-menu a:hover {
+    background-color: #2D3A3A;
+    color: #fcfffc;
+    transition: background-color 0.8s ease;
+}
+
+.close-btn {
+    background: #fcfffc;
+    border: none;
+    color: #040f0f;
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 10px;
+    right: -50px;
+    z-index: 5;
+    transition: right 0.3s ease;
+}
+.close-btn .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #040F0F;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.logo {
+    width: 180px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: block;
+    align-self: center;
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background: #fcfffc;
+    margin: 5px auto;
+}
+
+.logout {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: #fcfffc;
+    font-size: 18px;
+    padding: 15px;
+    text-decoration: none;
+}
+
+.logout:hover {
+    background: #f00;
+}
+
+.hamburger.active .bar {
+    background-color: #040F0F;
+}

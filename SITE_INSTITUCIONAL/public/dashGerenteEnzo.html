@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Suporte</title>
+    <link rel="stylesheet" href="css/dashGerenteEnzo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<body>
+
+    <div class="content">
+        <button class="hamburger" onclick="Navbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+
+        <nav id="navMenu" class="nav-menu">
+            <button class="close-btn" onclick="Navbar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </button>
+
+            <img src="Group 27.svg" alt="Logo" class="logo">
+
+            <div class="separator"></div>
+
+            <div class="nav-links">
+                <a href="./dashSuporte.html">Dashboard</a>
+                <a href="./dadosTecnico.html">Perfil</a>
+                <a href="./feedbackPublicar.html">Feedback</a>
+            </div>
+
+            <a href="index.html" class="logout">Sair</a>
+        </nav>
+    </div>
+
+    <div class="mae">
+        <div class="lateral"></div>
+        <div class="quadros">
+            <div class="div1">
+                <div class="filtro">
+                    <div class="escolha">
+                        <div class="textodata">
+                            <p>Escolha o servidor que você deseja monitorar</p>
+                            <select name="escolherServidor" id="">
+                                <option value="#" selected disabled>Escolher</option>
+                            </select>
+                        </div>
+                        <div class="aviso">
+                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor
+                                cadastrado.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="rede">
+                    <div class="espacotitulorede">
+                        <p> Numero de Pacotes X Tráfego de Rede</p>
+                    </div>
+
+                    <div class="espacografico1rede">
+                        <div class="grafico1rede">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="div2">
+                <div class="perdapacote">
+                    <div class="espacotitulopacote">
+                        <p> Transferencia de Rede (Mbps) </p>
+                    </div>
+                    <div class="espacograficopacote">
+                        <div class="graficopacote">
+                            <canvas id="myChart1"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="rede-pacote">
+                    <div class="transferencia">
+                        <div class="titulotransferencia">
+                            <p> Taxa Download - Semanal </p>
+                        </div>
+                        <div class="espacografico-transferencia">
+                            <div class="indicador">
+                                <p>Taxa Média de Download:</p>
+                                <span id="download-medio">Calculando...</span> Mbps
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pacote">
+                        <div class="titulopacote">
+                            <p> Taxa Upload - Semanal </p>
+                        </div>
+                        <div class="espacografico-pacote">
+                            <div class="indicador">
+                                <p>Taxa Média de Upload:</p>
+                                <span id="upload-medio">Calculando...</span> Mbps
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dadosDownload = [45, 90, 92, 15, 70, 60, 12];
+        const dadosUpload = [23, 40, 45, 12, 35, 28, 66];
+
+        // Função para calcular a média
+        function calcularMedia(dados) {
+            const soma = dados.reduce((total, valor) => total + valor, 0);
+            return (soma / dados.length).toFixed(2);
+        }
+
+        // Calculando as médias
+        const mediaDownload = calcularMedia(dadosDownload);
+        const mediaUpload = calcularMedia(dadosUpload);
+
+        // Exibindo os resultados nos indicadores
+        document.getElementById('download-medio').textContent = mediaDownload;
+        document.getElementById('upload-medio').textContent = mediaUpload;
+
+        // setInterval(obterdados(), 60000)
+
+        /** function toggleAlertSidebar() {
+             const sidebar = document.getElementById('alertSidebar');
+             sidebar.classList.toggle('show');
+         }*/
+
+        function Navbar() {
+            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const closeBtn = document.querySelector('.close-btn');
+
+            if (navMenu.classList.contains('show')) {
+                navMenu.classList.remove('show');
+                setTimeout(() => {
+                    hamburger.style.display = 'block';
+                    closeBtn.style.display = 'none';
+                }, 500);
+            } else {
+                hamburger.style.display = 'none';
+                closeBtn.style.display = 'block';
+                navMenu.classList.add('show');
+                hamburger.classList.add('active');
+            }
+        }
+        function obterMaquinas() {
+            var fkLinha = sessionStorage.LINHA;
+
+            fetch(`/maquinas/listarMaquinaDash/${fkLinha}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        if (resposta.status == 204) {
+                            var lista = document.getElementById("listamaquinas");
+                            window.alert("Não achou nenhuma máquina")
+                            return [];
+                        }
+                        return resposta.json();
+                    } else {
+                        throw "Houve um erro na API!";
+                    }
+                })
+                .then(function (dados) {
+                    console.log("Dados recebidos: ", JSON.stringify(dados));
+                    var lista = document.getElementById("listamaquinas");
+
+
+                    for (let i = 0; i < dados.length; i++) {
+                        var maquina = dados[i];
+                        var id = maquina.idDispositivo
+                        var nome = maquina.nome
+
+                        console.log(maquina)
+                        console.log(id)
+
+                        var opcao = document.createElement("option");
+                        opcao.value = `${id}`
+                        opcao.innerHTML = nome
+
+
+                        inputCargo.appendChild(opcao);
+                    }
+
+                    // MUDAR ESTAS FUNÇÕES - obterDadosAlertaVEL();
+                    // MUDAR ESTAS FUNÇÕES -  obterDadosTempoResposta();
+                    // MUDAR ESTAS FUNÇÕES -  obterDadosTempoRespostaCalor();
+                    // MUDAR ESTAS FUNÇÕES -  obterDadosFreq();
+
+                })
+                .catch(function (erro) {
+                    console.error(erro);
+
+                    console.log("Deu erro")
+                });
+
+
+
+        }
+
+        const ctx0 = document.getElementById('myChart');
+        const ctx1 = document.getElementById('myChart1');
+
+        new Chart(ctx0, {
+            type: 'line',
+            data: {
+                labels: ['10/Nov', '11/Nov', '12/Nov', '13/Nov', '14/Nov', '15/Nov', '16/Nov'],
+                datasets: [
+                    {
+                        label: 'Numero de Pacotes',
+                        data: [10, 20, 5, 15, 8, 12, 100],
+                        borderColor: 'rgba(36, 130, 50, 1)',
+                        backgroundColor: 'rgba(36, 130, 50, 0.3)',
+                        yAxisID: 'y-axis-1'
+                    },
+                    {
+                        label: 'Bytes Transferidos',
+                        data: [600, 900, 1500, 600, 900, 1300],
+                        borderColor: 'rgba(200, 50, 50, 1)',
+                        backgroundColor: 'rgba(200, 50, 50, 0.3)',
+                        yAxisID: 'y-axis-2' // Atribui ao eixo Y à direita
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    'y-axis-1': {
+                        type: 'linear',
+                        position: 'left',
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    },
+                    'y-axis-2': {
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            drawOnChartArea: false // Evita sobreposição de grades
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['10/Nov', '11/Nov', '12/Nov', '13/Nov', '14/Nov', '15/Nov', '16/Nov'],
+                datasets: [{
+                    label: 'Mb/s',
+                    data: [20, 90, 92, 15, 70, 60],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(200, 50, 50, 0.6)',
+                    borderColor: 'rgba(200, 50, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: [880, 440, 120, 60, 30, 0],
+                datasets: [{
+                    label: '%',
+                    data: [200, 900, 1500, 1500, 700, 600],
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 0.6)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+</body>
+
+</html>
