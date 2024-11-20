@@ -6,7 +6,7 @@
     <title>Dashboard - Gerente</title>
     <link rel="stylesheet" href="./css/dashPreditiva.css">
 </head>
-<body>
+<body onload="obterDados(), obterDadosGrafico()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -67,7 +67,7 @@
                     <div class="grafico1dispersao">
                         <div class="espacografico1">
                             <div class="graficodispersao">
-                                <canvas id="myChart"></canvas>
+                                <canvas id="graficoDispersao"></canvas>
                             </div>
                         </div>
                         <div class="legendagrafico1">
@@ -84,11 +84,11 @@
                     <div class="grafico1dispersao">
                         <div class="espacografico1">
                             <div class="graficodispersao">
-                                <canvas id="myChart1"></canvas>
+                                <canvas id="graficoBarra"></canvas>
                             </div>
                         </div>
                         <div class="legendagrafico1">
-                            <p>Acompanhe as tendências de utilização para identificar padrões de carga e planejar ações preventivas.</p>
+                            <p>Análise de desempenho da máquina para redistribuir recursos ou ajustar suporte conforme a carga.</p>
                             <p class="subleg">Dados de utilização diário de CPU e memória RAM das últimas 2 semanas.</p>
                         </div>
                     </div>
@@ -115,10 +115,10 @@
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-        function toggleAlertSidebar() {
-            const sidebar = document.getElementById('alertSidebar');
-            sidebar.classList.toggle('show');
-        }
+    function toggleAlertSidebar() {
+        const sidebar = document.getElementById('alertSidebar');
+        sidebar.classList.toggle('show');
+    }
 
     function Navbar() {
         const navMenu = document.getElementById('navMenu');
@@ -138,49 +138,118 @@
             hamburger.classList.add('active');
         }
     }
-    const ctx = document.getElementById('myChart');
-    const ctx1 = document.getElementById('myChart1');
-    const ctx2 = document.getElementById('myChart2');
-    const ctx3 = document.getElementById('myChart3');
-      
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Semana 1', 'Semana 2'],
-            datasets: [{
-              label: '%',
-              data: [20, 50],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+
+    function criarGraficoDispersao(data) {
+        const ctx = document.getElementById('graficoDispersao');
+
+        // Preparar os dados
+        const labels = data.map(item => item.dia); // Datas
+        const valores = data.map(item => (item.media_cpu + item.media_ram) / 2); // Média combinada
+
+        // Configuração do gráfico
+        new Chart(ctx, {
+            type: 'line', // Tipo dispersão de linha
+            data: {
+                labels: labels, // Eixo X (dias)
+                datasets: [{
+                    label: 'Tendência de Uso (CPU + RAM)',
+                    data: valores, // Eixo Y (média combinada CPU e RAM)
+                    borderColor: 'rgba(36, 130, 50, 1)',
+                    backgroundColor: 'rgba(36, 130, 50, 0.5)',
+                    tension: 0.4 // Linha suavizada
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Tendência de Uso de CPU e RAM (Últimos 14 dias)',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Data'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Média de Uso (%)'
+                        },
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return value + '%'; // Adiciona % ao valor
+                            }
+                        }
+                    }
+                }
             }
-          }
-    });
-    new Chart(ctx1, {
-        type: 'bar',
-        data: {
-            labels: ['Semana 1', 'Semana 2'],
-            datasets: [{
-              label: '%',
-              data: [30, 60],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+        });
+    }
+
+    // Chamada da função para obter dados e criar o gráfico
+    function obterDadosGrafico() {
+        const linha = sessionStorage.getItem("LINHA");
+        fetch(`/dashPreditiva/obterMediaDiaria/${linha}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    criarGraficoDispersao(data);
+                } else {
+                    console.log("Nenhum dado encontrado para o gráfico.");
+                }
+            })
+            .catch(err => console.error("Erro ao buscar dados do gráfico:", err));
+    }
+
+    function obterDados(){
+        var linha = sessionStorage.getItem("LINHA")
+        console.log(linha)
+        fetch(`/dashPreditiva/obterDados/${linha}`)
+            .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
+            console.log("Dados recebidos:", data);
+            atualizarGrafico(data);
+        })
+        .catch(function(err){
+            console.log(err);
+        })
+    }
+    function atualizarGrafico(data) {
+        const labels = data.map(item => item.semana);
+        const valores = data.map(item => item.media_geral);
+
+        const ctx1 = document.getElementById('graficoBarra');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Média CPU & RAM',
+                    data: valores,
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 0.5)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
             }
-          }
-    });
+        });
+    }
 </script>
