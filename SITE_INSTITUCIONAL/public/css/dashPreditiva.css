@@ -24,15 +24,15 @@ body{
     gap: 30px;
 }
 .div1{
-    width: 50%;
+    width: 45%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px;
 }
 .filtro {
     width: 100%;
-    height: 60px;
+    height: 15%;
     background-color: #FCFFFC;
     display: flex;
     align-items: center;
@@ -43,7 +43,7 @@ body{
     display: flex;
     flex-direction: column;
     padding: 5px;
-    width: 70%;
+    width: 80%;
     gap: 1px;
 }
 
@@ -66,7 +66,7 @@ body{
     font-size: 10px;
 }
 .select_filtro{
-    width: 30%;
+    width: 20%;
     display: flex;
     justify-content: center;
 }
@@ -95,76 +95,10 @@ body{
 .btn_filtro button:hover{
     background-color: #195d23;
 }
-.dispersao{
-    width: 100%;
-    height: 250px;
-    gap: 10px;
-    background-color: #FCFFFC;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-.titulodispersao{
-    width: 100%;
-    height: 30px;
-}
-.titulodispersao .titu{
-    font-size: 20px;
-    font-weight: 600;
-}
-.titulodispersao .sub{
-    font-size: 10px;
-}
-.grafico1dispersao{
-    width: 90%;
-    height: 210px;
-    display: flex;
-}
-.espacografico1{
-    width: 75%;
-    height: 95%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.graficodispersao{
-    width: 90%;
-}
-.legendagrafico1{
-    font-size: 15px;
-    width: 35%;
-    height: 95%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-.subleg{
-    font-size: 10px;
-}
-.desempenho{
-    width: 100%;
-    height: 250px;
-    gap: 10px;
-    background-color: #FCFFFC;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.div2{
-    width: 45%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 .alertas{
     width: 100%;
-    height: 100%;
+    height: 85%;
+    gap: 10px;
     background-color: #FCFFFC;
     padding: 5px;
     display: flex;
@@ -217,6 +151,74 @@ body{
     color: #FCFFFC;
     font-size: 12px;
     text-align: inherit;
+}
+
+.div2{
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.dispersao{
+    width: 100%;
+    height: 300px;
+    gap: 40px;
+    background-color: #FCFFFC;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.titulodispersao{
+    width: 100%;
+    height: 30px;
+}
+.titulodispersao .titu{
+    font-size: 20px;
+    font-weight: 600;
+}
+.titulodispersao .sub{
+    font-size: 10px;
+}
+.grafico1dispersao{
+    width: 95%;
+    height: 210px;
+    display: flex;
+    gap: 10px;
+}
+.espacografico1{
+    width: 75%;
+    height: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.graficodispersao{
+    width: 100%;
+}
+.legendagrafico1{
+    font-size: 15px;
+    width: 30%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.subleg{
+    font-size: 10px;
+}
+.desempenho{
+    width: 100%;
+    height: 300px;
+    gap: 35px;
+    background-color: #FCFFFC;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .hamburger {
