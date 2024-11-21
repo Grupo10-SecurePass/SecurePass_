@@ -119,7 +119,7 @@ body {
 }
 
 .header h1 {
-    font-size: 36px;
+    font-size: 22px;
     color: #333;
     margin-right: auto;
     margin-left: 40px;
@@ -188,13 +188,40 @@ body {
 .main-content {
     display: flex;
     gap: 20px;
-    margin-top: 40px;
+    justify-content: space-between;
+    align-items: flex-start; /* Alinha os itens ao topo */
+    padding: 20px;
+}
+
+
+.teste {
+    margin-top: 30px;
+    width: 97%;
+    display: flex;
+    justify-content: start;
+    margin-left: 20px;
+}
+
+.card-botoes {
+    background-color: #FFFFFF;
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 8px;
+    padding: 20px;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%; /* Tamanho do card */
+}
+
+.botoes-acao {
+    display: flex;
+    gap: 30px; /* Espaçamento entre os botões */
 }
 
 .grafico-principal,
 .grafico-lateral {
-    margin-top: 30px;
+    margin-top: 10px;
     background-color: #FFFFFF;
     border: 2px solid #333;
     border-radius: 8px;
@@ -206,13 +233,21 @@ body {
 }
 
 .grafico-principal {
-    width: 60%;
+    width: 62%;
+    height: 480px;
+    
 }
 
 .grafico-principal canvas {
-    height: 380px;
+    height: 400px;
     width: 100%;
-    max-height: 380px; /* Define o limite máximo */
+    max-height: 420px; /* Define o limite máximo */
+}
+
+.grafico-lateral {
+    width: 35%;
+    height: 480px;
+    margin-top: 10px;
 }
 
 .main-content2 {
@@ -260,28 +295,8 @@ body {
     margin-top: 10px; /* Reduz a margem para economizar espaço */
 }
 
-.grafico-lateral {
-    width: 35%;
-    height: 500px;
-}
-
-canvas {
-    width: 100%;
-    height: 300px;
-}
-
-
-
-.botoes-acao {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 20px;
-}
-
 .botao-colorido {
     padding: 12px 25px;
-    border: 2px solid #333;
     border-radius: 10px;
     font-size: 18px;
     cursor: pointer;
@@ -346,7 +361,7 @@ canvas {
     display: flex;
     gap: 20px;
     margin: 20px;
-    height: 60vh; 
+    height: 50vh; 
 }
 
 .alert-graph {
@@ -376,7 +391,7 @@ canvas {
     border: 2px solid #333;
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 8px;
-    font-size: 16px;
+    font-size: 20px;
     color: #333;
     margin-top: 5.6px;
     display: flex;
@@ -427,7 +442,21 @@ canvas {
     overflow-y: auto; 
     opacity: 1;
     transition: opacity 0.3s ease; 
+    margin-left: 10px;
 }
+
+
+.carregando {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: #333;
+    z-index: 1002;
+}
+
 
 /* Fundo ofuscado */
 .fundo-ofuscado {

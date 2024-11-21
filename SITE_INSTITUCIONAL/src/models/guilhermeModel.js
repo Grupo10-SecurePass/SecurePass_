@@ -65,14 +65,34 @@ function obterTempAlertas(Linha) {
 
     var instrucaoSql = `
        SELECT 
-            CONCAT(ROUND((COUNT(DISTINCT CASE WHEN a.fkCaptura IS NOT NULL THEN c.idCaptura END) / 
-                (SELECT COUNT(*) FROM captura WHERE dataRegistro >= NOW() - INTERVAL 24 HOUR AND fkLinha = ${Linha})) * 100, 1), '%') AS porcentagemAlertas,
-            CONCAT(ROUND((COUNT(DISTINCT CASE WHEN a.fkCaptura IS NULL THEN c.idCaptura END) / 
-                (SELECT COUNT(*) FROM captura WHERE dataRegistro >= NOW() - INTERVAL 24 HOUR AND fkLinha = ${Linha})) * 100, 1), '%') AS porcentagemSemAlertas
-       FROM captura c
-       LEFT JOIN alerta a ON c.idCaptura = a.fkCaptura
-       WHERE c.dataRegistro >= NOW() - INTERVAL 24 HOUR
-         AND c.fkLinha = ${Linha};
+    CONCAT(ROUND((
+        COUNT(CASE 
+            WHEN a.fkCaptura IS NOT NULL AND c.fkComponente IN (1, 2) THEN c.idCaptura 
+            END) / 
+        (SELECT COUNT(*) FROM captura 
+         WHERE dataRegistro >= NOW() - INTERVAL 24 HOUR 
+         AND fkLinha = ${Linha}
+         AND fkComponente IN (1, 2)
+        )
+    ) * 100, 1), '%') AS porcentagemAlertas,
+    
+    CONCAT(ROUND((
+        COUNT(CASE 
+            WHEN a.fkCaptura IS NULL AND c.fkComponente IN (1, 2) THEN c.idCaptura 
+            END) / 
+        (SELECT COUNT(*) FROM captura 
+         WHERE dataRegistro >= NOW() - INTERVAL 24 HOUR 
+         AND fkLinha = ${Linha}
+         AND fkComponente IN (1, 2)
+        )
+    ) * 100, 1), '%') AS porcentagemSemAlertas
+FROM captura c
+LEFT JOIN alerta a ON c.idCaptura = a.fkCaptura
+WHERE c.dataRegistro >= NOW() - INTERVAL 24 HOUR
+AND c.fkLinha = ${Linha}
+AND c.fkComponente IN (1, 2);
+
+
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -84,16 +104,18 @@ function obterInfoAlertas(Linha) {
 
     var instrucaoSql = `
        SELECT 
-            a.dataAlerta,
-            a.descricao AS descricaoAlerta,
-            c.nome AS nomeComponente,
-            d.nome AS nomeDispositivo
-       FROM alerta a
-       JOIN componente c ON a.fkComponente = c.idComponente
-       JOIN dispositivo d ON a.fkDispositivo = d.idDispositivo
-       WHERE a.dataAlerta >= NOW() - INTERVAL 24 HOUR
-         AND a.fkLinha = ${Linha}
-       ORDER BY a.dataAlerta DESC;
+       a.dataAlerta,
+       a.descricao AS descricaoAlerta,
+       c.nome AS nomeComponente,
+       d.nome AS nomeDispositivo
+FROM alerta a
+JOIN componente c ON a.fkComponente = c.idComponente
+JOIN dispositivo d ON a.fkDispositivo = d.idDispositivo
+WHERE a.dataAlerta >= NOW() - INTERVAL 24 HOUR
+  AND a.fkLinha = ${Linha}
+  AND c.nome IN ('PercCPU', 'PercMEM')
+ORDER BY a.dataAlerta DESC;
+
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
