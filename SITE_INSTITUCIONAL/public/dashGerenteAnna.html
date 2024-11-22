@@ -43,23 +43,8 @@
         <div class="lateral"></div>
         <div class="quadros">
             <div class="div1">
-                <div class="filtro">
-                    <div class="data">
-                        <div class="textodata">
-                            <p>Selecione o período desejado:  <br>de </p> 
-                            <input type="date">
-                            <p>até </p>
-                            <input type="date">
-                        </div>
-                        <div class="aviso">
-                            <p> Por padrão, ao entrar na dashboard o monitoramento visivel é da data de hoje e de 7 dias atrás.</p>
-                        </div>
-                    </div>
                 
-                    <div class="btn_filtro">
-                        <button>Filtrar</button>
-                    </div>
-                </div>
+                    
             
                 <div class="divAlerta">
                     <div class="titulo">
@@ -175,33 +160,46 @@
     }
 
     function atualizarGrafico(data) {
-       
-        const labels = data.map(item => item.diaAlerta);
-        const valores = data.map(item => item.quantidadeAlertas);
+    const labels = [...new Set(data.map(item => item.diaAlerta))]; // Dias únicos no eixo X
+    const dispositivos = [...new Set(data.map(item => item.idMaquina))]; // IDs únicos dos dispositivos
 
-       
-
-        const ctx = document.getElementById('myChart');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Dispositivo',
-                    data: valores,
-                    borderWidth: 2,
-                    backgroundColor: 'rgba(36, 130, 50, 0.5)',
-                    borderColor: 'rgba(36, 130, 50, 1)'
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+    const datasets = [];
+    for (const dispositivo of dispositivos) {
+        const nomeDispositivo = data.find(item => item.idMaquina === dispositivo).nomeDispositivo; // Busca o nome do dispositivo
+        const valores = [];
+        for (const label of labels) {
+            const alerta = data.find(item => item.idMaquina === dispositivo && item.diaAlerta === label);
+            valores.push(alerta ? alerta.quantidadeAlertas : 0); // Adiciona 0 se não houver alertas
+        }
+        datasets.push({
+            label: `Dispositivo: ${nomeDispositivo}`, // Exibe o nome do dispositivo
+            data: valores,
+            borderWidth: 2,
+            borderColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`,
+            backgroundColor: 'rgba(0, 0, 0, 0)', // Sem preenchimento
         });
     }
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: datasets,
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: { display: true, text: 'Dias' },
+                },
+                y: {
+                    title: { display: true, text: 'Quantidade de Alertas' },
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+}
 
 </script>
