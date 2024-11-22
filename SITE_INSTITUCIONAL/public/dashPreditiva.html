@@ -46,7 +46,7 @@
                 <div class="filtro">
                     <div class="escolha">
                         <div class="textodata">
-                            <p>Olá Thiago, selecione qual máquina você deseja monitorar:</p>
+                            <p>Olá Thiago, selecione qual dispositivo você deseja monitorar:</p>
                         </div>
                         <div class="aviso">
                             <p>Seu cargo: Gerente <br>
@@ -64,12 +64,7 @@
                         <p>Alertas de Capacidade - Projeção</p>
                         <p class="subalert">Alertas preditivos para evitar falhas e manter a continuidade do serviço. Monitore estes avisos para tomar ações preventivas.</p>
                     </div>
-                    <div class="espacoalertas">
-                        <div class="alerta">
-                            <p class="tituloalerta">Uso de CPU tende a passar do limite crítico.</p>
-                            <p class="descalerta">Monitore o consumo para evitar sobrecarga.
-                                Sugestão de Ação: Considere redistribuir a carga ou verificar processos intensivos para prevenir falhas.</p>
-                        </div>
+                    <div class="espacoalertas" id="espacoalertas">
                     </div>
                 </div>
             </div>
@@ -94,7 +89,7 @@
                 <div class="desempenho">
                     <div class="titulodispersao">
                         <p class="titu">Análise de Desempenho da Linha</p>
-                        <p class="sub">Média Semanal dos Recursos (últimas 2 semanas)</p>
+                        <p class="sub">Média semanal da utilização dos recursos (últimas 2 semanas)</p>
                     </div>
                     <div class="grafico1dispersao">
                         <div class="espacografico1">
@@ -293,67 +288,70 @@
 
     function dadosAlertas(data) {
         if (data.length > 0) {
-            // Obtém as médias de CPU e RAM
-            const mediasCPU = data.map(item => item.media_cpu);
-            const mediasRAM = data.map(item => item.media_ram);
+            var mediasCPU = data.map(item => item.media_cpu);
+            var mediasRAM = data.map(item => item.media_ram);
 
-            // Calcula as tendências usando calcularLinhaTendencia
-            const tendenciaCPU = calcularLinhaTendencia(mediasCPU);
-            const tendenciaRAM = calcularLinhaTendencia(mediasRAM);
+            var tendenciaCPU = calcularLinhaTendencia(mediasCPU);
+            var tendenciaRAM = calcularLinhaTendencia(mediasRAM);
 
-            // Armazena as tendências em variáveis (ou faça algo com elas)
-            console.log("Tendência CPU:", tendenciaCPU);
-            console.log("Tendência RAM:", tendenciaRAM);
+            var alertaCPU = gerarMensagemAlerta(mediasCPU, tendenciaCPU, "CPU");
+            var alertaRAM = gerarMensagemAlerta(mediasRAM, tendenciaRAM, "RAM");
 
-            // Aqui você pode adicionar lógica para exibir alertas com base nas tendências
+            atualizarAlertas([alertaCPU, alertaRAM]);
         } else {
             console.log("Nenhum dado encontrado para calcular tendências.");
         }
     }
-    function atualizarFeed() {
-        var feed = document.getElementById("feed_container");
-        feed.innerHTML = "";
-        for (let i = 0; i < resposta.length; i++) {
-            var publicacao = resposta[i];
-            var idPost = publicacao.idPost;
+    function gerarMensagemAlerta(dados, tendencia, tipo) {
+        var ultimoValorReal = dados[dados.length - 1];
+        var ultimoValorPrevisto = tendencia[tendencia.length - 1].y;
 
-            var divPost = document.createElement("div");
-            divPost.className = "post";
-            var divPublicacao = document.createElement("div");
-            divPublicacao.className = "imagem";
+        var diferenca = ultimoValorPrevisto - ultimoValorReal;
+        var porcentagem = ((diferenca / ultimoValorReal) * 100).toFixed(2);
 
-            var imgMarca = document.createElement("img");
-            imgMarca.className = "imagemPost";
-            imgMarca.src = `../feedImagens/${publicacao.imagem_post}`;
-            divPublicacao.appendChild(imgMarca);
+        if (diferenca > 0) {
+            return {
+                titulo: `${tipo} tende a aumentar em ${Math.abs(porcentagem)}%.`,
+                descricao: `O consumo de ${tipo} está projetado para aumentar nos próximos dias. Considere redistribuir a carga ou revisar processos intensivos.`,
+                cor: '#822424',
+            };
+        } else if (diferenca < 0) {
+            return {
+                titulo: `${tipo} tende a diminuir em ${Math.abs(porcentagem)}%.`,
+                descricao: `O consumo de ${tipo} está projetado para diminuir nos próximos dias. Avalie se isso está de acordo com a demanda esperada.`,
+                cor: '#1A5A23',
+            };
+        } else {
+            return {
+                titulo: `${tipo} tende a se estabilizar.`,
+                descricao: `O consumo de ${tipo} está projetado para se manter constante. Nenhuma ação corretiva é necessária no momento.`,
+                cor: '#7B6300',
+            };
+        }
+    }
+    function atualizarAlertas(alertas) {
+        var espacoalertas = document.getElementById("espacoalertas");
+        espacoalertas.innerHTML = "";
 
-            var divLike = document.createElement("div");
-            divLike.className = "like-container";
-            var inputLike = document.createElement("input");
-            inputLike.type = "checkbox";
-            inputLike.className = "like-checkbox";
-            var labelLike = document.createElement("label");
-            labelLike.className = "like-label";
-            labelLike.htmlFor = `likeButton${i}`;
-            var iLike = document.createElement("i");
-            iLike.className = "fa fa-heart-o";
-            var iLike2 = document.createElement("i");
-            iLike2.className = "fa fa-heart";
+        for (var i = 0; i < alertas.length; i++) {
+            var alerta = alertas[i];
 
-            inputLike.id = "inputCurtir" + publicacao.idPost;
-            labelLike.setAttribute('for', inputLike.id);
-            inputLike.setAttribute('onclick', `curtir(${publicacao.idPost})`);
+            var divAlerta = document.createElement("div");
+            divAlerta.className = "alerta";
+            divAlerta.style.backgroundColor = alerta.cor;
 
-            feed.appendChild(divPost);
-            divPost.appendChild(divPublicacao);
-            divPost.appendChild(divLike);
-            divLike.appendChild(inputLike);
-            divLike.appendChild(labelLike);
-            labelLike.appendChild(iLike);
-            labelLike.appendChild(iLike2);
+            var tituloAlerta = document.createElement("p");
+            tituloAlerta.className = "tituloalerta";
+            tituloAlerta.textContent = alerta.titulo;
 
+            var descAlerta = document.createElement("p");
+            descAlerta.className = "descalerta";
+            descAlerta.textContent = alerta.descricao;
 
-            obterEstatistica(idPost, (inputLike.id + 1))
+            divAlerta.appendChild(tituloAlerta);
+            divAlerta.appendChild(descAlerta);
+
+            espacoalertas.appendChild(divAlerta);
         }
     }
 </script>

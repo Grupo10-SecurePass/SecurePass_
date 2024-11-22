@@ -54,7 +54,7 @@ body{
 }
 
 .textodata p {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
 }
 
@@ -98,7 +98,6 @@ body{
 .alertas{
     width: 100%;
     height: 85%;
-    gap: 10px;
     background-color: #FCFFFC;
     padding: 5px;
     display: flex;
@@ -110,7 +109,7 @@ body{
     width: 100%;
     height: 60px;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 20px;
 }
 .subalert{
     font-size: 10px;
@@ -135,12 +134,15 @@ body{
 .alerta{
     width: 100%;
     height: 70px;
-    background-color: #822424;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     padding: 10px;
     justify-content: center;
+    cursor: pointer;
+}
+.alerta:hover{
+    border: #040F0F solid 3px;
 }
 .tituloalerta{
     color: #FCFFFC;
