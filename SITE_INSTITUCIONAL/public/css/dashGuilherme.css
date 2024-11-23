@@ -60,29 +60,6 @@ body {
     position: relative;
 }
 
-.nav-links a:hover {
-    color: #777;
-    transition: background 0.10s ease;
-    position: relative;
-}
-
-.nav-links a::after {
-    content: "";
-    position: absolute;
-    width: 5px;
-    height: 28px;
-    background-color: #777;
-    right: 22px;
-    top: 30%;
-    transform: translate(-50%);
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.nav-links a:hover::after {
-    opacity: 1;
-}
-
 .nav-icon {
     margin-right: 10px;
     margin-left: 10px;
@@ -492,3 +469,52 @@ body.ofuscado .fundo-ofuscado {
     height: 30px;
     cursor: pointer;
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown toggle (botão ou link que ativa o menu) */
+  .dropdown-toggle {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    font-size: 16px;
+  }
+  
+  /* Dropdown menu */
+  .dropdown-menu {
+    background-color: #111;
+  
+    display: none; /* Oculto inicialmente */
+    position: absolute;
+  
+    top: 1px; /* Abaixo do botão */
+    left: 180px; /* Alinhado à esquerda do botão */
+    
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    min-width: 150px;
+  }
+  
+  /* Itens do menu */
+  .dropdown-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 10px;
+    display: block;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #444;
+  }
+  
+  /* Exibe o menu ao passar o mouse no botão */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  

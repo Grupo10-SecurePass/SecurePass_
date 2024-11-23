@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Gerente</title>
     <link rel="stylesheet" href="./css/dashGerente.css">
 </head>
-<body>
+
+<body onload="obterMaquinas()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -52,32 +54,17 @@
         <div class="quadros">
             <div class="div1">
                 <div class="filtro">
-                    <div class="data">
-                        <div class="textodata">
-                            <p>Selecione o período desejado: de</p>
-                            <input type="date">
-                            <p>até</p>
-                            <input type="date">
-                        </div>
-                        <div class="aviso">
-                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento padrão da data de hoje e de 4 dias atrás.</p>
-                        </div>
-                    </div>
-                
-                    <div class="btn_filtro">
-                        <button>Filtrar</button>
-                    </div>
-                </div>
-                <div class="filtro">
                     <div class="escolha">
                         <div class="textodata">
                             <p>Escolha o servidor que você deseja monitorar</p>
-                            <select name="escolherServidor" id="">
-                                <option value="#" selected disabled>Escolher</option>
-                            </select>
+                            <select name="escolherServidor"
+                                onchange="obterDadosUpload();obterDadosDownload();obterDadosCPU();obterMaquinasRisco();obterLinhaProblemas();"
+                                id="inputCargo"></select>
                         </div>
                         <div class="aviso">
-                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor cadastrado.</p>
+                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º
+                                servidor
+                                cadastrado.</p>
                         </div>
                     </div>
                 </div>
@@ -142,13 +129,20 @@
         </div>
     </div>
 </body>
+
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-        function toggleAlertSidebar() {
-            const sidebar = document.getElementById('alertSidebar');
-            sidebar.classList.toggle('show');
-        }
+
+    let UploadChart;
+    let DownloadChart;
+    let CPUChart;
+    let MaquinasChart;
+
+    function toggleAlertSidebar() {
+        const sidebar = document.getElementById('alertSidebar');
+        sidebar.classList.toggle('show');
+    }
 
     function Navbar() {
         const navMenu = document.getElementById('navMenu');
@@ -168,89 +162,337 @@
             hamburger.classList.add('active');
         }
     }
+
     const ctx = document.getElementById('myChart');
     const ctx1 = document.getElementById('myChart1');
     const ctx2 = document.getElementById('myChart2');
     const ctx3 = document.getElementById('myChart3');
-      
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Mb/s',
-              data: [1500, 1000, 1250, 1750, 2000],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+
+    function obterMaquinas() {
+        var fkLinha = sessionStorage.LINHA;
+
+        fetch(`/maquinas/listarMaquinaDash/${fkLinha}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listamaquinas");
+                        window.alert("Não achou nenhuma máquina");
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listamaquinas");
+
+                for (let i = 0; i < dados.length; i++) {
+                    var maquina = dados[i];
+                    var id = maquina.idDispositivo
+                    var nome = maquina.nome
+
+                    console.log(maquina)
+                    console.log(id)
+
+                    var opcao = document.createElement("option");
+                    opcao.value = `${id}`;
+                    opcao.innerHTML = nome;
+
+                    inputCargo.appendChild(opcao);
+                }
+
+                obterDadosUpload();
+                obterDadosDownload();
+                obterDadosCPU();
+                obterMaquinasRisco();
+                obterLinhaProblemas();
+            })
+            .catch(function (erro) {
+                console.error(erro);
+                console.log("Deu erro");
+            });
+    }
+
+    function obterDadosUpload() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/UploadGerente/${idDispositivo}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        const labels = [];
+                        const data = [];
+
+                        resposta.forEach(item => {
+                            labels.push(item.data);
+                            data.push(item.media_diaria);
+                        });
+
+                        // Cálculo da média
+                        const media = data.reduce((acc, value) => acc + value, 0) / data.length;
+
+                        // Atualizando o parágrafo com a média
+                        document.querySelector('.legendagrafico1 p').innerText = `Média de velocidade: ${media.toFixed(2)} Mb/s`;
+
+                        if (UploadChart) {
+                            UploadChart.destroy();
+                        }
+
+                        plotarUpload(labels, data);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarUpload(labels, data) {
+        UploadChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Mb/s',
+                    data: data,
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-          }
-    });
-    new Chart(ctx1, {
-        type: 'line',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Mb/s',
-              data: [1500, 1000, 1250, 1750, 2000],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+        });
+    }
+
+    setInterval(() => {
+        obterDadosUpload();
+    }, 30000);
+
+    function obterDadosDownload() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/DownloadGerente/${idDispositivo}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        const labels = [];
+                        const data = [];
+
+                        resposta.forEach(item => {
+                            labels.push(item.data);
+                            data.push(item.media_diaria);
+                        });
+
+                        // Cálculo da média
+                        const media = data.reduce((acc, value) => acc + value, 0) / data.length;
+
+                        // Atualizando o parágrafo com a média
+                        document.querySelector('.legendagrafico2 p').innerText = `Média de velocidade: ${media.toFixed(2)} Mb/s`;
+
+                        if (DownloadChart) {
+                            DownloadChart.destroy();
+                        }
+
+                        plotarDownload(labels, data);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarDownload(labels, data) {
+        DownloadChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Mb/s',
+                    data: data,
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-          }
-    });
-    new Chart(ctx2, {
-        type: 'line',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: '%',
-              data: [0, 20, 60, 80, 100],
-              borderWidth: 2,
-              backgroundColor: 'rgba(36, 130, 50, 1)',
-              borderColor: 'rgba(36, 130, 50, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+        });
+    }
+
+    setInterval(() => {
+        obterDadosDownload();
+    }, 30000);
+
+    function obterDadosCPU() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/CPUGerente/${idDispositivo}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        const labels = [];
+                        const data = [];
+
+                        resposta.forEach(item => {
+                            labels.push(item.data);
+                            data.push(item.media_diaria);
+                        });
+
+                        if (CPUChart) {
+                            CPUChart.destroy();
+                        }
+
+                        plotarCPU(labels, data);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarCPU(labels, data) {
+        CPUChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '%',
+                    data: data,
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-          }
-    });
-    new Chart(ctx3, {
-        type: 'bar',
-        data: {
-            labels: ['17/09', '18/09', '19/10', '20/10', '21/10'],
-            datasets: [{
-              label: 'Qtd',
-              data: [15, 10, 12, 17, 20],
-              borderWidth: 2,
-              backgroundColor: 'rgba(178, 34, 34, 1)',
-              borderColor: 'rgba(178, 34, 34, 1)'
-            }]
-        },
-        options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+        });
+    }
+
+    setInterval(() => {
+        obterDadosCPU();
+    }, 30000);
+
+    function obterMaquinasRisco() {
+
+        fetch(`/medidas/MaquinasRisco/`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        const labels = [];
+                        const data = [];
+
+                        resposta.forEach(item => {
+                            labels.push(item.data);
+                            data.push(item.quantidadeDispositivosEmAlerta);
+                        });
+
+                        if (MaquinasChart) {
+                            MaquinasChart.destroy();
+                        }
+
+                        plotarMaquinasRisco(labels, data);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarMaquinasRisco(labels, data) {
+        MaquinasChart = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Qtd',
+                    data: data,
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(178, 34, 34, 1)',
+                    borderColor: 'rgba(178, 34, 34, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-          }
+        });
+    }
+
+    setInterval(() => {
+        obterMaquinasRisco();
+    }, 30000);
+
+    function obterLinhaProblemas() {
+
+        fetch(`/medidas/LinhaProblemas/`, { cache: 'no-store' })
+    .then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+
+                const nomeLinha = resposta[0].linha; 
+                const totalAlertas = resposta[0].totalProblemas;
+
+                const riscoLegenda = document.querySelector('.riscolegenda p');
+                if (riscoLegenda) {
+                    riscoLegenda.innerHTML = `A ${nomeLinha} teve mais problemas com máquinas, totalizando ${totalAlertas} problemas.`;
+                }
+
+                // Console para depuração
+                console.log('Nome da linha:', nomeLinha);
+                console.log('Total de alertas:', totalAlertas);
+            });
+        } else {
+            console.error('Erro ao buscar dados de linhas');
+        }
+    })
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados: ${error.message}`);
     });
+
+    }
+
+    setInterval(() => {
+        obterLinhaProblemas();
+    }, 30000);
+
+
 </script>

@@ -131,12 +131,48 @@ function Upload(req, res) {
     });
 }
 
+function UploadGerente(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.UploadGerente(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function Download(req, res) {
 
     var idDispositivo = req.params.idDispositivo;
 
 
     medidaModel.Download(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function DownloadGerente(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.DownloadGerente(idDispositivo).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -185,12 +221,60 @@ function CPU(req, res) {
     });
 }
 
+function CPUGerente(req, res) {
+
+    var idDispositivo = req.params.idDispositivo;
+
+
+    medidaModel.CPUGerente(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function DISCO(req, res) {
 
     var idDispositivo = req.params.idDispositivo;
 
 
     medidaModel.DISCO(idDispositivo).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function MaquinasRisco(req, res) {
+
+    medidaModel.MaquinasRisco().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function LinhaProblemas(req, res) {
+
+    medidaModel.LinhaProblemas().then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -214,5 +298,10 @@ module.exports = {
     Download,
     RAM,
     CPU,
-    DISCO
+    DISCO,
+    UploadGerente,
+    DownloadGerente,
+    CPUGerente,
+    MaquinasRisco,
+    LinhaProblemas
 }

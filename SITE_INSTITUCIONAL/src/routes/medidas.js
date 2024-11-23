@@ -31,8 +31,16 @@ router.get("/Upload/:idDispositivo", function (req, res) {
     medidaController.Upload(req, res);
 });
 
+router.get("/UploadGerente/:idDispositivo", function (req, res) {
+    medidaController.UploadGerente(req, res);
+});
+
 router.get("/Download/:idDispositivo", function (req, res) {
     medidaController.Download(req, res);
+});
+
+router.get("/DownloadGerente/:idDispositivo", function (req, res) {
+    medidaController.DownloadGerente(req, res);
 });
 
 router.get("/RAM/:idDispositivo", function (req, res) {
@@ -43,8 +51,20 @@ router.get("/CPU/:idDispositivo", function (req, res) {
     medidaController.CPU(req, res);
 });
 
+router.get("/CPUGerente/:idDispositivo", function (req, res) {
+    medidaController.CPUGerente(req, res);
+});
+
 router.get("/DISCO/:idDispositivo", function (req, res) {
     medidaController.DISCO(req, res);
+});
+
+router.get("/MaquinasRisco", function (req, res) {
+    medidaController.MaquinasRisco(req, res);
+});
+
+router.get("/LinhaProblemas", function (req, res) {
+    medidaController.LinhaProblemas(req, res);
 });
 
 module.exports = router;

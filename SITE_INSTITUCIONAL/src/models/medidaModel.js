@@ -94,12 +94,44 @@ function Upload(idDispositivo) {
     return database.executar(instrucaoSql);
 }
 
+function UploadGerente(idDispositivo) {
+
+    var instrucaoSql = ` SELECT 
+            DATE_FORMAT(dataRegistro, '%d-%m') AS data,
+            AVG(registro) AS media_diaria
+            FROM captura
+            WHERE fkDispositivo = ${idDispositivo}
+            AND fkComponente = 5
+            GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
+            ORDER BY data
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function Download(idDispositivo) {
 
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 4 
             ORDER BY dataRegistro
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function DownloadGerente(idDispositivo) {
+
+    var instrucaoSql = `SELECT 
+            DATE_FORMAT(dataRegistro, '%d-%m') AS data,
+            AVG(registro) AS media_diaria
+            FROM captura
+            WHERE fkDispositivo = ${idDispositivo}
+            AND fkComponente = 4
+            GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
+            ORDER BY data
             LIMIT 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -130,6 +162,22 @@ function CPU(idDispositivo) {
     return database.executar(instrucaoSql);
 }
 
+function CPUGerente(idDispositivo) {
+
+    var instrucaoSql = `SELECT 
+            DATE_FORMAT(dataRegistro, '%d-%m') AS data,
+            AVG(registro) AS media_diaria
+            FROM captura
+            WHERE fkDispositivo = ${idDispositivo}
+            AND fkComponente = 1
+            GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
+            ORDER BY data
+            LIMIT 5;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function DISCO(idDispositivo) {
 
     var instrucaoSql = `SELECT registro as valor FROM captura 
@@ -142,6 +190,54 @@ function DISCO(idDispositivo) {
     return database.executar(instrucaoSql);
 }
 
+function MaquinasRisco() {
+
+    var instrucaoSql = `
+            SELECT 
+            DATE_FORMAT(a.dataAlerta, '%d-%m') AS data, 
+            COUNT(DISTINCT d.idDispositivo) AS quantidadeDispositivosEmAlerta
+            FROM 
+            alerta a
+            JOIN 
+            dispositivo d ON a.fkDispositivo = d.idDispositivo
+            WHERE 
+            a.dataAlerta >= NOW() - INTERVAL 5 DAY
+            GROUP BY 
+            DATE_FORMAT(a.dataAlerta, '%d-%m')
+            ORDER BY 
+            data ASC;
+`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function LinhaProblemas() {
+
+    var instrucaoSql = `
+        SELECT 
+        l.nome AS linha, 
+        COUNT(a.idAlerta) AS totalProblemas
+        FROM 
+        alerta a
+        JOIN 
+        dispositivo d ON a.fkDispositivo = d.idDispositivo
+        JOIN 
+        linha l ON d.fkLinha = l.idLinha
+        GROUP BY 
+        l.nome
+        ORDER BY 
+        totalProblemas DESC
+        LIMIT 1;
+`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+
+
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
@@ -153,5 +249,10 @@ module.exports = {
     Download,
     RAM,
     CPU,
-    DISCO
+    DISCO,
+    UploadGerente,
+    DownloadGerente,
+    CPUGerente,
+    MaquinasRisco,
+    LinhaProblemas
 }

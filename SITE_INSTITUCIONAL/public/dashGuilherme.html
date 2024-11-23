@@ -24,14 +24,24 @@
             <img src="Imagens/SecurePass SVGLogoNavBar 1.png" alt="Logo" class="logo">
             <div class="separator"></div>
             <div class="nav-links">
-                <a href="./dashGerente.html"><img src="Imagens/bar-chart (3).png" alt="Icon"
-                        class="nav-icon">Dashboard</a>
-                <a href="./dadosUsuario.html"><img src="Imagens/user.png" alt="Icon" class="nav-icon">Perfil</a>
-                <a href="./feedbackPublicar.html"><img src="Imagens/feedback (1).png" alt="Icon"
-                        class="nav-icon">Feedback</a>
+                <div class="dropdown">
+                    <a href="./dashGerente.html">
+                        <img src="Imagens/bar-chart (3).png" alt="Icon" class="nav-icon">
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="./dashSuporte.html">Geral</a>
+                        <a href="./dashSuporteAyrton.html">Velocidade de Resposta</a>
+                        <a href="./DashBia.html">Saúde</a>
+                        <a href="./dashGuilherme.html">Uso de Processos</a>
+                    </div>
+                </div>
+                <a href="./dadosUsuario.html"><img src="Imagens/user.png" alt="Icon" class="nav-icon"><span class="nav-text">Perfil</span></a>
+                <a href="./feedbackPublicar.html"><img src="Imagens/feedback (1).png" alt="Icon" class="nav-icon"><span class="nav-text">Feedback</span></a>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                <a href="index.html"><img src="Imagens/logout.png" alt="Icon" class="nav-icon">Sair</a>
+                <a href="index.html"><img src="Imagens/logout.png" alt="Icon" class="nav-icon"><span class="nav-text">Sair</span></a>
             </div>
+            
         </nav>
 
         <div class="dashboard-content">
@@ -546,17 +556,19 @@
 
 
         // Chama as funções de atualização periodicamente
-        setInterval(atualizarGraficoAlertas, 8000); // Atualiza o gráfico de alertas
-        setInterval(fetchDataAndUpdateChart, 8000);  // Atualiza a CPU
-        setInterval(fetchDataAndUpdateRamChart, 8000);  // Atualiza a RAM
-        setInterval(updateTemp, 8000);
-        setInterval(atualizarInfoAlertas, 8000);
+        setInterval(atualizarGraficoAlertas, 30000); // Atualiza o gráfico de alertas
+        setInterval(fetchDataAndUpdateChart, 30000);  // Atualiza a CPU
+        setInterval(fetchDataAndUpdateRamChart, 30000);  // Atualiza a RAM
+        setInterval(updateTemp, 30000);
+        setInterval(atualizarInfoAlertas, 30000);
 
         // Chama as funções de atualização inicialmente
         fetchDataAndUpdateChart();
         fetchDataAndUpdateRamChart();
         atualizarGraficoAlertas();
-        atualizarInfoAlertas
+        atualizarInfoAlertas();
+        updateTemp();
+
     }
 
     async function gerarResposta() {
