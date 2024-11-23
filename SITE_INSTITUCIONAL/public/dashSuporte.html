@@ -135,6 +135,10 @@
         let CPUChart;
         let DISCOChart;
 
+        setInterval(() => {
+        exibirAlerta();
+        }, 15000);
+
         function toggleAlertSidebar() {
             const sidebar = document.getElementById('alertSidebar');
             sidebar.classList.toggle('show');
@@ -412,7 +416,7 @@
             data: {
                 labels: labelNRT,
                 datasets: [{
-                    label: 'GB',
+                    label: '%',
                     data: dados,
                     borderWidth: 2,
                     backgroundColor: 'rgba(36, 130, 50, 1)',
@@ -553,13 +557,13 @@
         DISCOChart = new Chart(ctx4, {
             type: 'pie',
             data: {
-                labels: ['Livre', 'Usado'],
+                labels: ['Usado', 'Livre'],
                 datasets: [{
                     label: 'Uso do Disco',
                     data: dados,
                     backgroundColor: [
-                        'rgb(36, 130, 50)',
-                        'rgb(255, 0, 0)'
+                        'rgb(255, 0, 0)',
+                        'rgb(36, 130, 50)'
                     ]
                 }]
             }

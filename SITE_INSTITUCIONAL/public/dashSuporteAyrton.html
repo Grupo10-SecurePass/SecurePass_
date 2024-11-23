@@ -128,6 +128,10 @@
     let AlertaChart;
     let FrequenciaChart;
 
+    setInterval(() => {
+        exibirAlerta();
+    }, 15000);
+
     function obterMaquinas() {
         var fkLinha = sessionStorage.LINHA;
 

@@ -46,7 +46,7 @@ function TempoResposta(idDispositivo) {
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 8 
-            ORDER BY dataRegistro
+            ORDER BY dataRegistro DESC
             LIMIT 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -75,7 +75,7 @@ function Freq(idDispositivo) {
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 6 
-            ORDER BY dataRegistro
+            ORDER BY dataRegistro DESC
             LIMIT 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -87,7 +87,7 @@ function Upload(idDispositivo) {
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 5 
-            ORDER BY dataRegistro
+            ORDER BY dataRegistro DESC
             LIMIT 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -99,7 +99,7 @@ function Download(idDispositivo) {
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 4 
-            ORDER BY dataRegistro
+            ORDER BY dataRegistro DESC
             LIMIT 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -111,7 +111,7 @@ function RAM(idDispositivo) {
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 2 
-            ORDER BY dataRegistro
+            ORDER BY dataRegistro DESC
             LIMIT 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -123,7 +123,7 @@ function CPU(idDispositivo) {
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 1 
-            ORDER BY dataRegistro
+            ORDER BY dataRegistro DESC
             LIMIT 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -135,7 +135,7 @@ function DISCO(idDispositivo) {
     var instrucaoSql = `SELECT registro as valor FROM captura 
             WHERE fkDispositivo = ${idDispositivo} 
             AND fkComponente = 3 
-            ORDER BY dataRegistro
+            ORDER BY dataRegistro DESC
             LIMIT 1;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
