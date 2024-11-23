@@ -22,6 +22,18 @@ h1, h2 {
     margin-bottom: 20px;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.chart-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .componentes {
     display: flex;
     justify-content: space-around;
@@ -131,7 +143,60 @@ h1, h2 {
     margin: 5px 0;
     transition: 0.3s;
 } 
- 
+ /* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown toggle (botão ou link que ativa o menu) */
+  .dropdown-toggle {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    display: inline-block;
+    font-size: 16px;
+  }
+  
+  /* Dropdown menu */
+  .dropdown-menu {
+    background-color: #111;
+  
+    display: none; /* Oculto inicialmente */
+    position: absolute;
+  
+    top: 1px; /* Abaixo do botão */
+    left: 180px; /* Alinhado à esquerda do botão */
+    
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    min-width: 150px;
+  }
+ /* Itens do menu */
+   /* Itens do menu */
+   .dropdown-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 10px;
+    display: block;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #444;
+  }
+  
+  /* Exibe o menu ao passar o mouse no botão */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+  /* Botão ativo no hover */
+  .dropdown-toggle:hover {
+    background-color: #248232;
+    color: white;
+  }
 .nav-menu {
     position: absolute;
     top: 0;
