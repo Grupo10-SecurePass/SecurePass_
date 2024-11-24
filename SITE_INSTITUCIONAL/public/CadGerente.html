@@ -357,63 +357,64 @@
         }
 
         function cadastrarGerente() {
-    var nomeGerenteVar = input_nomeGerente.value;
-    var emailGerenteVar = input_emailGerente.value;
-    var senhaGerenteVar = input_senhaGerente.value;
-    var cpfGerenteVar = input_cpfGerente.value;
+            var nomeGerenteVar = input_nomeGerente.value;
+            var emailGerenteVar = input_emailGerente.value;
+            var senhaGerenteVar = input_senhaGerente.value;
+            var cpfGerenteVar = input_cpfGerente.value;
 
-    if (
-        nomeGerenteVar == "" ||
-        emailGerenteVar == "" ||
-        senhaGerenteVar == "" ||
-        cpfGerenteVar == ""
-    ) {
-        window.alert("Todos os campos devem ser preenchidos");
-        return;
-    } else if (senhaGerenteVar.length < 8) {
-        window.alert("A senha deve ter 8 ou mais caracteres");
-        return;
-    } else if (emailGerenteVar.indexOf("@") < 0 || emailGerenteVar.indexOf(".") < 0) {
-        window.alert("O E-mail deve ter @ e .");
-        return;
-    }
-
-            fetch("/usuarios/cadastrarGerente", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    nomeGerenteServer: nomeGerenteVar,
-                    cpfGerenteServer: cpfGerenteVar,
-                    emailGerenteServer: emailGerenteVar,
-                    senhaGerenteServer: senhaGerenteVar,
-                    fkNRServer: fkNR
-                }),
-            })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
-
-            if (resposta.ok) {
-                window.alert("Cadastro de Gerente realizado com sucesso!");
-                atualizarLista();
-            } else if (resposta.status === 400) {
-                window.alert("Erro no cadastro: CPF ou E-mail já cadastrados.");
-            } else {
-                throw "Houve um erro ao tentar realizar o cadastro!";
+            if (
+                nomeGerenteVar == "" ||
+                emailGerenteVar == "" ||
+                senhaGerenteVar == "" ||
+                cpfGerenteVar == ""
+            ) {
+                window.alert("Todos os campos devem ser preenchidos");
+                return;
+            } else if (senhaGerenteVar.length < 8) {
+                window.alert("A senha deve ter 8 ou mais caracteres");
+                return;
+            } else if (emailGerenteVar.indexOf("@") < 0 || emailGerenteVar.indexOf(".") < 0) {
+                window.alert("O E-mail deve ter @ e .");
+                return;
             }
-        })
-        .catch(function (erro) {
-            console.error("#ERRO: ", erro);
-            window.alert("Erro inesperado: Não foi possível realizar o cadastro.");
-        });
 
-    // Limpa os campos após o envio
-    input_nomeGerente.value = "";
-    input_emailGerente.value = "";
-    input_senhaGerente.value = "";
-    input_cpfGerente.value = "";
+                    fetch("/usuarios/cadastrarGerente", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            nomeGerenteServer: nomeGerenteVar,
+                            cpfGerenteServer: cpfGerenteVar,
+                            emailGerenteServer: emailGerenteVar,
+                            senhaGerenteServer: senhaGerenteVar,
+                            fkNRServer: fkNR,
+                            fkLinhaServer: fkLinha
+                        }),
+                    })
+                        .then(function (resposta) {
+                            console.log("resposta: ", resposta);
 
-    return false;
-}
+                    if (resposta.ok) {
+                        window.alert("Cadastro de Gerente realizado com sucesso!");
+                        atualizarLista();
+                    } else if (resposta.status === 400) {
+                        window.alert("Erro no cadastro: CPF ou E-mail já cadastrados.");
+                    } else {
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
+                })
+                .catch(function (erro) {
+                    console.error("#ERRO: ", erro);
+                    window.alert("Erro inesperado: Não foi possível realizar o cadastro.");
+                });
+
+            // Limpa os campos após o envio
+            input_nomeGerente.value = "";
+            input_emailGerente.value = "";
+            input_senhaGerente.value = "";
+            input_cpfGerente.value = "";
+
+            return false;
+        }
     </script>
 </body>
 
