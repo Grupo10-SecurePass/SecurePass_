@@ -364,63 +364,65 @@
     }
 
     function cadastrarSuporte() {
-        var nomeTecnicoVar = input_nomeTecnico.value;
-        var cpfTecnicoVar = input_cpfTecnico.value;
-        var emailTecnicoVar = input_emailTecnico.value;
-        var senhaTecnicoVar = input_senhaTecnico.value;
-        var fkLinha = sessionStorage.getItem("LINHA");
+    var nomeTecnicoVar = input_nomeTecnico.value;
+    var cpfTecnicoVar = input_cpfTecnico.value;
+    var emailTecnicoVar = input_emailTecnico.value;
+    var senhaTecnicoVar = input_senhaTecnico.value;
+    var fkLinha = sessionStorage.getItem("LINHA");
 
-        var fkNR = sessionStorage.getItem("NR_EMPRESA");
+    var fkNR = sessionStorage.getItem("NR_EMPRESA");
 
-        if (
-            nomeTecnicoVar === "" ||
-            emailTecnicoVar === "" ||
-            senhaTecnicoVar === "" ||
-            cpfTecnicoVar === ""
-        ) {
-            window.alert("Todos os campos devem ser preenchidos");
-            return;
-        } else if (senhaTecnicoVar.length < 8) {
-            window.alert("A senha deve ter 8 ou mais caracteres");
-            return;
-        } else if (!emailTecnicoVar.includes("@") || !emailTecnicoVar.includes(".")) {
-            window.alert("O E-mail deve ter @ e .");
-            return;
-        }
-
-        fetch("/usuarios/cadastrarSuporte", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                nomeTecnicoServer: nomeTecnicoVar,
-                cpfTecnicoServer: cpfTecnicoVar,
-                emailTecnicoServer: emailTecnicoVar,
-                senhaTecnicoServer: senhaTecnicoVar,
-                fkNRServer: fkNR,
-                fkLinhaServer: fkLinha
-            }),
-        })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
-                if (resposta.ok) {
-                    window.alert("Cadastro de Suporte Realizado com sucesso");
-                    atualizarLista();
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (erro) {
-                console.error("#ERRO: ", erro);
-            });
-
-        input_nomeTecnico.value = "";
-        input_cpfTecnico.value = "";
-        input_emailTecnico.value = "";
-        input_senhaTecnico.value = "";
-
-        return false;
+    if (
+        nomeTecnicoVar === "" ||
+        emailTecnicoVar === "" ||
+        senhaTecnicoVar === "" ||
+        cpfTecnicoVar === ""
+    ) {
+        window.alert("Todos os campos devem ser preenchidos");
+        return;
+    } else if (senhaTecnicoVar.length < 8) {
+        window.alert("A senha deve ter 8 ou mais caracteres");
+        return;
+    } else if (!emailTecnicoVar.includes("@") || !emailTecnicoVar.includes(".")) {
+        window.alert("O E-mail deve ter @ e .");
+        return;
     }
+
+    fetch("/usuarios/cadastrarSuporte", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nomeTecnicoServer: nomeTecnicoVar,
+            cpfTecnicoServer: cpfTecnicoVar,
+            emailTecnicoServer: emailTecnicoVar,
+            senhaTecnicoServer: senhaTecnicoVar,
+            fkNRServer: fkNR,
+            fkLinhaServer: fkLinha
+        }),
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                window.alert("Cadastro de Suporte Realizado com sucesso");
+                atualizarLista();
+            } else {
+                return resposta.json().then(function (erro) {
+                    throw erro.mensagem || "Houve um erro ao tentar realizar o cadastro!";
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.error("#ERRO: ", erro);
+            window.alert(`Erro ao cadastrar suporte: ${erro}`);
+        });
+
+    input_nomeTecnico.value = "";
+    input_cpfTecnico.value = "";
+    input_emailTecnico.value = "";
+    input_senhaTecnico.value = "";
+
+    return false;
+}
+
 </script>
 
 

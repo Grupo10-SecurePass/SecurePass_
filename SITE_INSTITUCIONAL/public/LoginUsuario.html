@@ -66,92 +66,77 @@
 
 <script>
 
-function atualizarLista(){
-
-        fetch("/usuarios/listarCargo", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-
+function atualizarLista() {
+    fetch("/usuarios/listarCargo", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) {
+                    alert("Não achou nenhum cargo.");
+                    return [];
+                }
+                return resposta.json();
+            } else {
+                throw "Houve um erro na API!";
+            }
         })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    if (resposta.status == 204) {
-                        var lista = document.getElementById("listamaquinas");
-                        lista.className = "lista";
-                        lista.innerHTML = "<p>Ainda não há nenhuma máquina cadastrada.</p>";
-                        window.alert("Não achou nenhum cargo")
-                        return [];
-                    }
-                    return resposta.json();
-                } else {
-                    throw "Houve um erro na API!";
+        .then(function (dados) {
+            console.log("Dados recebidos: ", JSON.stringify(dados));
+
+            for (let i = 0; i < dados.length; i++) {
+                var cargo = dados[i];
+                var id = cargo.idCargo;
+                var nome = cargo.nome;
+                if (nome == "tecnico") {
+                    nome = "técnico";
                 }
-            })
-            .then(function (dados) {
-                console.log("Dados recebidos: ", JSON.stringify(dados));
-                var lista = document.getElementById("listamaquinas");
+                console.log(cargo);
+                console.log(id);
 
+                var opcao = document.createElement("option");
+                opcao.value = `${id}`;
+                opcao.innerHTML = nome;
 
-                for (let i = 0; i < dados.length; i++) {
-                    var cargo = dados[i];
-                    var id = cargo.idCargo
-                    var nome = cargo.nome
-                    if(nome == "tecnico"){
-                        nome = "técnico"
-                    }
-                    console.log(cargo)
-                    console.log(id)
-
-                    var opcao = document.createElement("option");
-                    opcao.value = `${id}`
-                    opcao.innerHTML = nome
-                    
-
-                    
-                    inputCargo.appendChild(opcao);    
-                }
-            })
-            .catch(function (erro) {
-                console.error(erro);
-
-                console.log("Deu erro")
-            });
-    
+                inputCargo.appendChild(opcao);
+            }
+        })
+        .catch(function (erro) {
+            console.error(erro);
+            alert("Erro ao carregar os cargos.");
+        });
 }
 
 function entrar() {
+    var emailVar = input_email.value;
+    var senhaVar = input_senha.value;
+    var fkCargoVar = inputCargo.value;
 
-        var emailVar = input_email.value;
-        var senhaVar = input_senha.value;
-        var fkCargoVar = inputCargo.value;
+    if (emailVar == "" || senhaVar == "" || fkCargoVar == "#") {
+        mensagem_erro.innerHTML = "Os campos para login estão preenchidos de forma incorreta!";
+        alert("Preencha todos os campos corretamente!");
+        return false;
+    }
 
-
-        if (emailVar == "" || senhaVar == "" || fkCargoVar == "#") {
-            mensagem_erro.innerHTML = "Os campos para login estão preenchidos de forma incorreta!";
-            
-            return false;
-        }
-        else {
-            
-        }
-
-        fetch("/usuarios/autenticar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar,
-                fkCargoServer: fkCargoVar
-            })
-        }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
+    fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+            fkCargoServer: fkCargoVar,
+        }),
+    })
+        .then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!");
 
             if (resposta.ok) {
                 console.log(resposta);
 
-                resposta.json().then(json => {
+                resposta.json().then((json) => {
                     console.log(json);
                     console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
@@ -163,35 +148,37 @@ function entrar() {
                     sessionStorage.NR_EMPRESA = json.fkNR;
                     sessionStorage.LINHA = json.fkLinha;
 
-                    if(sessionStorage.STATUS_USUARIO == "inativo"){
-                        mensagem_erro.innerHTML = "Seu estado no nosso sistema está como inativo, caso esteja incorreto, por favor verificar com sua empresa.";
-                    }else if(sessionStorage.CARGO_USUARIO == 1){
-                        window.location = "./assocLinha.html"
-                    }else if(sessionStorage.CARGO_USUARIO == 2){
-                        window.location = "./CadTecnicoSuporte.html"
-                    }else{
-                        window.location = "./dashSuporte.html"
+                    if (sessionStorage.STATUS_USUARIO == "inativo") {
+                        mensagem_erro.innerHTML =
+                            "Seu estado no nosso sistema está como inativo, caso esteja incorreto, por favor verificar com sua empresa.";
+                        alert("Usuário inativo. Verifique com sua empresa.");
+                    } else if (sessionStorage.CARGO_USUARIO == 1) {
+                        window.location = "./assocLinha.html";
+                    } else if (sessionStorage.CARGO_USUARIO == 2) {
+                        window.location = "./CadTecnicoSuporte.html";
+                    } else {
+                        window.location = "./dashSuporte.html";
                     }
-
                 });
-
             } else {
-
                 console.log("Houve um erro ao tentar realizar o login!");
+                mensagem_erro.innerHTML =
+                    "Houve um erro ao tentar realizar o login! Verifique se o seu cargo está correto e se as credênciais também estão!";
+                alert("Erro no login. Verifique seus dados e tente novamente.");
 
-                mensagem_erro.innerHTML = "Houve um erro ao tentar realizar o login! Verifique se o seu cargo está correto e se as credênciais também estão!"
-
-                resposta.text().then(texto => {
+                resposta.text().then((texto) => {
                     console.error(texto);
                 });
             }
-
-        }).catch(function (erro) {
-            console.log(erro);
         })
+        .catch(function (erro) {
+            console.error(erro);
+            alert("Erro ao conectar com o servidor. Tente novamente mais tarde.");
+        });
 
-        return false;
-    }
+    return false;
+}
+
 
 </script>
 
