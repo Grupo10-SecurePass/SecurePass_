@@ -48,7 +48,7 @@
             
                 <div class="divAlerta">
                     <div class="titulo">
-                        <p>Quantidade de alertas por servidor</p>
+                        <p>Quantidade de alertas por dispositivo</p>
                     </div>
                     <div class="grafico">
                         <div class="espacografico">
@@ -62,47 +62,36 @@
                 </div>
             </div>
             <div class="div2">
+                <div>
+                    <p> Alertas dos componentes por dispositivo</p>
+                </div>
                 <div class="a">
-                <div class="dispositivoW">
-                    <div class="tituloDispositivoW">
-                        <p>Dispositivo W</p>
-                    </div>
-                    <div class="espacograficoDispositivoW">
-                        <div class="graficoDispositivoW">
+                <div class="dispositivo1">
+                    <div class="espacograficoDispositivo1">
+                        <div class="graficoDispositivo1">
                             <canvas id="myChart1"></canvas>
                         </div>
                     </div>
                 </div>
                 
-                <div class="dispositivoX">
-                    <div class="tituloDispositivoX">
-                        <p>Dispositivo X</p>
-                    </div>
-                    
-                        <div class="graficoDispositivoX">
-                            <canvas id="myChart3"></canvas>
+                <div class="dispositivo2">  
+                        <div class="graficoDispositivo2">
+                            <canvas id="myChart2"></canvas>
                         </div>
                        
                 </div>
             </div>
     <div class="b">
-    <div class="dispositivoY">
-        <div class="tituloDispositivoY">
-            <p>Dispositivo Y</p>
-        </div>
-        <div class="espacograficoDispositivoY">
-            <div class="graficoDispositivoY">
-                <canvas id="myChart2"></canvas>
+    <div class="dispositivo3">
+        <div class="espacograficoDispositivo3">
+            <div class="graficoDispositivo3">
+                <canvas id="myChart3"></canvas>
             </div>
         </div>
     </div>
     
-    <div class="dispositivoZ">
-        <div class="tituloDispositivoZ">
-            <p>Dispositivo Z</p>
-        </div>
-        
-            <div class="graficoDispositivoZ">
+    <div class="dispositivo4">
+            <div class="graficoDispositivo4">
                 <canvas id="myChart4"></canvas>
             </div>
     </div>
@@ -172,7 +161,7 @@
             valores.push(alerta ? alerta.quantidadeAlertas : 0); // Adiciona 0 se não houver alertas
         }
         datasets.push({
-            label: `Dispositivo: ${nomeDispositivo}`, // Exibe o nome do dispositivo
+            label: `${nomeDispositivo}`, // Exibe o nome do dispositivo
             data: valores,
             borderWidth: 2,
             borderColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`,

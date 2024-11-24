@@ -78,7 +78,8 @@
 </html>
 
 <script>
-// Função para cadastrar um novo usuário
+
+    // Função para cadastrar um novo usuário
 function cadastrar() {
     // Obtém os valores dos campos
     var nomeVar = input_nome.value;
@@ -89,65 +90,72 @@ function cadastrar() {
 
     // Verifica se todos os campos estão preenchidos
     if (!nomeVar || !cpfVar || !emailVar || !senhaVar || idEmpresaVincular == "") {
-        alert("Preencha todos os campos corretamente");
+        alert("Preencha todos os campos corretamente.");
         return false;
     }
 
     // Chama a função assíncrona para verificar o NR
     verificarNR(idEmpresaVincular, function (resultadoVerificacao) {
-            if (resultadoVerificacao == "certo") {
-                // Se o NR for válido, realiza o cadastro
-                fetch("/usuarios/cadastrar", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        nomeServer: nomeVar,
-                        cpfServer: cpfVar,
-                        emailServer: emailVar,
-                        senhaServer: senhaVar,
-                        idEmpresaVincularServer: idEmpresaVincular
-                    }),
+        if (resultadoVerificacao == "certo") {
+            // Se o NR for válido, realiza o cadastro
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: nomeVar,
+                    cpfServer: cpfVar,
+                    emailServer: emailVar,
+                    senhaServer: senhaVar,
+                    idEmpresaVincularServer: idEmpresaVincular,
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("Resposta: ", resposta);
+                    if (resposta.ok) {
+                        alert("Cadastro realizado com sucesso!");
+                        setTimeout(() => {
+                            window.location = "LoginUsuario.html";
+                        }, 800);
+                    } else {
+                        alert("Erro ao realizar o cadastro. Verifique as informações e tente novamente.");
+                        throw "Houve um erro ao tentar realizar o cadastro!";
+                    }
                 })
-                    .then(function (resposta) {
-                        console.log("resposta: ", resposta);
-                        if (resposta.ok) {
-                            setTimeout(() => {
-                                window.location = "LoginUsuario.html";
-                            }, 800);
-                        } else {
-                            throw "Houve um erro ao tentar realizar o cadastro!";
-                        }
-                    })
-                    .catch(function (resposta) {
-                        console.log(`#ERRO: ${resposta}`);
-                    });
+                .catch(function (erro) {
+                    console.error(`#ERRO: ${erro}`);
+                    alert("Ocorreu um erro inesperado ao tentar realizar o cadastro. Por favor, tente novamente.");
+                });
+        } else {
+            alert("O NR informado não pertence a nenhuma empresa cadastrada.");
+        }
+    });
+
+    return false;
+}
+
+// Função para verificar o NR
+function verificarNR(idEmpresaVincular, callback) {
+    fetch(`/empresas/verificarNR?idEmpresaVincular=${idEmpresaVincular}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                callback("certo"); // NR encontrado
             } else {
-                alert("O NR informado não pertence a nenhuma empresa cadastrada.");
-            }
-        });
-
-        return false;
-    }
-
-    function verificarNR(idEmpresaVincular, callback) {
-        fetch(`/empresas/verificarNR?idEmpresaVincular=${idEmpresaVincular}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
+                alert("Erro ao verificar o NR. Certifique-se de que ele está correto.");
+                callback("erro"); // NR não encontrado
             }
         })
-            .then(function (resposta) {
-                if (resposta.ok) {
-                    callback("certo"); // NR encontrado
-                } else {
-                    callback("erro"); // NR não encontrado
-                }
-            })
-            .catch(function (error) {
-                console.error(error);
-                callback("erro");
-            });
-    }
+        .catch(function (erro) {
+            console.error(erro);
+            alert("Ocorreu um erro ao tentar verificar o NR. Por favor, tente novamente.");
+            callback("erro");
+        });
+}
+
 </script>

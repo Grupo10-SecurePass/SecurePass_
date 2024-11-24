@@ -148,6 +148,8 @@ body{
     height: 620px;
     display: flex;
     gap: 30px;
+
+    
 }
 .div1{
     width: 100%;
@@ -155,58 +157,14 @@ body{
     display: flex;
     flex-direction: column;
     gap: 30px;
+    
 }
 
-/* Filtro de data  */
-.filtro {
-    width: 100%;
-    height: 30%;
-    background-color: #FCFFFC;
-    display: flex;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-.textodata p {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.aviso {
-    font-size: 15px;
-}
-
-.data{
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-    width: 85%;
-    gap: 10px;
-}
-.btn_filtro{
-    width: 15%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-.btn_filtro button{
-    padding: 10px 20px;
-    background-color: #248232;
-    color: #FCFFFC;
-    border: 0px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.btn_filtro button:hover{
-    background-color: #195d23;
-}
-
-/* Filtro de data  */
 
 /* Div Alerta */
 .divAlerta{
     width: 100%;
-    height: 520px;
+    height: 98%;
     background-color: #FCFFFC;
     padding: 5px;
     display: flex;
@@ -214,17 +172,19 @@ body{
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     gap: 70px;
+    border-radius: 20px;
 }
 .titulo{
     width: 100%;
     height: 35px;
     font-size: 30px;
     font-weight: 600;
+   
 }
 
 .grafico{
     width: 95%;
-    height: 250px;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -254,7 +214,14 @@ body{
     flex-direction: column;
     align-items: flex-start;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    
+    border-radius: 20px;
+}
+
+.div2 p {
+    width: 100%;
+    height: 35px;
+    font-size: 30px;
+    font-weight: 600;
 }
 
 .a{
@@ -268,7 +235,7 @@ body{
     gap: 5px;
 }
 
-.dispositivoW{
+.dispositivo1{
    
     width: 80%;
     height: 70%;
@@ -277,27 +244,22 @@ body{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+   
     
 }
-.tituloDispositivoW{
-    width: 100%;
-    height: 35px;
-    font-weight: 600;
-    font-size: 25px;
-}
-.espacograficoDispositivoW{
+
+.espacograficoDispositivo1{
     width: 90%;
     height: 290px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.graficoDispositivoW{
+.graficoDispositivo1{
     width: 80%;
     height: 80%;
 }
-.dispositivoX{
+.dispositivo2{
     width: 80%;
     height: 70%;
     background-color: #FCFFFC;
@@ -305,17 +267,10 @@ body{
     flex-direction: column;
     align-items: center;
     padding: 5px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
    
 }
-.tituloDispositivoX{
-    width: 100%;
-    height: 40px;
-    font-size: 25px;
-    font-weight: 600;
-}
 
-.graficoDispositivoX{
+.graficoDispositivo2{
     width: 80%;
     height: 80%;
 }
@@ -332,7 +287,7 @@ body{
     gap: 5px; 
 }
 
-.dispositivoY{
+.dispositivo3{
    
     width: 80%;
     height: 70%;
@@ -341,27 +296,21 @@ body{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    
     
 }
-.tituloDispositivoY{
-    width: 100%;
-    height: 35px;
-    font-weight: 600;
-    font-size: 25px;
-}
-.espacograficoDispositivoY{
+.espacograficoDispositivo3{
     width: 90%;
     height: 290px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.graficoDispositivoY{
+.graficoDispositivo3{
     width: 80%;
     height: 80%;
 }
-.dispositivoZ{
+.dispositivo4{
     width: 80%;
     height: 70%;
     background-color: #FCFFFC;
@@ -369,17 +318,11 @@ body{
     flex-direction: column;
     align-items: center;
     padding: 5px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    
    
 }
-.tituloDispositivoZ{
-    width: 100%;
-    height: 40px;
-    font-size: 25px;
-    font-weight: 600;
-}
 
-.graficoDispositivoZ{
+.graficoDispositivo4{
     width: 80%;
     height: 80%;
 }
