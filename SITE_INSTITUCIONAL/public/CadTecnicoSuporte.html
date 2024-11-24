@@ -104,8 +104,8 @@
 </body>
 
 <script>
+    var Linha = sessionStorage.getItem("LINHA");
     function atualizarLista() {
-        var Linha = sessionStorage.getItem("LINHA");
         if (!Linha) {
             console.error("Erro: A chave 'LINHA' não está definida no sessionStorage.");
             return;
@@ -221,7 +221,8 @@
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                pesquisaServer: pesquisa
+                pesquisaServer: pesquisa,
+                fkLinhaServer: Linha
             }),
         })
             .then(function (resposta) {

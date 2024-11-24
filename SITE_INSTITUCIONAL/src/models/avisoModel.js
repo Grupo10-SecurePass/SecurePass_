@@ -1,21 +1,16 @@
 var database = require("../database/config");
 
-function listar(fkNR) {
+function listar(fkNR, fkLinha) {
     console.log("Executando a função listar() para exibir os gerentes\n");
 
     var instrucaoSql = `
         SELECT 
-            usuario.idUsuario, 
-            usuario.nome, 
-            usuario.cpf, 
-            usuario.email, 
-            usuario.senha, 
-            cargo.nome AS cargo, 
-            usuario.status
+            usuario.*, 
+            cargo.nome AS cargo
         FROM usuario
         JOIN empresa ON usuario.fkNR = empresa.NR
         JOIN cargo ON usuario.fkCargo = cargo.idCargo
-        WHERE cargo.nome = 'gerente' AND empresa.NR = ${fkNR};
+        WHERE cargo.nome = 'gerente' AND empresa.NR = '${fkNR}' AND usuario.fkLinha = '${fkLinha}';
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -71,26 +66,27 @@ function listarLinhaEmpresa(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
-function pesquisa(pesquisa) {
+function pesquisa(pesquisa, fkNR, fkLinha) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
 
-    var instrucaoSql = `SELECT usuario.idUsuario, usuario.nome, usuario.CPF, usuario.email, usuario.senha, usuario.cargo, usuario.stats, empresa.nome AS nome_empresa
+    var instrucaoSql = `SELECT usuario.*, cargo.nome AS cargo
     FROM usuario
-    JOIN empresa ON usuario.fkNR = empresa.NR
-    WHERE usuario.nome LIKE '%${pesquisa}%' AND usuario.cargo = 'gerente';`;
+    JOIN empresa ON usuario.fkNR = ${fkNR}
+    JOIN cargo ON usuario.fkCargo = cargo.idCargo
+    WHERE usuario.nome LIKE '%${pesquisa}%' AND usuario.fkLinha = '${fkLinha}' AND cargo.nome = 'gerente';`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
 
     return database.executar(instrucaoSql);
 }
-function pesquisaSuporte(pesquisa) {
+function pesquisaSuporte(pesquisa, fkLinha) {
     console.log("ACESSEI O AVISO  MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
 
     // Consulta corrigida sem o JOIN na tabela empresa
-    var instrucaoSql = `SELECT usuario.idUsuario, usuario.nome, usuario.CPF, usuario.email, usuario.senha, cargo.nome AS cargo, usuario.status
+    var instrucaoSql = `SELECT usuario.*, cargo.nome AS cargo
     FROM usuario
     JOIN cargo ON usuario.fkCargo = cargo.idCargo
-    WHERE usuario.nome LIKE '%${pesquisa}%' AND cargo.nome = 'técnico';`;
+    WHERE usuario.nome LIKE '%${pesquisa}%' AND usuario.fkLinha = '${fkLinha}' AND cargo.nome = 'técnico';`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
 

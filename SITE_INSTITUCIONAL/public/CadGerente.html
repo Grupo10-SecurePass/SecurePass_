@@ -104,7 +104,8 @@
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    fkNRServer: fkNR
+                    fkNRServer: fkNR,
+                    fkLinhaServer: fkLinha
                 }),
             })
                 .then(function (resposta) {
@@ -213,7 +214,9 @@
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    pesquisaServer: pesquisa
+                    pesquisaServer: pesquisa,
+                    fkNRServer: fkNR,
+                    fkLinhaServer: fkLinha
                 }),
             })
                 .then(function (resposta) {
@@ -383,7 +386,8 @@
                     cpfGerenteServer: cpfGerenteVar,
                     emailGerenteServer: emailGerenteVar,
                     senhaGerenteServer: senhaGerenteVar,
-                    fkNRServer: fkNR
+                    fkNRServer: fkNR,
+                    fkLinhaServer: fkLinha
                 }),
             })
                 .then(function (resposta) {

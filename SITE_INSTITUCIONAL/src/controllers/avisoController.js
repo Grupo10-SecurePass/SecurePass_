@@ -2,7 +2,9 @@ var avisoModel = require("../models/avisoModel");
 
 function listar(req, res) {
     var fkNR = req.body.fkNRServer;
-    avisoModel.listar(fkNR).then(function (resultado) {
+    var fkLinha = req.body.fkLinhaServer;
+
+    avisoModel.listar(fkNR, fkLinha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -112,8 +114,10 @@ function desassociarLinha(req, res) {
 
 function pesquisa(req, res) {
     var pesquisa = req.body.pesquisaServer;
+    var fkNR = req.body.fkNRServer;
+    var fkLinha = req.body.fkLinhaServer;
 
-    avisoModel.pesquisa(pesquisa).then(function (resultado) {
+    avisoModel.pesquisa(pesquisa, fkNR, fkLinha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -126,8 +130,9 @@ function pesquisa(req, res) {
 }
 function pesquisaSuporte(req, res) {
     var pesquisa = req.body.pesquisaServer;
+    var fkLinha = req.body.fkLinhaServer;
 
-    avisoModel.pesquisaSuporte(pesquisa).then(function (resultado) {
+    avisoModel.pesquisaSuporte(pesquisa, fkLinha).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado); // Retorna os dados encontrados
         } else {
