@@ -65,10 +65,6 @@
                             <input type="text" id="emailGerente">
                         </div>
                         <div class="label_input">
-                            <label for="cargoGerente"><b>Cargo:</b></label>
-                            <input type="text" id="cargoGerente">
-                        </div>
-                        <div class="label_input">
                             <label for="senhaGerente"><b>Senha:</b></label>
                             <div class="label_input_senha">
                                 <input type="password" id="input_senha">
@@ -81,12 +77,12 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="save">Salvar alterações</button>
+                        <button onclick="alterarDadosGerente()" class="save">Salvar alterações</button>
                     </div>
                 </div>
 
                 <div class="buttons">
-                    <button type="button" onclick="deletar(cpf)" class="delete">
+                    <button type="button" onclick="deletar()" class="delete">
                         Excluir Gerente
                     </button>
                 </div>
@@ -117,25 +113,52 @@
         document.getElementById("nomeGerente").value = gerente.nome;
         document.getElementById("cpfGerente").value = gerente.cpf;
         document.getElementById("emailGerente").value = gerente.email;
-        document.getElementById("cargoGerente").value = gerente.cargo;
         document.getElementById("input_senha").value = gerente.senha;
+
         function teste(){
             console.log(gerente)
         }
 
-        var cpf = gerente.CPF;
+        function alterarDadosGerente() {
+            var nome = nomeGerente.value;
+            var cpf = cpfGerente.value;
+            var email = emailGerente.value;
+            var senha = input_senha.value;
 
-        function deletar(cpf) {
-            console.log("Função de deletar gerente pelo CPF:" + cpf);
-            fetch(`/avisos/deletar/${cpf}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                }
+            fetch('/avisos/alterarDadosGerente', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    cpfServer: cpf,
+                    emailServer: email,
+                    senhaServer: senha
+                }),
             }).then(function (resposta) {
                 if (resposta.ok) {
-                    window.alert("Gerente excluído com sucesso!");
-                    window.location = "./CadGerente.html";
+                    window.alert("Dados atualizados com sucesso!");
+                    window.location.href="./CadGerente.html"
+                } else if (resposta.status == 404) {
+                    window.alert("Deu 404!");
+                } else {
+                    throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                }
+            }).catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+        }
+        var cpf = gerente.cpf;
+        function deletar() {
+            fetch('/avisos/deletar', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    cpfServer: cpf
+                }),
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    window.alert("O status do gerente agora é inativo.");
+                    window.location.href="./CadGerente.html"
                 } else if (resposta.status == 404) {
                     window.alert("Deu 404!");
                 } else {

@@ -11,4 +11,8 @@ router.get("/obterDados/:linha", function (req, res) {
     preditivaController.obterDados(req, res);
 });
 
+router.get("/listarMaquinaPreditiva/:fkLinha", function (req, res) {
+  preditivaController.listarMaquinaPreditiva(req, res);
+})
+
 module.exports = router;

@@ -93,8 +93,8 @@
 
     <script>
 
-        var fkLinha = sessionStorage.getItem("LINHA_SELECIONADA")
-        console.log(`A linha selecionada é: ${fkLinha}`)
+        var fkLinha = JSON.parse(sessionStorage.getItem("LINHA_SELECIONADA"));
+        console.log("A linha selecionada é: ", fkLinha);
         var fkNR = sessionStorage.getItem("NR_EMPRESA");
 
         function atualizarLista() {

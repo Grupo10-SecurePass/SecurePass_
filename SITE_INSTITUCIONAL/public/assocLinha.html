@@ -186,16 +186,13 @@
 
                         divCardLinha.dataset.idLinha = card.idLinha;
                         divCardLinha.dataset.nome = card.nome;
+                        divCardLinha.addEventListener("click", function () {
+                            var linha = this.dataset.idLinha
+                            cadastrarGerente(linha);
+                        });
 
                         var divFotoeNome = document.createElement("div");
                         divFotoeNome.className = "fotoenome";
-
-                        divFotoeNome.addEventListener("click", function () {
-                            var linha = {
-                                idLinha: this.dataset.idLinha
-                            };
-                            cadastrarGerente(card.idLinha);
-                        });
 
                         var nome = document.createElement("p");
                         nome.innerText = card.nome;
@@ -346,9 +343,9 @@
         }
     }
 
-    function cadastrarGerente(idLinhaSelecionada) {
-        sessionStorage.LINHA_SELECIONADA = idLinhaSelecionada;
-        window.location.href = "./CadGerente.html"
+    function cadastrarGerente(linha) {
+        sessionStorage.setItem("LINHA_SELECIONADA", JSON.stringify(linha));
+        window.location.href = "./CadGerente.html";
     }
 
     function adicionarBotaoLimparPesquisa() {

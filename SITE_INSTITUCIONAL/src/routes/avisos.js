@@ -54,16 +54,25 @@ router.get("/listarFeedbacks/:idUsuario", function (req, res) {
 router.get("/listarFeedbacksGeral", function (req, res) {
     avisoController.listarFeedbacksGeral(req, res);
 });
+router.put("/alterar", function (req, res) {
+    avisoController.alterar(req, res);
+});
+router.put("/alterarDadosGerente", function (req, res) {
+    avisoController.alterarDadosGerente(req, res);
+});
+router.put("/alterarTecnico", function (req, res) {
+    avisoController.alterarDadosGerente(req, res);
+});
 
 router.put("/editar/:cpf", function (req, res) {
     avisoController.editar(req, res);
 });
 
-router.delete("/deletar/:cpf", function (req, res) {
+router.put("/deletar", function (req, res) {
     avisoController.deletar(req, res);
 });
 
-router.delete("/deletarSuporte/:cpf", function (req, res) {
+router.delete("/deletarSuporte", function (req, res) {
     avisoController.deletarSuporte(req, res);
 });
 

@@ -279,6 +279,65 @@ function listarFeedbacks(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+function alterar(req, res) {
+    var idUsuario = req.body.idUsuarioServer;
+    var nome = req.body.nomeServer;
+    var cpf = req.body.cpfServer;
+    var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
+    console.log(req.body);
+
+    avisoModel.alterar(idUsuario, nome, cpf, email, senha).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function alterarDadosGerente(req, res) {
+    var nome = req.body.nomeServer;
+    var cpf = req.body.cpfServer;
+    var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
+    console.log(req.body);
+
+    avisoModel.alterarDadosGerente(nome, cpf, email, senha).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+function alterarDadosTecnico(req, res) {
+    var nome = req.body.nomeServer;
+    var cpf = req.body.cpfServer;
+    var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
+    console.log(req.body);
+
+    avisoModel.alterarDadosTecnico(nome, cpf, email, senha).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os avisos: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function listarFeedbacksGeral(req, res) {
     avisoModel.listarFeedbacksGeral().then(function (resultado) {
         if (resultado.length > 0) {
@@ -308,8 +367,7 @@ function editar(req, res) {
 }
 
 function deletar(req, res) {
-    var cpf = req.params.cpf;
-    console.log("CPF recebido na rota:", cpf);
+    var cpf = req.body.cpfServer;
 
     avisoModel.deletar(cpf)
         .then(function (resultado) {
@@ -323,8 +381,7 @@ function deletar(req, res) {
 }
 
 function deletarSuporte(req, res) {
-    var cpf = req.params.cpf;
-    console.log("CPF recebido na rota:", cpf);
+    var cpf = req.body.cpf;
 
     usuarioModel.deletarSuporte(cpf)
         .then(function (resultado) {
@@ -359,6 +416,9 @@ module.exports = {
     pesquisarDescricao,
     publicarFeedback,
     listarFeedbacks,
+    alterar,
+    alterarDadosGerente,
+    alterarDadosTecnico,
     listarFeedbacksGeral,
     editar,
     deletar,

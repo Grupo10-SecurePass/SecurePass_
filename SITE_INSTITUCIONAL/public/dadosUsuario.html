@@ -12,7 +12,7 @@
 
     <script src="./js/senha.js"></script>
 
-    <title>Seus dados - Representante</title>
+    <title>Seus dados</title>
 
 </head>
 
@@ -66,12 +66,12 @@
 
                         <div class="input-container">
                             <label for="empresaRepresentante"><b>Empresa:</b></label>
-                            <input type="text" id="empresaRepresentante">
+                            <input type="text" id="empresaRepresentante" disabled>
                         </div>
 
                         <div class="input-container">
                             <label for="cargoRepresentante"><b>Cargo:</b></label>
-                            <input type="text" id="cargoRepresentante">
+                            <input type="text" id="cargoRepresentante" disabled>
                         </div>
 
                         <div class="input-container">
@@ -88,7 +88,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="save">Salvar alterações</button>
+                        <button onclick="alterar()" class="save">Salvar alterações</button>
                     </div>
                 </div>
 
@@ -183,14 +183,15 @@
                 })
                 .then((dados) => {
                     if (dados.length > 0) {
+                        console.log(dados)
                         var usuario = dados[0];
 
                         document.getElementById("nomeRepresentante").value = usuario.nome;
-                        document.getElementById("senhaRepresentante").value = usuario.senha;
-                        document.getElementById("empresaRepresentante").value = usuario.nomeEmpresa;
-                        document.getElementById("cpfRepresentante").value = sessionStorage.getItem("CPF_USUARIO");
-                        document.getElementById("emailRepresentante").value = sessionStorage.getItem("EMAIL_USUARIO");
-                        document.getElementById("cargoRepresentante").value = sessionStorage.getItem("CARGO_USUARIO");
+                        document.getElementById("cpfRepresentante").value = usuario.cpf;
+                        document.getElementById("emailRepresentante").value = usuario.email;
+                        document.getElementById("empresaRepresentante").value = usuario.nomeFantasia;
+                        document.getElementById("cargoRepresentante").value = usuario.nomeCargo;
+                        document.getElementById("input_senha").value = usuario.senha;
                     } else {
                         console.warn("Nenhum dado encontrado para o usuário.");
                     }
@@ -200,6 +201,35 @@
                 });
 
             return false;
+        }
+        function alterar() {
+            var idUsuario = sessionStorage.getItem("ID_USUARIO");
+            var nome = nomeRepresentante.value;
+            var cpf = cpfRepresentante.value;
+            var email = emailRepresentante.value;
+            var senha = input_senha.value;
+
+            fetch('/avisos/alterar', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    idUsuarioServer: idUsuario,
+                    nomeServer: nome,
+                    cpfServer: cpf,
+                    emailServer: email,
+                    senhaServer: senha
+                }),
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    window.alert("Dados atualizados com sucesso!");
+                } else if (resposta.status == 404) {
+                    window.alert("Deu 404!");
+                } else {
+                    throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                }
+            }).catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
         }
     </script>
 

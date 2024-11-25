@@ -6,7 +6,7 @@
     <title>Dashboard - Gerente</title>
     <link rel="stylesheet" href="./css/dashPreditiva.css">
 </head>
-<body onload="obterDados(), obterDadosGrafico(), dadosAlertas()">
+<body onload="obterMaquinas(), obterDados(), obterDadosGrafico(), dadosAlertas()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -133,6 +133,50 @@
             navMenu.classList.add('show');
             hamburger.classList.add('active');
         }
+    }
+
+    function obterMaquinas() {
+        var fkLinha = sessionStorage.LINHA;
+
+        fetch(`/dashPreditiva/listarMaquinaPreditiva/${fkLinha}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        var lista = document.getElementById("listamaquinas");
+                        window.alert("Não achou nenhuma máquina");
+                        return [];
+                    }
+                    return resposta.json();
+                } else {
+                    throw "Houve um erro na API!";
+                }
+            })
+            .then(function (dados) {
+                console.log("Dados recebidos: ", JSON.stringify(dados));
+                var lista = document.getElementById("listamaquinas");
+
+                for (let i = 0; i < dados.length; i++) {
+                    var maquina = dados[i];
+                    var id = maquina.idDispositivo
+                    var nome = maquina.nome
+
+                    console.log(maquina)
+                    console.log(id)
+
+                    var opcao = document.createElement("option");
+                    opcao.value = `${id}`;
+                    opcao.innerHTML = nome;
+
+                    inputCargo.appendChild(opcao);
+                }
+            })
+            .catch(function (erro) {
+                console.error(erro);
+                console.log("Deu erro");
+            });
     }
 
     function calcularLinhaTendencia(data) {

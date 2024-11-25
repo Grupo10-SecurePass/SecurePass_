@@ -74,14 +74,6 @@
                             <input type="text" id="emailTecnico">
                         </div>
                         <div class="label_input">
-                            <label for="empresaTecnico"><b>Empresa do Técnico:</b></label>
-                            <input type="text" id="empresaTecnico">
-                        </div>
-                        <div class="label_input">
-                            <label for="cargoTecnico"><b>Cargo do Técnico:</b></label>
-                            <input type="text" id="cargoTecnico">
-                        </div>
-                        <div class="label_input">
                             <label for="senhaTecnico"><b>Senha do Técnico:</b></label>
                             <div class="label_input_senha">
                                 <input type="password" id="input_senha">
@@ -99,7 +91,7 @@
                 </div>
 
                 <div class="buttons">
-                    <button type="button" onclick="deletar(cpf)" class="delete">
+                    <button type="button" onclick="deletarSuporte()" class="delete">
                         Excluir Suporte
                     </button>
                 </div>
@@ -137,10 +129,9 @@
     if (tecnico) {
         // Preenche os campos com os dados do técnico, caso existam
         document.getElementById("nomeTecnico").value = tecnico.nome || ''; // nome
-        document.getElementById("cpfTecnico").value = tecnico.cpf || '';   // CPF
+        document.getElementById("cpfTecnico").value = tecnico.CPF || '';   // CPF
         document.getElementById("emailTecnico").value = tecnico.email || ''; // email
-        document.getElementById("empresaTecnico").value = tecnico.empresa || ''; // empresa
-        document.getElementById("cargoTecnico").value = tecnico.cargo || ''; // cargo
+        document.getElementById("input_senha").value = tecnico.senha;
     } else {
         console.log('Erro: Dados do técnico não encontrados no localStorage.');
     }
@@ -189,32 +180,54 @@
             });
     }
 
-    // Função para deletar o técnico
-    function deletar() {
-        if (!tecnico) {
-            alert("Erro: Técnico não encontrado no localStorage.");
-            return;
+    function alterarDadosTecnico() {
+            var nome = nomeTecnico.value;
+            var cpf = cpfTecnico.value;
+            var email = emailTecnico.value;
+            var senha = input_senha.value;
+
+            fetch('/avisos/alterarTecnico', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    cpfServer: cpf,
+                    emailServer: email,
+                    senhaServer: senha
+                }),
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    window.alert("Dados atualizados com sucesso!");
+                    window.location.href="./CadTecnicoSuporte.html"
+                } else if (resposta.status == 404) {
+                    window.alert("Deu 404!");
+                } else {
+                    throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                }
+            }).catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
         }
 
-        const cpf = tecnico.cpf;
-
-        console.log("Função de deletar técnico pelo CPF:" + cpf);
-        fetch(`/avisos/deletarSuporte/${cpf}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                window.alert("Técnico excluído com sucesso!");
-                window.location = "./CadSuporte.html";  // Redireciona após a exclusão
-            } else if (resposta.status == 404) {
-                window.alert("Erro: Técnico não encontrado!");
-            } else {
-                throw ("Houve um erro ao tentar realizar a exclusão! Código da resposta: " + resposta.status);
-            }
-        }).catch(function (erro) {
-            console.log(`#ERRO: ${erro}`);
-        });
-    }
+    var cpf = tecnico.CPF;
+    function deletarSuporte() {
+            fetch('/avisos/deletar', {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    cpfServer: cpf
+                }),
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    window.alert("O status do técnico agora é inativo.");
+                    window.location.href="./CadTecnicoSuporte.html"
+                } else if (resposta.status == 404) {
+                    window.alert("Deu 404!");
+                } else {
+                    throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+                }
+            }).catch(function (erro) {
+                console.log(`#ERRO: ${erro}`);
+            });
+        }
 </script>
