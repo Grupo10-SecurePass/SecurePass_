@@ -118,13 +118,12 @@
         }
         // Configuração do Gráfico de Linha (CPU)
         function obterDadosCPU() {
-            var idDispositivo = inputCargo.value;
+            var idDispositivo = sessionStorage.getItem('LINHA');
 
-            fetch(`/medidas/CPU/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            fetch(`/medidas/CPU?idDispositivo=${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
                 if (response.ok) {
                     response.json().then(function (resposta) {
                         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
 
                         plotarCPU(resposta);
 
@@ -188,7 +187,7 @@
         // Configuração do Gráfico de Barras Empilhadas (RAM)
 
         function obterDadosRAM() {
-            var idDispositivo = inputCargo.value;
+            var idDispositivo = sessionStorage.getItem('LINHA');
 
             fetch(`/medidas/RAM/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
                 if (response.ok) {
@@ -259,7 +258,7 @@
         // Configuração do Gráfico de Linha (Disco)
 
         function obterDadosDISCO() {
-            var idDispositivo = inputCargo.value;
+            var idDispositivo = sessionStorage.getItem('LINHA');
 
             fetch(`/medidas/DISCO/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
                 if (response.ok) {
@@ -322,7 +321,7 @@
         
         // Função para obter os dados de Velocidade de Rede
     function obterDadosLatencia() {
-        var idDispositivo = inputCargo.value;
+        var idDispositivo = sessionStorage.getItem('LINHA');
 
         fetch(`/medidas/TempoResposta/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
