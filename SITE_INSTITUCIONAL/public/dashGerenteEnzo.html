@@ -88,10 +88,10 @@
                             <p> Taxa Download - Semanal </p>
                         </div>
                         <div class="espacografico-transferencia">
-                            <div class="indicador">
+                            <div class="indicador0">
                                 <p>Taxa Média de Download:</p>
-                                <span id="download-medio">Calculando...</span> Mbps
-                            </div>
+                                <span id="download-medio">...</span>
+                            </div> Mbps
                         </div>
                     </div>
                     <div class="pacote">
@@ -99,26 +99,24 @@
                             <p> Taxa Upload - Semanal </p>
                         </div>
                         <div class="espacografico-pacote">
-                            <div class="indicador">
+                            <div class="indicador1">
                                 <p>Taxa Média de Upload:</p>
-                                <span id="upload-medio">Calculando...</span> Mbps
-                            </div>
+                                <span id="upload-medio">...
+                            </div> Mbps
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
     <script>
-        const dadosDownload = [45, 90, 92, 15, 70, 60, 12];
-        const dadosUpload = [23, 40, 45, 12, 35, 28, 66];
+        const dadosDownload = [];
+        const dadosUpload = [];
 
         // Função para calcular a média
-        function calcularMedia(dados) {
-            const soma = dados.reduce((total, valor) => total + valor, 0);
-            return (soma / dados.length).toFixed(2);
-        }
+
 
         // Calculando as médias
         const mediaDownload = calcularMedia(dadosDownload);
@@ -153,62 +151,7 @@
                 hamburger.classList.add('active');
             }
         }
-        function obterMaquinas() {
-            var fkLinha = sessionStorage.LINHA;
 
-            fetch(`/maquinas/listarMaquinaDash/${fkLinha}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-
-            })
-                .then(function (resposta) {
-                    if (resposta.ok) {
-                        if (resposta.status == 204) {
-                            var lista = document.getElementById("listamaquinas");
-                            window.alert("Não achou nenhuma máquina")
-                            return [];
-                        }
-                        return resposta.json();
-                    } else {
-                        throw "Houve um erro na API!";
-                    }
-                })
-                .then(function (dados) {
-                    console.log("Dados recebidos: ", JSON.stringify(dados));
-                    var lista = document.getElementById("listamaquinas");
-
-
-                    for (let i = 0; i < dados.length; i++) {
-                        var maquina = dados[i];
-                        var id = maquina.idDispositivo
-                        var nome = maquina.nome
-
-                        console.log(maquina)
-                        console.log(id)
-
-                        var opcao = document.createElement("option");
-                        opcao.value = `${id}`
-                        opcao.innerHTML = nome
-
-
-                        inputCargo.appendChild(opcao);
-                    }
-
-                    // MUDAR ESTAS FUNÇÕES - obterDadosAlertaVEL();
-                    // MUDAR ESTAS FUNÇÕES -  obterDadosTempoResposta();
-                    // MUDAR ESTAS FUNÇÕES -  obterDadosTempoRespostaCalor();
-                    // MUDAR ESTAS FUNÇÕES -  obterDadosFreq();
-
-                })
-                .catch(function (erro) {
-                    console.error(erro);
-
-                    console.log("Deu erro")
-                });
-
-
-
-        }
 
         const ctx0 = document.getElementById('myChart');
         const ctx1 = document.getElementById('myChart1');
@@ -216,18 +159,18 @@
         new Chart(ctx0, {
             type: 'line',
             data: {
-                labels: ['10/Nov', '11/Nov', '12/Nov', '13/Nov', '14/Nov', '15/Nov', '16/Nov'],
+                labels: [],
                 datasets: [
                     {
                         label: 'Numero de Pacotes',
-                        data: [10, 20, 5, 15, 8, 12, 100],
+                        data: [],
                         borderColor: 'rgba(36, 130, 50, 1)',
                         backgroundColor: 'rgba(36, 130, 50, 0.3)',
                         yAxisID: 'y-axis-1'
                     },
                     {
                         label: 'Bytes Transferidos',
-                        data: [600, 900, 1500, 600, 900, 1300],
+                        data: [],
                         borderColor: 'rgba(200, 50, 50, 1)',
                         backgroundColor: 'rgba(200, 50, 50, 0.3)',
                         yAxisID: 'y-axis-2' // Atribui ao eixo Y à direita
@@ -260,10 +203,10 @@
         new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: ['10/Nov', '11/Nov', '12/Nov', '13/Nov', '14/Nov', '15/Nov', '16/Nov'],
+                labels: [],
                 datasets: [{
                     label: 'Mb/s',
-                    data: [20, 90, 92, 15, 70, 60],
+                    data: [],
                     borderWidth: 2,
                     backgroundColor: 'rgba(200, 50, 50, 0.6)',
                     borderColor: 'rgba(200, 50, 50, 1)'
@@ -278,32 +221,108 @@
             }
         });
 
+        function obterMaquinas() {
+            var fkLinha = sessionStorage.LINHA;
 
-        new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: [880, 440, 120, 60, 30, 0],
-                datasets: [{
-                    label: '%',
-                    data: [200, 900, 1500, 1500, 700, 600],
-                    borderWidth: 2,
-                    backgroundColor: 'rgba(36, 130, 50, 0.6)',
-                    borderColor: 'rgba(36, 130, 50, 1)'
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            fetch(`/dashGerenteEnzo/listarMaquinaPreditiva/${fkLinha}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            })
+                .then(function (resposta) {
+                    if (resposta.ok) {
+                        if (resposta.status == 204) {
+                            var lista = document.getElementById("listamaquinas");
+                            window.alert("Não achou nenhuma máquina");
+                            return [];
+                        }
+                        return resposta.json();
+                    } else {
+                        throw "Houve um erro na API!";
                     }
-                }
+                })
+                .then(function (dados) {
+                    console.log("Dados recebidos: ", JSON.stringify(dados));
+                    var lista = document.getElementById("listamaquinas");
+
+                    for (let i = 0; i < dados.length; i++) {
+                        var maquina = dados[i];
+                        var id = maquina.idDispositivo
+                        var nome = maquina.nome
+
+                        console.log(maquina)
+                        console.log(id)
+
+                        var opcao = document.createElement("option");
+                        opcao.value = `${id}`;
+                        opcao.innerHTML = nome;
+
+                        inputCargo.appendChild(opcao);
+                    }
+                })
+                .catch(function (erro) {
+                    console.error(erro);
+                    console.log("Deu erro");
+                });
+        }
+
+
+        function obterTaxaDownload() {
+            fetch(`/enzo/obterTaxaDownload/${linha}`)
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw "Erro na API!";
+                })
+                .then(function (data) {
+                    console.log("Dados recebidos:", data);
+
+                    const mediaSemanal = calcularMedia(data);
+
+                    document.getElementById('download-medio').textContent = mediaSemanal.toFixed(2);
+                })
+                .catch(function (err) {
+                    console.error("Erro ao obter taxa de download:", err);
+                });
+        }
+
+        function calcularMedia(dados) {
+            if (!dados || dados.length === 0) {
+                return 0; // Retorna 0 caso não existam dados
             }
-        });
 
+            const soma = dados.reduce((acumulador, valor) => acumulador + valor, 0);
+            return soma / dados.length;
+        }
 
+        function obterTaxaUpload() {
+            fetch(`/enzo/obterTaxaUpload/${linha}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log("Dados recebidos:", data);
+                    atualizarGrafico(data);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                })
+        }
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
+        function obterTransferencia() {
+            fetch(`/enzo/obterTransferencia/${linha}`)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log("Dados recebidos:", data);
+                    atualizarGrafico(data);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                })
+        }
+
     </script>
 </body>
 

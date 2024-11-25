@@ -531,7 +531,7 @@ body {
     transform: translateY(-8px);
 }
 
-.indicador {
+.indicador0 {
     width: 100%;
     background-color: #f9f9f9;
     border-radius: 10px;
@@ -541,20 +541,26 @@ body {
 }
 
 
-.indicador span {
+.indicador0 span {
     font-size: 2.5rem;
     color: #4CAF50;
     font-weight: 600;
     display: block;
 }
 
+.indicador1 {
+    width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+}
 
 
-
-
-
-
-
-
-
-
+.indicador1 span {
+    font-size: 2.5rem;
+    color: #4CAF50;
+    font-weight: 600;
+    display: block;
+}
