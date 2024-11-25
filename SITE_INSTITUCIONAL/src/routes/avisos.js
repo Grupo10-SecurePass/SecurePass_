@@ -64,10 +64,6 @@ router.put("/alterarTecnico", function (req, res) {
     avisoController.alterarDadosGerente(req, res);
 });
 
-router.put("/editar/:cpf", function (req, res) {
-    avisoController.editar(req, res);
-});
-
 router.put("/deletar", function (req, res) {
     avisoController.deletar(req, res);
 });

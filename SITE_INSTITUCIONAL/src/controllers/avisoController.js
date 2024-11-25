@@ -352,20 +352,6 @@ function listarFeedbacksGeral(req, res) {
     });
 }
 
-function editar(req, res) {
-    var novoDado = req.body;  // Recebe todos os dados a serem atualizados
-    var cpfUsuario = req.params.cpf;  // Recebe o CPF do usuário a ser atualizado da URL
-
-    usuarioModel.editar(novoDado, cpfUsuario)
-        .then(function(resultado) {
-            res.json(resultado);
-        })
-        .catch(function(erro) {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
-
 function deletar(req, res) {
     var cpf = req.body.cpfServer;
 
@@ -420,7 +406,6 @@ module.exports = {
     alterarDadosGerente,
     alterarDadosTecnico,
     listarFeedbacksGeral,
-    editar,
     deletar,
     pesquisa,
     listarSuporte,

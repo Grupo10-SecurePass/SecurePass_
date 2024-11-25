@@ -139,47 +139,6 @@
     // CPF para ser usado na URL de requisição
     var cpf = tecnico ? tecnico.cpf : null;
 
-    // Função para editar os dados do técnico
-    function editarTecnico() {
-        // Pega os dados do formulário
-        const nome = document.getElementById("nomeTecnico").value;
-        const cpf = document.getElementById("cpfTecnico").value;
-        const email = document.getElementById("emailTecnico").value;
-        const empresa = document.getElementById("empresaTecnico").value;
-        const cargo = document.getElementById("cargoTecnico").value;
-
-        // Cria o objeto de dados para enviar
-        const dados = {
-            nome: nome,
-            cpf: cpf,
-            email: email,
-            empresa: empresa, // empresa ajustado aqui
-            cargo: cargo, // cargo ajustado aqui
-        };
-
-        // Envia uma requisição PUT para o servidor
-        fetch(`/editar/${cpf}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(dados)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Dados atualizados com sucesso!");
-                    window.location.reload(); // Atualiza a página após a alteração
-                } else {
-                    alert("Erro ao atualizar dados!");
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert("Houve um erro ao tentar atualizar os dados.");
-            });
-    }
-
     function alterarDadosTecnico() {
             var nome = nomeTecnico.value;
             var cpf = cpfTecnico.value;
