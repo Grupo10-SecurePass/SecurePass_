@@ -1,27 +1,16 @@
 var database = require("../database/config");
+const { listarMaquinaDash } = require("./maquinaModel");
 
-function obterTaxaDownload(Linha) {
+function obterTaxaDownload() {
   console.log("ACESSEI A FUNÇÃO DA TAXA DE DOWNLOAD");
-
   var instrucaoSql = `
-       SELECT 
-    YEAR(c.dataRegistro) AS ano,
-    WEEK(c.dataRegistro) AS semana,
-    AVG(c.registro) AS media_bytes_recebidos
-    FROM 
-        captura c
-    INNER JOIN 
-        componente comp ON c.fkComponente = comp.idComponente
-    WHERE 
-        comp.nome = 'RedeRecebida'
-    GROUP BY 
-        ano, semana
-    ORDER BY 
-       ano, semana;
+
     `;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
-  return database.executar(instrucaoSql);
+  var receberDados = database.executar(instrucaoSql);
+  console.log(receberDados);
+  return receberDados;
 }
 
 function obterTaxaUpload(Linha) {
@@ -36,13 +25,28 @@ function obterTaxaUpload(Linha) {
   return database.executar(instrucaoSql);
 }
 
-function obterTransferencia(Linha) {
+function obterTransferencia(idDispositivo) {
   console.log("ACESSEI A FUNÇÃO DA TAXA DE DOWNLOAD");
 
   var instrucaoSql = `
-    
+    SELECT 
+            DATE_FORMAT(dataRegistro, '%d-%m') AS data,
+            AVG(registro) AS media_diaria
+            FROM captura
+            WHERE fkDispositivo = ${idDispositivo}
+            AND fkComponente = 4
+            GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
+            ORDER BY data
+            LIMIT 5;
   `;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);
+}
+
+
+module.exports = {
+  obterTaxaDownload,
+  obterTaxaUpload,
+  obterTransferencia
 }

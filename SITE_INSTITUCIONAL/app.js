@@ -28,6 +28,8 @@ var guilhermeRouter = require("./src/routes/guilherme");
 var annaRouter = require("./src/routes/anna");
 var beaRouter = require("./src/routes/beatriz");
 var preditivaRouter = require("./src/routes/dashPreditiva");
+var enzoRouter = require("./src/routes/enzo");
+
 
 
 app.use(express.json());
@@ -48,6 +50,7 @@ app.use("/guilherme", guilhermeRouter);
 app.use("/anna", annaRouter);
 app.use("/beatriz", beaRouter);
 app.use("/dashPreditiva", preditivaRouter);
+app.use("/enzo", enzoRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

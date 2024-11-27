@@ -1,4 +1,4 @@
-var enzoController = require("../models/enzoModel")
+var enzoModel = require("../models/enzoModel")
 
 function obterTaxaDownload(req, res) {
     const linha = req.params.linha;
@@ -33,8 +33,8 @@ function obterTaxaUpload(req, res) {
 }
 
 function obterTransferencia(req, res) {
-    const linha = req.params.linha;
-    enzoModel.obterTransferencia(linha)
+    const idDispositivo = req.params.idDispositivo;
+    enzoModel.obterTransferencia(idDispositivo)
         .then((resultado) => {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -46,4 +46,10 @@ function obterTransferencia(req, res) {
             console.error("Erro ao obter dados de transferencia: ", erro.sqlMessage);
             res.status(500).json(erro.sqlMessage);
         });
+}
+
+module.exports = {
+    obterTaxaDownload,
+    obterTaxaUpload,
+    obterTransferencia
 }
