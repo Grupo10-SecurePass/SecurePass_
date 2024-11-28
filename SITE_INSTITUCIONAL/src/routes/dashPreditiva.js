@@ -3,15 +3,15 @@ var router = express.Router();
 
 var preditivaController = require("../controllers/preditivaController");
 
-router.get("/obterMediaDiaria/:linha", (req, res) => {
+router.get("/obterMediaDiaria/:linha/:idDispositivo", (req, res) => {
     preditivaController.obterMediaDiaria(req, res);
 });
 
-router.get("/obterDados/:linha", function (req, res) {
+router.get("/obterDados/:linha/:idDispositivo", function (req, res) {
     preditivaController.obterDados(req, res);
 });
 
-router.get("/listarMaquinaPreditiva/:fkLinha", function (req, res) {
+router.get("/listarMaquinaPreditiva/:linha", function (req, res) {
   preditivaController.listarMaquinaPreditiva(req, res);
 })
 
