@@ -13,6 +13,11 @@
     .hidden {
         display: none;
     }
+
+    #gerarpdf {
+        display: none;
+        /* Esconde o botão permanentemente */
+    }
 </style>
 
 <body>
@@ -36,12 +41,15 @@
                         <a href="./dashGuilherme.html">Uso de Processos</a>
                     </div>
                 </div>
-                <a href="./dadosUsuario.html"><img src="Imagens/user.png" alt="Icon" class="nav-icon"><span class="nav-text">Perfil</span></a>
-                <a href="./feedbackPublicar.html"><img src="Imagens/feedback (1).png" alt="Icon" class="nav-icon"><span class="nav-text">Feedback</span></a>
+                <a href="./dadosUsuario.html"><img src="Imagens/user.png" alt="Icon" class="nav-icon"><span
+                        class="nav-text">Perfil</span></a>
+                <a href="./feedbackPublicar.html"><img src="Imagens/feedback (1).png" alt="Icon" class="nav-icon"><span
+                        class="nav-text">Feedback</span></a>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                <a href="index.html"><img src="Imagens/logout.png" alt="Icon" class="nav-icon"><span class="nav-text">Sair</span></a>
+                <a href="index.html"><img src="Imagens/logout.png" alt="Icon" class="nav-icon"><span
+                        class="nav-text">Sair</span></a>
             </div>
-            
+
         </nav>
 
         <div class="dashboard-content">
@@ -59,15 +67,17 @@
                     <a href="dadosUsuario.html"><img src="Imagens/profile-user.png" alt="Icon" class="Icon">Perfil</a>
                 </div>
             </div>
-            
+
             <div id="resposta" class="resposta-card">
+                <button id="gerarpdf" class="botao-relatorio">GERAR PDF DO RELATÓRIO</button>
                 <img src="Imagens/close.png" alt="Fechar" class="fechar-icone" onclick="fecharResposta()">
-                <img id="carregando" src="imagens/Animation - 1732148291382.gif" alt="Carregando" class="carregando" style="display: none;">
+                <img id="carregando" src="imagens/Animation - 1732148291382.gif" alt="Carregando" class="carregando"
+                    style="display: none;">
                 <div class="resposta-texto">
                     <span id="resposta-texto"></span>
                 </div>
             </div>
-            
+
 
             <div class="teste">
                 <div class="card-botoes">
@@ -138,6 +148,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script>
 
     window.onload = function () {
@@ -576,7 +587,11 @@
     const respostaCard = document.getElementById('resposta');
     const carregandoIcone = document.getElementById('carregando');
     const respostaTexto = document.getElementById('resposta-texto');
-    
+    const gerarPdfBotao = document.getElementById('gerarpdf'); // Botão de gerar PDF
+
+    // Esconde o botão de gerar PDF no início
+    gerarPdfBotao.style.display = "none";
+
     // Limpar o conteúdo do card antes de exibir o carregando
     respostaTexto.innerText = '';
     respostaCard.style.display = "block";
@@ -606,17 +621,20 @@ document.getElementById('gerarRelatorio').addEventListener('click', function () 
     const respostaCard = document.getElementById('resposta');
     const carregandoIcone = document.getElementById('carregando');
     const respostaTexto = document.getElementById('resposta-texto');
+    const gerarPdfBotao = document.getElementById('gerarpdf'); // Botão de gerar PDF
 
     // Limpar o conteúdo do card antes de exibir o carregando
     respostaTexto.innerText = '';
     respostaCard.style.display = "block";
     carregandoIcone.style.display = "block";
+    gerarPdfBotao.style.display = "none"; // Esconde o botão de gerar PDF no início
     document.body.classList.add('ofuscado'); // Adiciona a classe de ofuscamento ao abrir o card
 
     async function coletarDados() {
         var Linha = sessionStorage.getItem("LINHA");
         if (!Linha) {
             alert("Linha não definida. Por favor, selecione uma linha antes de continuar.");
+            carregandoIcone.style.display = "none";
             return;
         }
 
@@ -630,78 +648,45 @@ document.getElementById('gerarRelatorio').addEventListener('click', function () 
             const totalAlertasCPU = alertasData[0]?.totalAlertasCPU || 0;
             const totalAlertasRAM = alertasData[0]?.totalAlertasRAM || 0;
 
-            const relatorioData = {
-                descricao: "Relatório detalhado sobre o desempenho dos sistemas monitorados. Foco nos dados de uso de CPU, RAM, alertas e tempo de ociosidade.",
-                cpu: {
-                    descricao: "Dados sobre o uso de CPU ao longo do dia.",
-                    historico: cpuData.map(item => ({
-                        horario: item.horario,
-                        uso: item.percentualCpu
-                    }))
-                },
-                ram: {
-                    descricao: "Dados sobre o uso de RAM ao longo do dia.",
-                    historico: ramData.map(item => ({
-                        horario: item.horario,
-                        uso: item.percentualRam
-                    }))
-                },
-                alertas: {
-                    descricao: "Dados sobre os alertas gerados ao longo do dia.",
-                    totalAlertasCPU: totalAlertasCPU,
-                    totalAlertasRAM: totalAlertasRAM,
-                    detalhes: `Foram registrados ${totalAlertasCPU} alertas de CPU e ${totalAlertasRAM} alertas de RAM.`
-                },
-                tempoEstavelEAlerta: {
-                    descricao: "Porcentagem de tempo que o sistema permaneceu em estado estável e alerta.",
-                    porcentagemAlerta: tempoAlertaData[0]?.porcentagemAlertas || 0,
-                    porcentagemEstavel: tempoAlertaData[0]?.porcentagemSemAlertas || 0,
-                },
-                infoAlertas: {
-                    descricao: "Detalhes dos alertas de CPU e RAM.",
-                    dados: infoAlertasData.map(alerta => ({
-                        componente: alerta.nomeComponente === 'PercCPU' ? 'CPU' : 'RAM',
-                        descricaoAlerta: alerta.descricaoAlerta,
-                        dataAlerta: new Date(alerta.dataAlerta).toLocaleString()
-                    }))
-                }
-            };
-
             const perguntaComDados = `
-                Análise detalhada do desempenho do sistema com base nos seguintes dados:
+            Análise detalhada do desempenho do sistema com base nos seguintes dados:
 
-                1. Uso de CPU:
-                    ${cpuData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualCpu}%`).join('\n')}
+            1. Uso de CPU:
+                ${cpuData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualCpu}%`).join('\n')}
 
-                2. Uso de RAM:
-                    ${ramData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualRam}%`).join('\n')}
+            2. Uso de RAM:
+                ${ramData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualRam}%`).join('\n')}
 
-                3. Alertas:
-                    CPU: ${totalAlertasCPU} alertas
-                    RAM: ${totalAlertasRAM} alertas
+            3. Alertas:
+                CPU: ${totalAlertasCPU} alertas
+                RAM: ${totalAlertasRAM} alertas
 
-                4. Detalhes dos alertas:
-                    ${infoAlertasData.map(alerta => `Componente: ${alerta.nomeComponente === 'PercCPU' ? 'CPU' : 'RAM'}, Descrição: ${alerta.descricaoAlerta}, Data: ${new Date(alerta.dataAlerta).toLocaleString()}`).join('\n')}
+            4. Detalhes dos alertas:
+                ${infoAlertasData.map(alerta => `Componente: ${alerta.nomeComponente === 'PercCPU' ? 'CPU' : 'RAM'}, Descrição: ${alerta.descricaoAlerta}, Data: ${new Date(alerta.dataAlerta).toLocaleString()}`).join('\n')}
 
-                5. Porcentagem de tempo:
-                    Em alerta: ${tempoAlertaData[0]?.porcentagemAlertas || 0}%
-                    Estável: ${tempoAlertaData[0]?.porcentagemSemAlertas || 0}%
+            5. Porcentagem de tempo:
+                Em alerta: ${tempoAlertaData[0]?.porcentagemAlertas || 0}%
+                Estável: ${tempoAlertaData[0]?.porcentagemSemAlertas || 0}%
 
-                Por favor, forneça uma análise detalhada e bem organizada dos dados de uso de CPU, RAM, alertas e tempo de ociosidade do sistema e faça sempre uma conclusão. O foco deve ser na explicação clara e simples desses dados, sem incluir dados relacionados ao banco de dados. Organize a resposta em tópicos e listas, e inclua descrições sobre cada aspecto dos dados apresentados.
+            Por favor, forneça uma análise detalhada e bem organizada dos dados de uso de CPU, RAM, alertas e tempo de ociosidade do sistema e faça sempre uma conclusão. O foco deve ser na explicação clara e simples desses dados, sem incluir dados relacionados ao banco de dados. Organize a resposta em tópicos e listas, e inclua descrições sobre cada aspecto dos dados apresentados, formatado em abnt por favor.
             `;
 
             const response = await fetch('http://localhost:3001/perguntar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    pergunta: perguntaComDados,
-                    contexto: relatorioData
+                    pergunta: perguntaComDados
                 })
             });
 
             const data = await response.json();
 
             respostaTexto.innerText = data.resultado || 'A resposta da API está vazia ou não foi definida corretamente.';
+
+            // Exibe o botão "Gerar PDF" apenas após o texto ser carregado
+            if (data.resultado) {
+                gerarPdfBotao.style.display = "block";
+            }
         } catch (error) {
             respostaTexto.innerText = 'Erro ao coletar ou enviar os dados: ' + error.message;
         } finally {
@@ -713,6 +698,75 @@ document.getElementById('gerarRelatorio').addEventListener('click', function () 
 
     coletarDados();
 });
+
+    document.getElementById('gerarpdf').addEventListener('click', async function () {
+        const respostaTexto = document.getElementById('resposta-texto').innerText;
+
+        if (!respostaTexto) {
+            alert('Nenhuma resposta disponível para gerar o PDF.');
+            return;
+        }
+
+        // Criar um PDF usando jsPDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        // Configuração inicial do PDF
+        pdf.setFont('Helvetica', 'normal');
+        pdf.setFontSize(12);
+
+        // Adicionar logo ao PDF no topo centralizado
+        const imgData = await fetch('imagens/logorelatorio.png') // Caminho da logo
+            .then(response => response.blob())
+            .then(blob => new Promise(resolve => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.readAsDataURL(blob);
+            }));
+
+        pdf.addImage(imgData, 'PNG', 80, 10, 50, 20); // Centraliza a logo no topo (ajuste os valores conforme necessário)
+
+        // Adicionar uma linha verde abaixo da logo
+        pdf.setDrawColor(0, 153, 51); // Verde
+        pdf.line(10, 35, 200, 35); // Linha horizontal abaixo da logo
+
+        // Adicionar título estilizado abaixo da linha
+        pdf.setFontSize(16);
+        pdf.setTextColor(0, 0, 0); // Preto para o título
+        pdf.text("Relatório do Sistema", 105, 45, { align: 'center' }); // Título centralizado
+
+        // Adicionar subtítulo estilizado (opcional)
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 153, 51); // Verde para o subtítulo
+        pdf.text("Análise detalhada do desempenho", 105, 52, { align: 'center' });
+
+        // Adicionar o texto principal
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 0, 0); // Preto para o texto principal
+        const linhas = pdf.splitTextToSize(respostaTexto, 180); // Define largura máxima para texto
+        pdf.text(linhas, 10, 60); // Começa o texto após o cabeçalho
+
+        // Adicionar rodapé com detalhes em verde
+        const paginasTotais = pdf.internal.getNumberOfPages();
+        for (let i = 1; i <= paginasTotais; i++) {
+            pdf.setPage(i);
+
+            // Rodapé estilizado
+            pdf.setFontSize(10);
+            pdf.setTextColor(0, 153, 51); // Verde para o rodapé
+            pdf.text(`Página ${i} de ${paginasTotais}`, 10, 290); // Número da página no canto inferior esquerdo
+
+            const dataAtual = new Date().toLocaleDateString();
+            pdf.text(`Data: ${dataAtual}`, 180, 290); // Data no canto inferior direito
+
+            // Linha separando o rodapé do conteúdo
+            pdf.setDrawColor(200, 200, 200); // Cinza claro
+            pdf.line(10, 285, 200, 285);
+        }
+
+        // Salvar o arquivo PDF
+        pdf.save('relatorio.pdf');
+    });
 
     function fecharResposta() {
         // Oculta o card de resposta

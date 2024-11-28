@@ -235,6 +235,9 @@
                             data.push(item.media_diaria);
                         });
 
+                        labels.reverse();
+                        data.reverse();
+
                         // Cálculo da média
                         const media = data.reduce((acc, value) => acc + value, 0) / data.length;
 
@@ -298,6 +301,10 @@
                             data.push(item.media_diaria);
                         });
 
+                        // Inverter a ordem dos dados
+                        labels.reverse();
+                        data.reverse();
+
                         // Cálculo da média
                         const media = data.reduce((acc, value) => acc + value, 0) / data.length;
 
@@ -347,34 +354,39 @@
     }, 30000);
 
     function obterDadosCPU() {
-        var idDispositivo = inputCargo.value;
+    var idDispositivo = inputCargo.value;
 
-        fetch(`/medidas/CPUGerente/${idDispositivo}`, { cache: 'no-store' })
-            .then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (resposta) {
-                        const labels = [];
-                        const data = [];
+    fetch(`/medidas/CPUGerente/${idDispositivo}`, { cache: 'no-store' })
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    const labels = [];
+                    const data = [];
 
-                        resposta.forEach(item => {
-                            labels.push(item.data);
-                            data.push(item.media_diaria);
-                        });
-
-                        if (CPUChart) {
-                            CPUChart.destroy();
-                        }
-
-                        plotarCPU(labels, data);
+                    resposta.forEach(item => {
+                        labels.push(item.data);
+                        data.push(item.media_diaria);
                     });
-                } else {
-                    console.error('Nenhum dado encontrado ou erro na API');
-                }
-            })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-            });
-    }
+
+                    // Inverter a ordem dos dados
+                    labels.reverse();
+                    data.reverse();
+
+                    if (CPUChart) {
+                        CPUChart.destroy();
+                    }
+
+                    plotarCPU(labels, data);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+}
+
 
     function plotarCPU(labels, data) {
         CPUChart = new Chart(ctx2, {
@@ -464,29 +476,29 @@
     function obterLinhaProblemas() {
 
         fetch(`/medidas/LinhaProblemas/`, { cache: 'no-store' })
-    .then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
 
-                const nomeLinha = resposta[0].linha; 
-                const totalAlertas = resposta[0].totalProblemas;
+                        const nomeLinha = resposta[0].linha;
+                        const totalAlertas = resposta[0].totalProblemas;
 
-                const riscoLegenda = document.querySelector('.riscolegenda p');
-                if (riscoLegenda) {
-                    riscoLegenda.innerHTML = `A ${nomeLinha} teve mais problemas com máquinas, totalizando ${totalAlertas} problemas.`;
+                        const riscoLegenda = document.querySelector('.riscolegenda p');
+                        if (riscoLegenda) {
+                            riscoLegenda.innerHTML = `A ${nomeLinha} teve mais problemas com máquinas, totalizando ${totalAlertas} problemas.`;
+                        }
+
+                        // Console para depuração
+                        console.log('Nome da linha:', nomeLinha);
+                        console.log('Total de alertas:', totalAlertas);
+                    });
+                } else {
+                    console.error('Erro ao buscar dados de linhas');
                 }
-
-                // Console para depuração
-                console.log('Nome da linha:', nomeLinha);
-                console.log('Total de alertas:', totalAlertas);
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados: ${error.message}`);
             });
-        } else {
-            console.error('Erro ao buscar dados de linhas');
-        }
-    })
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados: ${error.message}`);
-    });
 
     }
 

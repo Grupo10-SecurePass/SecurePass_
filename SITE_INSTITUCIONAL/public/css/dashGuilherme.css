@@ -283,6 +283,26 @@ body {
     margin: 0 15px;
 }
 
+.botao-relatorio {
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #FFF;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s;
+    margin: 0 15px;
+    background-color: #248232;
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    cursor: pointer;
+}
+
+.botao-relatorio:hover {
+    transform: scale(1.05);
+    background-color: #1e6c2a;
+}
+
 .hidden {
     display: none;
 }

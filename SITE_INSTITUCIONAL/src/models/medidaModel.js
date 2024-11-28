@@ -97,14 +97,15 @@ function Upload(idDispositivo) {
 function UploadGerente(idDispositivo) {
 
     var instrucaoSql = ` SELECT 
-            DATE_FORMAT(dataRegistro, '%d-%m') AS data,
-            AVG(registro) AS media_diaria
-            FROM captura
-            WHERE fkDispositivo = ${idDispositivo}
-            AND fkComponente = 5
-            GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
-            ORDER BY data
-            LIMIT 5;`;
+    DATE_FORMAT(dataRegistro, '%d-%m') AS data,
+    AVG(registro) AS media_diaria
+FROM captura
+WHERE fkDispositivo = ${idDispositivo}
+  AND fkComponente = 5
+GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
+ORDER BY MAX(dataRegistro) DESC
+LIMIT 5;
+`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -125,14 +126,16 @@ function Download(idDispositivo) {
 function DownloadGerente(idDispositivo) {
 
     var instrucaoSql = `SELECT 
-            DATE_FORMAT(dataRegistro, '%d-%m') AS data,
-            AVG(registro) AS media_diaria
-            FROM captura
-            WHERE fkDispositivo = ${idDispositivo}
-            AND fkComponente = 4
-            GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
-            ORDER BY data
-            LIMIT 5;`;
+    DATE_FORMAT(dataRegistro, '%d-%m') AS data,
+    AVG(registro) AS media_diaria
+FROM captura
+WHERE fkDispositivo = ${idDispositivo}
+  AND fkComponente = 4
+GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
+ORDER BY MAX(dataRegistro) DESC
+LIMIT 5;
+;
+`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -165,14 +168,15 @@ function CPU(idDispositivo) {
 function CPUGerente(idDispositivo) {
 
     var instrucaoSql = `SELECT 
-            DATE_FORMAT(dataRegistro, '%d-%m') AS data,
-            AVG(registro) AS media_diaria
-            FROM captura
-            WHERE fkDispositivo = ${idDispositivo}
-            AND fkComponente = 1
-            GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
-            ORDER BY data
-            LIMIT 5;`;
+    DATE_FORMAT(dataRegistro, '%d-%m') AS data,
+    AVG(registro) AS media_diaria
+FROM captura
+WHERE fkDispositivo = ${idDispositivo}
+  AND fkComponente = 1
+GROUP BY DATE_FORMAT(dataRegistro, '%d-%m')
+ORDER BY MAX(dataRegistro) DESC
+LIMIT 5;
+`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -201,11 +205,12 @@ function MaquinasRisco() {
             JOIN 
             dispositivo d ON a.fkDispositivo = d.idDispositivo
             WHERE 
-            a.dataAlerta >= NOW() - INTERVAL 5 DAY
+            a.dataAlerta >= NOW() - INTERVAL 40 DAY
             GROUP BY 
             DATE_FORMAT(a.dataAlerta, '%d-%m')
             ORDER BY 
-            data ASC;
+            data ASC
+            LIMIT 5;
 `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
