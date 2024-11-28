@@ -116,6 +116,7 @@
             const sidebar = document.getElementById('alertSidebar');
             sidebar.classList.toggle('show');
         }
+        
         // Configuração do Gráfico de Linha (CPU)
         function obterDadosCPU() {
             var idDispositivo = sessionStorage.getItem('LINHA');
@@ -124,6 +125,28 @@
                 if (response.ok) {
                     response.json().then(function (resposta) {
                         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        plotarCPU(resposta);
+
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+                });
+        }
+        const labelNRT = ['10s', '20s', '30s', '40s', '50s', '60s'];
+
+        function obterDadosCPU() {
+            var idDispositivo = sessionStorage.getItem('LINHA');
+
+            fetch(`/medidas/CPU/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
 
                         plotarCPU(resposta);
 
@@ -155,19 +178,20 @@
 
             if (CPUChart) {
                 CPUChart.destroy();
-            }
-            // Criar  gráfico
+            }   
+
+            // Criar o novo gráfico
             const cpuCtx = document.getElementById('myChart1').getContext('2d');
             CPUChart = new Chart(cpuCtx, {
                 type: 'line',
                 data: {
                     labels: labelNRT,
                     datasets: [{
-                        label: 'Uso da CPU (%)',
+                        label: 'uso da cpu (%)',
                         data: dados,
-                        borderColor: '#4caf50',
-                        backgroundColor: 'rgba(76, 175, 80, 0.2)',
-                        tension: 0.4
+                        borderWidth: 2,
+                        backgroundColor: 'rgba(36, 130, 50, 1)',
+                        borderColor: 'rgba(36, 130, 50, 1)'
                     }]
                 },
                 options: {
@@ -382,7 +406,7 @@
     }
 
     setInterval(() => {
-        obterDadosVelocidade();
+        obterDadosLatencia();
     }, 30000);
 
     </script>
