@@ -1,8 +1,9 @@
 var preditivaModel = require("../models/preditivaModel");
 
 function obterMediaDiaria(req, res) {
-    const linha = req.params.linha;
-    preditivaModel.obterMediaDiaria(linha)
+    var linha = req.params.linha;
+    var idDispositivo = req.params.idDispositivo;
+    preditivaModel.obterMediaDiaria(linha, idDispositivo)
         .then((resultado) => {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -19,8 +20,9 @@ function obterMediaDiaria(req, res) {
 
 function obterDados(req, res) {
     var linha = req.params.linha;
+    var idDispositivo = req.params.idDispositivo;
 
-    preditivaModel.obterDados(linha).then(function (resultado) {
+    preditivaModel.obterDados(linha, idDispositivo).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -34,10 +36,10 @@ function obterDados(req, res) {
 }
 
 function listarMaquinaPreditiva(req,res) {
-  var fkLinha = req.params.fkLinha;
+  var fkLinha = req.params.linha;
   console.log(fkLinha)
     
-  maquinaModel.preditivaModel(fkLinha).then(function (resultado) {
+  preditivaModel.listarMaquinaPreditiva(fkLinha).then(function (resultado) {
       if (resultado.length > 0) {
           res.status(200).json(resultado);
       } else {

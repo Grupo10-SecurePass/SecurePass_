@@ -6,7 +6,7 @@
     <title>Dashboard - Gerente</title>
     <link rel="stylesheet" href="./css/dashPreditiva.css">
 </head>
-<body onload="obterMaquinas(), obterDados(), obterDadosGrafico(), dadosAlertas()">
+<body onload="obterMaquinas(), obterDados(), obterDadosGrafico(), dadosAlertas(), atualizarAlertas(), gerarMensagemAlerta()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -54,9 +54,9 @@
                         </div>
                     </div>
                     <div class="select_filtro">
-                        <select name="escolherServidor" id="">
+                        <select name="escolherServidor" id="inputEscolha" onchange="onDeviceChange()">
                             <option value="#" selected disabled>Escolher</option>
-                        </select>
+                        </select>                        
                     </div>
                 </div>
                 <div class="alertas">
@@ -135,10 +135,9 @@
         }
     }
 
+    var linha = sessionStorage.getItem("LINHA");
     function obterMaquinas() {
-        var fkLinha = sessionStorage.LINHA;
-
-        fetch(`/dashPreditiva/listarMaquinaPreditiva/${fkLinha}`, {
+        fetch(`/dashPreditiva/listarMaquinaPreditiva/${linha}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         })
@@ -170,13 +169,28 @@
                     opcao.value = `${id}`;
                     opcao.innerHTML = nome;
 
-                    inputCargo.appendChild(opcao);
+                    inputEscolha.appendChild(opcao);
                 }
+                obterDados()
+                obterDadosGrafico()
+                atualizarAlertas()
+                gerarMensagemAlerta()
             })
             .catch(function (erro) {
                 console.error(erro);
                 console.log("Deu erro");
             });
+    }
+    function onDeviceChange() {
+        var selectElement = document.getElementById('inputEscolha');
+        var idDispositivo = selectElement.value;
+
+        if (idDispositivo !== "#") {
+            obterDados(idDispositivo);
+            obterDadosGrafico(idDispositivo);
+        } else {
+            console.log("Nenhum dispositivo selecionado.");
+        }
     }
 
     function calcularLinhaTendencia(data) {
@@ -201,12 +215,17 @@
         }));
     }
 
+    let graficoDispersao = null;
+    let graficoBarra = null;
     function criarGraficoDispersao(data) {
+        if (graficoDispersao) {
+            graficoDispersao.destroy();
+        }
         const ctx = document.getElementById('graficoDispersao');
         const valores = data.map(item => (item.media_cpu + item.media_ram) / 2);
         const linhaTendencia = calcularLinhaTendencia(valores);
 
-        new Chart(ctx, {
+        graficoDispersao = new Chart(ctx, {
             type: 'scatter',
             data: {
                 datasets: [
@@ -264,9 +283,8 @@
         });
     }
 
-    function obterDadosGrafico() {
-        const linha = sessionStorage.getItem("LINHA");
-        fetch(`/dashPreditiva/obterMediaDiaria/${linha}`)
+    function obterDadosGrafico(idDispositivo) {
+        fetch(`/dashPreditiva/obterMediaDiaria/${linha}/${idDispositivo}`)
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
@@ -279,10 +297,9 @@
             .catch(err => console.error("Erro ao buscar dados do gráfico:", err));
     }
 
-    function obterDados(){
-        var linha = sessionStorage.getItem("LINHA")
+    function obterDados(idDispositivo){
         console.log(linha)
-        fetch(`/dashPreditiva/obterDados/${linha}`)
+        fetch(`/dashPreditiva/obterDados/${linha}/${idDispositivo}`)
             .then(function(response){
             return response.json();
         })
@@ -295,11 +312,14 @@
         })
     }
     function atualizarGrafico(data) {
+        if (graficoBarra) {
+            graficoBarra.destroy();
+        }
         const labels = data.map(item => item.semana);
         const valores = data.map(item => item.media_geral);
 
         const ctx1 = document.getElementById('graficoBarra');
-        new Chart(ctx1, {
+        graficoBarra = new Chart(ctx1, {
             type: 'bar',
             data: {
                 labels: labels,
