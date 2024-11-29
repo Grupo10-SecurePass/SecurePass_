@@ -54,7 +54,7 @@ body{
 }
 
 .textodata p {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 700;
 }
 
@@ -100,6 +100,7 @@ body{
     height: 85%;
     background-color: #FCFFFC;
     padding: 5px;
+    gap: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -164,8 +165,8 @@ body{
 }
 .dispersao{
     width: 100%;
-    height: 300px;
-    gap: 40px;
+    height: 210px;
+    gap: 10px;
     background-color: #FCFFFC;
     padding: 5px;
     display: flex;
@@ -175,7 +176,10 @@ body{
 }
 .titulodispersao{
     width: 100%;
-    height: 30px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .titulodispersao .titu{
     font-size: 20px;
@@ -184,14 +188,21 @@ body{
 .titulodispersao .sub{
     font-size: 10px;
 }
-.grafico1dispersao{
-    width: 95%;
-    height: 210px;
+.espaco{
     display: flex;
+    flex-direction: column;
+    gap: 50px;
+    height: 350px;
+}
+.grafico1dispersao{
+    width: 100%;
+    height: 230px;
+    display: flex;
+    justify-content: center;
     gap: 10px;
 }
 .espacografico1{
-    width: 75%;
+    width: 100%;
     height: 95%;
     display: flex;
     align-items: center;
@@ -200,10 +211,18 @@ body{
 .graficodispersao{
     width: 100%;
 }
+.legendagrafico2{
+    font-size: 15px;
+    width: 80%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 .legendagrafico1{
     font-size: 15px;
-    width: 30%;
-    height: 95%;
+    width: 40%;
+    height: 50px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -213,7 +232,7 @@ body{
 }
 .desempenho{
     width: 100%;
-    height: 300px;
+    height: 390px;
     gap: 35px;
     background-color: #FCFFFC;
     padding: 5px;
@@ -224,122 +243,183 @@ body{
 }
 
 .hamburger {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    z-index: 3;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  top: 10px;
+  left: 10px; 
+  z-index: 3;
+  display: block;
+  transition: left 0.3s ease; 
 }
 
 .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: #fcfffc;
-    margin: 5px 0;
-    transition: 0.3s;
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #000000;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+
+.close-btn {
+  background: #040f0f;
+  border: none;
+  color: #fcfffc;
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  display: none;
+}
+
+.close-btn .bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #fcfffc;
+  margin: 5px 0;
+  transition: 0.3s;
 }
 
 .nav-menu {
-    position: absolute;
-    top: 0;
-    left: -250px;
-    height: 100%;
-    width: 250px;
-    background: #040f0f;
-    padding-top: 10px;
-    box-sizing: border-box;
-    transition: left 0.3s ease;
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: -250px; 
+  height: 100%;
+  width: 250px;
+  background: #040f0f;
+  padding-top: 10px;
+  box-sizing: border-box;
+  transition: left 0.3s ease;
+  z-index: 4;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
 }
 
 .nav-menu.show {
-    left: 0;
+  left: 0;
+}
+
+.nav-menu.show ~ .hamburger {
+  left: 270px; 
 }
 
 .nav-links {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    text-align: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 100%;
 }
 
 .nav-menu a {
-    display: block;
-    color: #fcfffc;
-    padding: 15px;
-    text-decoration: none;
-    transition: background 0.3s ease, color 0.3s ease;
-    font-size: 18px;
-    margin-bottom: 10px;
-    text-align: center;
+  display: block;
+  color: #fcfffc;
+  padding: 15px;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
+  font-size: 18px;
+  margin-bottom: 10px; 
+  text-align: center; 
 }
 
 .nav-menu a:hover {
-    background-color: #2D3A3A;
-    color: #fcfffc;
-    transition: background-color 0.8s ease;
+  background-color: #2D3A3A; 
+  color: #fcfffc;
+  transition: background-color 0.8s ease; 
 }
 
-.close-btn {
-    background: #fcfffc;
-    border: none;
-    color: #040f0f;
-    cursor: pointer;
-    padding: 5px;
-    position: absolute;
-    top: 10px;
-    right: -50px;
-    z-index: 5;
-    transition: right 0.3s ease;
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
-.close-btn .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: #040F0F;
-    margin: 5px 0;
-    transition: 0.3s;
+
+/* Dropdown toggle (botão ou link que ativa o menu) */
+.dropdown-toggle {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  display: inline-block;
+  font-size: 16px;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  background-color: #111;
+
+  display: none; /* Oculto inicialmente */
+  position: absolute;
+
+  top: 1px; /* Abaixo do botão */
+  left: 180px; /* Alinhado à esquerda do botão */
+  
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  min-width: 150px;
+}
+
+/* Itens do menu */
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 10px;
+  display: block;
+}
+
+.dropdown-menu a:hover {
+  background-color: #444;
+}
+
+/* Exibe o menu ao passar o mouse no botão */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Botão ativo no hover */
+.dropdown-toggle:hover {
+  background-color: #248232;
+  color: white;
 }
 
 .logo {
-    width: 180px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: block;
-    align-self: center;
+  width: 180px; 
+  margin-top: 30px; 
+  margin-bottom: 30px; 
+  display: block;
+  align-self: center; 
 }
 
 .separator {
-    width: 100%;
-    height: 1px;
-    background: #fcfffc;
-    margin: 5px auto;
+  width: 100%;
+  height: 1px;
+  background: #fcfffc;
+  margin: 5px auto;
 }
 
 .logout {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    color: #fcfffc;
-    font-size: 18px;
-    padding: 15px;
-    text-decoration: none;
+  position: absolute;
+  bottom: 10px;
+  width: 88%; 
+  text-align: center;
+  color: #fcfffc;
+  font-size: 18px;
+  padding: 10px; 
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .logout:hover {
-    background: #f00;
-}
-
-.hamburger.active .bar {
-    background-color: #040F0F;
+  background: #f00; 
 }
