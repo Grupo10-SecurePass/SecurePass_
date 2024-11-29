@@ -225,7 +225,7 @@
                     },
                     plugins: {
                         legend: { display: false },
-                        title: { display: true, text: 'Média de uso de CPU por dia', font: { size: 20, weight: 'bold' }, color: '#000' }
+                        title: { display: true, text: 'Uso de CPU por dia', font: { size: 20, weight: 'bold' }, color: '#000' }
                     }
                 }
             });
@@ -350,7 +350,7 @@
                     },
                     plugins: {
                         legend: { display: false },
-                        title: { display: true, text: 'Média de uso de RAM por dia', font: { size: 20, weight: 'bold' }, color: '#000' }
+                        title: { display: true, text: 'Uso de RAM por dia', font: { size: 20, weight: 'bold' }, color: '#000' }
                     }
                 }
             });
@@ -583,41 +583,42 @@
     }
 
     async function gerarResposta() {
-    const pergunta = document.getElementById('pergunta').value;
-    const respostaCard = document.getElementById('resposta');
-    const carregandoIcone = document.getElementById('carregando');
-    const respostaTexto = document.getElementById('resposta-texto');
-    const gerarPdfBotao = document.getElementById('gerarpdf'); // Botão de gerar PDF
+        const pergunta = document.getElementById('pergunta').value;
+        const respostaCard = document.getElementById('resposta');
+        const carregandoIcone = document.getElementById('carregando');
+        const respostaTexto = document.getElementById('resposta-texto');
+        const gerarPdfBotao = document.getElementById('gerarpdf'); // Botão de gerar PDF
 
-    // Esconde o botão de gerar PDF no início
-    gerarPdfBotao.style.display = "none";
+        // Esconde o botão de gerar PDF no início
+        gerarPdfBotao.style.display = "none";
 
-    // Limpar o conteúdo do card antes de exibir o carregando
-    respostaTexto.innerText = '';
-    respostaCard.style.display = "block";
-    carregandoIcone.style.display = "block";
-    document.body.classList.add('ofuscado'); // Adiciona a classe de ofuscamento ao abrir o card
+        // Limpar o conteúdo do card antes de exibir o carregando
+        respostaTexto.innerText = '';
+        respostaCard.style.display = "block";
+        carregandoIcone.style.display = "block";
+        document.body.classList.add('ofuscado'); // Adiciona a classe de ofuscamento ao abrir o card
 
-    try {
-        const response = await fetch('http://localhost:3001/perguntar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ pergunta })
-        });
+        try {
+            const response = await fetch('/guilherme/Gemini/Bobia', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pergunta })
+            });
 
-        const data = await response.json();
-        document.getElementById("pergunta").value = '';
-        respostaTexto.innerText = data.resultado;
-    } catch (error) {
-        respostaTexto.innerText = 'Erro ao gerar a resposta: ' + error.message;
-    } finally {
-        carregandoIcone.style.display = "none";
-        const fecharIcone = document.querySelector('.fechar-icone');
-        fecharIcone.style.display = 'block';
+            const data = await response.json();
+            document.getElementById("pergunta").value = '';
+            respostaTexto.innerText = data.resposta;
+        } catch (error) {
+            respostaTexto.innerText = 'Erro ao gerar a resposta: ' + error.message;
+        } finally {
+            carregandoIcone.style.display = "none";
+            const fecharIcone = document.querySelector('.fechar-icone');
+            fecharIcone.style.display = 'block';
+        }
     }
-}
 
-document.getElementById('gerarRelatorio').addEventListener('click', function () {
+
+    document.getElementById('gerarRelatorio').addEventListener('click', function () {
     const respostaCard = document.getElementById('resposta');
     const carregandoIcone = document.getElementById('carregando');
     const respostaTexto = document.getElementById('resposta-texto');
@@ -639,6 +640,7 @@ document.getElementById('gerarRelatorio').addEventListener('click', function () 
         }
 
         try {
+            // Coleta os dados de CPU, RAM, Alertas e Tempo
             const cpuData = await fetch(`guilherme/obterPercentualCpu/${Linha}`).then(res => res.json());
             const ramData = await fetch(`guilherme/obterPercentualRam/${Linha}`).then(res => res.json());
             const alertasData = await fetch(`guilherme/obterQtdAlertasRamCpu/${Linha}`).then(res => res.json());
@@ -648,30 +650,32 @@ document.getElementById('gerarRelatorio').addEventListener('click', function () 
             const totalAlertasCPU = alertasData[0]?.totalAlertasCPU || 0;
             const totalAlertasRAM = alertasData[0]?.totalAlertasRAM || 0;
 
+            // Monta a pergunta formatada para enviar à IA
             const perguntaComDados = `
-            Análise detalhada do desempenho do sistema com base nos seguintes dados:
+                Análise detalhada do desempenho do sistema com base nos seguintes dados:
 
-            1. Uso de CPU:
-                ${cpuData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualCpu}%`).join('\n')}
+                1. Uso de CPU:
+                    ${cpuData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualCpu}%`).join('\n')}
 
-            2. Uso de RAM:
-                ${ramData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualRam}%`).join('\n')}
+                2. Uso de RAM:
+                    ${ramData.map(item => `Horário: ${item.horario}, Uso: ${item.percentualRam}%`).join('\n')}
 
-            3. Alertas:
-                CPU: ${totalAlertasCPU} alertas
-                RAM: ${totalAlertasRAM} alertas
+                3. Alertas:
+                    CPU: ${totalAlertasCPU} alertas
+                    RAM: ${totalAlertasRAM} alertas
 
-            4. Detalhes dos alertas:
-                ${infoAlertasData.map(alerta => `Componente: ${alerta.nomeComponente === 'PercCPU' ? 'CPU' : 'RAM'}, Descrição: ${alerta.descricaoAlerta}, Data: ${new Date(alerta.dataAlerta).toLocaleString()}`).join('\n')}
+                4. Detalhes dos alertas:
+                    ${infoAlertasData.map(alerta => `Componente: ${alerta.nomeComponente === 'PercCPU' ? 'CPU' : 'RAM'}, Descrição: ${alerta.descricaoAlerta}, Data: ${new Date(alerta.dataAlerta).toLocaleString()}`).join('\n')}
 
-            5. Porcentagem de tempo:
-                Em alerta: ${tempoAlertaData[0]?.porcentagemAlertas || 0}%
-                Estável: ${tempoAlertaData[0]?.porcentagemSemAlertas || 0}%
+                5. Porcentagem de tempo:
+                    Em alerta: ${tempoAlertaData[0]?.porcentagemAlertas || 0}%
+                    Estável: ${tempoAlertaData[0]?.porcentagemSemAlertas || 0}%
 
-            Por favor, forneça uma análise detalhada e bem organizada dos dados de uso de CPU, RAM, alertas e tempo de ociosidade do sistema e faça sempre uma conclusão. O foco deve ser na explicação clara e simples desses dados, sem incluir dados relacionados ao banco de dados. Organize a resposta em tópicos e listas, e inclua descrições sobre cada aspecto dos dados apresentados, formatado em abnt por favor.
+                Por favor, forneça uma análise detalhada e bem organizada dos dados de uso de CPU, RAM, alertas e tempo de ociosidade do sistema e faça sempre uma conclusão. O foco deve ser na explicação clara e simples desses dados, sem incluir dados relacionados ao banco de dados. Organize a resposta em tópicos e listas, e inclua descrições sobre cada aspecto dos dados apresentados, formatado em ABNT por favor.
             `;
 
-            const response = await fetch('http://localhost:3001/perguntar', {
+            // Envia a pergunta à API para gerar a resposta
+            const response = await fetch('/guilherme/Gemini/Bobia', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -681,10 +685,11 @@ document.getElementById('gerarRelatorio').addEventListener('click', function () 
 
             const data = await response.json();
 
-            respostaTexto.innerText = data.resultado || 'A resposta da API está vazia ou não foi definida corretamente.';
+            // Exibe a resposta no card
+            respostaTexto.innerText = data.resposta || 'A resposta da API está vazia ou não foi definida corretamente.';
 
-            // Exibe o botão "Gerar PDF" apenas após o texto ser carregado
-            if (data.resultado) {
+            // Exibe o botão "Gerar PDF" após a resposta ser carregada
+            if (data.resposta) {
                 gerarPdfBotao.style.display = "block";
             }
         } catch (error) {
@@ -696,8 +701,10 @@ document.getElementById('gerarRelatorio').addEventListener('click', function () 
         }
     }
 
+    // Chama a função para coletar os dados e gerar a resposta
     coletarDados();
 });
+
 
     document.getElementById('gerarpdf').addEventListener('click', async function () {
         const respostaTexto = document.getElementById('resposta-texto').innerText;

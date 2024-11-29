@@ -19,6 +19,10 @@ router.get("/obterTempAlertas/:Linha", function (req, res) {
     guilhermeController.obterTempAlertas(req, res);
 });
 
+router.post("/Gemini/Bobia", function (req, res) {
+    guilhermeController.Bobia(req, res);
+});
+
 router.get("/obterInfoAlertas/:Linha", function (req, res) {
     guilhermeController.obterInfoAlertas(req, res);
 });
