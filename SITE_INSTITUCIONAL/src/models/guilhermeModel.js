@@ -44,16 +44,16 @@ function obterQtdAlertasRamCpu(Linha) {
     console.log("ACESSEI A FUNÇÃO DE CAPTURA DE RAM");
 
     var instrucaoSql = `
-       SELECT 
-            COUNT(DISTINCT CASE WHEN comp.nome = 'PercCPU' AND a.fkCaptura IS NOT NULL THEN a.idAlerta END) AS totalAlertasCPU,
-            COUNT(DISTINCT CASE WHEN comp.nome = 'PercMEM' AND a.fkCaptura IS NOT NULL THEN a.idAlerta END) AS totalAlertasRAM
-       FROM captura c
-       LEFT JOIN alerta a ON c.idCaptura = a.fkCaptura
-       LEFT JOIN componente comp ON c.fkComponente = comp.idComponente
-       WHERE c.dataRegistro >= NOW() - INTERVAL 24 HOUR
-         AND comp.nome IN ('PercCPU', 'PercMEM')
-         AND c.fkLinha = ${Linha}
-         AND a.fkCaptura IS NOT NULL;
+      SELECT 
+       COUNT(DISTINCT CASE WHEN comp.nome = 'PercCPU' THEN a.idAlerta END) AS totalAlertasCPU,
+       COUNT(DISTINCT CASE WHEN comp.nome = 'PercMEM' THEN a.idAlerta END) AS totalAlertasRAM
+FROM alerta a
+JOIN captura c ON a.fkCaptura = c.idCaptura
+JOIN componente comp ON c.fkComponente = comp.idComponente
+WHERE c.dataRegistro >= NOW() - INTERVAL 24 HOUR
+  AND comp.nome IN ('PercCPU', 'PercMEM')
+  AND c.fkLinha = ${Linha};
+
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -111,8 +111,10 @@ function obterInfoAlertas(Linha) {
 FROM alerta a
 JOIN componente c ON a.fkComponente = c.idComponente
 JOIN dispositivo d ON a.fkDispositivo = d.idDispositivo
+JOIN captura cap ON a.fkCaptura = cap.idCaptura
 WHERE a.dataAlerta >= NOW() - INTERVAL 24 HOUR
-  AND a.fkLinha = ${Linha}
+  AND cap.dataRegistro >= NOW() - INTERVAL 24 HOUR
+  AND cap.fkLinha = ${Linha}
   AND c.nome IN ('PercCPU', 'PercMEM')
 ORDER BY a.dataAlerta DESC;
 
