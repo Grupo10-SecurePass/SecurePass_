@@ -215,6 +215,7 @@ body{
     align-items: flex-start;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 20px;
+
 }
 
 .div2 p {
@@ -222,13 +223,14 @@ body{
     height: 35px;
     font-size: 30px;
     font-weight: 600;
+    
 }
 
 .a{
 
     width: 100%;
     height: 100%;
-    padding: 5px;
+    padding: 10px;
     display: flex;
     flex-direction: row ;
     align-items: flex-start;
@@ -237,7 +239,7 @@ body{
 
 .dispositivo1{
    
-    width: 80%;
+    width: 50%;
     height: 70%;
     background-color: #FCFFFC;
     padding: 5px;
@@ -248,19 +250,14 @@ body{
     
 }
 
-.espacograficoDispositivo1{
-    width: 90%;
-    height: 290px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .graficoDispositivo1{
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
 }
+
 .dispositivo2{
-    width: 80%;
+    width:  50%;
     height: 70%;
     background-color: #FCFFFC;
     display: flex;
@@ -271,15 +268,15 @@ body{
 }
 
 .graficoDispositivo2{
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
 }
 
 
 .b{
 
     width: 100%;
-    height: 80%;
+    height: 100%;
     padding: 5px;
     display: flex;
     flex-direction: row ;
@@ -289,7 +286,7 @@ body{
 
 .dispositivo3{
    
-    width: 80%;
+    width: 50%;
     height: 70%;
     background-color: #FCFFFC;
     padding: 5px;
@@ -299,19 +296,14 @@ body{
     
     
 }
-.espacograficoDispositivo3{
-    width: 90%;
-    height: 290px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 .graficoDispositivo3{
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
 }
+
 .dispositivo4{
-    width: 80%;
+    width: 50%;
     height: 70%;
     background-color: #FCFFFC;
     display: flex;
@@ -323,8 +315,8 @@ body{
 }
 
 .graficoDispositivo4{
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
 }
 
 /* Div Alerta Componente */

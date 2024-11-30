@@ -6,8 +6,9 @@
     <title>Dashboard de Alertas</title>
     <link rel="shortcut icon" href="./imagens/logoColorida.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/dashGerenteAnna.css">
+    <link rel="stylesheet" href="./css/dashGerente.css">
 </head>
-<body onload="obterDados()">
+<body onload="obterDados(), obterDadosComponente()">
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -29,9 +30,17 @@
 
             <div class="nav-links">
                 <a href="./CadTecnicoSuporte.html">Gestão TS</a>
-                <a href="./dashGerente.html">Dashboard</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle">Dashboard</a>
+                    <div class="dropdown-menu">
+                        <a href="./dashGerente.html">Geral</a>
+                        <a href="./dashGerenteAnna.html">Alertas</a>
+                        <a href="./dashPreditiva.html">Preditiva</a>
+                        <a href="./dashGerenteEnzo.html">Pacotes</a>
+                    </div>
+                </div>
                 <a href="./CadMaquina.html">Gestão de Máquinas</a>
-                <a href="./dadosGerente.html">Perfil</a>
+                <a href="./dadosUsuario.html">Perfil</a>
                 <a href="./feedbackPublicar.html">Feedback</a>
                 <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
             </div>
@@ -190,5 +199,97 @@
         },
     });
 }
+
+function obterDadosComponente() {
+    const linha = sessionStorage.getItem("LINHA");
+
+    fetch(`/anna/obterDadosComponente/${linha}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                const dadosProcessados = organizarDadosParaGrafico(data);
+                atualizarGraficosComponente(dadosProcessados);
+            } else {
+                console.log("Nenhum dado encontrado.");
+            }
+        })
+        .catch(err => {
+            console.error("Erro ao obter os dados:", err);
+        });
+}
+
+
+
+function organizarDadosParaGrafico(dadosSQL) {
+    // Cria um objeto vazio para armazenar os dispositivos
+    const dispositivos = {};
+
+    // Itera sobre os dados para agrupar por dispositivo
+    dadosSQL.forEach(item => {
+        const { idDispositivo, nomeDispositivo, nomeComponente, quantidadeAlertas } = item;
+
+        // Se o dispositivo ainda não existe no objeto, cria uma entrada para ele
+        if (!dispositivos[idDispositivo]) {
+            dispositivos[idDispositivo] = {
+                nomeDispositivo,
+                componentes: []
+            };
+        }
+
+        // Adiciona o componente e a quantidade de alertas ao dispositivo
+        dispositivos[idDispositivo].componentes.push({
+            nomeComponente,
+            quantidadeAlertas
+        });
+    });
+
+    // Retorna um array com os dispositivos e seus componentes
+    return Object.values(dispositivos);
+}
+
+
+function atualizarGraficosComponente(data) {
+    // Definindo onde os gráficos serão desenhados
+    const divs = ['myChart1', 'myChart2', 'myChart3', 'myChart4'];
+
+    // Limita a quantidade de dispositivos a 4
+    data.slice(0, divs.length).forEach((dispositivo, index) => {
+        const { nomeDispositivo, componentes } = dispositivo;
+
+        if (componentes && componentes.length > 0) {
+            // Cria os rótulos e valores dos gráficos
+            const labels = componentes.map(componente => componente.nomeComponente);
+            const valores = componentes.map(componente => componente.quantidadeAlertas);
+
+            // Desenha o gráfico
+            const ctx = document.getElementById(divs[index]);
+            new Chart(ctx, {
+                type: 'bar', // Tipo de gráfico (barra)
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ` ${nomeDispositivo}`,
+                        data: valores,
+                        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                        borderColor: 'rgba(255, 0, 0, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+
+
+
+
 
 </script>
