@@ -11,7 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
-<body onload="obterMaquinas()">
+<body onload="obterMaquinas(); obterTaxaDownload(); obterTaxaPacote();">
+
 
     <div class="content">
         <button class="hamburger" onclick="Navbar()">
@@ -27,19 +28,31 @@
                 <div class="bar"></div>
             </button>
 
-            <img src="imagens/Logo.png" alt="Logo" class="logo">
+            <img src="imagens/SecurePass SVGLogoNavBar.svg" alt="Logo" class="logo">
 
             <div class="separator"></div>
 
             <div class="nav-links">
-                <a href="./dashSuporte.html">Dashboard</a>
-                <a href="./dadosTecnico.html">Perfil</a>
-                <a href="./feedbackPublicar.html">Feedback</a>
+                <a href="./CadTecnicoSuporte.html">Gestão TS</a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle">Dashboard</a>
+                    <div class="dropdown-menu">
+                        <a href="./dashGerente.html">Geral</a>
+                        <a href="./dashGerenteAnna.html">Alertas</a>
+                        <a href="./dashPreditiva.html">Preditiva</a>
+                        <a href="./dashGerenteEnzo.html">Pacotes</a>
+                    </div>
+                </div>
+                <a href="./CadMaquina.html">Gestão de Máquinas</a>
+                <a href="./dadosUsuario.html">Perfil</a>
+                <a href="./feedbackGer.html">Feedback</a>
+                <a href="https://securepasssp.atlassian.net/servicedesk/customer/portal/1">Suporte</a>
             </div>
 
             <a href="index.html" class="logout">Sair</a>
         </nav>
     </div>
+
 
     <div class="mae">
         <div class="lateral"></div>
@@ -49,7 +62,8 @@
                     <div class="escolha">
                         <div class="textodata">
                             <p>Escolha o servidor que você deseja monitorar</p>
-                            <select name="escolherServidor" onchange="obterTransferencia();" id="inputCargo"></select>
+                            <select name="escolherServidor" onchange="obterTransferencia();obterPacote();   "
+                                id="inputCargo"></select>
                         </div>
                         <div class="aviso">
                             <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor
@@ -59,7 +73,7 @@
                 </div>
                 <div class="rede">
                     <div class="espacotitulorede">
-                        <p> Numero de Pacotes X Tráfego de Rede</p>
+                        <p> Numero de Pacotes Perdidos </p>
                     </div>
 
                     <div class="espacografico1rede">
@@ -81,28 +95,31 @@
                     </div>
                 </div>
                 <div class="rede-pacote">
-                    <div class="transferencia">
+                    <div id="transferencia" class="transferencia">
                         <div class="titulotransferencia">
                             <p> Taxa Download - Semanal </p>
                         </div>
                         <div class="espacografico-transferencia">
                             <div class="indicador0">
-                                <p>Taxa Média de Download:</p>
-                                <span id="downloadMedio">...</span>
+                                <p> Média:</p>
+                                <span id="downloadMedio"></span>
                             </div> Mbps
                         </div>
                     </div>
-                    <div class="pacote">
+
+                    <div id="pacote" class="pacote">
                         <div class="titulopacote">
-                            <p> Taxa Upload - Semanal </p>
+                            <p> Taxa Perda Pacotes - Semanal </p>
                         </div>
                         <div class="espacografico-pacote">
                             <div class="indicador1">
-                                <p>Taxa Média de Upload:</p>
-                                <span id="upload-medio">...
-                            </div> Mbps
+                                <p> Média:</p>
+                                <span id="upload-medio">
+                            </div> Pacotes
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -111,7 +128,8 @@
 
     <script>
 
-        let transferenciaChart  ;
+        let transferenciaChart;
+        let pacoteChart;
 
         function toggleAlertSidebar() {
             const sidebar = document.getElementById('alertSidebar');
@@ -128,7 +146,7 @@
                 setTimeout(() => {
                     hamburger.style.display = 'block';
                     closeBtn.style.display = 'none';
-                }, 500);
+                }, 10000);
             } else {
                 hamburger.style.display = 'none';
                 closeBtn.style.display = 'block';
@@ -139,16 +157,17 @@
 
         function obterMaquinas() {
             var fkLinha = sessionStorage.LINHA;
-            console.log("Acessei Aqui")
+
             fetch(`/maquinas/listarMaquinaDash/${fkLinha}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
+
             })
                 .then(function (resposta) {
                     if (resposta.ok) {
                         if (resposta.status == 204) {
                             var lista = document.getElementById("listamaquinas");
-                            window.alert("Não achou nenhuma máquina");
+                            window.alert("Não achou nenhuma máquina")
                             return [];
                         }
                         return resposta.json();
@@ -160,6 +179,7 @@
                     console.log("Dados recebidos: ", JSON.stringify(dados));
                     var lista = document.getElementById("listamaquinas");
 
+
                     for (let i = 0; i < dados.length; i++) {
                         var maquina = dados[i];
                         var id = maquina.idDispositivo
@@ -169,190 +189,166 @@
                         console.log(id)
 
                         var opcao = document.createElement("option");
-                        opcao.value = `${id}`;
-                        opcao.innerHTML = nome;
+                        opcao.value = `${id}`
+                        opcao.innerHTML = nome
+
 
                         inputCargo.appendChild(opcao);
                     }
 
                     obterTransferencia();
-
+                    obterPacote();
 
                 })
                 .catch(function (erro) {
                     console.error(erro);
-                    console.log("Deu erro");
+
+                    console.log("Deu erro")
+                });
+
+
+
+        }
+
+        function obterPacote() {
+            var idDispositivo = inputCargo.value;
+
+            fetch(`/enzo/obterPacote/${idDispositivo}`, { cache: 'no-store' })
+                .then(function (response) {
+                    if (response.ok) {
+                        response.json().then(function (resposta) {
+                            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                            const labels = [];
+                            const data = [];
+
+                            // Confirmação de que os dados têm formato esperado
+                            if (resposta.length === 0) {
+                                console.warn('A API não retornou dados.');
+                                return;
+                            }
+
+                            resposta.forEach(item => {
+                                labels.push(item.data);
+                                data.push(item.media_diaria);
+                            });
+
+                            if (pacoteChart) {
+                                pacoteChart.destroy();
+                            }
+
+                            plotarPacote(labels, data);
+                        });
+                    } else {
+                        console.error('Nenhum dado encontrado ou erro na API');
+                    }
+                })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+                });
+        }
+
+        const ctx0 = document.getElementById('myChart').getContext('2d');
+
+        function plotarPacote(labels, data) {
+            pacoteChart = new Chart(ctx0, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Número de Pacotes',
+                            data: data,
+                            borderColor: 'rgba(36, 130, 50, 1)',
+                            backgroundColor: 'rgba(36, 130, 50, 0.3)',
+                            yAxisID: 'y-axis-1'
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        'y-axis-1': {
+                            type: 'linear',
+                            position: 'left',
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+        const ctx1 = document.getElementById('myChart1');
+
+
+        function obterTransferencia() {
+            var idDispositivo = inputCargo.value;
+
+            fetch(`/enzo/obterTransferencia/${idDispositivo}`, { cache: 'no-store' })
+                .then(function (response) {
+                    ''
+                    if (response.ok) {
+                        response.json().then(function (resposta) {
+                            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                            const labels = [];
+                            const data = [];
+
+                            resposta.forEach(item => {
+                                labels.push(item.data);
+                                data.push(item.media_diaria);
+                            });
+
+
+                            if (transferenciaChart) {
+                                transferenciaChart.destroy();
+                            }
+
+                            plotarTransferencia(labels, data);
+                        });
+                    } else {
+                        console.error('Nenhum dado encontrado ou erro na API');
+                    }
+                })
+                .catch(function (error) {
+                    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
                 });
         }
 
 
 
-        // const ctx0 = document.getElementById('myChart');
+        function plotarTransferencia(labels, data) {
+            transferenciaChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Mb/s',
+                        data: data,
+                        borderWidth: 2,
+                        backgroundColor: 'rgba(200, 50, 50, 0.6)',
+                        borderColor: 'rgba(200, 50, 50, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
 
-        // new Chart(ctx0, {
-        //     type: 'line',
-        //     data: {
-        //         labels: [],
-        //         datasets: [
-        //             {
-        //                 label: 'Numero de Pacotes',
-        //                 data: [],
-        //                 borderColor: 'rgba(36, 130, 50, 1)',
-        //                 backgroundColor: 'rgba(36, 130, 50, 0.3)',
-        //                 yAxisID: 'y-axis-1'
-        //             },
-        //             {
-        //                 label: 'Bytes Transferidos',
-        //                 data: [],
-        //                 borderColor: 'rgba(200, 50, 50, 1)',
-        //                 backgroundColor: 'rgba(200, 50, 50, 0.3)',
-        //                 yAxisID: 'y-axis-2' // Atribui ao eixo Y à direita
-        //             }
-        //         ]
-        //     },
-        //     options: {
-        //         scales: {
-        //             'y-axis-1': {
-        //                 type: 'linear',
-        //                 position: 'left',
-        //                 ticks: {
-        //                     beginAtZero: true
-        //                 }
-        //             },
-        //             'y-axis-2': {
-        //                 type: 'linear',
-        //                 position: 'right',
-        //                 ticks: {
-        //                     beginAtZero: true
-        //                 },
-        //                 gridLines: {
-        //                     drawOnChartArea: false // Evita sobreposição de grades
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
+        setInterval(() => {
+            obterTransferencia();
+            obterPacote();
+            obterTaxaPacote();
+            obterTaxaDownload();
+        }, 3000);
 
-
-
-
-
-
-        // function obterTaxaDownload() {
-        //     fetch(`/enzo/obterTaxaDownload/${fkLinha}`)
-        //         .then(function (response) {
-        //             if (response.ok) {
-        //                 return response.json();
-        //             }
-        //             throw "Erro na API!";
-        //         })
-        //         .then(function (data) {
-        //             console.log("Dados recebidos:", data);
-
-        //             const mediaSemanal = calcularMedia(data);
-
-        //             // Atualiza o indicador com a média calculada
-        //             const downloadMedioElemento = document.getElementById('download-medio');
-        //             downloadMedioElemento.textContent = mediaSemanal.toFixed(2); // Exibe a média com 2 casas decimais
-        //         })
-        //         .catch(function (err) {
-        //             console.error("Erro ao obter taxa de download:", err);
-
-        //             // Exibe mensagem de erro no indicador
-        //             const downloadMedioElemento = document.getElementById('download-medio');
-        //             downloadMedioElemento.textContent = "Erro ao carregar";
-        //         });
-        // }
-
-        /* function atualizarIndicadorDownload() {
-            fetch(`/enzo/obterTaxaDownload/`) // Endpoint para obter taxa de download
-                .then(response => {
-                    if (response.ok) return response.json();
-                    throw new Error("Erro ao buscar dados na API.");
-                })
-                .then(data => {
-                    const mediaSemanal = calcularMedia(data); // Calcula a média
-                    document.getElementById('download-medio').textContent = `${mediaSemanal.toFixed(2)} Mbps`; // Atualiza o texto do indicador
-                })
-                .catch(error => {
-                    console.error("Erro ao atualizar indicador:", error);
-                    document.getElementById('download-medio').textContent = "Erro ao carregar dados.";
-                });
-        } */
-
-        // Atualizar automaticamente a cada 5 segundos
-
-        // setInterval(atualizarIndicadorDownload, 5000);
-
-
-        // function obterTaxaDownload() {
-        //     var idDispositivo = inputCargo.value;
-
-        //     fetch(`enzo/obterTaxaDownload/`, { cache: 'no-store' })
-        //         .then(function (response) {
-        //             if (response.ok) {
-        //                 response.json().then(function (dados) {
-        //                     console.log(`Dados recebidos: ${JSON.stringify(dados)}`);
-
-        //                     // Itera sobre os dados recebidos e processa Horas_Uptime
-        //                     dados.forEach((dado) => {
-        //                         downloadMedio.innerHTML = `${dado.media_registro}`;
-        //                     });
-
-        //                     // Chama a função para plotar o gráfico
-        //                     plotarDownload(dados);
-        //                 });
-        //             } else {
-        //                 console.error('Nenhum dado encontrado ou erro na API');
-        //             }
-        //         })
-        //         .catch(function (error) {
-        //             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        //         });
-
-
-        // }
-        // function plotarDownload(resposta) {
-
-
-        //     const dadosDownload = [];
-        //     const dadosUpload = [];
-
-        //     for (i = 0; i < resposta.length; i++) {
-        //         var registro = resposta[i];
-        //         console.log(registro.data)
-        //         console.log(registro.quantidade)
-
-        //         labels.push(registro.data);
-        //         dados.push(registro.quantidade);
-
-        //     }
-
-        //     if (AlertaChart) {
-        //         AlertaChart.destroy();
-        //     }
-
-        // }
-
-
-
-
-
-        // function obterTaxaUpload() {
-        //     fetch(`/enzo/obterTaxaUpload/${fkLinha}`)
-        //         .then(function (response) {
-        //             return response.json();
-        //         })
-        //         .then(function (data) {
-        //             console.log("Dados recebidos:", data);
-        //             atualizarGrafico(data);
-        //         })
-        //         .catch(function (err) {
-        //             console.log(err);
-        //         })
-        // }
-
-        const ctx1 = document.getElementById('myChart1');
 
 
         function obterTransferencia() {
@@ -388,32 +384,153 @@
                 });
         }
 
-        function plotarTransferencia(labels, data) {
-            transferenciaChart = new Chart(ctx1, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Mb/s',
-                        data: data,
-                        borderWidth: 2,
-                        backgroundColor: 'rgba(200, 50, 50, 0.6)',
-                        borderColor: 'rgba(200, 50, 50, 1)'
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+
+        function obterTaxaDownload() {
+
+            obterTransferencia();  // Presumo que esta função seja responsável por outra parte do processo
+
+            var idDispositivo = inputCargo.value;
+
+            fetch(`/enzo/obterTaxaDownload/${idDispositivo}`, {
+
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
                 }
-            });
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro HTTP: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Dados recebidos da API:", data);
+
+                    const transferenciaDiv = document.getElementById('transferencia');
+
+                    // Limpa o conteúdo da transferência antes de inserir os novos dados
+                    transferenciaDiv.innerHTML = `
+        <div class="titulotransferencia">
+            <p> Taxa Download - Semanal </p>
+        </div>
+
+        <div class="espacografico-transferencia">
+
+            <div class="indicador0">
+                        <div class="ranking"> <!-- Contêiner para dados de taxa de download -->
+
+                <span id="downloadMedio">Carregando...</span>
+            </div> Mbps
+        </div>
+        </div>
+    `;
+
+                    if (data.length === 0) {
+                        // Se não houver dados, exibe a mensagem "Nenhum alerta encontrado"
+                        transferenciaDiv.querySelector('.ranking').innerHTML = "<p>Nenhum alerta encontrado.</p>";
+                    } else {
+                        // Calcular a média de download
+                        const mediaRegistro = data.reduce((acc, val) => acc + val.media_diaria, 0) / data.length;
+                        document.getElementById('downloadMedio').textContent = mediaRegistro.toFixed(2); // Exibe a média de download
+
+                        // Preencher a lista de taxas de download diretamente no innerHTML
+                        let taxasHTML = '';  // Variável para armazenar as taxas de download
+
+                        data.forEach(item => {
+                            const dataItem = item.data || "Desconhecido";  // Data da taxa de download
+                            const mediaRegistro = item.media_registro || "0";  // Média diária
+
+                            taxasHTML += `
+                <div class="linha_ranking">
+                    <span>${mediaRegistro}</span>
+                </div>
+            `;
+                        });
+
+                        // Inserir os dados de taxa de download no contêiner .ranking
+                        transferenciaDiv.querySelector('.ranking').innerHTML = taxasHTML;
+                    }
+                })
+                .catch(error => {
+                    console.error('Houve um erro ao capturar os dados:', error);
+                });
         }
-        
-        setInterval(() => {
-            obterTransferencia();
-        }, 3000);
+
+
+        function obterTaxaPacote() {
+
+            obterTransferencia();  // Presumo que esta função seja responsável por outra parte do processo
+
+            var idDispositivo = inputCargo.value;
+
+            fetch(`/enzo/obterTaxaPacote/${idDispositivo}`, {
+
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro HTTP: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Dados recebidos da API:", data);
+
+                    const transferenciaDiv = document.getElementById('pacote');
+
+                    // Limpa o conteúdo da transferência antes de inserir os novos dados
+                    transferenciaDiv.innerHTML = `
+
+                    <div id="pacote" class="pacote">
+                        <div class="titulopacote">
+                            <p> Taxa Perda Pacotes - Semanal </p>
+                        </div>
+                        <div class="espacografico-pacote">
+                            <div class="indicador1">
+                                <p> Média:</p>
+                                
+                                    <div class="espacografico-transferencia">
+
+                                <span id="upload-medio">
+                            </div> Pacotes
+                        </div>
+                    </div>
+`;
+
+                    if (data.length === 0) {
+                        // Se não houver dados, exibe a mensagem "Nenhum alerta encontrado"
+                        transferenciaDiv.querySelector('.ranking').innerHTML = "<p>Nenhum alerta encontrado.</p>";
+                    } else {
+                        // Calcular a média de download
+                        const mediaRegistro = data.reduce((acc, val) => acc + val.media_perda_pacotes, 0) / data.length;
+                        document.getElementById('upload-medio').textContent = mediaRegistro.toFixed(2); // Exibe a média de download
+
+                        // Preencher a lista de taxas de download diretamente no innerHTML
+                        let taxasHTML = '';  // Variável para armazenar as taxas de download
+
+                        data.forEach(item => {
+                            const dataItem = item.data || "Desconhecido";  // Data da taxa de download
+                            const mediaRegistro = item.media_perda_pacotes || "0";  // Média diária
+
+                            taxasHTML += `
+    <div class="linha_ranking">
+        <span>${mediaRegistro}</span>
+    </div>
+`;
+                        });
+
+                        // Inserir os dados de taxa de download no contêiner .ranking
+                        transferenciaDiv.querySelector('.ranking').innerHTML = taxasHTML;
+                    }
+                })
+                .catch(error => {
+                    console.error('Houve um erro ao capturar os dados:', error);
+                });
+        }
 
 
     </script>
