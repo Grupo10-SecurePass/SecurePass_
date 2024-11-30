@@ -491,6 +491,7 @@
     }
 
     function cadastrarLimites(idDispositivo) {
+        var limitePerdaPacote = 10.0;
         var limitePercCPU = 80.0;
         var limitePercMEM = 75.0;
         var limitePercDISCO = 90.0;
@@ -507,7 +508,6 @@
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    percCPUServer: limitePercCPU,
                     percCPUServer: limitePercCPU,
                     percMEMServer: limitePercMEM,
                     percDISCOServer: limitePercDISCO,

@@ -2,7 +2,6 @@ var limiteModel = require("../models/limiteModel");
 
 function cadastrar(req, res) {
   var limitePercCPU = req.body.percCPUServer;
-  var limitePercCPU = req.body.percCPUServer;
   var limitePercMEM = req.body.percMEMServer;
   var limitePercDISCO = req.body.percDISCOServer;
   var limiteRedeEnviada = req.body.redeEnviadaServer;

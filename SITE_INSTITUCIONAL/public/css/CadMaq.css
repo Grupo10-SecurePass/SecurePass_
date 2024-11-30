@@ -295,6 +295,7 @@ body {
 }
 .linklista{
   text-decoration: none;
+  cursor: pointer;
 }
 .cardgerente {
   width: 97%;
