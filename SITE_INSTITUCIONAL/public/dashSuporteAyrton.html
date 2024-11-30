@@ -7,6 +7,8 @@
     <title>Dashboard de Velocidade de Resposta</title>
     <link rel="stylesheet" href="./css/dashSuporteAyrton.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="shortcut icon" href="./imagens/logoColorida.png" type="image/x-icon">
+
     <script src="./js/alerta.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
@@ -69,7 +71,7 @@
                             </select>
                         </div>
                         <div class="aviso">
-                            <p>*Se você ainda não filtrou pelas datas, você está vendo o monitoramento do 1º servidor
+                            <p>*Se você ainda não filtrou a máquina desejada, você está vendo o monitoramento do 1º servidor
                                 cadastrado.</p>
                         </div>
                     </div>
@@ -283,10 +285,6 @@
 
     }
 
-    setInterval(() => {
-        obterDadosAlertaVEL();
-    }, 30000);
-
 
     function obterDadosTempoResposta() {
         var idDispositivo = inputCargo.value;
@@ -317,11 +315,6 @@
 
         for (i = resposta.length - 1; i >= 0; i--) {
             var registro = resposta[i];
-            console.log(registro.valor)
-
-            if (dados.length >= labelNRT.length) {
-                dados.shift();
-            }
 
             dados.push(registro.valor);
 
@@ -359,11 +352,6 @@
     }
 
 
-    setInterval(() => {
-        obterDadosTempoResposta();
-    }, 30000);
-
-
     function obterDadosFreq() {
         var idDispositivo = inputCargo.value;
 
@@ -393,11 +381,6 @@
 
         for (i = resposta.length - 1; i >= 0; i--) {
             var registro = resposta[i];
-            console.log(registro.valor)
-
-            if (dados.length >= labelNRT.length) {
-                dados.shift();
-            }
 
             dados.push(registro.valor);
 
@@ -434,12 +417,11 @@
 
     }
 
-
     setInterval(() => {
+        obterDadosAlertaVEL();
         obterDadosFreq();
+        obterDadosTempoResposta();
     }, 30000);
-
-
 
 </script>
 
