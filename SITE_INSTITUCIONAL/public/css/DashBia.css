@@ -34,6 +34,12 @@ h1, h2 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+#myChart3 {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto; /* Centraliza o gráfico */
+}
+
 .componentes {
     display: flex;
     justify-content: space-around;
