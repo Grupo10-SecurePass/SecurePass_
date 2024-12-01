@@ -43,29 +43,28 @@ body {
 .nav-links {
     display: flex;
     flex-direction: column;
-    text-align: left;
-    width: 120%;
+    text-align: center;
+    width: 100%;
     position: relative;
 }
 
 .nav-links a {
     display: flex;
     align-items: center;
+    justify-content: center;
     color: #FCFFFC;
     padding: 15px;
     text-decoration: none;
     font-size: 18px;
     transition: background 0.5s ease;
-    margin-left: 20px;
     position: relative;
+    margin-bottom: 15px;
 }
 
-.nav-icon {
-    margin-right: 10px;
-    margin-left: 10px;
-    width: 28px;
-    height: 32px;
-    object-fit: contain;
+.nav-links a:hover {
+    background-color: #2D3A3A;
+    color: #fcfffc;
+    transition: background-color 0.8s ease;
 }
 
 .logout {
@@ -128,6 +127,7 @@ body {
 }
 
 .botao-colorido.visualizar:hover {
+    transform: scale(1.05);
     padding: 7px 14px;
     background-color: #1e6c2a;
 }
@@ -182,7 +182,6 @@ body {
 .card-botoes {
     background-color: #FFFFFF;
     border: 2px solid #333;
-    border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 8px;
     padding: 20px;
     display: flex;
@@ -201,7 +200,6 @@ body {
     margin-top: 10px;
     background-color: #FFFFFF;
     border: 2px solid #333;
-    border-radius: 8px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -239,7 +237,6 @@ body {
     margin-top: 30px;
     background-color: #FFFFFF;
     border: 2px solid #333;
-    border-radius: 8px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -299,9 +296,10 @@ body {
 }
 
 .botao-relatorio:hover {
-    transform: scale(1.05);
     background-color: #1e6c2a;
 }
+
+
 
 .hidden {
     display: none;
@@ -338,7 +336,6 @@ body {
     padding: 20px; /* Aumenta o padding para dar mais espaço interno */
     background-color: #FFFFFF;
     border: 2px solid #333;
-    border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 8px;
     font-size: 1.5em; /* Aumenta o tamanho do texto para destacar mais */
 }
@@ -365,7 +362,6 @@ body {
     flex: 1;
     background-color: #FFFFFF;
     border: 2px solid #333;
-    border-radius: 8px;
     padding: 20px;
     display: flex;
     flex-direction: column;
