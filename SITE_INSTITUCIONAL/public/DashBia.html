@@ -6,8 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Detalhamento de Servidores</title>
         <link rel="stylesheet" href="css/DashBia.css">
-
+        <script src="./js/alerta.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+    </body>
     </head>
 
     <body>
@@ -79,10 +81,8 @@
            
         </div>
         <script src="app.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.0"></script>
-    </body>
-
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.0"></script>
+    
     </html>
     <script>
         function Navbar() {
@@ -103,6 +103,8 @@
                 hamburger.classList.add('active');
             }
         }
+
+    
         let RAMChart;
         let CPUChart;
         let DISCOChart;
@@ -113,226 +115,201 @@
             sidebar.classList.toggle('show');
         }
         
-        // Configuração do Gráfico de Linha (CPU)
-        function obterDadosCPU() {
-            var idDispositivo = sessionStorage.getItem('LINHA');
-
-            fetch(`/medidas/CPU?idDispositivo=${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (resposta) {
-                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-                        plotarCPU(resposta);
-
-                    });
-                } else {
-                    console.error('Nenhum dado encontrado ou erro na API');
-                }
-            })
-                .catch(function (error) {
-                    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-                });
-        }
+    
         let labelNRT = ["2min", "1.5min", "1min", "30s", "0"];
 
-        function obterDadosCPU() {
-            var idDispositivo = sessionStorage.getItem('LINHA');
-
-            fetch(`/medidas/CPU/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (resposta) {
-                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-
-
-                        plotarCPU(resposta);
-
-                    });
-                } else {
-                    console.error('Nenhum dado encontrado ou erro na API');
-                }
-            })
-                .catch(function (error) {
-                    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-                });
-        }
-
-        function plotarCPU(resposta) {
-
-            let dados = [];
-
-            for (i = resposta.length - 1; i >= 0; i--) {
-                var registro = resposta[i];
-                console.log(registro.valor)
-
-                if (dados.length >= labelNRT.length) {
-                    dados.shift();
-                }
-
-                dados.push(registro.valor);
-
-            }
-
-            if (CPUChart) {
-                CPUChart.destroy();
-            }   
-
-            // Criar o novo gráfico
-            const cpuCtx = document.getElementById('myChart1').getContext('2d');
-            CPUChart = new Chart(cpuCtx, {
-                type: 'line',
-                data: {
-                    labels: labelNRT,
-                    datasets: [{
-                        label: 'uso da cpu (%)',
-                        data: dados,
-                        borderWidth: 2,
-                        backgroundColor: 'rgba(36, 130, 50, 1)',
-                        borderColor: 'rgba(36, 130, 50, 1)'
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-            console.log(dados)
-        }
-        setInterval(() => {
-            obterDadosCPU();
-        }, 30000);
-
-       
-
         function obterDadosRAM() {
-            var idDispositivo = sessionStorage.getItem('LINHA');
+        var idDispositivo = inputCargo.value;
 
-            fetch(`/medidas/RAM/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (resposta) {
-                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+        fetch(`/medidas/RAM/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
 
-                        plotarRAM(resposta);
+                    plotarRAM(resposta);
 
-                    });
-                } else {
-                    console.error('Nenhum dado encontrado ou erro na API');
-                }
-            })
-                .catch(function (error) {
-                    console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
                 });
-        }
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
 
-        // Gráfico de Área para myChart2
     function plotarRAM(resposta) {
+
         let dados = [];
-        for (let i = resposta.length - 1; i >= 0; i--) {
+
+        for (i = resposta.length - 1; i >= 0; i--) {
             var registro = resposta[i];
+            console.log(registro.valor)
+
             if (dados.length >= labelNRT.length) {
                 dados.shift();
             }
+
             dados.push(registro.valor);
+
         }
 
         if (RAMChart) {
             RAMChart.destroy();
         }
 
-        const ramCtx = document.getElementById('myChart2').getContext('2d');
-        RAMChart = new Chart(ramCtx, {
+        // Criar o novo gráfico
+        const ctx2 = document.getElementById('myChart2');
+        RAMChart = new Chart(ctx2, {
             type: 'line',
             data: {
                 labels: labelNRT,
                 datasets: [{
-                    label: 'RAM (GB)',
+                    label: '%',
                     data: dados,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: true
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
                 }]
             },
             options: {
                 scales: {
-                    y: { beginAtZero: true }
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
         });
-    }   
-        setInterval(() => {
-            obterDadosRAM();
-        }, 30000);
 
-        
-        function obterDadosDISCO() {
-    var idDispositivo = sessionStorage.getItem('LINHA');
+        console.log(dados)
 
-    fetch(`/medidas/DISCO/${idDispositivo}`, { cache: 'no-store' })
-        .then(function (response) {
+    }
+
+    setInterval(() => {
+        obterDadosRAM();
+    }, 30000);
+
+    function obterDadosCPU() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/CPU/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    atualizarDISCO(resposta);
+
+
+                    plotarCPU(resposta);
+
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
             }
         })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados para o gráfico: ${error.message}`);
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarCPU(resposta) {
+
+        let dados = [];
+
+        for (i = resposta.length - 1; i >= 0; i--) {
+            var registro = resposta[i];
+            console.log(registro.valor)
+
+            if (dados.length >= labelNRT.length) {
+                dados.shift();
+            }
+
+            dados.push(registro.valor);
+
+        }
+
+        if (CPUChart) {
+            CPUChart.destroy();
+        }
+
+        // Criar o novo gráfico
+        const ctx1 = document.getElementById('myChart1');
+        CPUChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: labelNRT,
+                datasets: [{
+                    label: '%',
+                    data: dados,
+                    borderWidth: 2,
+                    backgroundColor: 'rgba(36, 130, 50, 1)',
+                    borderColor: 'rgba(36, 130, 50, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
-}
 
-function atualizarDISCO(resposta) {
-    if (resposta && resposta.length > 0) {
-        var registro = resposta[0];
-        var valor = registro.valor;
-        var ideal = 90; // Valor ideal para o uso de disco
+        console.log(dados)
 
-        if (isNaN(valor)) {
-            console.error('O valor recebido não é numérico:', valor);
-            return;
+    }
+
+
+    setInterval(() => {
+        obterDadosCPU();
+    }, 30000);
+
+
+    function obterDadosDISCO() {
+        var idDispositivo = inputCargo.value;
+
+        fetch(`/medidas/DISCO/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+
+                    plotarDISCO(resposta);
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarDISCO(resposta) {
+
+        let dados = [];
+
+            var registro = resposta[0];
+            console.log(registro.valor)
+            var resto = 100 - registro.valor;
+
+            dados.push(registro.valor);
+            dados.push(resto)
+
+
+        if (DISCOChart) {
+            DISCOChart.destroy();
         }
 
-        // Atualizar gráfico "gauge" para o disco
-        criarGauge('myChart3', 'Disco', valor, ideal);
-
-        // Atualizar status textual
-        const status = document.getElementById('discoStatus');
-        if (valor > ideal) {
-            status.textContent = `⚠️ Em risco: ${valor}% (Ideal: ${ideal}%)`;
-        } else {
-            status.textContent = `✅ Dentro dos parâmetros: ${valor}%`;
-        }
-    } else {
-        console.error('Resposta da API vazia ou inesperada.');
-    }
-}
-
-function criarGauge( myChart3, label, valor, ideal) {
-    const canvasElement = document.getElementById('myChart3');
-
-    if (!canvasElement) {
-        console.error(`Canvas com ID "${'myChart3'}" não encontrado.`);
-        return;
-    }
-
-    if (window[DISCOChart]) {
-        window[DISCOChart].destroy(); // Destruir gráfico anterior, se existente
-    }
-
-    console.log(`Criando gráfico Gauge: ${'myChart3'}, valor: ${valor}, ideal: ${ideal}`);
-
-    DISCOChart= new Chart(canvasElement, {
-        type: 'doughnut',
+        // Criar o novo gráfico
+        const ctx3 = document.getElementById('myChart3').getContext('2d');
+        DISCOChart = new Chart(ctx3, {
+            type: 'doughnut',
         data: {
             labels: [label, 'Livre'],
             datasets: [{
-                data: [valor, 100 - valor],
-                backgroundColor: [valor > ideal ? '#ff0000' : '#36a2eb', '#dddddd'],
+                data: [resto, 100 - resto],
+                backgroundColor: [resto > registro ? '#ff0000' : '#36a2eb', '#dddddd'],
             }]
         },
         options: {
@@ -342,21 +319,25 @@ function criarGauge( myChart3, label, valor, ideal) {
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: `${label}: ${valor}% (Ideal: ${ideal}%)`,
+                    text: `${label}: ${resto}% (Ideal: ${registro}%)`,
                 },
             },
         },
     });
-}
-
-// Atualizar dados a cada 3 segundos
-setInterval(() => {
-    obterDadosDISCO();
-}, 30000);
 
 
-        
-        // Função para obter os dados de Velocidade de Rede
+        console.log(dados)
+
+    }
+
+
+    setInterval(() => {
+        obterDadosDISCO();
+    }, 30000);
+
+
+
+     // dados de Velocidade de Rede
     function obterDadosLatencia() {
         var idDispositivo = sessionStorage.getItem('LINHA');
 
@@ -393,9 +374,8 @@ setInterval(() => {
             LatenciaChart.destroy();
         }
 
-        // Criar gráfico 
-        const LatenciaChartCtx = document.getElementById('myChart4').getContext('2d');
-        LatenciaChart = new Chart(LatenciaChartCtx, {
+        const ctx4 = document.getElementById('myChart4').getContext('2d');
+        LatenciaChart = new Chart(ctx4, {
             type: 'line',
             data: {
                 labels: labelNRT,
@@ -421,5 +401,8 @@ setInterval(() => {
     setInterval(() => {
         obterDadosLatencia();
     }, 30000);
+
+
+        
 
     </script>
