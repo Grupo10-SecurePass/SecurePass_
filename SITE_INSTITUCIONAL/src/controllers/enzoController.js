@@ -23,7 +23,7 @@ function obterTaxaDownload(req, res) {
 function obterTaxaPacote(req, res) {
 
     const idDispositivo = req.params.idDispositivo;
-    enzoModel.obterTaxaDownload(idDispositivo)
+    enzoModel.obterTaxaPacote(idDispositivo)
 
         .then((resultado) => {
             if (resultado.length > 0) {

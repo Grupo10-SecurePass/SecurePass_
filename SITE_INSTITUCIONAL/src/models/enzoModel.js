@@ -2,16 +2,23 @@ var database = require("../database/config");
 const { listarMaquinaDash } = require("./maquinaModel");
 
 function obterTaxaDownload(idDispositivo) {
+
   console.log("ACESSEI A FUNÇÃO DA TAXA DE DOWNLOAD");
   var instrucaoSql = `
-      SELECT 
-    ROUND(AVG(c.registro), 2) AS media_registro
+SELECT 
+    DATE(c.dataRegistro) AS data,
+    ROUND(AVG(c.registro), 2) AS media_diaria_download
 FROM 
     captura c
 WHERE 
-    c.dataRegistro >= CURDATE() - INTERVAL 5 DAY
-    AND c.fkDispositivo = ${idDispositivo};
-    `;
+    c.fkComponente = 4 -- Filtro para a taxa de download
+    AND DATE(c.dataRegistro) = CURDATE() -- Apenas o dia de hoje
+GROUP BY 
+    DATE(c.dataRegistro) -- Agrupamento por data (aqui será apenas hoje)
+ORDER BY 
+    data;
+`;
+
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   var receberDados = database.executar(instrucaoSql);
@@ -56,18 +63,25 @@ function obterTransferencia(idDispositivo) {
 }
 
 function obterTaxaPacote(idDispositivo) {
-  console.log("ACESSEI A FUNÇÃO DA TAXA DE DOWNLOAD");
+  console.log("ACESSEI A FUNÇÃO DA TAXA DE PACOTE");
   var instrucaoSql = `
       SELECT 
-    ROUND(AVG(
-        (c.PacoteEnviado - c.PacoteRecebido) / c.PacoteEnviado * 100
-    ), 2) AS media_perda_pacotes
-FROM 
-    captura c
-WHERE 
-    c.dataRegistro >= CURDATE() - INTERVAL 5 DAY
-    AND c.fkDispositivo = ${idDispositivo} IN (9, 10);
-    `;
+    COALESCE(ROUND(AVG(ABS(PacoteEnviado - PacoteRecebido)), 0), 0) AS media_perda_pacotes
+FROM (
+    SELECT 
+        SUM(CASE WHEN c.fkComponente = 9 THEN c.registro ELSE 0 END) AS PacoteRecebido,
+        SUM(CASE WHEN c.fkComponente = 10 THEN c.registro ELSE 0 END) AS PacoteEnviado
+    FROM 
+        captura c
+    WHERE 
+        c.dataRegistro >= CURDATE() - INTERVAL 5 DAY
+    AND 
+        c.fkDispositivo = ${idDispositivo}
+    AND 
+        c.fkComponente IN (9, 10)
+    GROUP BY c.dataRegistro
+) as tb;
+`;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   var receberDados = database.executar(instrucaoSql);

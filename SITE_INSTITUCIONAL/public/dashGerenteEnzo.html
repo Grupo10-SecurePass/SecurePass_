@@ -387,7 +387,7 @@
 
         function obterTaxaDownload() {
 
-            obterTransferencia();  // Presumo que esta função seja responsável por outra parte do processo
+            obterTransferencia();// Presumo que esta função seja responsável por outra parte do processo
 
             var idDispositivo = inputCargo.value;
 
@@ -425,28 +425,26 @@
         </div>
         </div>
     `;
-
                     if (data.length === 0) {
                         // Se não houver dados, exibe a mensagem "Nenhum alerta encontrado"
                         transferenciaDiv.querySelector('.ranking').innerHTML = "<p>Nenhum alerta encontrado.</p>";
                     } else {
                         // Calcular a média de download
-                        const mediaRegistro = data.reduce((acc, val) => acc + val.media_diaria, 0) / data.length;
-                        document.getElementById('downloadMedio').textContent = mediaRegistro.toFixed(2); // Exibe a média de download
 
                         // Preencher a lista de taxas de download diretamente no innerHTML
                         let taxasHTML = '';  // Variável para armazenar as taxas de download
 
                         data.forEach(item => {
-                            const dataItem = item.data || "Desconhecido";  // Data da taxa de download
-                            const mediaRegistro = item.media_registro || "0";  // Média diária
+                            const dataItem = item.data || "Desconhecido"; // Data da taxa de download
+                            const media_download_diaria = item.media_diaria_download || "0"; // Média diária
 
                             taxasHTML += `
-                <div class="linha_ranking">
-                    <span>${mediaRegistro}</span>
-                </div>
-            `;
+        <div class="linha_ranking">
+            <span>${media_download_diaria}</span>
+        </div>
+    `;
                         });
+
 
                         // Inserir os dados de taxa de download no contêiner .ranking
                         transferenciaDiv.querySelector('.ranking').innerHTML = taxasHTML;
@@ -460,7 +458,7 @@
 
         function obterTaxaPacote() {
 
-            obterTransferencia();  // Presumo que esta função seja responsável por outra parte do processo
+            obterPacote();  // Presumo que esta função seja responsável por outra parte do processo
 
             var idDispositivo = inputCargo.value;
 
@@ -480,30 +478,29 @@
                 .then(data => {
                     console.log("Dados recebidos da API:", data);
 
-                    const transferenciaDiv = document.getElementById('pacote');
+                    const transferenciaDiv1 = document.getElementById('pacote');
 
                     // Limpa o conteúdo da transferência antes de inserir os novos dados
-                    transferenciaDiv.innerHTML = `
-
-                    <div id="pacote" class="pacote">
+                    transferenciaDiv1.innerHTML = `
                         <div class="titulopacote">
                             <p> Taxa Perda Pacotes - Semanal </p>
                         </div>
                         <div class="espacografico-pacote">
-                            <div class="indicador1">
-                                <p> Média:</p>
-                                
-                                    <div class="espacografico-transferencia">
+                           <div class="indicador1">
 
-                                <span id="upload-medio">
+                       <div class="ranking"> <!-- Contêiner para dados de taxa de download -->
+
+                                                 
+                                <p> Média:</p>
+
+                            <span id="upload-medio">  </span>
                             </div> Pacotes
                         </div>
-                    </div>
-`;
+                    </div>`;
 
                     if (data.length === 0) {
                         // Se não houver dados, exibe a mensagem "Nenhum alerta encontrado"
-                        transferenciaDiv.querySelector('.ranking').innerHTML = "<p>Nenhum alerta encontrado.</p>";
+                        transferenciaDiv1.querySelector('.ranking').innerHTML = "<p>Nenhum alerta encontrado.</p>";
                     } else {
                         // Calcular a média de download
                         const mediaRegistro = data.reduce((acc, val) => acc + val.media_perda_pacotes, 0) / data.length;
@@ -514,17 +511,17 @@
 
                         data.forEach(item => {
                             const dataItem = item.data || "Desconhecido";  // Data da taxa de download
-                            const mediaRegistro = item.media_perda_pacotes || "0";  // Média diária
+                            const media_perda_pacotes = item.media_perda_pacotes || "0";  // Média diária
 
                             taxasHTML += `
     <div class="linha_ranking">
-        <span>${mediaRegistro}</span>
+        <span>${media_perda_pacotes}</span>
     </div>
 `;
                         });
 
                         // Inserir os dados de taxa de download no contêiner .ranking
-                        transferenciaDiv.querySelector('.ranking').innerHTML = taxasHTML;
+                        transferenciaDiv1.querySelector('.ranking').innerHTML = taxasHTML;
                     }
                 })
                 .catch(error => {
