@@ -53,12 +53,12 @@
                 <div class="filtro">
                     <div class="escolha">
                         <div class="textodata">
-                            <p>Selecione qual dispositivo você deseja monitorar:</p>
+                            <p>Selecione o dispositivo que você deseja monitorar:</p>
                         </div>
                         <div class="aviso">
-                            <p>Seu cargo: Gerente <br>
-                                *Se você ainda não selecionou, os dados são do primeiro dispositivo que foi cadastrado da linha.</p>
-                        </div>
+                            <p id="info-linha">Seu cargo: Gerente - Linha: <span id="linha-texto"></span><br>
+                                *Caso você ainda não tenha selecionado, os dados exibidos correspondem ao primeiro dispositivo cadastrado na linha.</p>
+                        </div>                        
                     </div>
                     <div class="select_filtro">
                         <select name="escolherServidor" id="inputEscolha" onchange="obterDados(); obterDadosGrafico(); dadosAlertas(); atualizarAlertas(); gerarMensagemAlerta()">
@@ -67,8 +67,8 @@
                 </div>
                 <div class="alertas">
                     <div class="titulodispersao">
-                        <p class="titu">Análise de Tendências</p>
-                        <p class="sub">Tendências de Utilização dos Recursos (Últimas 2 Semanas)</p>
+                        <p class="titu">Análise de Tendência</p>
+                        <p class="sub">Tendência de Utilização dos Recursos (últimas 2 Semanas)</p>
                     </div>
                     <div class="espaco">
                         <div class="grafico1dispersao">
@@ -79,8 +79,8 @@
                             </div>
                         </div>
                         <div class="legendagrafico2">
-                            <p>Acompanhe as tendências de utilização para identificar padrões de carga e planejar ações preventivas.</p>
-                            <p class="subleg">Dados de utilização diário de CPU e memória RAM das últimas 2 semanas.</p>
+                            <p>Acompanhe a tendência de utilização para identificar padrões de carga e planejar ações preventivas.</p>
+                            <p class="subleg">Dados de utilização diários de CPU e memória RAM nas últimas 2 semanas.</p>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="desempenho">
                     <div class="titulodispersao">
-                        <p class="titu">Análise de Desempenho da Linha</p>
+                        <p class="titu">Análise de Desempenho do Dispositivo</p>
                         <p class="sub">Média semanal da utilização dos recursos (últimas 2 semanas)</p>
                     </div>
                     <div class="grafico1dispersao">
@@ -106,8 +106,8 @@
                             </div>
                         </div>
                         <div class="legendagrafico1">
-                            <p>Análise de desempenho da máquina para redistribuir recursos ou ajustar suporte conforme a carga.</p>
-                            <p class="subleg">Dados de utilização diário de CPU e memória RAM das últimas 2 semanas.</p>
+                            <p>Análise de desempenho do dispositivo para redistribuir recursos ou ajustar o suporte conforme a carga.</p>
+                            <p class="subleg">Dados de utilização diários de CPU e memória RAM nas últimas 2 semanas.</p>
                         </div>
                     </div>
                 </div>
@@ -134,6 +134,18 @@
     }
 
     var linha = sessionStorage.getItem("LINHA");
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var linha = sessionStorage.getItem("LINHA");
+        var linhaTexto = document.getElementById("linha-texto");
+
+        if (linha) {
+            linhaTexto.textContent = linha;
+        } else {
+            linhaTexto.textContent = "Não definida";
+        }
+    });
+
     function obterMaquinas() {
         fetch(`/dashPreditiva/listarMaquinaPreditiva/${linha}`, {
             method: "GET",
