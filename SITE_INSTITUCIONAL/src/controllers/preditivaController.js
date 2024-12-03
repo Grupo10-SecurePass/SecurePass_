@@ -3,7 +3,8 @@ var preditivaModel = require("../models/preditivaModel");
 function obterMediaDiaria(req, res) {
     var linha = req.params.linha;
     var idDispositivo = req.params.idDispositivo;
-    preditivaModel.obterMediaDiaria(linha, idDispositivo)
+    var componente = req.params.componente;
+    preditivaModel.obterMediaDiaria(linha, idDispositivo, componente)
         .then((resultado) => {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -21,8 +22,9 @@ function obterMediaDiaria(req, res) {
 function obterDados(req, res) {
     var linha = req.params.linha;
     var idDispositivo = req.params.idDispositivo;
+    var componente = req.params.componente;
 
-    preditivaModel.obterDados(linha, idDispositivo).then(function (resultado) {
+    preditivaModel.obterDados(linha, idDispositivo, componente).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -52,8 +54,26 @@ function listarMaquinaPreditiva(req,res) {
   });
 }
 
+function obterAlertas(req, res) {
+    var linha = req.params.linha;
+    var idDispositivo = req.params.idDispositivo;
+    preditivaModel.obterAlertas(linha, idDispositivo)
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum dado encontrado.");
+            }
+        })
+        .catch((erro) => {
+            console.error("Erro ao obter dados de CPU e RAM: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     obterMediaDiaria,
     obterDados,
-    listarMaquinaPreditiva
+    listarMaquinaPreditiva,
+    obterAlertas
 }

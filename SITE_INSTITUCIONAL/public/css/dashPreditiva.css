@@ -116,11 +116,12 @@ body{
   font-weight: 600;
 }
 .espaco_componente select{
-  height: 25px;
+  height: 30px;
   background-color: #040F0F;
   border: #248232 solid 2px;
   border-radius: 4px;
   color: #FCFFFC;
+  font-size: 20px;
 }
 .tituloalert{
     width: 100%;

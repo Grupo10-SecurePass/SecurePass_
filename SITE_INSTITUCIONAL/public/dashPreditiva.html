@@ -6,7 +6,7 @@
     <title>Dashboard - Gerente</title>
     <link rel="stylesheet" href="./css/dashPreditiva.css">
 </head>
-<body onload="obterMaquinas(), obterDados(), obterDadosGrafico(), dadosAlertas(), atualizarAlertas(), gerarMensagemAlerta()">
+<body onload="obterMaquinas(), obterAlertas(), obterDados(), obterDadosGrafico(), dadosAlertas(), atualizarAlertas(), gerarMensagemAlerta()">
 
     <div class="content">
         <button class="hamburger" onclick="toggleNavbar()">
@@ -61,16 +61,16 @@
                         </div>                        
                     </div>
                     <div class="select_filtro">
-                        <select name="escolherServidor" id="inputEscolha" onchange="obterDados(); obterDadosGrafico(); dadosAlertas(); atualizarAlertas(); gerarMensagemAlerta()">
+                        <select name="escolherServidor" id="inputEscolha" onchange="atualizarDadosDoDispositivo()">
                         </select>                        
                     </div>
                 </div>
                 <div class="alertas">
                     <div class="espaco_componente">
                         <p>Selecione o componente (CPU ou memória RAM):</p>
-                        <select name="componente" id="escolha_componente">
-                            <option value="cpu" selected>CPU</option>
-                            <option value="ram">RAM</option>
+                        <select name="componente" id="escolha_componente" onchange="agregarComponente()">
+                            <option value="PercCPU" selected>CPU</option>
+                            <option value="PercMEM">RAM</option>
                         </select>
                     </div>
                     <div class="titulodispersao">
@@ -87,7 +87,7 @@
                         </div>
                         <div class="legendagrafico2">
                             <p>Acompanhe a tendência de utilização para identificar padrões de carga e planejar ações preventivas.</p>
-                            <p class="subleg">Dados de utilização diários de CPU e memória RAM nas últimas 2 semanas.</p>
+                            <p class="subleg">Dados de utilização diários de CPU ou memória RAM nas últimas 2 semanas.</p>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="legendagrafico1">
                             <p>Análise de desempenho do dispositivo para redistribuir recursos ou ajustar o suporte conforme a carga.</p>
-                            <p class="subleg">Dados de utilização diários de CPU e memória RAM nas últimas 2 semanas.</p>
+                            <p class="subleg">Dados de utilização diários de CPU ou memória RAM nas últimas 2 semanas.</p>
                         </div>
                     </div>
                 </div>
@@ -153,49 +153,66 @@
         }
     });
 
+    document.addEventListener("DOMContentLoaded", () => {
+        var linha = sessionStorage.getItem("LINHA");
+        var linhaTexto = document.getElementById("linha-texto");
+
+        if (linha) {
+            linhaTexto.textContent = linha;
+        } else {
+            linhaTexto.textContent = "Não definida";
+        }
+
+        obterMaquinas().then(() => {
+            const selectDispositivo = document.getElementById("inputEscolha");
+            if (selectDispositivo.options.length > 0) {
+                selectDispositivo.value = selectDispositivo.options[0].value;
+            }
+            const selectComponente = document.getElementById("escolha_componente");
+            selectComponente.value = "PercCPU";
+
+            atualizarDadosDoDispositivo();
+        });
+    });
+    function atualizarDadosDoDispositivo() {
+        var componente = escolha_componente.value;
+        obterDadosGrafico(componente);
+        obterDados(componente);
+        obterAlertas()
+        dadosAlertas();
+        atualizarAlertas();
+        gerarMensagemAlerta();
+    }
+
     function obterMaquinas() {
-        fetch(`/dashPreditiva/listarMaquinaPreditiva/${linha}`, {
+        return fetch(`/dashPreditiva/listarMaquinaPreditiva/${linha}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
         })
-            .then(function (resposta) {
+            .then(resposta => {
                 if (resposta.ok) {
-                    if (resposta.status == 204) {
-                        var lista = document.getElementById("listamaquinas");
-                        window.alert("Não achou nenhuma máquina");
+                    if (resposta.status === 204) {
+                        console.warn("Nenhuma máquina encontrada.");
                         return [];
                     }
                     return resposta.json();
                 } else {
-                    throw "Houve um erro na API!";
+                    throw new Error("Erro ao obter máquinas.");
                 }
             })
-            .then(function (dados) {
-                console.log("Dados recebidos: ", JSON.stringify(dados));
-                var lista = document.getElementById("listamaquinas");
+            .then(dados => {
+                const selectDispositivo = document.getElementById("inputEscolha");
+                selectDispositivo.innerHTML = "";
 
-                for (let i = 0; i < dados.length; i++) {
-                    var maquina = dados[i];
-                    var id = maquina.idDispositivo
-                    var nome = maquina.nome
-
-                    console.log(maquina)
-                    console.log(id)
-
-                    var opcao = document.createElement("option");
-                    opcao.value = `${id}`;
-                    opcao.innerHTML = nome;
-
-                    inputEscolha.appendChild(opcao);
-                }
-                obterDados()
-                obterDadosGrafico()
-                atualizarAlertas()
-                gerarMensagemAlerta()
+                dados.forEach(maquina => {
+                    const opcao = document.createElement("option");
+                    opcao.value = maquina.idDispositivo;
+                    opcao.textContent = maquina.nome;
+                    selectDispositivo.appendChild(opcao);
+                });
             })
-            .catch(function (erro) {
-                console.error(erro);
-                console.log("Deu erro");
+            .catch(erro => {
+                console.error("Erro ao obter máquinas:", erro);
             });
     }
 
@@ -228,7 +245,7 @@
             graficoDispersao.destroy();
         }
         const ctx = document.getElementById('graficoDispersao');
-        const valores = data.map(item => (item.media_cpu + item.media_ram) / 2);
+        const valores = data.map(item => (item.media) / 2);
         const linhaTendencia = calcularLinhaTendencia(valores);
 
         graficoDispersao = new Chart(ctx, {
@@ -236,7 +253,7 @@
             data: {
                 datasets: [
                     {
-                        label: 'Amostras de Uso (CPU + RAM)',
+                        label: 'Amostras de Uso do Componente Selecionado',
                         data: valores.map((v, i) => ({ x: i + 1, y: v })),
                         backgroundColor: 'rgba(36, 130, 50, 0.5)',
                         pointRadius: 5,
@@ -304,14 +321,19 @@
         });
     }
 
-    function obterDadosGrafico() {
+    function agregarComponente(){
+        var componente = escolha_componente.value;
+        obterDadosGrafico(componente);
+        obterDados(componente);
+    }
+
+    function obterDadosGrafico(componente) {
         var idDispositivo = inputEscolha.value;
-        fetch(`/dashPreditiva/obterMediaDiaria/${linha}/${idDispositivo}`)
+        fetch(`/dashPreditiva/obterMediaDiaria/${linha}/${idDispositivo}/${componente}`)
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
                     criarGraficoDispersao(data);
-                    dadosAlertas(data);
                 } else {
                     console.log("Nenhum dado encontrado para o gráfico.");
                 }
@@ -322,10 +344,10 @@
         obterDadosGrafico();
     }, 604800000);
 
-    function obterDados(){
+    function obterDados(componente){
         var idDispositivo = inputEscolha.value;
         console.log(linha)
-        fetch(`/dashPreditiva/obterDados/${linha}/${idDispositivo}`)
+        fetch(`/dashPreditiva/obterDados/${linha}/${idDispositivo}/${componente}`)
             .then(function(response){
             return response.json();
         })
@@ -354,7 +376,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Média CPU & RAM',
+                    label: 'Média de Uso do Componente Selecionado',
                     data: valores,
                     borderWidth: 2,
                     backgroundColor: 'rgba(36, 130, 50, 0.5)',
@@ -394,6 +416,20 @@
         });
     }
 
+    function obterAlertas() {
+        var idDispositivo = inputEscolha.value;
+        fetch(`/dashPreditiva/obterAlertas/${linha}/${idDispositivo}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    dadosAlertas(data);
+                } else {
+                    console.log("Nenhum dado encontrado para o gráfico.");
+                }
+            })
+            .catch(err => console.error("Erro ao buscar dados do gráfico:", err));
+    }
+
     function dadosAlertas(data) {
         if (data.length > 0) {
             var mediasCPU = data.map(item => item.media_cpu);
@@ -410,6 +446,7 @@
             console.log("Nenhum dado encontrado para calcular tendências.");
         }
     }
+
     function gerarMensagemAlerta(dados, tendencia, tipo) {
         var ultimoValorReal = dados[dados.length - 1];
         var ultimoValorPrevisto = tendencia[tendencia.length - 1].y;
@@ -437,6 +474,7 @@
             };
         }
     }
+
     function atualizarAlertas(alertas) {
         var espacoalertas = document.getElementById("espacoalertas");
         espacoalertas.innerHTML = "";
