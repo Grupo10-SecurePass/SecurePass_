@@ -354,38 +354,38 @@
     }, 30000);
 
     function obterDadosCPU() {
-    var idDispositivo = inputCargo.value;
+        var idDispositivo = inputCargo.value;
 
-    fetch(`/medidas/CPUGerente/${idDispositivo}`, { cache: 'no-store' })
-        .then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    const labels = [];
-                    const data = [];
+        fetch(`/medidas/CPUGerente/${idDispositivo}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        const labels = [];
+                        const data = [];
 
-                    resposta.forEach(item => {
-                        labels.push(item.data);
-                        data.push(item.media_diaria);
+                        resposta.forEach(item => {
+                            labels.push(item.data);
+                            data.push(item.media_diaria);
+                        });
+
+                        // Inverter a ordem dos dados
+                        labels.reverse();
+                        data.reverse();
+
+                        if (CPUChart) {
+                            CPUChart.destroy();
+                        }
+
+                        plotarCPU(labels, data);
                     });
-
-                    // Inverter a ordem dos dados
-                    labels.reverse();
-                    data.reverse();
-
-                    if (CPUChart) {
-                        CPUChart.destroy();
-                    }
-
-                    plotarCPU(labels, data);
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
 
 
     function plotarCPU(labels, data) {
@@ -418,32 +418,45 @@
     function obterMaquinasRisco() {
 
         fetch(`/medidas/MaquinasRisco/`, { cache: 'no-store' })
-            .then(function (response) {
-                if (response.ok) {
-                    response.json().then(function (resposta) {
-                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    .then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-                        const labels = [];
-                        const data = [];
+                const labels = [];
+                const data = [];
 
-                        resposta.forEach(item => {
-                            labels.push(item.data);
-                            data.push(item.quantidadeDispositivosEmAlerta);
-                        });
+                resposta.forEach(item => {
+                    labels.push(item.data);
+                    data.push(item.quantidadeDispositivosEmAlerta);
+                });
 
-                        if (MaquinasChart) {
-                            MaquinasChart.destroy();
-                        }
+                // Ordena as labels e dados pela data antes de passar para o gráfico
+                const sortedData = labels.map((label, index) => ({ label, data: data[index] }))
+                                          .sort((a, b) => {
+                                              // Ordena pela data no formato 'dd-mm', se necessário
+                                              const dateA = new Date(a.label.split('-').reverse().join('-'));
+                                              const dateB = new Date(b.label.split('-').reverse().join('-'));
+                                              return dateA - dateB;
+                                          });
 
-                        plotarMaquinasRisco(labels, data);
-                    });
-                } else {
-                    console.error('Nenhum dado encontrado ou erro na API');
+                // Agora, labels e data estão ordenados pela data
+                const sortedLabels = sortedData.map(item => item.label);
+                const sortedDataValues = sortedData.map(item => item.data);
+
+                if (MaquinasChart) {
+                    MaquinasChart.destroy();
                 }
-            })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+
+                plotarMaquinasRisco(sortedLabels, sortedDataValues);
             });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
     }
 
     function plotarMaquinasRisco(labels, data) {
