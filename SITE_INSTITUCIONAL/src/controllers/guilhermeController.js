@@ -102,8 +102,7 @@ function Bobia(req, res) {
 
         try {
             const respostaBanco = await guilhermeModel.Bobia();
-            chaveGemini = String(respostaBanco[0].Chave);
-            console.log("CHAVE AQUI>>>>>>>>>>>>", chaveGemini)
+            chaveGemini = String(respostaBanco[0].codigo);
         } catch (error) {
             console.error("Erro ao obter chave gemini do banco de dados.");
         }

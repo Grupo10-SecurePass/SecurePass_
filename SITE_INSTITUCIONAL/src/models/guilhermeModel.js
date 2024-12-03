@@ -128,7 +128,7 @@ function Bobia() {
     console.log("ACESSEI A FUNÇÃO DE CAPTURAR A CHAVE");
 
     var instrucaoSql = `
-       Select Chave from Chave;
+       Select codigo from chave;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
