@@ -124,10 +124,23 @@ ORDER BY a.dataAlerta DESC;
     return database.executar(instrucaoSql);  
 }
 
+function Bobia() {
+    console.log("ACESSEI A FUNÇÃO DE CAPTURAR A CHAVE");
+
+    var instrucaoSql = `
+       Select Chave from Chave;
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);  
+}
+
+
 module.exports = {
     obterPercentualCpu,
     obterPercentualRam,
     obterQtdAlertasRamCpu,
     obterTempAlertas,
-    obterInfoAlertas
+    obterInfoAlertas,
+    Bobia
 };

@@ -88,48 +88,50 @@ function obterInfoAlertas(req, res) {
 }
 
 function Bobia(req, res) {
-        const pergunta = req.body.pergunta;
-    
-        gerarResposta(pergunta).then( resposta => {
-            res.status(200).json({ resposta: resposta });
-        }).catch( erro => {
-            res.status(500).json({ status: "Erro", message: "Falha ao gerar resposta", erro: erro.message});
-        });
-    
-        async function gerarResposta(mensagem) {
-    
-            var chaveGemini = null;
+    const pergunta = req.body.pergunta;
 
-            if (!chaveGemini) {
-                console.error(` Tentando obter a chave do .env...`);
-                chaveGemini = process.env.CHAVE_GEMINI;
-            }
-    
-            if(chaveGemini) {
-                console.log("Chave da API do Gemini Obtida com Sucesso...");
-            }
-    
-            // instanciando a classe GoogleGenerativeAI
-            const chatIA = new GoogleGenerativeAI(chaveGemini);
-            // obtendo o modelo de IA
-            const modeloIA = chatIA.getGenerativeModel({ model: "gemini-pro" });
-        
-            try {
-                // gerando conteúdo com base na pergunta
-                const resultado = await modeloIA.generateContent(`${mensagem}`);
-                const resposta = await resultado.response.text();
-                
-                console.log('Requisição na API do Gemini feita, resposta: ', resposta);
-        
-                return resposta;
-            } catch (error) {
-                console.error(error);
-                throw error;
-            }
+    gerarResposta(pergunta).then( resposta => {
+        res.status(200).json({ resposta: resposta });
+    }).catch( erro => {
+        res.status(500).json({ status: "Erro", message: "Falha ao gerar resposta", erro: erro.message});
+    });
+
+    async function gerarResposta(mensagem) {
+
+        let chaveGemini = null;
+
+        try {
+            const respostaBanco = await guilhermeModel.Bobia();
+            chaveGemini = String(respostaBanco[0].Chave);
+            console.log("CHAVE AQUI>>>>>>>>>>>>", chaveGemini)
+        } catch (error) {
+            console.error("Erro ao obter chave gemini do banco de dados.");
         }
+
+        if(chaveGemini) {
+            console.log("Chave da API do Gemini Obtida com Sucesso...");
+        }
+
+        // instanciando a classe GoogleGenerativeAI
+        const chatIA = new GoogleGenerativeAI(chaveGemini);
+        // obtendo o modelo de IA
+        const modeloIA = chatIA.getGenerativeModel({ model: "gemini-pro" });
     
+        try {
+            // gerando conteúdo com base na pergunta
+            const resultado = await modeloIA.generateContent(`${mensagem}`);
+            const resposta = await resultado.response.text();
+            
+            console.log('Requisição na API do Gemini feita, resposta: ', resposta);
+    
+            return resposta;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
 
+}
 
 module.exports = {
     obterPercentualCpu,
