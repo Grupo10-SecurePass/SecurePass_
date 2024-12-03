@@ -12,12 +12,12 @@ function obterDados(linha) {
         JOIN 
             dispositivo d ON a.fkDispositivo = d.idDispositivo
         WHERE 
-            d.fkLinha = ${linha}
+            d.fkLinha = 1
             AND a.dataAlerta >= DATE_SUB(NOW(), INTERVAL 14 DAY)
         GROUP BY 
             d.idDispositivo, d.nome, a.dataAlerta
         ORDER BY 
-            diaAlerta;
+            a.dataAlerta ;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
