@@ -161,22 +161,20 @@
     const labels = [...new Set(data.map(item => item.diaAlerta))]; // Dias únicos no eixo X
     const dispositivos = [...new Set(data.map(item => item.idMaquina))]; // IDs únicos dos dispositivos
 
-    const datasets = [];
-    for (const dispositivo of dispositivos) {
-        const nomeDispositivo = data.find(item => item.idMaquina === dispositivo).nomeDispositivo; // Busca o nome do dispositivo
-        const valores = [];
-        for (const label of labels) {
+    const datasets = dispositivos.map(dispositivo => {
+        const nomeDispositivo = data.find(item => item.idMaquina === dispositivo)?.nomeDispositivo || 'Desconhecido';
+        const valores = labels.map(label => {
             const alerta = data.find(item => item.idMaquina === dispositivo && item.diaAlerta === label);
-            valores.push(alerta ? alerta.quantidadeAlertas : 0); // Adiciona 0 se não houver alertas
-        }
-        datasets.push({
-            label: `${nomeDispositivo}`, // Exibe o nome do dispositivo
+            return alerta ? alerta.quantidadeAlertas : 0;
+        });
+        return {
+            label: nomeDispositivo, // Exibe o nome do dispositivo
             data: valores,
             borderWidth: 2,
             borderColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 1)`,
             backgroundColor: 'rgba(0, 0, 0, 0)', // Sem preenchimento
-        });
-    }
+        };
+    });
 
     const ctx = document.getElementById('myChart').getContext('2d');
     new Chart(ctx, {
@@ -199,6 +197,7 @@
         },
     });
 }
+
 
 function obterDadosComponente() {
     const linha = sessionStorage.getItem("LINHA");
