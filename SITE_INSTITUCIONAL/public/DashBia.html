@@ -119,7 +119,7 @@
         let labelNRT = ["2min", "1.5min", "1min", "30s", "0"];
 
         function obterDadosRAM() {
-        var idDispositivo = inputCargo.value;
+        var idDispositivo = sessionStorage.getItem('LINHA');
 
         fetch(`/medidas/RAM/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
@@ -191,7 +191,7 @@
     }, 30000);
 
     function obterDadosCPU() {
-        var idDispositivo = inputCargo.value;
+        var idDispositivo = sessionStorage.getItem('LINHA');
 
         fetch(`/medidas/CPU/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
@@ -265,7 +265,7 @@
 
 
     function obterDadosDISCO() {
-        var idDispositivo = inputCargo.value;
+        var idDispositivo = sessionStorage.getItem('LINHA');
 
         fetch(`/medidas/DISCO/${idDispositivo}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
@@ -335,7 +335,7 @@
         obterDadosDISCO();
     }, 30000);
 
-
+ 
 
      // dados de Velocidade de Rede
     function obterDadosLatencia() {
