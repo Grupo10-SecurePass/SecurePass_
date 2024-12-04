@@ -35,7 +35,7 @@ function alertaVEL(idDispositivo) {
     WHERE fkComponente = 6 OR fkComponente = 8 
     AND fkDispositivo = ${idDispositivo} 
     GROUP BY DAY(dataAlerta), MONTH(dataAlerta) 
-    ORDER BY DAY(dataAlerta), MONTH(dataAlerta);`;
+    ORDER BY  MONTH(dataAlerta), DAY(dataAlerta);`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
